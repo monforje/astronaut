@@ -44,6 +44,8 @@
 | **brand/** | |
 | [brand/messaging/](brand/messaging/README.md) | слова бренда: голос, девизы, фразы, CTA |
 | [brand/](brand/) | логотипы, иконки, иллюстрации |
+| **utils/** | |
+| [utils/scripts/idea-pdf.py](utils/scripts/idea-pdf.py) | собирает всю папку в [astronaut-idea.pdf](astronaut-idea.pdf): `uv run idea/utils/scripts/idea-pdf.py` |
 
 ## Как ведём
 
