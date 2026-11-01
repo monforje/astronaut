@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astronaut — анимации</title>
+<style>
+  :root { --navy: #0F1B33; --bg: #F4F1EA; --card: #fff; --muted: #6b7280; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 48px; font: 15px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--navy); }
+  header { max-width: 1100px; margin: 0 auto 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  h1 { font-size: 20px; margin: 0; flex: 1; }
+  button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--navy); background: var(--navy); color: #fff; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--navy); }
+  main { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  figure { margin: 0; background: var(--card); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  figure.wide { grid-column: span 2; }
+  @media (max-width: 680px) { figure.wide { grid-column: auto; } }
+  .stage { display: grid; place-items: center; min-height: 180px; }
+  .stage img { max-width: 100%; max-height: 260px; }
+  figcaption { font-size: 13px; color: var(--muted); }
+  figcaption b { color: var(--navy); font-family: ui-monospace, monospace; font-weight: 600; }
+  body.dark { --bg: #0F1B33; --card: #16243f; --muted: #9aa6bd; color: #eef; }
+  body.dark h1 { color: #fff; }
+  body.dark figcaption b { color: #fff; }
+  body.dark button.ghost { color: #fff; border-color: #fff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Astronaut — анимации</h1>
+  <button id="replay">↻ Повторить интро</button>
+  <button id="theme" class="ghost">Тёмный фон</button>
+</header>
+<main>
+  <figure class="wide"><div class="stage"><img src="logo-header.svg" alt=""></div>
+    <figcaption><b>logo-header.svg</b> — интро: знак выпрыгивает, буквы выезжают по одной, слоган проявляется. Дальше мигают искры.</figcaption></figure>
+  <figure><div class="stage"><img src="logo-stacked.svg" alt=""></div>
+    <figcaption><b>logo-stacked.svg</b> — то же интро в вертикальной компоновке.</figcaption></figure>
+  <figure class="wide"><div class="stage"><img src="logo-horizontal.svg" alt=""></div>
+    <figcaption><b>logo-horizontal.svg</b> — интро для горизонтального лого.</figcaption></figure>
+  <figure><div class="stage"><img src="wordmark.svg" alt=""></div>
+    <figcaption><b>wordmark.svg</b> — буквы выезжают по очереди.</figcaption></figure>
+  <figure><div class="stage"><img src="logo-mark.svg" alt=""></div>
+    <figcaption><b>logo-mark.svg</b> — астронавт парит внутри круга, искры мигают. Цикл.</figcaption></figure>
+  <figure><div class="stage"><img src="app-icon.svg" alt=""></div>
+    <figcaption><b>app-icon.svg</b> — то же для иконки приложения.</figcaption></figure>
+  <figure><div class="stage"><img src="loader.svg" alt="" style="width:120px"></div>
+    <figcaption><b>loader.svg</b> — быстрый лоадер «подключаемся…».</figcaption></figure>
+  <figure class="wide"><div class="stage"><img src="illustration.svg" alt=""></div>
+    <figcaption><b>illustration.svg</b> — сцена медленно дрейфует, искры у разъёма мигают.</figcaption></figure>
+</main>
+<script>
+  document.getElementById('replay').onclick = () => {
+    for (const img of document.querySelectorAll('.stage img')) {
+      const src = img.getAttribute('src').split('?')[0];
+      img.src = src + '?t=' + Date.now();
+    }
+  };
+  document.getElementById('theme').onclick = (e) => {
+    const dark = document.body.classList.toggle('dark');
+    e.target.textContent = dark ? 'Светлый фон' : 'Тёмный фон';
+  };
+</script>
+</body>
+</html>
