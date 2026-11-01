@@ -1,0 +1,32 @@
+version: '3.53.1'
+
+env:
+  PREK:
+    sh: echo "$HOME/.local/bin/prek"
+  PREK_VERSION: v0.3.9
+
+tasks:
+  prek:
+    desc: "Выполняет команду prek в корне проекта"
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - task: prek-install
+      - '"$PREK" {{.PREK_COMMAND | default .CLI_ARGS}}'
+
+  prek-install:
+    internal: true
+    desc: "Скачивает бинарник prek"
+    status:
+      - test -x "$PREK"
+    cmds:
+      - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/j178/prek/releases/download/$PREK_VERSION/prek-installer.sh | sh
+
+  prek-link:
+    internal: true
+    desc: "Создаёт в корне проекта относительный симлинк .pre-commit-config.yaml на CONFIG"
+    requires:
+      vars: [CONFIG]
+    status:
+      - test "$(readlink "{{.ROOT_DIR}}/.pre-commit-config.yaml")" = "{{relPath .ROOT_DIR .CONFIG}}"
+    cmds:
+      - ln -sfn "{{relPath .ROOT_DIR .CONFIG}}" "{{.ROOT_DIR}}/.pre-commit-config.yaml"

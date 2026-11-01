@@ -1,0 +1,30 @@
+# Подмены типов sqlc для всех Go-проектов; свои (столбцы-перечисления) проект кладёт в sqlc.overrides.yaml.
+# uuid — пакет стандартной библиотеки Go 1.27, NULL — указатели вместо pgtype.
+- db_type: uuid
+  go_type:
+    import: uuid
+    type: UUID
+- db_type: uuid
+  nullable: true
+  go_type:
+    import: uuid
+    type: UUID
+    pointer: true
+- db_type: text
+  nullable: true
+  go_type:
+    type: string
+    pointer: true
+- db_type: timestamptz
+  go_type: time.Time
+- db_type: timestamptz
+  nullable: true
+  go_type:
+    import: time
+    type: Time
+    pointer: true
+- db_type: pg_catalog.int8
+  nullable: true
+  go_type:
+    type: int64
+    pointer: true

@@ -1,0 +1,38 @@
+# Общий traefik на машину: 80/443, http → https, сертификаты из CERTS_DIR.
+# Имена (проект shared-proxy, контейнер и сеть traefik, CERTS_DIR) общие для всех локальных стендов:
+# на одной машине они делят один traefik, а не спорят за порты. Кто поднял первым — того конфиг и работает.
+name: shared-proxy
+
+networks:
+  traefik:
+    name: traefik
+
+services:
+  traefik:
+    image: traefik:v3.7.15
+    container_name: traefik
+    restart: unless-stopped
+    networks: [traefik]
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - traefik.enable=true
+      - 'traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_HOSTNAME:-traefik.${LOCAL_DOMAIN:-astronaut.localhost}}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))'
+      - traefik.http.routers.dashboard.service=api@internal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CERTS_DIR}:/certs:ro
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.directory=/certs
+      - --providers.file.watch=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.asDefault=true
+      - --entrypoints.websecure.http.tls=true
+      - --api.dashboard=true
+      - --log.level=INFO

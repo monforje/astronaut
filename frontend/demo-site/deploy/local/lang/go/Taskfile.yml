@@ -1,0 +1,277 @@
+version: '3.53.1'
+
+vars:
+  DOCKER_GID:
+    sh: stat -c '%g' /var/run/docker.sock 2>/dev/null || echo 0
+  DOCKER_NODE_IMAGE_NAME: '{{.DOCKER_NODE_IMAGE_NAME | default "node:24-alpine"}}'
+  OGEN_TARGET: '{{.OGEN_TARGET | default "internal/transport/http/gen"}}'
+  OGEN_PACKAGE: '{{.OGEN_PACKAGE | default "gen"}}'
+  COVERAGE_MIN: '{{.COVERAGE_MIN | default "70"}}'
+  ZEUS_SRC_DIR: '{{.ZEUS_SRC_DIR | default (printf "%s/../../utils/zeus" .ROOT_DIR | clean)}}'
+  DOCKER_ZEUS_IMAGE_NAME: '{{.DOCKER_ZEUS_IMAGE_NAME | default "downtimesu/zeus:local"}}'
+
+tasks:
+  go:
+    desc: 'Выполняет команду go'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'go {{.GO_COMMAND | default .CLI_ARGS}}'
+
+  lint:
+    desc: '[alias] golangci-lint run по .golangci.yml проекта'
+    cmds:
+      - task: lint-run
+        vars:
+          RUN_COMMAND: 'golangci-lint {{.LINT_COMMAND | default "run ./..."}}'
+
+  fmt:
+    desc: '[alias] Форматирование: golangci-lint fmt и автоисправление пустых строк (wsl_v5, nlreturn, whitespace)'
+    cmds:
+      - task: lint-run
+        vars:
+          RUN_COMMAND: 'golangci-lint fmt ./...'
+      - task: lint-run
+        vars:
+          RUN_COMMAND: 'golangci-lint run --fix --enable-only wsl_v5,nlreturn,whitespace ./...'
+
+  codestyle:
+    desc: '[alias] Код-стайл (docs/codestyle): golangci-lint + тесты правил go test ./docs/codestyle/...'
+    cmds:
+      - task: lint
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'if [ -d docs/codestyle ]; then go test -count=1 ./docs/codestyle/...; else echo "codestyle: docs/codestyle нет, пропуск"; fi'
+
+  gen-check:
+    desc: '[alias] Сгенерированное совпадает с источниками: gen-api, gen-sqlc, gen-mocks и git diff --exit-code'
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - task: gen-api
+      - task: gen-sqlc
+      - task: gen-mocks
+      - git diff --exit-code -- .
+      - |
+        untracked=$(git ls-files --others --exclude-standard -- .)
+        if [ -n "$untracked" ]; then echo "Новые сгенерированные файлы не в git:"; echo "$untracked"; exit 1; fi
+
+  test:
+    desc: '[alias] Юнит-тесты (без testing/: интеграционные и e2e — отдельными задачами)'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'go test $(go list ./... | grep -v /testing/)'
+
+  test-integration:
+    desc: '[alias] Интеграционные тесты (testing/integration): нужна инфра проекта и миграции; адреса — TEST_DOCKER_ARGS'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_DOCKER_ARGS: '{{.TEST_DOCKER_ARGS}}'
+          RUN_COMMAND: 'if [ -d testing/integration ]; then go test -count=1 ./testing/integration/... {{.CLI_ARGS}}; else echo "integration: testing/integration нет, пропуск"; fi'
+
+  test-e2e:
+    desc: '[alias] E2E-тесты (testing/e2e): нужны запущенные сервисы проекта (task start); адреса — TEST_DOCKER_ARGS'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_DOCKER_ARGS: '{{.TEST_DOCKER_ARGS}}'
+          RUN_COMMAND: 'if [ -d testing/e2e ]; then go test -count=1 ./testing/e2e/... {{.CLI_ARGS}}; else echo "e2e: testing/e2e нет, пропуск"; fi'
+
+  bench:
+    desc: '[alias] Бенчмарки pkg/, internal/ и адаптеров (testing/integration) на инфре проекта (без TEST_* бенчмарк пропускается); адреса — TEST_DOCKER_ARGS'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_DOCKER_ARGS: '{{.TEST_DOCKER_ARGS}}'
+          RUN_COMMAND: 'go test -run xxx -bench . -benchmem -benchtime=1s {{.CLI_ARGS}} ./pkg/... ./internal/... ./testing/integration/...'
+
+  test-cover:
+    desc: '[alias] Юнит-тесты с покрытием: порог COVERAGE_MIN % (по умолчанию 70)'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'sh /opt/deploy/scripts/cover.sh {{.COVERAGE_MIN}}{{if .COVERAGE_EXCLUDE}} "{{.COVERAGE_EXCLUDE}}"{{end}}'
+
+  sec:
+    desc: '[alias] gosec (SAST) через golangci-lint: без тестов, конфиг golangci-sec.yml вместо .golangci.yml проекта'
+    cmds:
+      - task: lint-run
+        vars:
+          RUN_COMMAND: 'golangci-lint run -c /opt/deploy/golangci-sec.yml ./...'
+
+  vuln:
+    desc: '[alias] govulncheck: известные уязвимости в зависимостях и stdlib'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'go run golang.org/x/vuln/cmd/govulncheck@latest ./...'
+
+  tidy:
+    desc: '[alias] go mod tidy + go mod vendor'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'go mod tidy && go mod vendor'
+
+  gen-api:
+    desc: '[alias] Контракт: typespec/ → schema/openapi/openapi.yaml → сервер и клиент ogen в OGEN_TARGET (ogen.yml проекта или общий utils/ogen/ogen.yml)'
+    status:
+      - '[ ! -f "{{.ROOT_DIR}}/schema/openapi/openapi.yaml" ] && [ ! -d "{{.ROOT_DIR}}/typespec" ]'
+    cmds:
+      - task: node-run
+        if: '[ -d "{{.ROOT_DIR}}/typespec" ]'
+        vars:
+          RUN_DIR: typespec
+          RUN_COMMAND: |
+            { [ node_modules/.package-lock.json -nt package-lock.json ] || npm ci --no-audit --no-fund; } &&
+            npm run build &&
+            { [ ! -f ../scripts/postprocess-openapi.mjs ] || node ../scripts/postprocess-openapi.mjs ../schema/openapi/openapi.yaml; }
+      - task: ogen-run
+        vars:
+          RUN_COMMAND: 'ogen --config $([ -f ogen.yml ] && echo ogen.yml || echo /opt/ogen/ogen.yml) --target {{.OGEN_TARGET}} --package {{.OGEN_PACKAGE}} --clean schema/openapi/openapi.yaml'
+
+  gen-mocks:
+    desc: '[alias] Моки: go generate ./... (директивы //go:generate лежат рядом с интерфейсами)'
+    cmds:
+      - task: go-run
+        vars:
+          RUN_COMMAND: 'go generate ./...'
+
+  zeus:
+    desc: 'Выполняет команду zeus'
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: '{{.ZEUS_COMMAND | default .CLI_ARGS}}'
+
+  db-migrate-up:
+    desc: '[alias] Накатывает миграции на базу проекта (yugabyte, и clickhouse, если задан ZEUS_CH_URL и есть миграции)'
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: 'migrate apply --dir file:///migrations/yugabyte --url "{{.ZEUS_URL}}"'
+      - task: zeus-run
+        if: '[ -n "{{.ZEUS_CH_URL}}" ] && ls "{{.ROOT_DIR}}"/migrations/clickhouse/*.sql >/dev/null 2>&1'
+        vars:
+          RUN_COMMAND: 'migrate apply --dir file:///migrations/clickhouse --url "{{.ZEUS_CH_URL}}"'
+
+  db-migrate-diff:
+    desc: '[alias] Генерирует миграцию из schema/yugabyte/schema.hcl: task db-migrate-diff -- <name>'
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: 'migrate diff {{.CLI_ARGS}} --dir file:///migrations/yugabyte --to file:///schema/yugabyte/schema.hcl --dev-url "{{.ZEUS_DEV_URL}}"'
+
+  db-migrate-lint:
+    desc: '[alias] Проверяет последнюю миграцию'
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: 'migrate lint --dir file:///migrations/yugabyte --dev-url "{{.ZEUS_DEV_URL}}" --latest 1'
+
+  ch-migrate-diff:
+    desc: '[alias] Генерирует миграцию clickhouse из schema/clickhouse/schema.hcl: task ch-migrate-diff -- <name>'
+    requires:
+      vars: [ZEUS_CH_DEV_URL]
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: 'migrate diff {{.CLI_ARGS}} --dir file:///migrations/clickhouse --to file:///schema/clickhouse/schema.hcl --dev-url "{{.ZEUS_CH_DEV_URL}}"'
+
+  ch-migrate-lint:
+    desc: '[alias] Проверяет последнюю миграцию clickhouse'
+    requires:
+      vars: [ZEUS_CH_DEV_URL]
+    cmds:
+      - task: zeus-run
+        vars:
+          RUN_COMMAND: 'migrate lint --dir file:///migrations/clickhouse --dev-url "{{.ZEUS_CH_DEV_URL}}" --latest 1'
+
+  go-cache:
+    internal: true
+    requires:
+      vars: [GO_CACHE_VOLUME]
+    status:
+      - docker volume inspect {{.GO_CACHE_VOLUME}}
+    cmds:
+      - docker volume create {{.GO_CACHE_VOLUME}} >/dev/null
+      - docker run --rm -v {{.GO_CACHE_VOLUME}}:/cache alpine:3.24.1 chown {{.USERID}}:{{.GROUPID}} /cache
+
+  go-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    deps: [go-cache]
+    requires:
+      vars: [RUN_COMMAND, APP_WORKING_DIR, DOCKER_GO_IMAGE_NAME, GO_CACHE_VOLUME]
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          --group-add {{.DOCKER_GID}} \
+          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}} \
+          -v "{{.TASKFILE_DIR}}":/opt/deploy:ro \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -v {{.GO_CACHE_VOLUME}}:/cache \
+          -e HOME=/tmp \
+          -e GOCACHE=/cache/go-build -e GOMODCACHE=/cache/go-mod -e GOBIN=/cache/go-bin \
+          -e PATH=/cache/go-bin:/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin \
+          {{.RUN_DOCKER_ARGS}} \
+          {{.DOCKER_GO_IMAGE_NAME}} \
+          sh -c '{{.RUN_COMMAND}}'
+
+  node-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    requires:
+      vars: [RUN_COMMAND, RUN_DIR, APP_WORKING_DIR]
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}}/{{.RUN_DIR}} \
+          -e HOME=/tmp -e npm_config_cache=/tmp/.npm \
+          {{.DOCKER_NODE_IMAGE_NAME}} \
+          sh -c '{{.RUN_COMMAND}}'
+
+  lint-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    deps: [go-cache]
+    requires:
+      vars: [RUN_COMMAND, APP_WORKING_DIR, DOCKER_LINT_IMAGE_NAME, GO_CACHE_VOLUME]
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}} \
+          -v "{{.TASKFILE_DIR}}":/opt/deploy:ro \
+          -v {{.GO_CACHE_VOLUME}}:/cache \
+          -e HOME=/tmp \
+          -e GOCACHE=/cache/go-build -e GOMODCACHE=/cache/go-mod \
+          -e GOLANGCI_LINT_CACHE=/cache/golangci \
+          {{.DOCKER_LINT_IMAGE_NAME}} \
+          {{.RUN_COMMAND}}
+
+  # Собственная сборка zeus (utils/zeus, Apache-2.0): сборка и её кеш - в Taskfile.yml самого проекта.
+  zeus-build:
+    internal: true
+    run: once
+    cmds:
+      - DOCKER_ZEUS_IMAGE_NAME={{.DOCKER_ZEUS_IMAGE_NAME}} task -d "{{.ZEUS_SRC_DIR}}" build
+
+  zeus-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    deps: [zeus-build]
+    requires:
+      vars: [RUN_COMMAND, DOCKER_ZEUS_IMAGE_NAME, PROJECT_NETWORK]
+    cmds:
+      - |
+        docker run --rm \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}/migrations":/migrations \
+          -v "{{.ROOT_DIR}}/schema":/schema \
+          --network {{.PROJECT_NETWORK}} \
+          {{.DOCKER_ZEUS_IMAGE_NAME}} \
+          {{.RUN_COMMAND}}

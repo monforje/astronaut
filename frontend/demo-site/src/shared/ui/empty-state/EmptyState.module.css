@@ -1,0 +1,12 @@
+.state {
+  padding-block: 48px;
+  text-align: center;
+}
+
+.compact {
+  padding-block: 20px;
+}
+
+.text {
+  max-width: 48ch;
+}

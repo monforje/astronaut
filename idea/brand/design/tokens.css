@@ -1,0 +1,26 @@
+/* Astronaut brand tokens. See README.md for usage. */
+
+@font-face {
+  font-family: "Onest";
+  src: url("fonts/Onest[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono[wght].ttf") format("truetype");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+:root {
+  --color-navy: #041a31;
+  --color-teal: #00c4c0;
+  --color-orange: #f88030;
+  --color-off-white: #f4ece0;
+  --color-white: #fdfdfd;
+
+  --font-sans: "Onest", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

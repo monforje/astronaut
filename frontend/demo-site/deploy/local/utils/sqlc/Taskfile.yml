@@ -1,0 +1,79 @@
+version: '3.53.1'
+
+env:
+  SQLC_VERSION: v1.31.1
+  SQLC_IMAGE: downtimesu/sqlc:v1.31.1
+  SQLC_GO_IMAGE: golang:1.27.0-alpine3.23
+
+vars:
+  SQLC_SCHEMA_DIR: '{{.SQLC_SCHEMA_DIR | default "migrations/yugabyte"}}'
+  SQLC_QUERIES_DIR: '{{.SQLC_QUERIES_DIR | default "internal/repository/db"}}'
+  SQLC_OVERRIDES: '{{.SQLC_OVERRIDES | default "sqlc.overrides.yaml"}}'
+
+tasks:
+  sqlc:
+    desc: "Выполняет команду sqlc в контейнере в корне проекта"
+    cmds:
+      - task: sqlc-run
+        vars:
+          RUN_COMMAND: 'sqlc {{.SQLC_COMMAND | default .CLI_ARGS}}'
+
+  gen-sqlc:
+    desc: '[alias] Код репозиториев: <SQLC_QUERIES_DIR>/<домен>/*.sql → <домен>/gen, схема — миграции SQLC_SCHEMA_DIR'
+    # Нет ни одного *.sql (новый проект из шаблона) — генерировать нечего.
+    status:
+      - '[ -z "$(find "{{.ROOT_DIR}}/{{.SQLC_QUERIES_DIR}}" -name "*.sql" ! -path "*/gen/*" 2>/dev/null | head -n 1)" ]'
+    cmds:
+      - task: sqlc-run
+        vars:
+          RUN_COMMAND: 'sh /opt/sqlc/scripts/gen.sh generate'
+
+  sqlc-check:
+    desc: '[alias] Проверяет запросы по схеме без генерации кода (sqlc compile)'
+    status:
+      - '[ -z "$(find "{{.ROOT_DIR}}/{{.SQLC_QUERIES_DIR}}" -name "*.sql" ! -path "*/gen/*" 2>/dev/null | head -n 1)" ]'
+    cmds:
+      - task: sqlc-run
+        vars:
+          RUN_COMMAND: 'sh /opt/sqlc/scripts/gen.sh compile'
+
+  sqlc-new:
+    desc: '[alias] Репозиторий по таблице из миграций: task sqlc-new -- orders [домен]; без аргументов — какие таблицы уже с запросами'
+    cmds:
+      - task: sqlc-run
+        vars:
+          RUN_COMMAND: 'sh /opt/sqlc/scripts/new.sh {{.CLI_ARGS}}'
+      - task: gen-sqlc
+        if: '[ -n "{{.CLI_ARGS}}" ]'
+
+  sqlc-build:
+    internal: true
+    run: once
+    status:
+      - docker image inspect "$SQLC_IMAGE" >/dev/null 2>&1
+    cmds:
+      - |
+        docker build -t "$SQLC_IMAGE" \
+          --build-arg GO_IMAGE="$SQLC_GO_IMAGE" \
+          --build-arg SQLC_VERSION="$SQLC_VERSION" \
+          "{{.TASKFILE_DIR}}"
+
+  # RUN_COMMAND выполняется через sh -c в корне проекта, скрипты этого каталога — в /opt/sqlc.
+  sqlc-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    deps: [sqlc-build]
+    requires:
+      vars: [RUN_COMMAND]
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":/app -w /app \
+          -v "{{.TASKFILE_DIR}}":/opt/sqlc:ro \
+          -e HOME=/tmp -e GOCACHE=/tmp/go-build \
+          -e SQLC_SCHEMA_DIR="{{.SQLC_SCHEMA_DIR}}" \
+          -e SQLC_QUERIES_DIR="{{.SQLC_QUERIES_DIR}}" \
+          -e SQLC_OVERRIDES="{{.SQLC_OVERRIDES}}" \
+          "$SQLC_IMAGE" \
+          sh -c '{{.RUN_COMMAND}}'

@@ -1,0 +1,253 @@
+version: '3.53.1'
+
+includes:
+  infra:
+    taskfile: ./infra/Taskfile.yml
+    flatten: true
+  proxy:
+    taskfile: ./infra/traefik/Taskfile.yml
+    flatten: true
+  ao:
+    taskfile: ./utils/ao/Taskfile.yml
+    flatten: true
+  prek:
+    taskfile: ./utils/prek/Taskfile.yml
+    flatten: true
+  gomplate:
+    taskfile: ./utils/gomplate/Taskfile.yml
+    flatten: true
+  ogen:
+    taskfile: ./utils/ogen/Taskfile.yml
+    flatten: true
+  sqlc:
+    taskfile: ./utils/sqlc/Taskfile.yml
+    flatten: true
+
+env:
+  CI_REGISTRY: docker.sculk.ltd
+  # Общие на машину: один CA и один traefik для всех локальных стендов (и соседних репозиториев —
+  # тот же каталог и тот же CA, что у них).
+  CERTS_DIR:
+    sh: echo "${CERTS_DIR:-${HOME:-$USERPROFILE}/.deploy-templates/certs}"
+  CA_NICKNAME:
+    sh: echo "${CA_NICKNAME:-ao local CA}"
+  # На Windows нет id: Docker Desktop не сверяет uid с хостом, берём uid по умолчанию.
+  USERID:
+    sh: id -u 2>/dev/null || echo 1000
+  GROUPID:
+    sh: id -g 2>/dev/null || echo 1000
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  project_deploy:
+    internal: true
+    desc: "Дефолтный деплой, домены и сертификат, сборка, хуки, traefik, инфра, контейнеры проекта"
+    cmds:
+      - task: trust
+        if: '[ -f "{{.ROOT_DIR}}/ao.toml" ]'
+      - task: project_build
+      - task: init-hooks
+        if: '[ -e "{{.ROOT_DIR}}/.pre-commit-config.yaml" ]'
+      - task: proxy-start
+      - task: infra-up
+      - task: start
+        vars: { CLI_ARGS: "-d" }
+
+  project_build:
+    internal: true
+    desc: "Рендерит LOCAL_DOCKERFILE_TEMPLATE и собирает образы проекта"
+    cmds:
+      - task: gomplate-render
+        if: '[ -n "{{.LOCAL_DOCKERFILE_TEMPLATE}}" ] && [ -f "{{.ROOT_DIR}}/{{.LOCAL_DOCKERFILE_TEMPLATE}}" ]'
+        vars:
+          TEMPLATE_FILE: '{{.LOCAL_DOCKERFILE_TEMPLATE}}'
+          OUTPUT_FILE: '{{trimSuffix ".tpl" .LOCAL_DOCKERFILE_TEMPLATE}}'
+          EXTRA_OPTS: '{{.LOCAL_TEMPLATE_OPTS}}'
+      - task: containers
+        vars: { CONTAINERS_COMMAND: "build" }
+
+  project_cicd_build:
+    internal: true
+    desc: "Рендерит CICD_DOCKERFILE_TEMPLATE и собирает cicd-образ CICD_IMAGE"
+    requires:
+      vars: [CICD_DOCKERFILE_TEMPLATE, CICD_IMAGE]
+    cmds:
+      - task: gomplate-render
+        vars:
+          TEMPLATE_FILE: '{{.CICD_DOCKERFILE_TEMPLATE}}'
+          OUTPUT_FILE: '{{trimSuffix ".tpl" .CICD_DOCKERFILE_TEMPLATE}}'
+          EXTRA_OPTS: '{{.CICD_TEMPLATE_OPTS}}'
+      - docker build "{{.ROOT_DIR}}" -f "{{.ROOT_DIR}}/{{trimSuffix ".tpl" .CICD_DOCKERFILE_TEMPLATE}}" -t "{{.CICD_IMAGE}}"
+
+  project_down:
+    internal: true
+    desc: "Удаляет контейнеры проекта вместе с volumes"
+    cmds:
+      - task: containers
+        vars: { CONTAINERS_COMMAND: "--profile '*' down -v" }
+
+  deploy:
+    desc: "[interface] Разворачивает проект с нуля"
+    cmds:
+      - task: project_deploy
+
+  build:
+    desc: "[interface] Собирает docker-образы проекта"
+    cmds:
+      - task: project_build
+
+  cicd-build:
+    desc: "[interface] Собирает cicd-образ"
+    cmds:
+      - task: project_cicd_build
+
+  destroy:
+    desc: "[interface] Уничтожает контейнеры проекта вместе с данными"
+    cmds:
+      - task: project_down
+
+  containers:
+    desc: "[interface] Пробрасывает произвольные команды в docker compose"
+    requires:
+      vars: [DOCKER_COMPOSE_FILEPATH]
+    cmds:
+      - docker compose -f {{.DOCKER_COMPOSE_FILEPATH}} {{.CONTAINERS_COMMAND | default .CLI_ARGS}}
+
+  command:
+    desc: "[interface] Выполняет команду в контейнере сервиса приложения"
+    requires:
+      vars: [DOCKER_COMPOSE_FILEPATH, SERVICE_APP, APP_WORKING_DIR]
+    cmds:
+      - docker compose -f {{.DOCKER_COMPOSE_FILEPATH}} exec $([ -t 0 ] || echo -T) -u {{.USERID}}:{{.GROUPID}} -w {{.APP_WORKING_DIR}} {{.SERVICE_APP}} {{.APP_COMMAND | default .CLI_ARGS}}
+
+  start:
+    desc: "[interface] Запускает контейнеры проекта"
+    cmds:
+      - task: containers
+        vars:
+          CONTAINERS_COMMAND:
+            sh: echo "up {{.CLI_ARGS}}"
+
+  stop:
+    desc: "[interface] Останавливает контейнеры проекта вместе с воркерами"
+    cmds:
+      - task: containers
+        vars: { CONTAINERS_COMMAND: "--profile '*' stop" }
+
+  start-workers:
+    desc: "[interface] Запускает воркеры"
+    cmds:
+      - task: containers
+        vars: { CONTAINERS_COMMAND: "--profile {{.WORKERS_PROFILE | default \"workers\"}} up -d {{.CLI_ARGS}}" }
+
+  proxy-start:
+    desc: "[interface] Поднимает общий traefik"
+    cmds:
+      - task: traefik-default-cert
+      - task: traefik-render-tls-config
+      - task: traefik-up
+
+  proxy-stop:
+    desc: "[interface] Останавливает общий traefik"
+    cmds:
+      - task: traefik-stop
+
+  proxy-down:
+    desc: "[interface] Удаляет контейнер и сеть общего traefik"
+    cmds:
+      - task: traefik-down
+
+  proxy-certs:
+    desc: "[interface] Показывает сертификаты traefik: домены и срок действия"
+    cmds:
+      - task: traefik-certs
+
+  infra-up:
+    desc: "[interface] Поднимает shared-инфру"
+    cmds:
+      - task: infra-compose-up
+
+  infra-stop:
+    desc: "[interface] Останавливает shared-инфру"
+    cmds:
+      - task: infra-compose-stop
+
+  infra-down:
+    desc: "[interface] Удаляет контейнеры shared-инфры"
+    cmds:
+      - task: infra-compose-down
+
+  start-all:
+    desc: "[interface] traefik + shared-инфра + контейнеры проекта"
+    cmds:
+      - task: proxy-start
+      - task: infra-up
+      - task: start
+
+  stop-all:
+    desc: "[interface] Останавливает контейнеры проекта + shared-инфру + traefik"
+    cmds:
+      - task: stop
+      - task: infra-stop
+      - task: proxy-stop
+
+  trust:
+    desc: "[interface] Локальный CA (один на машину) и сертификат на домены ao.toml проекта; AO_HOSTS=true — ещё и /etc/hosts"
+    requires:
+      vars: [CERT_NAME]
+    vars:
+      # Корень монорепо: из него ao собирает все ao.toml в блок /etc/hosts.
+      HOSTS_ROOT:
+        sh: git -C "{{.ROOT_DIR}}" rev-parse --show-toplevel 2>/dev/null || echo "{{.ROOT_DIR}}"
+    cmds:
+      - task: ao-ca-install
+      - task: ao-cert
+        vars:
+          NAME: '{{.CERT_NAME}}'
+          CONFIG: '{{.ROOT_DIR}}/ao.toml'
+          CERTS_DIR: '{{.CERTS_DIR}}'
+      - task: traefik-render-tls-config
+      # *.localhost резолвят сами браузеры, curl и systemd-resolved — /etc/hosts не нужен.
+      # А блок ao в нём один на машину: sync отсюда выкинул бы домены соседних стендов.
+      - task: ao-hosts
+        if: '[ "{{.AO_HOSTS}}" = true ]'
+        vars: { ROOT: '{{.HOSTS_ROOT}}' }
+
+  untrust:
+    desc: "[interface] Удалить сертификат проекта (CA общий — остаётся)"
+    requires:
+      vars: [CERT_NAME]
+    cmds:
+      - task: ao-cert-delete
+        vars:
+          NAME: '{{.CERT_NAME}}'
+          CERTS_DIR: '{{.CERTS_DIR}}'
+      - task: traefik-render-tls-config
+
+  ca-install:
+    desc: "[interface] Поставить локальный CA в систему и браузеры (уже доверенный ao не трогает)"
+    cmds:
+      - task: ao-ca-install
+      - task: ao
+        vars: { AO_COMMAND: 'ca install {{.CERTS_DIR}}/ca/rootCA.pem --name "{{.CA_NICKNAME}}"' }
+
+  ca-uninstall:
+    desc: "[interface] Снять доверие к локальному CA — сломает https всех стендов на машине"
+    cmds:
+      - task: ao-ca-uninstall
+
+  update-submodule:
+    desc: "Обновляет сабмодули проекта"
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - git submodule update --init --recursive --remote {{.SUBMODULE | default .CLI_ARGS}}
+
+  init-hooks:
+    desc: "[interface] Устанавливает prek и git pre-commit хуки"
+    cmds:
+      - task: prek
+        vars: { PREK_COMMAND: "install" }

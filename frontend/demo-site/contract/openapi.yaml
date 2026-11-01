@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Astronaut API
+  version: 0.1.0
+  description: >
+    Контракт API, пока бэкенда нет. Фронт генерирует по нему клиент (`task gen-api`), а моки
+    (`mocks/`) отвечают по нему же. Когда появится бэкенд, контракт переезжает в
+    `backend/<имя>/schema/openapi/openapi.yaml`, а фронт переключается на него через `BACKEND`.
+tags:
+  - name: system
+paths:
+  /system/info:
+    get:
+      operationId: systemInfo
+      tags: [system]
+      summary: Имя и версия сервиса
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SystemInfo" }
+        "503": { $ref: "#/components/responses/ServiceUnavailable" }
+
+components:
+  schemas:
+    Uuid:
+      type: string
+      format: uuid
+
+    SystemInfo:
+      type: object
+      required: [service, version]
+      properties:
+        service: { type: string }
+        version: { type: string }
+
+    ErrorCode:
+      type: string
+      enum:
+        - validation_failed
+        - unauthenticated
+        - not_found
+        - csrf_invalid
+        - rate_limited
+        - service_unavailable
+        - internal_error
+
+    FieldError:
+      type: object
+      required: [field, message]
+      properties:
+        field:
+          type: string
+          description: Путь к полю, например `name`.
+        message: { type: string }
+
+    Problem:
+      type: object
+      required: [type, title, status, code]
+      properties:
+        type:
+          type: string
+          description: URI типа ошибки; `about:blank`, если кроме статуса сказать нечего.
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        code: { $ref: "#/components/schemas/ErrorCode" }
+        errors:
+          type: array
+          description: Только для `validation_failed`.
+          items: { $ref: "#/components/schemas/FieldError" }
+
+  responses:
+    ServiceUnavailable:
+      description: Сервис недоступен
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }

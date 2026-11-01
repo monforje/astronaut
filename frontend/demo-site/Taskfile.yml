@@ -1,0 +1,87 @@
+version: "3.53.1"
+
+dotenv: ["../../.env", ".env", "../../.env.example", ".env.example"]
+
+env:
+  PROJECT_NAME: demo-site-front
+  SERVICE_APP: frontend
+  APP_WORKING_DIR: /app
+  DOCKER_COMPOSE_FILEPATH: compose.yml
+  # Сертификат домена из ao.toml (task trust) — имя файла в CERTS_DIR.
+  CERT_NAME: astronaut-demo-site
+  DOCKER_BUN_IMAGE_NAME: oven/bun:1.4.3
+  PW_CONFIG: testing/playwright.config.ts
+  DOCKER_UID:
+    sh: id -u
+  DOCKER_GID:
+    sh: id -g
+
+vars:
+  # Пока бэкенда нет, контракт живёт во фронте (contract/openapi.yaml), а API отвечают моки (mocks/).
+  # Появится backend/${BACKEND} со своим контрактом — берём его.
+  BACKEND_CONTRACT: '../../backend/{{.BACKEND | default "astronaut"}}/schema/openapi/openapi.yaml'
+  API_CONTRACT:
+    sh: '[ -f "{{.BACKEND_CONTRACT}}" ] && echo "{{.BACKEND_CONTRACT}}" || echo contract/openapi.yaml'
+
+includes:
+  base:
+    taskfile: ./deploy/local/Taskfile.yml
+    flatten: true
+    excludes: [default, project_deploy, infra-up]
+  bun:
+    taskfile: ./deploy/local/lang/bun/Taskfile.yml
+    flatten: true
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  gen-api:
+    desc: "orval: клиент API из контракта (API_CONTRACT: бэкенд BACKEND или contract/openapi.yaml) в src/shared/api/generated"
+    dir: "{{.ROOT_DIR}}"
+    preconditions:
+      - sh: '[ -f "{{.API_CONTRACT}}" ]'
+        msg: "Нет контракта {{.API_CONTRACT}}: проверьте BACKEND в .env и выполните task gen-api в бэкенде"
+    cmds:
+      - task: deps-install
+      # Контракт лежит в backend/, поэтому монтируем корень монорепо, а не только фронт.
+      - |
+        docker run --rm \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}/../..":/repo -w /repo/frontend/{{base .ROOT_DIR}} \
+          -e HOME=/tmp \
+          -e API_CONTRACT="{{.API_CONTRACT}}" \
+          {{.DOCKER_BUN_IMAGE_NAME}} \
+          bun run api:gen
+
+  api-check:
+    desc: "[alias] Клиент API совпадает с контрактом бэкенда: перегенерация и git diff --exit-code src/shared/api/generated"
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - task: gen-api
+      - git diff --exit-code -- src/shared/api/generated
+      - |
+        untracked=$(git ls-files --others --exclude-standard -- src/shared/api/generated)
+        if [ -n "$untracked" ]; then echo "Новые файлы клиента не в git:"; echo "$untracked"; exit 1; fi
+
+  project_deploy:
+    internal: true
+    cmds:
+      - task: trust
+      - task: init-hooks
+        if: '[ -e "{{.ROOT_DIR}}/.pre-commit-config.yaml" ]'
+      - task: deps-install
+      - task: proxy-start
+      - task: start
+        vars: { CLI_ARGS: "-d --wait" }
+
+  deps-install:
+    desc: "bun install — только если менялись package.json/bun.lock"
+    sources: [package.json, bun.lock]
+    status:
+      - test -d node_modules
+    cmds:
+      - task: bun
+        vars: { BUN_COMMAND: "install" }

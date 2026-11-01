@@ -1,0 +1,27 @@
+# Каркас шаблона: у проекта, созданного из frontend/example (task new-frontend), эти файлы совпадают
+# с шаблоном после переименования. Проверка — docs/codestyle/mirror.sh в корне репозитория.
+# «*» совпадает с любым хвостом пути, включая подкаталоги. Своё проект добавляет рядом, а не правкой
+# этих файлов; общее улучшение — сначала в шаблон, потом во все проекты.
+.gitignore
+Taskfile.yml
+compose.yml
+ao.toml
+orval.config.ts
+oxfmt.config.ts
+oxlint.config.ts
+steiger.config.js
+tsconfig.json
+vite.config.ts
+vitest.config.ts
+docs/codestyle/*
+*/README.md
+deploy/local/*
+src/main.tsx
+src/vite-env.d.ts
+src/app/error-boundary/*
+src/app/query-provider/*
+src/shared/api/http-client/*
+src/shared/config/env/*
+src/shared/lib/cn/*
+src/shared/lib/use-title/*
+testing/playwright.config.ts
