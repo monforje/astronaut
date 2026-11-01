@@ -17,7 +17,7 @@
   figure.wide { grid-column: span 2; }
   @media (max-width: 680px) { figure.wide { grid-column: auto; } }
   .stage { display: grid; place-items: center; min-height: 180px; }
-  .stage img { max-width: 100%; max-height: 260px; }
+  .stage object { max-width: 100%; max-height: 260px; pointer-events: none; }
   figcaption { font-size: 13px; color: var(--muted); }
   figcaption b { color: var(--navy); font-family: ui-monospace, monospace; font-weight: 600; }
   body.dark { --bg: #0F1B33; --card: #16243f; --muted: #9aa6bd; color: #eef; }
@@ -33,28 +33,28 @@
   <button id="theme" class="ghost">Тёмный фон</button>
 </header>
 <main>
-  <figure class="wide"><div class="stage"><img src="logo-header.svg" alt=""></div>
+  <figure class="wide"><div class="stage"><object type="image/svg+xml" data="logo-header.svg"></object></div>
     <figcaption><b>logo-header.svg</b> — интро: знак выпрыгивает, буквы выезжают по одной, слоган проявляется. Дальше мигают искры.</figcaption></figure>
-  <figure><div class="stage"><img src="logo-stacked.svg" alt=""></div>
+  <figure><div class="stage"><object type="image/svg+xml" data="logo-stacked.svg"></object></div>
     <figcaption><b>logo-stacked.svg</b> — то же интро в вертикальной компоновке.</figcaption></figure>
-  <figure class="wide"><div class="stage"><img src="logo-horizontal.svg" alt=""></div>
+  <figure class="wide"><div class="stage"><object type="image/svg+xml" data="logo-horizontal.svg"></object></div>
     <figcaption><b>logo-horizontal.svg</b> — интро для горизонтального лого.</figcaption></figure>
-  <figure><div class="stage"><img src="wordmark.svg" alt=""></div>
+  <figure><div class="stage"><object type="image/svg+xml" data="wordmark.svg"></object></div>
     <figcaption><b>wordmark.svg</b> — буквы выезжают по очереди.</figcaption></figure>
-  <figure><div class="stage"><img src="logo-mark.svg" alt=""></div>
+  <figure><div class="stage"><object type="image/svg+xml" data="logo-mark.svg"></object></div>
     <figcaption><b>logo-mark.svg</b> — астронавт парит внутри круга, искры мигают. Цикл.</figcaption></figure>
-  <figure><div class="stage"><img src="app-icon.svg" alt=""></div>
+  <figure><div class="stage"><object type="image/svg+xml" data="app-icon.svg"></object></div>
     <figcaption><b>app-icon.svg</b> — то же для иконки приложения.</figcaption></figure>
-  <figure><div class="stage"><img src="loader.svg" alt="" style="width:120px"></div>
+  <figure><div class="stage"><object type="image/svg+xml" data="loader.svg" style="width:120px"></object></div>
     <figcaption><b>loader.svg</b> — быстрый лоадер «подключаемся…».</figcaption></figure>
-  <figure class="wide"><div class="stage"><img src="illustration.svg" alt=""></div>
+  <figure class="wide"><div class="stage"><object type="image/svg+xml" data="illustration.svg"></object></div>
     <figcaption><b>illustration.svg</b> — сцена медленно дрейфует, искры у разъёма мигают.</figcaption></figure>
 </main>
 <script>
   document.getElementById('replay').onclick = () => {
-    for (const img of document.querySelectorAll('.stage img')) {
-      const src = img.getAttribute('src').split('?')[0];
-      img.src = src + '?t=' + Date.now();
+    // A fresh <object> loads a new SVG document, so CSS animations restart (works on file:// too).
+    for (const obj of document.querySelectorAll('.stage object')) {
+      obj.replaceWith(obj.cloneNode(true));
     }
   };
   document.getElementById('theme').onclick = (e) => {

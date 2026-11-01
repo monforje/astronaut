@@ -41,6 +41,9 @@
 | **glossary/** | |
 | [glossary/terms.md](glossary/terms.md) | словарь терминов с примерами из логистики |
 | [glossary/README.md](glossary/README.md) | как ведём словарь |
+| **brand/** | |
+| [brand/messaging/](brand/messaging/README.md) | слова бренда: голос, девизы, фразы, CTA |
+| [brand/](brand/) | логотипы, иконки, иллюстрации |
 
 ## Как ведём
 
