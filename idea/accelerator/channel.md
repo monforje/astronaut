@@ -16,6 +16,13 @@
 
 Статус по каждому пункту у нас: `[TODO]`.
 
+### Ссылки
+
+- Создание проекта на «Университете 2035» (продолжить заполнение анкеты): https://pt.2035.university/project/create. Готовые значения полей: [project-form.html](project-form.html).
+- Заявка на участие в акселераторе: https://pt.2035.university/accelerator/929
+- Инструкция по регистрации: https://drive.google.com/file/d/1kR2jl9KJr7ap40IkorP_PoQ4WwQFwcPg/view?usp=sharing
+- Telegram-канал проекта: https://t.me/astronaut_for_business
+
 ## Программа (что уже прошло)
 
 | Дата | Событие | Заметка |

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astronaut: анкета проекта</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #fff; --text: #14181f; --muted: #5b6575; --line: #dde1e8;
+    --accent: #2b5fd9; --fact: #1f7a4d; --fact-bg: #e3f4ea;
+    --est: #9a6200; --est-bg: #fff1d6; --todo: #b3261e; --todo-bg: #fde7e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1218; --card: #171b23; --text: #e8ebf0; --muted: #98a2b3; --line: #2a303b;
+      --accent: #7c9cff; --fact: #6fd6a0; --fact-bg: #173626;
+      --est: #f0b84f; --est-bg: #3a2c0f; --todo: #ff8f86; --todo-bg: #3e1a17;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+  h3 { font-size: 16px; margin: 20px 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+  .tag.fact { color: var(--fact); background: var(--fact-bg); }
+  .tag.est { color: var(--est); background: var(--est-bg); }
+  .tag.todo { color: var(--todo); background: var(--todo-bg); }
+  .field { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 10px 0; }
+  .field .head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .field .name { font-weight: 600; }
+  .field .val { margin: 6px 0 0; white-space: pre-wrap; word-break: break-word; }
+  .field .note { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+  .field .val.long { font-size: 15px; }
+  button.copy { font: inherit; font-size: 13px; padding: 3px 10px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--line); background: transparent; color: var(--accent); }
+  button.copy:hover { background: var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  .box { background: var(--est-bg); border: 1px solid var(--line);
+    border-radius: 8px; padding: 10px 14px; margin: 16px 0; font-size: 15px; }
+  ul { padding-left: 20px; }
+  .urgent { background: var(--todo-bg); }
+  @media (max-width: 520px) { h1 { font-size: 23px; } }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Astronaut: анкета проекта</h1>
+<p class="sub">Заполнено по форме «Создание проекта» на pt.2035.university. Подготовлено 3 ноября 2026 по материалам репозитория, данным об АО «Вигет» и контактам Даниила Комарова.</p>
+
+<div class="legend">
+  <span class="tag fact">факт</span> взято из репозитория или от вас
+  <span class="tag est">оценка</span> посчитано по допущениям, проверить
+  <span class="tag todo">нужно от вас</span> данных нет
+</div>
+
+<div class="box urgent">
+  <b>Срок регистрации на платформах: 8 ноября 2026.</b> Паспорта команды и проекта должны быть заполнены на 100% к завершению трекинга. Описание проекта (эта анкета) и паспорт проекта — разные разделы.
+</div>
+
+<div class="box">
+  <b>Перед отправкой проверьте помеченное «оценка»:</b> финансовые поля, уровни CRL/IRL/TRL/MRL и численность команды. Это не факты, а предложения, посчитанные по тому, что есть в проекте. Ниже, в разделе «Допущения», видно, откуда каждое число.
+</div>
+
+<!-- ====================== ОСНОВНАЯ ИНФОРМАЦИЯ ====================== -->
+<h2>1. Основная информация</h2>
+
+<div class="field"><div class="head"><span class="name">Тип проекта</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Инициативная разработка</p></div>
+
+<div class="field"><div class="head"><span class="name">Стадия продукта *</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Прототип или MVP</p></div>
+
+<div class="field"><div class="head"><span class="name">Название *</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Astronaut</p></div>
+
+<div class="field"><div class="head"><span class="name">Описание * (полное)</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val long">Astronaut — программа для логистических компаний. Она хранит одну правильную карточку груза, сверяет документы между собой до отправки и связывает 1С, CRM и кабинеты.
+
+Проблема. Экспедитор, который везёт контейнер из Китая во Владивосток, работает с десятком документов: инвойс, упаковочный лист, коносамент, предварительная информация, декларация, накладная. Каждый документ заполняет свой человек в своей программе (1С, CRM, кабинет терминала, программа брокера), и одни и те же данные о грузе переписываются вручную. На каждом переписывании появляется ошибка. В инвойсе 120 мест, в коносаменте 118, и это выясняется на таможне. Ошибка превращается в задержку груза, отклонённый документ или возврат платежа. С 1 сентября 2026 перевозочные документы обязаны быть электронными, поэтому опечатка в реквизитах теперь останавливает отгрузку.
+
+Что делает Astronaut:
+1. Карточка груза. Данные вносятся один раз. PDF от поставщика, в том числе на английском и китайском, программа считывает сама.
+2. Сверка до отправки. Инвойс, упаковочный лист, коносамент, предварительная информация, декларация и накладная проверяются друг против друга. Расхождения показаны простым языком: «В инвойсе 120 мест, в коносаменте 118».
+3. Единый справочник. Один клиент и один перевозчик во всех программах, реквизиты подтягиваются по ИНН из государственных реестров.
+4. Подключения и контроль обменов. 1С, Битрикс24, почта и Excel, операторы электронных документов, реестры, Telegram. Если обмен сломался, сообщение приходит сразу, а не на следующий день.
+5. Помощник в чате. Сотрудник пишет «подключи 1С к CRM» или «найди дубли клиентов». Любое изменение рабочих данных помощник делает только после подтверждения человека. Документы за сотрудника он не подписывает.
+
+Для кого. Первые клиенты — экспедиторы морского импорта из Китая во Владивостоке, 20–200 человек. Дальше — крупные компании, морские линии, порты и терминалы, для них отдельный пакет с работой на собственных серверах.
+
+Чем отличаемся. По открытым источникам мы не нашли продукта, который сверяет эти документы между собой (проверяем это на интервью с клиентами). Работаем поверх систем, которые у клиента уже есть, и не заменяем 1С. Подключения и шаблоны сделаны для логистики, их не нужно писать с нуля.
+
+Стадия. Есть MVP, сейчас дорабатываем его под клиента. Ищем логистические компании для пилота и для интервью.
+
+Чего не обещаем: быструю доставку, снижение ставок, решение проблем портов и нехватки вагонов.</p>
+<p class="note">Если у поля есть лимит символов, используйте краткую версию ниже.</p></div>
+
+<div class="field"><div class="head"><span class="name">Описание * (краткое, на случай лимита)</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Astronaut — программа для логистических компаний: хранит одну правильную карточку груза, сверяет документы (инвойс, упаковочный лист, коносамент, декларация, накладная) между собой до отправки и связывает 1С, CRM и кабинеты. Сбой обмена виден сразу, рутину делает помощник в чате, решения остаются за человеком. Начинаем с экспедиторов морского импорта из Китая во Владивостоке. Есть MVP, дорабатываем под клиента, ищем компании для пилота.</p></div>
+
+<div class="field"><div class="head"><span class="name">Ссылка на сайт проекта</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">https://astronaut.koumori.cloud</p></div>
+
+<div class="field"><div class="head"><span class="name">Обложка</span><span><span class="tag todo">нужно от вас</span></span></div>
+<p class="val">Загрузить картинку</p>
+<p class="note">Подойдёт логотип или первый экран лендинга. Файлы бренда: <code>idea/skelet/brand/</code>.</p></div>
+
+<div class="field"><div class="head"><span class="name">Направление / сфера / индустрия *</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">Транспорт</p>
+<p class="note">Если разрешён выбор нескольких, добавьте «Торговля и ритейл» (ВЭД и импорт). Основное — «Транспорт».</p></div>
+
+<div class="field"><div class="head"><span class="name">Рынки *</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">MariNet, TechNet</p>
+<p class="note">MariNet — морские перевозки, первый рынок. TechNet — программа для бизнеса.</p></div>
+
+<div class="field"><div class="head"><span class="name">Сквозные технологии *</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Искусственный интеллект
+Технологии машинного обучения и когнитивные технологии
+Технологии хранения и анализа больших данных</p>
+<p class="note">ИИ — помощник и считывание документов. Машинное обучение — распознавание PDF. Большие данные — единый справочник и сверка.</p></div>
+
+<div class="field"><div class="head"><span class="name">Технологические направления (критические технологии) *</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Технологии искусственного интеллекта в отраслях экономики, социальной сферы (включая сферу общественной безопасности) и в органах публичной власти
+Технологии создания доверенного и защищенного системного и прикладного программного обеспечения, в том числе для управления социальными и экономически значимыми системами</p></div>
+
+<div class="field"><div class="head"><span class="name">Стадия инвестирования</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Собственные инвестиции</p>
+<p class="note">Внешних инвестиций пока нет. Если это неверно, выберите свою стадию.</p></div>
+
+<div class="field"><div class="head"><span class="name">Уровень продаж</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">нет продаж</p></div>
+
+<div class="field"><div class="head"><span class="name">Бизнес-модели</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">B2B</p></div>
+
+<h3>Команда</h3>
+
+<div class="field"><div class="head"><span class="name">Лидер *</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">Комаров Даниил Иванович</p></div>
+
+<div class="field"><div class="head"><span class="name">Участники и роли</span><span><span class="tag todo">нужно от вас</span></span></div>
+<p class="val">Даниил Комаров: Лидер (роли для себя на выбор: Продакт-менеджер, Разработчик (fullstack), Предприниматель)
+Остальные участники: [не указаны]</p>
+<p class="note">Добавьте каждого через поиск и выберите роль из списка: Разработчик (front-end / back-end / fullstack), Продакт-менеджер, Аналитик, Маркетолог, Логист, Юрист, Экономист, Дата-инженер, Дизайнер и другие. Трекера тоже нужно добавить в проект.</p></div>
+
+<div class="field"><div class="head"><span class="name">ИНН организации</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">9703209884</p>
+<p class="note">АО «Вигет».</p></div>
+
+<div class="field"><div class="head"><span class="name">Базовый регион проекта *</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">Приморский край</p></div>
+
+<div class="field"><div class="head"><span class="name">Электронная почта *</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">komarov.di@dvfu.ru</p>
+<p class="note">Так же указана как запасной контакт на лендинге.</p></div>
+
+<div class="field"><div class="head"><span class="name">Контактный телефон *</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">89105977457</p></div>
+
+<div class="field"><div class="head"><span class="name">Ключевой контакт команды *</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Комаров Даниил Иванович, Telegram: @monforje</p>
+<p class="note">Форма предупреждает: контакты могут быть публичными.</p></div>
+
+<div class="field"><div class="head"><span class="name">ВУЗ / организация *</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Дальневосточный федеральный университет</p>
+<p class="note">Есть в списке формы. Если проект от лица компании, выберите АО «Вигет», если оно есть в списке, или «!Без вуза».</p></div>
+
+<div class="field"><div class="head"><span class="name">Настройки видимости</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Показывать всем
+Показывать акселераторам
+Показывать индустриальным партнерам
+Показывать экспертам</p>
+<p class="note">Нам нужны клиенты для пилота, поэтому открыты все четыре. Если не хотите публиковать телефон, скройте для «Показывать всем».</p></div>
+
+<!-- ====================== ИНФОРМАЦИЯ ДЛЯ ИНВЕСТОРОВ ====================== -->
+<h2>2. Информация для инвесторов</h2>
+
+<div class="field"><div class="head"><span class="name">ОГРН</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">1257700174269</p></div>
+
+<div class="field"><div class="head"><span class="name">Отрасль компании</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">80 Специализированные информационные системы</p>
+<p class="note">Запасной вариант: «86 Деятельность по созданию новых информационных технологий».</p></div>
+
+<div class="field"><div class="head"><span class="name">Отрасль продукта</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">121 Перемещение и экспедирование грузов, другие логистические услуги</p>
+<p class="note">Отрасль, где продукт применяется: клиенты — экспедиторы. Запасной вариант: «113 Перевозки водным транспортом» (если нужна морская привязка) или «114 Инфраструктура для водного транспорта».</p></div>
+
+<div class="field"><div class="head"><span class="name">Приоритетная технология в компании</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">Инструменты для взаимодействия программ (API)</p>
+<p class="note">Главное, что делает продукт: связывает 1С, CRM, кабинеты и государственные реестры. Если можно выбрать несколько, добавьте по порядку важности: «Технологии организации и синхронизации данных» (единый справочник, обмены), «Метрология/верификация данных, контроль качества дата-сетов» (сверка документов), «Обработка естественных языков (перевод, классификация, кластеризация и другое)» (считывание PDF, помощник в чате).</p></div>
+
+<div class="field"><div class="head"><span class="name">Сайт компании</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">https://astronaut.koumori.cloud</p></div>
+
+<div class="field"><div class="head"><span class="name">Телеграм-канал компании</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">https://t.me/astronaut_for_business</p></div>
+
+<div class="field"><div class="head"><span class="name">Профиль в VK</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">[пропустить]</p>
+<p class="note">Необязательное поле, профиля в проекте нет.</p></div>
+
+<div class="field"><div class="head"><span class="name">CRL (уровень готовности команды)</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">3 — Команда сформирована, но нет полного набора базовых компетенций (например, отсутствуют бизнес-компетенции), есть внешняя поддержка (менторы, эксперты)</p>
+<p class="note">Внешняя поддержка есть: акселератор, трекер, эксперты. Если в команде есть и технический, и бизнес-человек, выбирайте 4. Если вы один, выбирайте 2.</p></div>
+
+<div class="field"><div class="head"><span class="name">IRL (уровень готовности инвестиций)</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">1 — FFF. Выполнена базовая оценка объема рынка, проведен конкурентный анализ, оценены первоначальные показатели бизнес-плана (необходимый объем инвестиций, прогноз по выручке), выработана стратегия защиты интеллектуальной собственности</p>
+<p class="note">Рынок и конкуренты разобраны (папка <code>idea/skelet/market/</code>), показатели ниже посчитаны. Стратегии защиты интеллектуальной собственности пока нет, это пункт на ближайшие недели (в акселераторе была лекция по IP). Привлечённого финансирования нет, поэтому выше первого уровня не поднимаемся.</p></div>
+
+<div class="field"><div class="head"><span class="name">TRL (технологическая готовность)</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">3 — Получен макетный образец и продемонстрированы его ключевые характеристики</p>
+<p class="note">Есть демо-сайт на тестовых данных и лендинг. Если MVP уже обрабатывает настоящие документы клиентов, выберите 4.</p></div>
+
+<div class="field"><div class="head"><span class="name">MRL (рыночная готовность)</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">3 — Определены ключевые клиентские сегменты, сформулировано ценностное предложение для каждого сегмента (гипотеза). Определены базовые каналы продаж. Проведен анализ и подготовлены предложения по интеграции в технологические цепочки потенциальных клиентов.</p>
+<p class="note">Сегменты, ценность и цены описаны, обратной связи от клиентов пока нет (это уровень 4). После первых интервью поднимем.</p></div>
+
+<div class="field"><div class="head"><span class="name">Описание компании</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val long">АО «Вигет», Москва. Зарегистрировано 11 апреля 2025 года, генеральный директор — Даниил Комаров. Основной вид деятельности — обработка данных и размещение информации (ОКВЭД 63.11), дополнительные — разработка программного обеспечения (62.01) и консультации (62.02). Компания разрабатывает Astronaut — программу для логистических компаний: карточка груза, сверка документов до отправки, подключение 1С, CRM и кабинетов.</p></div>
+
+<div class="field"><div class="head"><span class="name">Количество сотрудников компании</span><span><span class="tag todo">нужно от вас</span></span></div>
+<p class="val">[TODO]</p>
+<p class="note">В материалах проекта число людей не указано.</p></div>
+
+<div class="field"><div class="head"><span class="name">Патенты компании (или членов команды)</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">Нет</p>
+<p class="note">Если есть свидетельства о регистрации программ, укажите их.</p></div>
+
+<div class="field"><div class="head"><span class="name">Роль компании в проекте</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">Разработчик</p></div>
+
+<div class="field"><div class="head"><span class="name">Стоимость проекта (общая стоимость всех работ), ₽</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">1110000</p>
+<p class="note">Только живые расходы за год: серверы и модели, продажи, юрист, бухгалтерия. Работа команды без зарплат (вклад собственными силами) в сумму не входит. Расчёт ниже, в разделе «Допущения».</p></div>
+
+<div class="field"><div class="head"><span class="name">Объем инвестиций, уже привлеченных, ₽</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">0</p>
+<p class="note">Внешних инвестиций нет. Уставный капитал АО «Вигет» — 30 000 ₽.</p></div>
+
+<div class="field"><div class="head"><span class="name">Объем инвестиций, необходимых для полной реализации, ₽</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">1000000</p>
+<p class="note">Стоимость проекта 1 110 000 ₽: 1 000 000 ₽ на реализацию просим, остальное (около 110 000 ₽) покрываем собственными средствами и выручкой от пилотов.</p></div>
+
+<div class="field"><div class="head"><span class="name">Количество инвесторов, поддержавших проект</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">0</p></div>
+
+<div class="field"><div class="head"><span class="name">Дата начала реализации проекта</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">01.11.2026</p>
+<p class="note">Первая запись в репозитории. Если считаете от акселератора или старой идеи, поставьте свою дату.</p></div>
+
+<div class="field"><div class="head"><span class="name">Планируемая дата окончания реализации проекта</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">31.10.2027</p></div>
+
+<div class="field"><div class="head"><span class="name">Срок окупаемости (месяцев)</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">10</p></div>
+
+<div class="field"><div class="head"><span class="name">Планируемый доход от реализации продукта, ₽</span><span><span class="tag est">оценка</span> <button class="copy">копировать</button></span></div>
+<p class="val">1750000</p>
+<p class="note">Выручка за первый год (до 31.10.2027). Расчёт ниже.</p></div>
+
+<div class="field"><div class="head"><span class="name">Вид продукта</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">ПО</p></div>
+
+<div class="field"><div class="head"><span class="name">Характер воздействия на продукт</span><span><span class="tag fact">факт</span></span></div>
+<p class="val">Разработчик</p></div>
+
+<div class="field"><div class="head"><span class="name">Рыночное наименование продукта</span><span><span class="tag fact">факт</span> <button class="copy">копировать</button></span></div>
+<p class="val">Astronaut</p></div>
+
+<div class="field"><div class="head"><span class="name">ОКПД2</span><span><span class="tag est">оценка</span></span></div>
+<p class="val">62.01.2. Оригиналы программного обеспечения</p>
+<p class="note">Запасной вариант: 62.01.1. Услуги по проектированию, разработке информационных технологий. Бухгалтеру стоит подтвердить.</p></div>
+
+<!-- ====================== ДОПУЩЕНИЯ ====================== -->
+<h2>3. Допущения для финансовых полей</h2>
+<p class="sub">Всё в этом разделе — оценка. Цены берём из <code>idea/product/05-stoimost.md</code> (гипотеза, клиентам не называли). Себестоимость в проекте не посчитана, бюджет разработки в документах не планировался, поэтому статьи затрат ниже придуманы как разумные ориентиры. Замените на реальные.</p>
+
+<h3>Затраты на 12 месяцев (ноябрь 2026 — октябрь 2027)</h3>
+<table>
+<tr><th>Статья</th><th>Допущение</th><th class="n">₽</th></tr>
+<tr><td>Разработка</td><td>команда работает без зарплат, вклад собственными силами</td><td class="n">0</td></tr>
+<tr><td>Серверы и языковые модели</td><td>40 000 ₽ в мес. × 12</td><td class="n">480 000</td></tr>
+<tr><td>Продажи, интервью, поездки, маркетинг</td><td>30 000 ₽ в мес. × 12</td><td class="n">360 000</td></tr>
+<tr><td>Юрист</td><td>персональные данные (152-ФЗ), реестр российского ПО, договоры</td><td class="n">150 000</td></tr>
+<tr><td>Бухгалтерия, регистрации, прочее</td><td>10 000 ₽ в мес. × 12</td><td class="n">120 000</td></tr>
+<tr><td><b>Итого (стоимость проекта)</b></td><td></td><td class="n"><b>1 110 000</b></td></tr>
+</table>
+<p>Для поля «необходимо инвестиций» указан 1 000 000 ₽ на реализацию, остаток покрывается собственными средствами и выручкой. Если позже платить разработчикам зарплату, добавится около 120 000 ₽ в месяц на человека.</p>
+
+<h3>Выручка за первый год</h3>
+<p>Цены пакета «Старт»: 27 110 ₽ в месяц (платформа + «Распознавание» + «Сверка»), подключение 11 700 ₽ за систему, 4 подключения на клиента. Первые три пилота идут со скидкой 30%: 18 977 ₽ в месяц и 8 190 ₽ за подключение.</p>
+<table>
+<tr><th>Период</th><th>Клиенты</th><th class="n">₽ за период</th></tr>
+<tr><td>Месяцы 1–3</td><td>разработка и интервью, выручки нет</td><td class="n">0</td></tr>
+<tr><td>Месяцы 4–6</td><td>3 пилота</td><td class="n">170 793</td></tr>
+<tr><td>Месяцы 7–9</td><td>3 пилота + 3 клиента по полной цене</td><td class="n">414 783</td></tr>
+<tr><td>Месяцы 10–12</td><td>3 пилота + 7 клиентов по полной цене</td><td class="n">740 103</td></tr>
+<tr><td>Разовые подключения</td><td>3 пилота × 4 × 8 190 ₽ + 7 клиентов × 4 × 11 700 ₽</td><td class="n">425 880</td></tr>
+<tr><td><b>Итого выручка за год</b></td><td></td><td class="n"><b>1 751 559</b></td></tr>
+</table>
+
+<h3>Срок окупаемости</h3>
+<p>Затраты около 92 500 ₽ в месяц. Ежемесячная подписка покрывает их при 4 клиентах «Старт» по полной цене (4 × 27 110 = 108 440 ₽). Накопленная выручка с учётом разовых подключений сравнивается с накопленными затратами примерно к 10-му месяцу, поэтому срок окупаемости указан 10 месяцев. Расчёт держится на допущении, что первые пилоты начнутся в 4-м месяце.</p>
+
+<h3>Что может изменить цифры</h3>
+<ul>
+  <li>Цены не проверены на клиентах, а себестоимость серверов и моделей не считалась.</li>
+  <li>Число клиентов (3, 6 и 10) взято как осторожный темп для региона, подтверждений пока нет.</li>
+  <li>Если команде начнут платить зарплату, стоимость проекта вырастет и окупаемость сдвинется.</li>
+</ul>
+
+<h2>4. Что осталось сделать вам</h2>
+<ul>
+  <li>Загрузить обложку.</li>
+  <li>Добавить в проект трекера и участников команды с ролями.</li>
+  <li>Указать количество сотрудников.</li>
+  <li>Проверить поля с пометкой «оценка»: CRL, TRL, финансы, даты, ВУЗ.</li>
+  <li>Заполнить паспорт команды и паспорт проекта (это другие разделы платформы).</li>
+</ul>
+
+</main>
+<script>
+document.querySelectorAll('button.copy').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var f = b.closest('.field');
+    var v = f && f.querySelector('.val');
+    if (!v) return;
+    var text = v.textContent.trim();
+    function done() { var t = b.textContent; b.textContent = 'готово'; setTimeout(function () { b.textContent = t; }, 1200); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {});
+    } else {
+      var a = document.createElement('textarea'); a.value = text; document.body.appendChild(a);
+      a.select(); try { document.execCommand('copy'); done(); } catch (e) {} a.remove();
+    }
+  });
+});
+</script>
+</body>
+</html>
