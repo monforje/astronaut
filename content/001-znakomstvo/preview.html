@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Astronaut: превью первого поста</title>
+<meta name="viewport" content="width=1280">
+<link rel="stylesheet" href="../brand/design/tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1280px; height: 1024px; }
+  body {
+    font-family: "Onest", system-ui, sans-serif;
+    background: var(--color-off-white);
+    color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+  }
+  .logo { position: absolute; left: 72px; top: 60px; height: 64px; }
+  .illu { position: absolute; right: -40px; top: 40px; width: 620px; }
+  h1 {
+    position: absolute; left: 72px; top: 210px; width: 640px;
+    font-size: 62px; line-height: 1.02; font-weight: 800; letter-spacing: -0.02em;
+  }
+  h1 span { display: block; }
+  h1 .t { color: #009a97; }
+  .sub {
+    position: absolute; left: 72px; top: 450px; width: 560px;
+    font-size: 28px; line-height: 1.35; font-weight: 450;
+  }
+  .check { position: absolute; left: 72px; right: 72px; bottom: 72px; }
+  .tag {
+    font-family: "JetBrains Mono", monospace; font-size: 18px; letter-spacing: .08em;
+    text-transform: uppercase; color: #5b6b7c; margin-bottom: 22px;
+  }
+  .nums { display: flex; gap: 72px; align-items: flex-end; }
+  .n small { display: block; font-size: 20px; color: #5b6b7c; margin-bottom: 4px; }
+  .n b { font-family: "JetBrains Mono", monospace; font-size: 54px; font-weight: 700; letter-spacing: -0.03em; }
+  .n.bad b { color: #d4610f; }
+  .note { margin-top: 26px; font-size: 26px; line-height: 1.35; font-weight: 500; max-width: 1100px; }
+  .note em { font-style: normal; font-weight: 800; }
+</style>
+</head>
+<body>
+  <img class="logo" src="../brand/logo-horizontal.svg" alt="Astronaut">
+  <img class="illu" src="../brand/illustration.svg" alt="">
+  <h1><span>Одна карточка.</span><span class="t">Сверка до отправки.</span><span>Сбой виден сразу.</span></h1>
+  <p class="sub">Данные по грузу в одном месте. Документы сверяются между собой, пока груз ещё не ушёл.</p>
+
+  <div class="check">
+    <div class="tag">Пример расхождения</div>
+    <div class="nums">
+      <div class="n"><small>Упаковочный лист, вес брутто</small><b>18 420 кг</b></div>
+      <div class="n bad"><small>Коносамент, вес брутто</small><b>18 920 кг</b></div>
+    </div>
+    <p class="note"><em>Разница 2,7 %</em>, это больше допуска. Проверьте коносамент до выпуска.</p>
+  </div>
+</body>
+</html>
