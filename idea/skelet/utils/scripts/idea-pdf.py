@@ -3,9 +3,9 @@
 # requires-python = ">=3.11"
 # dependencies = ["weasyprint>=62"]
 # ///
-"""Собирает папку idea/ в один PDF: idea/astronaut-idea.pdf.
+"""Собирает папку idea/skelet/ в один PDF: idea/skelet/astronaut-idea.pdf.
 
-Запуск из любого места:  uv run idea/utils/scripts/idea-pdf.py
+Запуск из любого места:  uv run idea/skelet/utils/scripts/idea-pdf.py
 Нужен pandoc в системе (apt install pandoc).
 Порядок разделов — список ORDER ниже; новые .md, которых нет в списке, попадут в конец.
 """
@@ -33,7 +33,6 @@ ORDER = [
     ("audience/pains.md", "Боли и компании"),
     ("audience/companies.md", None),
     ("decisions.md", "Решения и вопросы"),
-    ("questions.md", None),
     ("glossary/terms.md", "Словарь"),
     ("glossary/README.md", None),
     ("brand/messaging/README.md", "Слова бренда"),
