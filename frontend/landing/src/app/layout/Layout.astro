@@ -1,0 +1,39 @@
+---
+import { SeoHead } from "@/shared/ui";
+import { SiteHeader } from "@/widgets/header";
+import "../styles/index.css";
+
+/** Общая раскладка: `<head>`, ссылка «К содержимому», шапка и `<main>`, куда маршрут кладёт страницу. */
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#041a31" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <SeoHead title={title} description={description} noindex={noindex} />
+  </head>
+  <body class="min-h-dvh overflow-x-clip bg-bg font-sans text-text">
+    <a
+      href="#content"
+      class="sr-only rounded-full bg-accent px-4 py-2 font-semibold text-accent-contrast focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+    >
+      К содержимому
+    </a>
+    <SiteHeader />
+    <main id="content">
+      <slot />
+    </main>
+  </body>
+</html>

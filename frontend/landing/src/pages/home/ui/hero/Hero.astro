@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import { astronautPort } from "@/shared/brand";
+import { Button } from "@/shared/ui";
+
+/**
+ * Первый экран. Заголовок — ценность «А. Документы», подзаголовок — «одно предложение» о компании,
+ * CTA — первый экран из cta.md (idea/skelet/brand/messaging).
+ */
+---
+
+<section aria-labelledby="hero-title" class="relative isolate">
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    class="pointer-events-none absolute right-0 bottom-0 -z-10 h-[45%] w-full fill-surface lg:-top-36 lg:bottom-auto lg:h-[calc(100%+9rem)] lg:w-[52%]"
+  >
+    <path d="M34 0H100V94C86 100 64 99 50 90C34 80 12 76 5 58C-2 40 14 30 20 18C24 9 29 4 34 0Z"></path>
+  </svg>
+
+  <div class="mx-auto grid max-w-7xl items-center gap-8 px-4 pt-6 pb-12 md:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-0 lg:pt-10 lg:pb-16">
+    <div class="relative z-10">
+      <h1
+        id="hero-title"
+        class="text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-6xl lg:-mr-56 lg:text-7xl xl:text-[5.5rem]"
+      >
+        Документы
+        <br /> без расхождений
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-muted md:text-xl lg:mt-8">
+        Astronaut связывает 1С, CRM, операторов ЭПД и таможенное ПО, чтобы данные о грузе были
+        одинаковыми во всех документах и системах.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 lg:mt-10">
+        <Button href="#contact" size="lg">
+          Проверить мои документы
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            class="size-5 fill-none stroke-current stroke-2 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+          >
+            <path d="M4 10h12M11 5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </Button>
+        <Button href="#features" variant="link" size="lg">
+          Узнать больше
+        </Button>
+      </div>
+    </div>
+
+    <Image
+      src={astronautPort}
+      alt=""
+      widths={[480, 800, 1200, 1634]}
+      sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="mx-auto w-full max-w-xl lg:max-w-none"
+    />
+  </div>
+</section>

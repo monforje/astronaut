@@ -1,0 +1,12 @@
+/* База поверх Tailwind: фон, текст и плавная прокрутка к якорям — если движение не отключено. */
+html {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

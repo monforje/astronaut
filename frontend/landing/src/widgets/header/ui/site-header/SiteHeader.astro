@@ -1,0 +1,44 @@
+---
+import { Button } from "@/shared/ui";
+
+/**
+ * Пункты меню — якоря секций главной. [TODO] Секций «Как это работает», «Тарифы», «О компании»
+ * пока нет: якоря заработают, когда они появятся. «Кейсы» и «Войти» не ставим — клиентов и
+ * кабинета ещё нет.
+ */
+const NAV = [
+  { href: "/#features", label: "Возможности" },
+  { href: "/#how", label: "Как это работает" },
+  { href: "/#pricing", label: "Тарифы" },
+  { href: "/#about", label: "О компании" },
+] as const;
+---
+
+<header class="relative z-10">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 md:gap-6 md:px-8 lg:py-6">
+    <a
+      href="/"
+      class="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong md:gap-3"
+    >
+      <img src="/brand/astronaut.svg" alt="" width="920" height="744" class="h-9 w-auto md:h-14" />
+      <span class="text-xl font-extrabold tracking-tight md:text-4xl">Astronaut</span>
+    </a>
+
+    <nav aria-label="Основное меню" class="hidden lg:block">
+      <ul class="flex items-center gap-8 text-[0.95rem] font-medium">
+        {NAV.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class="rounded py-1 transition-colors hover:text-accent-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <Button href="/#contact">Оставить заявку</Button>
+  </div>
+</header>

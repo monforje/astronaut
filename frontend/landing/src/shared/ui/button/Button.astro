@@ -1,0 +1,28 @@
+---
+/**
+ * Ссылка в виде кнопки: на лендинге все действия — переходы (якорь, почта, другой сайт), поэтому
+ * разметка всегда `<a>`. `primary` — один главный призыв на экран, `link` — второй, текстом.
+ */
+interface Props {
+  href: string;
+  variant?: "primary" | "link";
+  size?: "md" | "lg";
+}
+
+const { href, variant = "primary", size = "md" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "group inline-flex items-center gap-2 font-semibold whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong",
+    variant === "primary" && "rounded-full bg-spark text-spark-contrast hover:bg-spark/85",
+    variant === "primary" && size === "md" && "px-5 py-2.5 text-sm",
+    variant === "primary" && size === "lg" && "px-7 py-4 text-base",
+    variant === "link" && "border-b-2 border-accent pb-0.5 text-text hover:border-accent-strong",
+    variant === "link" && size === "lg" && "text-base",
+    variant === "link" && size === "md" && "text-sm",
+  ]}
+>
+  <slot />
+</a>

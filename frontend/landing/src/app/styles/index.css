@@ -5,3 +5,4 @@
 @import "tailwindcss";
 @import "./brand.css";
 @import "./tokens.css";
+@import "./global.css";

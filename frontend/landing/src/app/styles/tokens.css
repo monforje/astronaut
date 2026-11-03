@@ -17,6 +17,8 @@
   /* Акцент-текст и фокус: teal темнее фирменного, чтобы читался на белом (контраст ≥ 3:1). */
   --accent-strong: color-mix(in srgb, var(--color-teal) 55%, var(--color-navy));
   --spark: var(--color-orange);
+  /* Белый на оранжевом — 2,6:1, не читается; navy — 6,8:1. Текст на кнопках-«искрах» — navy. */
+  --spark-contrast: var(--color-navy);
 }
 
 @theme inline {
@@ -29,6 +31,7 @@
   --color-accent-contrast: var(--accent-contrast);
   --color-accent-strong: var(--accent-strong);
   --color-spark: var(--spark);
+  --color-spark-contrast: var(--spark-contrast);
   --color-navy: var(--color-navy);
   --color-teal: var(--color-teal);
   --default-font-family: var(--font-sans);

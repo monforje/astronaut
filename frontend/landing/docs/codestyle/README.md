@@ -45,6 +45,7 @@ task bun -- run lint:style   # только codestyle.test.ts
 | В лендинге                    | Ссылка на                                                     |
 | ----------------------------- | ------------------------------------------------------------- |
 | `public/` (вся папка целиком) | `idea/skelet/brand/public/` — внутри симлинки на файлы бренда |
+| `src/shared/brand/<имя>.png`  | `idea/skelet/brand/<имя>.png` — растр через `astro:assets`    |
 | `src/app/styles/brand.css`    | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face` |
 | `src/app/styles/fonts/`       | `idea/skelet/brand/design/fonts/`                             |
 
