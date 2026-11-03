@@ -11,7 +11,7 @@ Astronaut is a data-integration platform for logistics/transport companies (1C, 
 | `idea/product/` | Plain-language product description (start at `10-shpargalka.md` for the one-page summary). No jargon: write "груз, декларация, накладная, 1С", not "интеграционная шина / мастер-данные / коннектор" |
 | `idea/skelet/` | Detailed workup: pains, competitors, layers/MVP, logistics flow, `decisions.md` (decision log with решено/гипотеза status), glossary, brand |
 | `idea/questions.md` | Single list of open questions for the whole project |
-| `content/` | Telegram post drafts (own `CLAUDE.md`) |
+| `content/` | Telegram post drafts, one `NNN-slug/` folder per post (own `CLAUDE.md`: formats, preview render, text rules). Nothing is sent to the channel without the user's explicit "да" |
 | `frontend/demo-site/` | React demo site |
 | `frontend/landing/` | Astro landing (own `CLAUDE.md`, `DESIGN.md`, and `PLAN.md` — section order and copy, following the shared story arc in `idea/skelet/brand/messaging/story.md`) |
 
@@ -39,7 +39,7 @@ The dev server is a long-running compose container behind traefik, not a host pr
 
 ## Landing (`frontend/landing/`)
 
-Astro 7 + Tailwind 4, FSD, static, no backend. Commands, architecture and brand wiring: `frontend/landing/CLAUDE.md`. **Visual style: read `frontend/landing/DESIGN.md` before adding or changing any section**; if the style changes in code, update DESIGN.md in the same change.
+Astro 7 + Tailwind 4, FSD, static, no backend. All sections are built; the page stays `noindex` while it shows `[TODO]`. «Записаться на демо» opens a Telegram chat (`DEMO_URL`), no form. Commands, architecture and brand wiring: `frontend/landing/CLAUDE.md`. **Visual style: read `frontend/landing/DESIGN.md` before adding or changing any section**; if the style changes in code, update DESIGN.md in the same change.
 
 ## Demo site (`frontend/demo-site/`)
 

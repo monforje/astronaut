@@ -10,10 +10,23 @@
 |---|---|
 | [idea/product/](idea/product/README.md) | **Продукт простым языком, без технических подробностей:** что это, что получает клиент, ценность, аудитория, стоимость, список компаний, интервью, письма и бриф для лидгенераторов, шпаргалка для заучивания. **Начинать отсюда** |
 | [idea/skelet/](idea/skelet/README.md) | Подробная проработка: боли рынка, конкуренты, слои продукта и MVP, логистика по шагам, журнал решений, открытые вопросы, словарь, бренд |
-| [frontend/demo-site/](frontend/demo-site) | Демо-сайт |
+| [frontend/landing/](frontend/landing/CLAUDE.md) | Лендинг (Astro). Порядок секций и тексты — [PLAN.md](frontend/landing/PLAN.md), визуальный стиль — [DESIGN.md](frontend/landing/DESIGN.md). Заявка на демо — чат в Telegram |
+| [frontend/demo-site/](frontend/demo-site) | Демо-сайт (React) |
+| [content/](content/CLAUDE.md) | Посты для Telegram-канала: текст, картинки, источники фактов. Одна папка на пост |
+
+## Запуск
+
+Оба фронта работают в Docker через [go-task](https://taskfile.dev), на хосте bun не нужен. Из корня:
+
+```bash
+task deploy    # сертификат, зависимости, traefik, контейнеры; в конце печатает адреса
+task test      # тесты обоих фронтов; task lint, task codestyle — так же
+```
+
+Адреса: https://landing.astronaut.localhost, https://demo.astronaut.localhost. Команды отдельного фронта — в его `CLAUDE.md`.
 
 ## Статус
 
-Ноябрь 2026. Продукт описан по открытым источникам, разговоров с клиентами ещё не было. Цены в [idea/product/05-stoimost.md](idea/product/05-stoimost.md) — стартовая гипотеза. Что решено, а что остаётся гипотезой, смотрите в [idea/skelet/decisions.md](idea/skelet/decisions.md). Открытые вопросы — в [idea/questions.md](idea/questions.md).
+Ноябрь 2026. Продукт описан по открытым источникам, разговоров с клиентами ещё не было. Лендинг собран целиком, но пока закрыт от поисковиков (`noindex`), пока на странице есть `[TODO]`. Цены в [idea/product/05-stoimost.md](idea/product/05-stoimost.md) — стартовая гипотеза. Что решено, а что остаётся гипотезой, смотрите в [idea/skelet/decisions.md](idea/skelet/decisions.md). Открытые вопросы — в [idea/questions.md](idea/questions.md).
 
 Ближайший шаг: выйти на логистические компании из [списка](idea/product/06-kompanii.md) и провести проблемные интервью по [сценарию](idea/product/08-intervyu.md).
