@@ -36,10 +36,11 @@
 | [audience/tech-contacts.md](audience/tech-contacts.md) | ЛПР и технари в приоритетных компаниях: кто нашёлся, контакты, как заходить |
 | **product/** | |
 | [product/building-blocks.md](product/building-blocks.md) | блоки продукта, видение и срез MVP |
-| [product/mvp-usecases.md](product/mvp-usecases.md) | юзкейсы MVP верхнего уровня: акторы, 11 юзкейсов, хребет MVP (черновик) |
+| [product/mvp-usecases.md](product/mvp-usecases.md) | юзкейсы MVP верхнего уровня: акторы, 13 юзкейсов, хребет MVP (черновик) |
 | [product/mvp-promises.md](product/mvp-promises.md) | что обещаем в письмах и питчах и чем это покрыто в MVP; противоречия в текстах (черновик) |
+| [mvp/](../mvp/README.md) | папка MVP: юзкейсы, области, макеты (черновик) |
 | [mvp/ddd-contexts.md](../mvp/ddd-contexts.md) | предметная область в mermaid: области бизнеса, связи, путь контейнера, главные объекты, язык (черновик) |
-| [mvp/usecases/](../mvp/usecases/README.md) | каждый юзкейс MVP в своей папке: как это для клиента, что сделать, бизнес-логика, бэкенд (заглушка); общие фейк-данные для моков (черновик) |
+| [mvp/usecases/](../mvp/usecases/README.md) | каждый юзкейс MVP в своей папке: как это для клиента, что сделать, бизнес-логика, бэкенд (заглушка); общие фейк-данные для моков, боковое меню (черновик) |
 | [product/layers.md](product/layers.md) | что делает каждый слой: надёжность, движение данных, MDM, логистика, AI-агент, услуги |
 | [product/logistics-flow.md](product/logistics-flow.md) | импорт контейнера по шагам, документы, матрица сверки |
 | [product/differentiators.md](product/differentiators.md) | чем отличаемся от рынка |

@@ -10,6 +10,7 @@ Astronaut is a data-integration platform for logistics/transport companies (1C, 
 |---|---|
 | `idea/product/` | Plain-language product description (start at `10-shpargalka.md` for the one-page summary). No jargon: write "груз, декларация, накладная, 1С", not "интеграционная шина / мастер-данные / коннектор" |
 | `idea/skelet/` | Detailed workup: pains, competitors, layers/MVP, logistics flow, `decisions.md` (decision log with решено/гипотеза status), glossary, brand |
+| `idea/mvp/` | MVP: `mvp-usecases.md` и `mvp-promises.md` (симлинки на `idea/skelet/product/`), `ddd-contexts.md` (области, mermaid; PNG в `ddd-images/` пересобираются `bash idea/mvp/utils/build-diagrams.sh`), `usecases/` (по папке на юзкейс: `user-view`, `tasks`, `business-logic`, `backend`; общие `fake-data.md` и `side-nav.md`) |
 | `idea/questions.md` | Single list of open questions for the whole project |
 | `content/` | Telegram post drafts, one `NNN-slug/` folder per post (own `CLAUDE.md`: formats, preview render, text rules). Nothing is sent to the channel without the user's explicit "да" |
 | `frontend/demo-site/` | React demo site |
