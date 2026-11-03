@@ -83,9 +83,10 @@ Brand symlinks resolve inside containers only because `idea/skelet/brand` is mou
 ## Styles and brand
 
 - CSS entry `src/app/styles/index.css`, imported in this order: Tailwind, then `brand.css`, then
-  `tokens.css`, then `global.css`. Components use only the role utilities from `tokens.css`
+  `roles.css` (symlink: shared color/shadow/radius roles, same file the demo-site uses), then
+  `tokens.css` (Tailwind names for the roles), then `global.css`. Components use only the role utilities from `tokens.css`
   (`bg-bg`, `bg-surface`, `bg-tint`, `text-muted`, `bg-accent`, `text-accent-strong`, `bg-spark`,
-  `shadow-card`…). Add a missing shade there as `color-mix` of brand colors, never as a new hex value.
+  `shadow-card`…). Add a missing shade in `idea/skelet/brand/design/roles.css` as `color-mix` of brand colors, never as a new hex value.
 - `global.css` defines the width utility `page-container` (96rem), the motion tokens (`--ease-out-expo`,
   `animate-rise|letter|twinkle|ping-soft`) and the scroll-reveal CSS for `data-reveal`.
 - Sections are `Band` (`@/shared/ui`: full-width strip, `tone` plain/surface/tint, static waves on

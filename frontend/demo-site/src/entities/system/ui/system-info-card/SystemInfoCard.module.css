@@ -4,9 +4,9 @@
   gap: 8px 16px;
   margin: 0;
   padding: 20px 24px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  background: var(--surface);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  box-shadow: var(--elevation-card);
 }
 
 .card dt {

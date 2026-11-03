@@ -76,13 +76,25 @@ uv run idea/skelet/brand/design/recolor.py --from <старые hex через �
 `sand` (off-white), `dark` (navy для тёмной темы), шрифты. Фирменный цвет в каждой шкале
 стоит на индексе 6 — его Mantine берёт для заливки, так что кнопки точно в цвет бренда.
 
+`roles.css` — **роли дизайн-системы**, общий слой между палитрой и витринами (лендинг на Tailwind,
+демо на Mantine). Без фреймворка, только CSS-переменные: цвет (`--bg`, `--surface`, `--tint`, `--text`,
+`--text-muted`, `--line`, `--accent`, `--accent-strong`, `--spark` и их `*-contrast`), тени
+(`--elevation-card`, `--elevation-lift`), скругления (`--radius-chip|card|panel|pill`), `--ease-out-expo`,
+фокус (`--focus-width`, `--focus-offset`). Компонент берёт роль, а не палитру и не HEX; новый оттенок —
+`color-mix` от фирменных цветов здесь, чтобы его увидели обе витрины.
+
+Слои, сверху вниз: `tokens.css` (палитра, шрифты) → `roles.css` (роли) → тема витрины
+(`frontend/landing/src/app/styles/tokens.css` — имена утилит Tailwind; `theme.ts` — Mantine: радиусы, тени,
+кнопки-пилюли, карточки). Визуальные правила и компоненты — `frontend/landing/DESIGN.md`.
+
 ```html
 <link rel="stylesheet" href="design/tokens.css">
+<link rel="stylesheet" href="design/roles.css">
 ```
 
 ## Где используется
 
-`brand/` — источник правды. `frontend/demo-site` подключает отсюда симлинками логотипы, иконки,
-`tokens.css`, `fonts/` и `theme.ts` — правка здесь сразу видна в запущенной демке. Поэтому файлы
+`brand/` — источник правды. `frontend/landing` и `frontend/demo-site` подключают отсюда симлинками логотипы, иконки,
+`tokens.css`, `roles.css`, `fonts/` и `theme.ts` — правка здесь сразу видна в запущенной демке. Поэтому файлы
 не переименовывайте и не перемещайте молча: ссылки сломаются (это ловит проверка стиля фронта).
 Список ссылок — `frontend/demo-site/docs/codestyle/README.md`, раздел «Бренд».

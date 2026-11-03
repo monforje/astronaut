@@ -18,6 +18,12 @@ body {
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  caret-color: var(--accent-strong);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text);
 }
 
 img {
@@ -65,8 +71,8 @@ ol {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent-strong);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--accent-strong);
+  outline-offset: var(--focus-offset);
   border-radius: 4px;
 }
 
@@ -92,7 +98,7 @@ ol {
   top: -60px;
   z-index: 100;
   padding: 10px 16px;
-  border-radius: var(--radius-s);
+  border-radius: var(--radius-pill);
   background: var(--accent);
   color: var(--accent-contrast);
   font-weight: 700;

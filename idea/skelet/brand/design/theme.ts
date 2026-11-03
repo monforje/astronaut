@@ -1,4 +1,12 @@
-import { createTheme, type MantineColorsTuple } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Card,
+  createTheme,
+  Modal,
+  Paper,
+  type MantineColorsTuple,
+} from "@mantine/core";
 
 /*
  * Тема Mantine бренда Astronaut. Фирменный цвет каждой шкалы стоит на индексе 6 — его Mantine берёт
@@ -79,4 +87,29 @@ export const theme = createTheme({
   fontFamily: SANS,
   fontFamilyMonospace: '"Fira Code", ui-monospace, monospace',
   headings: { fontFamily: SANS, fontWeight: "800" },
+  /** Скругления и тени — роли из roles.css (одни на лендинг и демо). */
+  radius: {
+    xs: "0.25rem",
+    sm: "0.5rem",
+    md: "var(--radius-chip)",
+    lg: "var(--radius-card)",
+    xl: "var(--radius-panel)",
+  },
+  defaultRadius: "md",
+  shadows: {
+    xs: "var(--elevation-card)",
+    sm: "var(--elevation-card)",
+    md: "var(--elevation-lift)",
+    lg: "var(--elevation-lift)",
+    xl: "var(--elevation-lift)",
+  },
+  components: {
+    /** Кнопки — пилюли, как на лендинге. */
+    Button: Button.extend({ defaultProps: { radius: "xl", fw: 600 } }),
+    ActionIcon: ActionIcon.extend({ defaultProps: { radius: "xl" } }),
+    /** Карточки — белые, скруглённые, с мягкой navy-тенью. */
+    Paper: Paper.extend({ defaultProps: { radius: "lg" } }),
+    Card: Card.extend({ defaultProps: { radius: "lg", shadow: "sm", withBorder: false } }),
+    Modal: Modal.extend({ defaultProps: { radius: "xl" } }),
+  },
 });

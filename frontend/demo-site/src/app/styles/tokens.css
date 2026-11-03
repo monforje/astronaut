@@ -1,37 +1,14 @@
 /*
- * Токены по ролям (фон, текст, акцент). Компоненты берут значения только отсюда или из темы Mantine.
- *
- * Своих цветов здесь нет: палитра (`--color-*`) и шрифты приходят из бренда — brand.css (симлинк на
- * idea/skelet/brand/design/tokens.css), шкалы цветов — из темы Mantine (shared/ui/theme, симлинк на
- * idea/skelet/brand/design/theme.ts). Светлая и тёмная схема переключаются вместе с MantineProvider.
+ * Токены демо-сайта. Роли (фон, текст, акцент, тени, скругления) — общие с лендингом: roles.css
+ * (симлинк на idea/skelet/brand/design/roles.css). Mantine получает те же значения через тему
+ * (shared/ui/theme, симлинк на idea/skelet/brand/design/theme.ts). Здесь только то, чего нет в
+ * общем слое: статусы, раскладка и алиасы шрифтов. Схема одна, светлая.
  */
 :root {
-  --bg: var(--mantine-color-body);
-  --surface: light-dark(var(--color-white), var(--mantine-color-dark-6));
-  --surface-muted: light-dark(var(--color-off-white), var(--mantine-color-dark-5));
-  --text: var(--mantine-color-text);
-  --text-muted: var(--mantine-color-dimmed);
-  --border: var(--mantine-color-default-border);
-  --accent: var(--mantine-primary-color-filled);
-  --accent-hover: var(--mantine-primary-color-filled-hover);
-  /* Teal светлый: текст на нём — navy, а не белый. */
-  --accent-contrast: var(--color-navy);
-  --accent-soft: var(--mantine-primary-color-light);
-  /* Акцент-текст и фокус: teal темнее фирменного, чтобы читался на белом (контраст ≥ 3:1). */
-  --accent-strong: light-dark(var(--mantine-color-brand-8), var(--mantine-color-brand-4));
-  --spark: var(--color-orange);
   --danger: var(--mantine-color-error);
   --ok: var(--mantine-color-green-filled);
 
-  --radius-s: var(--mantine-radius-sm);
-  --radius-m: var(--mantine-radius-md);
-  --radius-l: var(--mantine-radius-lg);
-  --shadow-card: var(--mantine-shadow-sm);
-
-  --font: var(--mantine-font-family);
-  --font-mono: var(--mantine-font-family-monospace);
+  --font: var(--font-sans);
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 32px);
-
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }

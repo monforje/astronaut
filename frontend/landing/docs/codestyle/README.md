@@ -49,6 +49,7 @@ task bun -- run lint:style   # только codestyle.test.ts
 | `src/shared/brand/doc-*.jpg`  | `idea/skelet/brand/documents/*.jpg` — листы веера документов     |
 | `src/shared/brand/photos/`    | `idea/skelet/brand/photos/` (вся папка) — фото блоков, `photo()` |
 | `src/app/styles/brand.css`    | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face`    |
+| `src/app/styles/roles.css`    | `idea/skelet/brand/design/roles.css` — роли: цвет, тени, радиусы |
 | `src/app/styles/fonts/`       | `idea/skelet/brand/design/fonts/`                                |
 
 - Ссылки относительные и хранятся в git как симлинки. Включены `preserveSymlinks` и `server.fs.allow`

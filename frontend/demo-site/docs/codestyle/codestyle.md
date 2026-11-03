@@ -94,7 +94,7 @@ lib/http-client/
 ## Стили
 
 - Цвета, шрифты, радиусы — тема Mantine (`shared/ui/theme`): пропсы `c="dimmed"`, `color="accent"`,
-  `radius="md"`. В CSS — токены по ролям из `app/styles/tokens.css` (`var(--text-muted)`,
+  `radius="md"`. В CSS — роли из `app/styles/roles.css` (симлинк на бренд, общие с лендингом) (`var(--text-muted)`,
   `var(--border)`), они ссылаются на переменные той же темы.
 - CSS Modules на компонент — для раскладки; глобально — только `app/styles/` (`index.css` — вход,
   `tokens.css`, `global.css`).
