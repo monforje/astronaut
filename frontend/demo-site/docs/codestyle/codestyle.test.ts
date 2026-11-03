@@ -3,8 +3,8 @@
  * ответственности сегментов и полнота словаря ошибок контракта. Правила словами — codestyle.md и
  * fsd.md рядом. Запуск: `task bun -- run lint:style` (входит в `task lint` и `task codestyle`).
  */
-import { existsSync, lstatSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { basename, dirname, join, relative, sep } from "node:path";
 import { describe, expect, it } from "vitest";
 import { ApiError, ErrorCode } from "@/shared/api";
 import { errorMessage } from "@/shared/lib";
@@ -104,6 +104,29 @@ describe("структура", () => {
   it("ссылки на бренд целы: файл в idea/skelet/brand не переименован и не удалён", () => {
     const broken = [SRC, join(ROOT, "public")].flatMap(links).filter((l) => !existsSync(l));
     expect(broken.map(rel)).toEqual([]);
+  });
+
+  it("public/ — ссылка на idea/skelet/brand/public, внутри только ссылки на файлы бренда", () => {
+    const publicDir = join(ROOT, "public");
+    expect(lstatSync(publicDir).isSymbolicLink()).toBe(true);
+    const shared = realpathSync(publicDir);
+    const brand = dirname(shared);
+    const copies = walk(publicDir).filter((f) => {
+      const real = realpathSync(f);
+      return !real.startsWith(brand + sep) || real.startsWith(shared + sep);
+    });
+    expect(copies.map(rel)).toEqual([]);
+  });
+
+  it("картинка /brand/… из кода есть в public/", () => {
+    // `/brand/icons/${icon}.svg` проверяется до `${`: должна быть папка /brand/icons/.
+    const missing = code.flatMap((f) =>
+      [...read(f).matchAll(/["'`(](\/brand\/[\w./-]*)(\$\{)?/g)]
+        .map(([, url, dynamic]) => (dynamic ? url.slice(0, url.lastIndexOf("/") + 1) : url))
+        .filter((url) => !existsSync(join(ROOT, "public", url)))
+        .map((url) => `${rel(f)}: ${url}`),
+    );
+    expect(missing).toEqual([]);
   });
 
   it("папки — в kebab-case", () => {

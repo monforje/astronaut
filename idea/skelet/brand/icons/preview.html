@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astronaut — иконки ценностей</title>
+<style>
+  :root { --navy: #041A31; --bg: #F4F1EA; --card: #fff; --muted: #6b7280; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px 48px; font: 15px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--navy); }
+  header { max-width: 1100px; margin: 0 auto 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  h1 { font-size: 20px; margin: 0; flex: 1; }
+  button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--navy); background: var(--navy); color: #fff; cursor: pointer; }
+  main { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  figure { margin: 0; background: var(--card); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .stage { display: flex; gap: 16px; align-items: flex-end; justify-content: center; min-height: 180px; }
+  figcaption { font-size: 13px; color: var(--muted); }
+  figcaption b { color: var(--navy); font-family: ui-monospace, monospace; font-weight: 600; }
+  body.dark { --bg: #041A31; --card: #16243f; --muted: #9aa6bd; color: #eef; }
+  body.dark h1, body.dark figcaption b { color: #fff; }
+  body.dark button { background: transparent; border-color: #fff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Astronaut — иконки ценностей</h1>
+  <button id="theme">Тёмный фон</button>
+</header>
+<main>
+  <figure><div class="stage"><img src="documents.svg" width="48" alt=""><img src="documents.svg" width="80" alt=""><img src="documents.svg" width="128" alt=""></div>
+    <figcaption><b>documents.svg</b> — «Документы без расхождений».</figcaption></figure>
+  <figure><div class="stage"><img src="status.svg" width="48" alt=""><img src="status.svg" width="80" alt=""><img src="status.svg" width="128" alt=""></div>
+    <figcaption><b>status.svg</b> — «Где контейнер — видно сразу».</figcaption></figure>
+  <figure><div class="stage"><img src="exchanges.svg" width="48" alt=""><img src="exchanges.svg" width="80" alt=""><img src="exchanges.svg" width="128" alt=""></div>
+    <figcaption><b>exchanges.svg</b> — «Обмены, которые не ломаются молча».</figcaption></figure>
+  <figure><div class="stage"><img src="directory.svg" width="48" alt=""><img src="directory.svg" width="80" alt=""><img src="directory.svg" width="128" alt=""></div>
+    <figcaption><b>directory.svg</b> — «Одна Ромашка вместо трёх».</figcaption></figure>
+</main>
+<script>
+  document.getElementById('theme').onclick = (e) => {
+    const dark = document.body.classList.toggle('dark');
+    e.target.textContent = dark ? 'Светлый фон' : 'Тёмный фон';
+  };
+</script>
+</body>
+</html>

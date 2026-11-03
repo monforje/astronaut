@@ -36,6 +36,7 @@ ORDER = [
     ("glossary/terms.md", "Словарь"),
     ("glossary/README.md", None),
     ("brand/messaging/README.md", "Слова бренда"),
+    ("brand/messaging/story.md", None),
     ("brand/messaging/voice.md", None),
     ("brand/messaging/slogans.md", None),
     ("brand/messaging/phrases.md", None),

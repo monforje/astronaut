@@ -17,12 +17,22 @@ const { href, variant = "primary", size = "md" } = Astro.props;
   class:list={[
     "group inline-flex items-center gap-2 font-semibold whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong",
     variant === "primary" && "rounded-full bg-spark text-spark-contrast hover:bg-spark/85",
-    variant === "primary" && size === "md" && "px-5 py-2.5 text-sm",
-    variant === "primary" && size === "lg" && "px-7 py-4 text-base",
-    variant === "link" && "border-b-2 border-accent pb-0.5 text-text hover:border-accent-strong",
-    variant === "link" && size === "lg" && "text-base",
-    variant === "link" && size === "md" && "text-sm",
+    variant === "primary" && size === "md" && "px-5 py-2.5 text-sm lg:px-6 lg:py-3 lg:text-base",
+    variant === "primary" && size === "lg" && "px-7 py-4 text-base 2xl:px-8 2xl:py-5 2xl:text-lg",
+    variant === "link" && "rounded text-text",
+    variant === "link" && size === "md" && "py-2.5 text-sm",
+    variant === "link" && size === "lg" && "py-4 text-base 2xl:py-5 2xl:text-lg",
   ]}
 >
-  <slot />
+  {variant === "link" ? (
+    /*
+     * Подчёркивание — два слоя под текстом: бирюзовый всегда, navy по наведению прокатывается
+     * слева направо поверх. Высота ссылки (py) — как у основной кнопки рядом.
+     */
+    <span class="relative pb-1.5 before:absolute before:inset-x-0 before:bottom-0 before:h-[3px] before:rounded-full before:bg-accent after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-right after:scale-x-0 after:rounded-full after:bg-text after:transition-transform after:duration-300 after:ease-out group-hover:after:origin-left group-hover:after:scale-x-100 group-focus-visible:after:origin-left group-focus-visible:after:scale-x-100 motion-reduce:after:transition-none">
+      <slot />
+    </span>
+  ) : (
+    <slot />
+  )}
 </a>

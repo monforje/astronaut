@@ -45,8 +45,9 @@
 | [glossary/terms.md](glossary/terms.md) | словарь терминов с примерами из логистики |
 | [glossary/README.md](glossary/README.md) | как ведём словарь |
 | **brand/** | |
-| [brand/messaging/](brand/messaging/README.md) | слова бренда: голос, девизы, фразы, CTA |
-| [brand/](brand/) | логотипы, иконки, иллюстрации |
+| [brand/messaging/](brand/messaging/README.md) | слова бренда: сюжет рассказа ([story.md](brand/messaging/story.md)), голос, девизы, фразы, CTA |
+| [brand/](brand/README.md) | логотипы, иконки, иллюстрации; **как файл бренда попадает на фронты** (`brand/public/` — общий `public/` обоих фронтов) |
+| [brand/icons/](brand/icons/) | иконки ценностей лендинга (documents, status, exchanges, directory); шоукейс — `preview.html`; на фронтах — `/brand/icons/<имя>.svg` |
 | **utils/** | |
 | [utils/scripts/idea-pdf.py](utils/scripts/idea-pdf.py) | собирает всю папку в [astronaut-idea.pdf](astronaut-idea.pdf): `uv run idea/skelet/utils/scripts/idea-pdf.py` |
 

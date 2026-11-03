@@ -1,0 +1,43 @@
+version: '3.53.1'
+
+# Весь стенд: команды раздаются проектам из PROJECTS (deploy/local/group).
+# Первый проект в списке поднимает общий traefik; deploy/local у фронтов одинаковый, корень берёт его у demo-site.
+# `deploy` корня = общий деплой группы (all:deploy) + адреса сайтов в самом конце.
+
+includes:
+  group:
+    taskfile: ./frontend/demo-site/deploy/local/group/Taskfile.yml
+    flatten: true
+    excludes: [deploy, where]
+    vars:
+      PROJECTS: frontend/demo-site frontend/landing
+  all:
+    taskfile: ./frontend/demo-site/deploy/local/group/Taskfile.yml
+    internal: true
+    vars:
+      PROJECTS: frontend/demo-site frontend/landing
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  deploy:
+    desc: "Развернуть все проекты, в конце — адреса сайтов"
+    cmds:
+      - task: all:deploy
+      - task: where
+
+  where:
+    desc: "Где какой сайт (домены из ao.toml проектов)"
+    silent: true
+    cmds:
+      - |
+        echo
+        for p in demo-site:Демо-сайт landing:Лендинг; do
+          d=${p%%:*}
+          h=$(tomlq -r '.hosts[][]' "frontend/$d/ao.toml")
+          printf '  %-10s https://%s\n' "${p#*:}" "$h"
+        done
+        echo

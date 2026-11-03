@@ -19,20 +19,22 @@ import { Button } from "@/shared/ui";
     <path d="M34 0H100V94C86 100 64 99 50 90C34 80 12 76 5 58C-2 40 14 30 20 18C24 9 29 4 34 0Z"></path>
   </svg>
 
-  <div class="mx-auto grid max-w-7xl items-center gap-8 px-4 pt-6 pb-12 md:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-0 lg:pt-10 lg:pb-16">
+  <div class="page-container grid items-center gap-8 pt-6 pb-12 lg:grid-cols-[1fr_1.1fr] lg:gap-0 lg:pt-10 lg:pb-16">
     <div class="relative z-10">
       <h1
         id="hero-title"
-        class="text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-6xl lg:-mr-56 lg:text-7xl xl:text-[5.5rem]"
+        class="text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-6xl lg:-mr-56 lg:text-7xl xl:text-[5.5rem] 2xl:text-[6.5rem]"
       >
-        Документы
-        <br /> без расхождений
+        <span class="block motion-safe:animate-rise">Документы</span>{" "}
+        <span class="block motion-safe:animate-rise motion-safe:[animation-delay:120ms]">
+          без расхождений
+        </span>
       </h1>
-      <p class="mt-6 max-w-xl text-lg text-muted md:text-xl lg:mt-8">
+      <p class="mt-6 max-w-xl text-lg text-muted md:text-xl lg:mt-8 2xl:max-w-2xl 2xl:text-2xl motion-safe:animate-rise motion-safe:[animation-delay:260ms]">
         Astronaut связывает 1С, CRM, операторов ЭПД и таможенное ПО, чтобы данные о грузе были
         одинаковыми во всех документах и системах.
       </p>
-      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 lg:mt-10">
+      <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-2 lg:mt-8 motion-safe:animate-rise motion-safe:[animation-delay:400ms]">
         <Button href="#contact" size="lg">
           Проверить мои документы
           <svg
@@ -53,7 +55,7 @@ import { Button } from "@/shared/ui";
       src={astronautPort}
       alt=""
       widths={[480, 800, 1200, 1634]}
-      sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
+      sizes="(min-width: 1024px) 50vw, 100vw"
       loading="eager"
       fetchpriority="high"
       class="mx-auto w-full max-w-xl lg:max-w-none"

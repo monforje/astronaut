@@ -72,8 +72,12 @@ Brand symlinks resolve inside containers only because `idea/skelet/brand` is mou
   folder, `src/shared/brand/*.png` (rasters for `astro:assets`), `src/app/styles/brand.css`
   (→ `design/tokens.css`) and `src/app/styles/fonts/`. `astro.config.ts` sets `preserveSymlinks` and
   `server.fs.allow`; containers mount the brand folder (see Commands). A renamed brand file fails
-  the "ссылки на бренд целы" check; re-point it with `ln -sfn`. The full list is in
+  the "ссылки на бренд целы" check; re-point it with `ln -sfn`. An image needed by URL is linked in
+  `idea/skelet/brand/public/`, not in the landing (steps: `idea/skelet/brand/README.md`). The full list is in
   `docs/codestyle/README.md`, section «Бренд».
+- Section order, each section's job and draft copy live in `PLAN.md`; it follows the story arc in
+  `idea/skelet/brand/messaging/story.md`, shared with the pitch and the letters. Change the arc there
+  first, then the plan.
 - Copy comes from `idea/skelet/brand/messaging/` (`phrases.md`, `cta.md`, voice in `voice.md`).
   Missing facts become `[TODO]`; never invent numbers, clients or cases.
 

@@ -5,6 +5,44 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * Ширина контента всех секций: одна на сайт, чтобы шапка, Hero и блоки стояли по одной линии.
+ * На широких экранах поля растут, а не остаются 300px пустоты, как с max-w-7xl.
+ */
+@utility page-container {
+  width: 100%;
+  max-width: 110rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @variant md {
+    padding-inline: 2rem;
+  }
+  @variant xl {
+    padding-inline: 4rem;
+  }
+}
+
+/*
+ * Появление текста первого экрана: `motion-safe:animate-rise` (снизу вверх), задержки —
+ * `[animation-delay:…]` в разметке. С prefers-reduced-motion классы `motion-safe:` не срабатывают,
+ * и всё видно сразу. Иллюстрация не анимируется.
+ */
+@theme {
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
