@@ -24,7 +24,7 @@ describe("Systems", () => {
       "Операторы ЭПД",
       "ЕГРЮЛ",
       "ГосЛог",
-      "Telegram",
+      "MAX",
     ]);
     expect(list?.querySelectorAll("img")).toHaveLength(0);
   });

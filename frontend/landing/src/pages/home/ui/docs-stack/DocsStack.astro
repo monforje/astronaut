@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import {
   docBillOfLading,
   docDeclaration,
@@ -68,8 +68,11 @@ const sheet = "doc absolute top-[8%] left-[30%] aspect-[3/4] w-[40%]";
       ]}
       style={`--r: ${r}; --x: ${x}; --y: ${y}; --i: ${i}`}
     >
-      <Image
+      <Picture
         src={src}
+        formats={["avif"]}
+        fallbackFormat="webp"
+        quality={60}
         alt=""
         widths={[240, 480, 720]}
         sizes="(min-width: 1024px) 14rem, 40vw"

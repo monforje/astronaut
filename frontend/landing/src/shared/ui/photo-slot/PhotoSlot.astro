@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { Icon } from "../icon";
 
 /**
@@ -35,8 +35,11 @@ const CORNERS = [
 ---
 
 {photo.src ? (
-  <Image
+  <Picture
     src={photo.src}
+    formats={["avif"]}
+    fallbackFormat="webp"
+    quality={60}
     alt={alt}
     widths={widths}
     sizes={sizes}

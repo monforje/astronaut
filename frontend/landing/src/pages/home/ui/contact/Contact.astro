@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { DemoButton } from "@/features/request-demo";
 import { astronautPlug } from "@/shared/brand";
 import { EMAIL, MAILTO_URL } from "@/shared/config";
@@ -58,8 +58,11 @@ import { Band, Blob, Heading, Icon, Mono } from "@/shared/ui";
       <div class="absolute inset-y-[4%] right-0 left-[8%] -z-10">
         <Blob shape="contact" tone="bg" duration={20} />
       </div>
-      <Image
+      <Picture
         src={astronautPlug}
+        formats={["avif"]}
+        fallbackFormat="webp"
+        quality={60}
         alt=""
         widths={[480, 800, 1200, 1600]}
         sizes="(min-width: 1024px) 50vw, 100vw"

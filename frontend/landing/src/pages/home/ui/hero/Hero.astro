@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { DemoButton } from "@/features/request-demo";
 import { astronautPort } from "@/shared/brand";
 import { Blob, Button, SplitText } from "@/shared/ui";
@@ -60,8 +60,11 @@ const STARS = [
           <path d="M12 0c.8 6.4 5.6 11.2 12 12-6.4.8-11.2 5.6-12 12-.8-6.4-5.6-11.2-12-12C6.4 11.2 11.2 6.4 12 0z" />
         </svg>
       ))}
-      <Image
+      <Picture
         src={astronautPort}
+        formats={["avif"]}
+        fallbackFormat="webp"
+        quality={60}
         alt=""
         widths={[480, 800, 1200, 1634]}
         sizes="(min-width: 1024px) 45vw, 100vw"

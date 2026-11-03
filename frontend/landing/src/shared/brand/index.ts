@@ -1,7 +1,7 @@
 import type { ImageMetadata } from "astro";
 
 /**
- * Растровые картинки бренда для `astro:assets` (`<Image />` сожмёт и отдаст webp). Файлы рядом —
+ * Растровые картинки бренда для `astro:assets` (`<Picture />` отдаст AVIF с WebP fallback). Файлы рядом —
  * симлинки на idea/skelet/brand; векторные лого лежат в `public/brand`.
  */
 export { default as astronautConsole } from "./astronaut-console.png";

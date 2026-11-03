@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { astronautConsole } from "@/shared/brand";
 import { Band, Blob, Heading, Icon, Lead, Mono } from "@/shared/ui";
 
@@ -164,8 +164,11 @@ const TOOLS = ["copy", "thumb-up", "thumb-down", "sync"] as const;
       <div class="absolute inset-x-[4%] top-[14%] bottom-0 -z-10">
         <Blob shape="spot" duration={18} />
       </div>
-      <Image
+      <Picture
         src={astronautConsole}
+        formats={["avif"]}
+        fallbackFormat="webp"
+        quality={60}
         alt=""
         widths={[480, 800, 1306]}
         sizes="(min-width: 640px) 28rem, 100vw"
