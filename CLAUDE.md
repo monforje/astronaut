@@ -15,7 +15,7 @@ Astronaut is a data-integration platform for logistics/transport companies (1C, 
 
 Conventions for `idea/` (from README files): every decision goes to `idea/skelet/decisions.md` with a status; unresolved items go to `idea/questions.md`; new terms go to `idea/skelet/glossary/terms.md`; each new file is added to the map in the folder README. Never invent facts or numbers — missing data becomes `[TODO]`. Prices in `idea/product/05-stoimost.md` are a starting hypothesis, not validated. Old material lives only on git branch `old` (`begining/`), read-only reference.
 
-`idea/skelet/astronaut-idea.pdf` is generated: `uv run idea/skelet/utils/scripts/idea-pdf.py`.
+`idea/skelet/astronaut-idea.pdf` is generated: `uv run idea/skelet/utils/scripts/idea-pdf.py`. Likewise `idea/product/product.pdf`: `uv run idea/product/utils/scripts/product-pdf.py`. Rebuild both PDFs after changing the docs they cover.
 
 ## Frontend (`frontend/demo-site/`)
 
