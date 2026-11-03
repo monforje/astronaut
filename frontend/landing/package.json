@@ -1,0 +1,41 @@
+{
+  "name": "landing-frontend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --bun astro dev",
+    "build": "bun --bun astro check && bun --bun astro build",
+    "preview": "bun --bun astro preview",
+    "check": "bun --bun astro check",
+    "lint": "oxlint && bun run lint:fsd && bun run lint:style",
+    "lint:fsd": "steiger src",
+    "lint:style": "vitest run docs/codestyle",
+    "format": "oxfmt --write . && prettier --no-error-on-unmatched-pattern --write \"src/**/*.astro\"",
+    "format:check": "oxfmt --check . && prettier --no-error-on-unmatched-pattern --check \"src/**/*.astro\"",
+    "test": "vitest run",
+    "test:e2e": "playwright test --config testing/playwright.config.ts",
+    "verify": "bun run check && bun run lint && bun run format:check && bun run test"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "tailwindcss": "^4.3.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@feature-sliced/steiger-plugin": "^0.8.2",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-istanbul": "^5.1.0",
+    "happy-dom": "^21.0.4",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "steiger": "^0.9.0",
+    "typescript": "^6",
+    "vitest": "^5.1.0"
+  }
+}

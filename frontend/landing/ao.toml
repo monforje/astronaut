@@ -1,0 +1,6 @@
+# ao — домены стенда за общим traefik: task trust выпускает под них сертификат (deploy/local/utils/ao).
+# *.localhost резолвится сам, /etc/hosts не нужен.
+default_ip = "127.0.0.1"
+
+[hosts]
+"127.0.0.1" = ["landing.astronaut.localhost"]

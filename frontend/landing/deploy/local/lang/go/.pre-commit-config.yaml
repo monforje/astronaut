@@ -1,0 +1,86 @@
+default_stages: [pre-commit]
+exclude: (^|/)(vendor|test_data|testdata)/
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: check-yaml
+        args: [--unsafe]
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+        stages: [pre-commit]
+      - id: detect-private-key
+        stages: [pre-commit]
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, master]
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: go-fmt
+        name: golangci-lint fmt
+        entry: task fmt
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      - id: go-vet
+        name: go vet
+        entry: task go -- vet ./...
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      - id: go-lint
+        name: golangci-lint run
+        entry: task lint
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      - id: go-sec
+        name: gosec
+        entry: task sec
+        language: system
+        types: [go]
+        pass_filenames: false
+
+      - id: go-mod-tidy
+        name: go mod tidy + vendor
+        entry: task tidy
+        language: system
+        files: '(go\.mod|go\.sum)$'
+        pass_filenames: false
+
+      - id: go-test
+        name: go test
+        entry: task test
+        language: system
+        types: [go]
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: go-cover
+        name: go test coverage
+        entry: task test-cover
+        language: system
+        types: [go]
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: go-vuln
+        name: govulncheck
+        entry: task vuln
+        language: system
+        files: '(\.go|go\.mod|go\.sum)$'
+        pass_filenames: false
+        stages: [pre-push]

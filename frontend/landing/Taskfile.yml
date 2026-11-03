@@ -1,0 +1,59 @@
+version: "3.53.1"
+
+dotenv: [".env", ".env.example"]
+
+env:
+  PROJECT_NAME: landing-front
+  SERVICE_APP: frontend
+  APP_WORKING_DIR: /app
+  DOCKER_COMPOSE_FILEPATH: compose.yml
+  # Сертификат домена из ao.toml (task trust) — имя файла в CERTS_DIR.
+  CERT_NAME: astronaut-landing
+  DOCKER_BUN_IMAGE_NAME: oven/bun:1.4.3
+  PW_CONFIG: testing/playwright.config.ts
+  DOCKER_UID:
+    sh: id -u
+  DOCKER_GID:
+    sh: id -g
+
+includes:
+  base:
+    taskfile: ./deploy/local/Taskfile.yml
+    flatten: true
+    excludes: [default, project_deploy, infra-up]
+  bun:
+    taskfile: ./deploy/local/lang/bun/Taskfile.yml
+    flatten: true
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  project_deploy:
+    internal: true
+    cmds:
+      - task: trust
+      - task: init-hooks
+        if: '[ -e "{{.ROOT_DIR}}/.pre-commit-config.yaml" ]'
+      - task: deps-install
+      - task: proxy-start
+      - task: start
+        vars: { CLI_ARGS: "-d --wait" }
+
+  deps-install:
+    desc: "bun install — только если менялись package.json/bun.lock"
+    sources: [package.json, bun.lock]
+    status:
+      - test -d node_modules
+    cmds:
+      - task: bun
+        vars: { BUN_COMMAND: "install" }
+
+  build-site:
+    desc: "Статическая сборка (astro check + astro build) в dist/ — отдаётся любым статик-хостингом"
+    cmds:
+      - task: deps-install
+      - task: bun
+        vars: { BUN_COMMAND: "run build" }

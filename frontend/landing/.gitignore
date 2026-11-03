@@ -1,0 +1,8 @@
+/tools/
+/dist/
+/coverage/
+/e2e-results/
+/e2e-report/
+/.task/
+/node_modules/
+/.astro/

@@ -1,0 +1,7 @@
+/*
+ * Точка входа стилей. Порядок важен: Tailwind → бренд → токены.
+ * brand.css и fonts/ — симлинки на idea/skelet/brand/design: правка бренда сразу видна в dev-сервере.
+ */
+@import "tailwindcss";
+@import "./brand.css";
+@import "./tokens.css";

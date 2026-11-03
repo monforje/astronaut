@@ -1,0 +1,21 @@
+# Каркас шаблона: у проекта, созданного из frontend/example (task new-frontend), эти файлы совпадают
+# с шаблоном после переименования. Проверка — docs/codestyle/mirror.sh в корне репозитория.
+# «*» совпадает с любым хвостом пути, включая подкаталоги. Своё проект добавляет рядом, а не правкой
+# этих файлов; общее улучшение — сначала в шаблон, потом во все проекты.
+# Лендинг (Astro) — отдельный стек: общее с demo-site — deploy/local, docs/codestyle, конфиги линтеров.
+.gitignore
+Taskfile.yml
+compose.yml
+ao.toml
+astro.config.ts
+oxfmt.config.ts
+oxlint.config.ts
+prettier.config.mjs
+steiger.config.js
+tsconfig.json
+vitest.config.ts
+docs/codestyle/*
+*/README.md
+deploy/local/*
+src/env.d.ts
+testing/playwright.config.ts

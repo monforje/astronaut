@@ -1,0 +1,106 @@
+# ao: локальный CA, сертификаты под домены ao.toml, записи /etc/hosts.
+# Бинарники лежат в bin/ (ao v0.1.0, по одному на платформу) — ничего не качается.
+# Включается Taskfile.yml deploy-local; CERTS_DIR и CA_NICKNAME задаёт он.
+version: '3.53.1'
+
+vars:
+  CA_DIR: '{{.CERTS_DIR}}/ca'
+  # Путь к бинарнику — в vars каждой задачи, а не здесь и не в env: на уровне
+  # файла TASKFILE_DIR у включённого Taskfile — каталог вызвавшего, а env
+  # родительского task ещё и перебил бы env дочернего (`task _up` из `task up`).
+  AO_BIN: 'bin/ao-{{OS}}-{{ARCH}}{{exeExt}}'
+
+tasks:
+  ao:
+    desc: 'ao с аргументами: task ao -- doctor'
+    vars:
+      AO: '{{.TASKFILE_DIR}}/{{.AO_BIN}}'
+    preconditions:
+      - sh: test -x "{{.AO}}"
+        msg: 'нет ao под {{OS}}/{{ARCH}}: {{.AO}}'
+    cmds:
+      - '"{{.AO}}" {{.AO_COMMAND | default .CLI_ARGS}}'
+
+  ao-ca-install:
+    internal: true
+    desc: 'Создаёт локальный CA и ставит его в систему и браузеры (sudo — только на системную часть)'
+    status:
+      - test -f {{.CA_DIR}}/rootCA.pem
+    cmds:
+      - task: ao
+        # ao не перезаписывает существующий CA и выходит с 1
+        vars: { AO_COMMAND: 'ca create --dir {{.CA_DIR}} || true' }
+      - task: ao
+        vars: { AO_COMMAND: 'ca install {{.CA_DIR}}/rootCA.pem --name "{{.CA_NICKNAME}}"' }
+
+  ao-ca-uninstall:
+    internal: true
+    cmds:
+      - task: ao
+        vars: { AO_COMMAND: 'ca uninstall {{.CA_DIR}}/rootCA.pem --name "{{.CA_NICKNAME}}"' }
+
+  ao-cert:
+    internal: true
+    desc: 'Выпускает NAME.pem под домены ao.toml CONFIG'
+    requires:
+      vars: [NAME, CONFIG, CERTS_DIR]
+    vars:
+      AO: '{{.TASKFILE_DIR}}/{{.AO_BIN}}'
+      # домены ao.toml: строки «IP домен…» из `ao list`, без самого IP
+      AO_DOMAINS: '"{{.AO}}" list -c "{{.CONFIG}}" | awk ''$1 ~ /^[0-9]/ {for (i = 2; i <= NF; i++) print $i}'' | sort -u'
+    # не «файл есть», а «покрывает все домены»: после правки ao.toml старый
+    # сертификат браузер отверг бы на новых доменах. Пустой список — не «готово»:
+    # так выглядел бы и сбой ao, а cmds сами скажут, что доменов нет.
+    status:
+      - |
+        set -o pipefail
+        domains=$({{.AO_DOMAINS}}) && [ -n "$domains" ] || exit 1
+        for d in $domains; do
+          openssl x509 -in {{.CERTS_DIR}}/{{.NAME}}.pem -noout -ext subjectAltName 2>/dev/null | grep -qF "DNS:$d" || exit 1
+        done
+    cmds:
+      - |
+        set -o pipefail
+        domains=$({{.AO_DOMAINS}} | tr '\n' ' ')
+        [ -n "$domains" ] || { echo "-> {{.NAME}}: в {{.CONFIG}} нет доменов, сертификат не нужен"; exit 0; }
+        mkdir -p {{.CERTS_DIR}}
+        # --force: сюда доходим, только если status решил, что сертификата нет или он устарел
+        "{{.AO}}" cert $domains --name {{.NAME}} --ca-dir {{.CA_DIR}} --out {{.CERTS_DIR}} --force
+
+  ao-cert-delete:
+    internal: true
+    requires:
+      vars: [NAME, CERTS_DIR]
+    cmds:
+      - rm -f {{.CERTS_DIR}}/{{.NAME}}.pem {{.CERTS_DIR}}/{{.NAME}}-key.pem
+
+  ao-generate:
+    internal: true
+    desc: 'Выпускает NAME.pem под явный список DOMAINS'
+    requires:
+      vars: [NAME, DOMAINS, CERTS_DIR]
+    cmds:
+      - mkdir -p {{.CERTS_DIR}}
+      - task: ao
+        vars: { AO_COMMAND: 'cert {{.DOMAINS}} --name {{.NAME}} --ca-dir {{.CA_DIR}} --out {{.CERTS_DIR}} --force' }
+
+  ao-hosts:
+    internal: true
+    desc: 'Сводит все ao.toml под ROOT в блок ao в /etc/hosts'
+    requires:
+      vars: [ROOT]
+    vars:
+      AO: '{{.TASKFILE_DIR}}/{{.AO_BIN}}'
+    status:
+      - '"{{.AO}}" sync --check --from-root "{{.ROOT}}"'
+    cmds:
+      - task: ao
+        vars: { AO_COMMAND: 'sync --from-root "{{.ROOT}}"' }
+
+  ao-hosts-clean:
+    internal: true
+    requires:
+      vars: [ROOT]
+    cmds:
+      - task: ao
+        vars: { AO_COMMAND: 'clean --from-root "{{.ROOT}}"' }

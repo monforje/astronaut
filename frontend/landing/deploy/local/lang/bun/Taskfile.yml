@@ -1,0 +1,133 @@
+version: '3.53.1'
+
+vars:
+  COVERAGE_MIN: '{{.COVERAGE_MIN | default "70"}}'
+  AUDIT_LEVEL: '{{.AUDIT_LEVEL | default "high"}}'
+
+tasks:
+  bun:
+    desc: 'Выполняет команду bun'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun {{.BUN_COMMAND | default .CLI_ARGS}}'
+
+  bunx:
+    desc: '[alias] Выполняет bun x'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun x {{.BUNX_COMMAND | default .CLI_ARGS}}'
+
+  format:
+    desc: '[alias] Скрипт format проекта; нет скрипта — пропуск'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun run --if-present format'
+
+  lint:
+    desc: '[alias] Скрипт lint проекта; нет скрипта — пропуск'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun run --if-present lint'
+
+  check:
+    desc: '[alias] Скрипт check проекта (типы); нет скрипта — пропуск'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun run --if-present check'
+
+  codestyle:
+    desc: '[alias] Код-стайл (docs/codestyle): типы, oxlint, steiger, codestyle.test.ts, oxfmt --check'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'sh -c "bun run --if-present check && bun run --if-present lint && bun run --if-present format:check"'
+
+  lint-fsd:
+    desc: '[alias] Скрипт lint:fsd проекта (steiger); нет скрипта — пропуск'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun run --if-present lint:fsd'
+
+  test:
+    desc: '[alias] Юнит-тесты по слоям FSD: shared → entities → features → widgets → pages → app'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'sh /opt/deploy/scripts/test.sh layers'
+
+  test-layer:
+    desc: '[alias] Юнит-тесты одного слоя FSD: task test-layer -- shared'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'sh /opt/deploy/scripts/test.sh layer {{.CLI_ARGS}}'
+
+  test-cover:
+    desc: '[alias] Покрытие: порог COVERAGE_MIN % (по умолчанию 70), непокрытые исходники — ошибка'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'sh /opt/deploy/scripts/test.sh cover {{.COVERAGE_MIN}}{{if .COVERAGE_EXCLUDE}} "{{.COVERAGE_EXCLUDE}}"{{end}}'
+
+  audit:
+    desc: '[alias] bun audit: уязвимости зависимостей от AUDIT_LEVEL (по умолчанию high)'
+    cmds:
+      - task: bun-run
+        vars:
+          RUN_COMMAND: 'bun audit --audit-level={{.AUDIT_LEVEL}}'
+
+  test-e2e:
+    desc: '[alias] E2E Playwright в контейнере; без @playwright/test и конфига (PW_CONFIG, по умолчанию playwright.config.*) — пропуск'
+    dir: '{{.ROOT_DIR}}'
+    vars:
+      PW_VERSION:
+        sh: |
+          sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' node_modules/@playwright/test/package.json 2>/dev/null | head -n 1
+    cmds:
+      - task: playwright-run
+        if: '[ -n "{{.PW_VERSION}}" ] && ls {{.PW_CONFIG | default "playwright.config.*"}} >/dev/null 2>&1'
+        vars:
+          PW_VERSION: '{{.PW_VERSION}}'
+      - cmd: 'echo "e2e: Playwright не настроен (нет @playwright/test или конфига Playwright), пропуск"'
+        if: '[ -z "{{.PW_VERSION}}" ] || ! ls {{.PW_CONFIG | default "playwright.config.*"}} >/dev/null 2>&1'
+
+  bun-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    requires:
+      vars: [RUN_COMMAND, APP_WORKING_DIR, DOCKER_BUN_IMAGE_NAME]
+    cmds:
+      - mkdir -p "${BUN_CACHE_DIR:-$HOME/.cache/bun}"
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}} \
+          -v "{{.TASKFILE_DIR}}":/opt/deploy:ro \
+          -e HOME=/tmp \
+          -v "${BUN_CACHE_DIR:-$HOME/.cache/bun}":/tmp/bun-cache -e BUN_INSTALL_CACHE_DIR=/tmp/bun-cache \
+          {{.DOCKER_BUN_IMAGE_NAME}} \
+          {{.RUN_COMMAND}}
+
+  playwright-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    requires:
+      vars: [PW_VERSION, APP_WORKING_DIR]
+    vars:
+      PW_IMAGE: '{{.DOCKER_PLAYWRIGHT_IMAGE_NAME | default (printf "mcr.microsoft.com/playwright:v%s-noble" .PW_VERSION)}}'
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) --ipc=host --network host \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}} \
+          -v "{{.TASKFILE_DIR}}":/opt/deploy:ro \
+          -v /etc/hosts:/etc/hosts:ro \
+          -e HOME=/tmp -e CI=1 ${E2E_BASE_URL:+-e E2E_BASE_URL} ${E2E_HOST_IP:+-e E2E_HOST_IP} \
+          {{.PW_IMAGE}} \
+          npx playwright test{{if .PW_CONFIG}} --config {{.PW_CONFIG}}{{end}} {{.CLI_ARGS}}

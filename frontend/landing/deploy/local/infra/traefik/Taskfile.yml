@@ -1,0 +1,98 @@
+version: '3.53.1'
+
+# Общий traefik на машину: https на 443, сертификаты из CERTS_DIR (выпускает ao — utils/ao).
+# Имена (проект shared-proxy, контейнер и сеть traefik, CERTS_DIR, формат dynamic.yml) те же, что у
+# стендов соседних репозиториев: на одной машине они делят один traefik, а не спорят за порты.
+
+vars:
+  LOCAL_DOMAIN:
+    sh: echo "${LOCAL_DOMAIN:-astronaut.localhost}"
+  TRAEFIK_COMPOSE: docker compose -p shared-proxy -f compose.traefik.yml
+
+env:
+  LOCAL_DOMAIN: '{{.LOCAL_DOMAIN}}'
+
+tasks:
+  traefik-up:
+    internal: true
+    desc: "Поднимает контейнер traefik"
+    # traefik уже поднят — этим стендом или соседним
+    status:
+      - test -n "$(docker ps -q -f name=^traefik$)"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.TRAEFIK_COMPOSE}} up -d'
+
+  traefik-stop:
+    internal: true
+    desc: "Останавливает контейнер traefik — вместе с ним пропадут и чужие стенды на машине"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.TRAEFIK_COMPOSE}} stop'
+
+  traefik-down:
+    internal: true
+    desc: "Удаляет контейнер и сеть traefik"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.TRAEFIK_COMPOSE}} down'
+
+  traefik-certs:
+    internal: true
+    desc: "Показывает сертификаты в CERTS_DIR: домены и срок действия"
+    cmds:
+      - |
+        for f in {{.CERTS_DIR}}/*.pem; do
+          [ -e "$f" ] || continue
+          case "$f" in *-key.pem) continue ;; esac
+          echo "== $(basename "$f")"
+          openssl x509 -in "$f" -noout -enddate -ext subjectAltName 2>/dev/null | sed 's/^/   /'
+        done
+
+  traefik-default-cert:
+    internal: true
+    desc: "Сертификат traefik по умолчанию (*.LOCAL_DOMAIN), если его ещё нет"
+    # Только «файла нет»: _default на машине один, и соседний стенд держит в нём свой домен.
+    # Наши домены traefik отдаёт по SNI из сертификата ao.toml (task trust).
+    status:
+      - test -f {{.CERTS_DIR}}/_default.pem
+    cmds:
+      - task: ao-ca-install
+      - task: ao-generate
+        vars:
+          NAME: _default
+          DOMAINS: '*.{{.LOCAL_DOMAIN}} {{.LOCAL_DOMAIN}}'
+          CERTS_DIR: '{{.CERTS_DIR}}'
+
+  traefik-render-tls-config:
+    internal: true
+    desc: "Собирает dynamic.yml traefik из всех *.pem в CERTS_DIR"
+    # Файл общий на машину: его пишут все стенды, формат держать одинаковым.
+    sources:
+      - '{{.CERTS_DIR}}/*.pem'
+    generates:
+      - '{{.CERTS_DIR}}/dynamic.yml'
+    cmds:
+      - mkdir -p {{.CERTS_DIR}}
+      - |
+        tmp=$(mktemp {{.CERTS_DIR}}/.dynamic.yml.XXXXXX)
+        {
+          echo "tls:"
+          echo "  options:"
+          echo "    default:"
+          echo "      minVersion: VersionTLS12"
+          echo "      sniStrict: false"
+          echo "  stores:"
+          echo "    default:"
+          echo "      defaultCertificate:"
+          echo "        certFile: /certs/_default.pem"
+          echo "        keyFile: /certs/_default-key.pem"
+          echo "  certificates:"
+          for f in {{.CERTS_DIR}}/*.pem; do
+            [ -e "$f" ] || continue
+            case "$f" in *-key.pem|*/_default.pem) continue ;; esac
+            echo "    - certFile: /certs/$(basename "$f")"
+            echo "      keyFile: /certs/$(basename "$f" .pem)-key.pem"
+          done
+        } > "$tmp"
+        mv "$tmp" {{.CERTS_DIR}}/dynamic.yml

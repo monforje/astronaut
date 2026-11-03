@@ -1,0 +1,36 @@
+/*
+ * Роли (фон, текст, акцент) и тема Tailwind. Компоненты берут цвета только отсюда: утилитами
+ * `bg-accent`, `text-muted`, `border-line`…
+ *
+ * Своих цветов и шрифтов здесь нет: палитра (`--color-navy`, `--color-teal`…) и шрифты приходят
+ * из бренда — brand.css (симлинк на idea/skelet/brand/design/tokens.css). Сайт светлый, одна схема.
+ */
+:root {
+  --bg: var(--color-white);
+  --surface: var(--color-off-white);
+  --text: var(--color-navy);
+  --text-muted: color-mix(in srgb, var(--color-navy) 70%, var(--color-white));
+  --line: color-mix(in srgb, var(--color-navy) 15%, var(--color-white));
+  --accent: var(--color-teal);
+  /* Teal светлый: текст на нём — navy, а не белый. */
+  --accent-contrast: var(--color-navy);
+  /* Акцент-текст и фокус: teal темнее фирменного, чтобы читался на белом (контраст ≥ 3:1). */
+  --accent-strong: color-mix(in srgb, var(--color-teal) 55%, var(--color-navy));
+  --spark: var(--color-orange);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-strong: var(--accent-strong);
+  --color-spark: var(--spark);
+  --color-navy: var(--color-navy);
+  --color-teal: var(--color-teal);
+  --default-font-family: var(--font-sans);
+  --default-mono-font-family: var(--font-mono);
+}

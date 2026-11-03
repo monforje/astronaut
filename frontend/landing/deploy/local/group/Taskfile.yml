@@ -1,0 +1,205 @@
+version: '3.53.1'
+
+# Группа проектов: backend/, frontend/ и корень репо (группа групп) подключают этот файл.
+# Команда уходит каждому проекту из PROJECTS, у которого она есть; общий слой (traefik, инфра) — один раз.
+# PROJECTS по умолчанию — подкаталоги с Taskfile.yml; первый из них отвечает за traefik и инфру.
+
+vars:
+  PROJECTS_FOUND:
+    sh: cd "{{.ROOT_DIR}}" && for d in *; do if [ -f "$d/Taskfile.yml" ]; then printf '%s ' "$d"; fi; done
+  PROJECTS: '{{.PROJECTS | default .PROJECTS_FOUND | trim}}'
+  FIRST: '{{splitList " " .PROJECTS | first}}'
+  GEN_TASKS: '{{.GEN_TASKS | default "gen-api gen-sqlc gen-mocks"}}'
+
+tasks:
+  deploy:
+    desc: "Развернуть все проекты: домены, traefik и инфра один раз, затем проекты параллельно"
+    cmds:
+      - task: shared-up
+        vars: { WITH_TRUST: true }
+      - task: fan
+        vars: { T: deploy, ARGS: SKIP_SHARED=true }
+      - task: where
+        if: '[ "{{.SKIP_SHARED}}" != "true" ]'
+
+  start:
+    desc: "Запустить все проекты: traefik и инфра один раз, затем контейнеры проектов"
+    cmds:
+      - task: shared-up
+      - task: fan
+        vars: { T: start, ARGS: 'SKIP_SHARED=true -- -d' }
+      - task: where
+        if: '[ "{{.SKIP_SHARED}}" != "true" ]'
+
+  build:
+    desc: "Собрать образы всех проектов параллельно"
+    cmds:
+      - task: fan
+        vars: { T: build }
+
+  destroy:
+    desc: "Снести контейнеры всех проектов вместе с данными (инфра и traefik остаются)"
+    cmds:
+      - task: fan
+        vars: { T: destroy }
+
+  stop:
+    desc: "Остановить всё: контейнеры проектов, инфра и traefik удаляются вместе с данными в томах"
+    cmds:
+      - task: destroy
+      - task: infra-down
+      - task: infra-volumes-rm
+      - task: proxy-down
+
+  trust:
+    desc: "Домены всех проектов в hosts и их сертификаты"
+    cmds:
+      - task: each
+        vars: { T: trust }
+
+  untrust:
+    desc: "Убрать домены и сертификаты всех проектов"
+    cmds:
+      - task: each
+        vars: { T: untrust }
+
+  test:
+    desc: "Юнит-тесты всех проектов параллельно"
+    cmds:
+      - task: fan
+        vars: { T: test }
+
+  lint:
+    desc: "Линтеры всех проектов параллельно"
+    cmds:
+      - task: fan
+        vars: { T: lint }
+
+  gen:
+    desc: "Кодоген всех проектов по очереди: GEN_TASKS (контракт, запросы, моки) — фронт берёт контракт у бэкенда"
+    cmds:
+      - for: { var: PROJECTS }
+        task: in
+        vars: { P: '{{.ITEM}}', T: gen, ALL: '{{.GEN_TASKS}}' }
+
+  codestyle:
+    desc: "Код-стайл: каркас проектов сверяется с шаблонами example (docs/codestyle/mirror.sh), затем task codestyle каждого проекта"
+    cmds:
+      - cmd: cd "{{.ROOT_DIR}}" && sh docs/codestyle/mirror.sh
+        if: '[ -f "{{.ROOT_DIR}}/docs/codestyle/mirror.sh" ]'
+      - task: each
+        vars: { T: codestyle }
+
+  gen-check:
+    desc: "Сгенерированное всех проектов совпадает с источниками (бэкенды: контракт, sqlc, моки; фронты: клиент API)"
+    cmds:
+      - task: each
+        vars: { T: 'gen-check api-check' }
+
+  api-check:
+    desc: "Клиенты API фронтендов совпадают с контрактами их бэкендов (после task gen)"
+    cmds:
+      - task: each
+        vars: { T: api-check }
+
+  migrate:
+    desc: "Накатить миграции всех проектов"
+    cmds:
+      - task: each
+        vars: { T: 'migrate db-migrate-up' }
+
+  proxy-start:
+    desc: "Поднять общий traefik"
+    cmds:
+      - task -d "{{.FIRST}}" proxy-start
+
+  proxy-stop:
+    desc: "Остановить общий traefik"
+    cmds:
+      - task -d "{{.FIRST}}" proxy-stop
+
+  proxy-down:
+    desc: "Удалить контейнер и сеть traefik"
+    cmds:
+      - task -d "{{.FIRST}}" proxy-down
+
+  infra-up:
+    desc: "Поднять общую инфру: каждый проект поднимает то, чем пользуется"
+    cmds:
+      - task: each
+        vars: { T: infra-up }
+
+  infra-stop:
+    desc: "Остановить общую инфру"
+    cmds:
+      - task -d "{{.FIRST}}" infra-stop
+
+  infra-down:
+    desc: "Удалить контейнеры общей инфры"
+    cmds:
+      - task -d "{{.FIRST}}" infra-down
+
+  infra-volumes-rm:
+    desc: "Удалить тома общей инфры"
+    cmds:
+      - |
+        docker volume ls -q --filter 'label=com.docker.compose.project=shared' \
+          | xargs -r docker volume rm -f 2>/dev/null || true
+
+  where:
+    desc: "Куда заходить: домены из hosts всех проектов"
+    silent: true
+    cmds:
+      - |
+        urls=$(
+          for p in {{.PROJECTS}}; do
+            if [ -f "$p/hosts" ]; then
+              awk '$1 !~ /^#/ && NF > 1 { print "  http://" $2 }' "$p/hosts"
+            elif [ -f "$p/Taskfile.yml" ] && task -d "$p" --summary where >/dev/null 2>&1; then
+              task -s -d "$p" where BARE=true
+            fi
+          done | awk '!seen[$0]++'
+        )
+        if [ "{{.BARE}}" = "true" ]; then echo "$urls"; else printf '\n%s\n\n' "$urls"; fi
+
+  shared-up:
+    internal: true
+    status:
+      - '[ "{{.SKIP_SHARED}}" = "true" ]'
+    cmds:
+      - task: trust
+        if: '[ "{{.WITH_TRUST}}" = "true" ]'
+      - task: proxy-start
+      - task: infra-up
+
+  fan:
+    internal: true
+    deps:
+      - for: { var: PROJECTS }
+        task: in
+        vars: { P: '{{.ITEM}}', T: '{{.T}}', ARGS: '{{.ARGS}}' }
+
+  each:
+    internal: true
+    cmds:
+      - for: { var: PROJECTS }
+        task: in
+        vars: { P: '{{.ITEM}}', T: '{{.T}}', ARGS: '{{.ARGS}}' }
+
+  # Первая из задач T, которая есть у проекта P; у вложенной группы нет gen-* — у неё есть gen, иначе — все ALL по очереди.
+  in:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    label: '{{.P}} {{.T}}'
+    cmds:
+      - |
+        [ -f "{{.P}}/Taskfile.yml" ] || { echo "{{.P}}: нет Taskfile.yml" >&2; exit 1; }
+        has() { task -d "{{.P}}" --summary "$1" >/dev/null 2>&1; }
+        for t in {{.T}}; do
+          if has "$t"; then task -d "{{.P}}" "$t" {{.ARGS}}; exit $?; fi
+        done
+        ran=
+        for t in {{.ALL}}; do
+          if has "$t"; then task -d "{{.P}}" "$t" {{.ARGS}} || exit $?; ran=1; fi
+        done
+        [ -n "$ran" ] || echo "{{.P}}: нет задачи {{.T}}, пропуск"

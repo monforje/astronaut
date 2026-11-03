@@ -1,0 +1,121 @@
+default_stages: [pre-commit]
+exclude: ^node_modules/
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        stages: [pre-commit]
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: check-yaml
+        args: [--unsafe]
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+        stages: [pre-commit]
+      - id: detect-private-key
+        stages: [pre-commit]
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, master]
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: bun-format
+        name: format
+        entry: task format
+        language: system
+        types_or: [javascript, jsx, ts, tsx, svelte, css, json]
+        pass_filenames: false
+
+      - id: bun-lint
+        name: lint
+        entry: task lint
+        language: system
+        types_or: [javascript, jsx, ts, tsx, svelte]
+        pass_filenames: false
+
+      - id: bun-check
+        name: type-check
+        entry: task check
+        language: system
+        types_or: [ts, tsx, svelte]
+        pass_filenames: false
+
+      - id: fsd-lint
+        name: fsd (steiger)
+        entry: task lint-fsd
+        language: system
+        files: '^src/'
+        pass_filenames: false
+
+      - id: test-shared
+        name: tests shared
+        entry: task test-layer -- shared
+        language: system
+        files: '^src/shared/'
+        pass_filenames: false
+
+      - id: test-entities
+        name: tests entities
+        entry: task test-layer -- entities
+        language: system
+        files: '^src/entities/'
+        pass_filenames: false
+
+      - id: test-features
+        name: tests features
+        entry: task test-layer -- features
+        language: system
+        files: '^src/features/'
+        pass_filenames: false
+
+      - id: test-widgets
+        name: tests widgets
+        entry: task test-layer -- widgets
+        language: system
+        files: '^src/widgets/'
+        pass_filenames: false
+
+      - id: test-pages
+        name: tests pages
+        entry: task test-layer -- pages
+        language: system
+        files: '^src/pages/'
+        pass_filenames: false
+
+      - id: test-app
+        name: tests app
+        entry: task test-layer -- app
+        language: system
+        files: '^src/app/'
+        pass_filenames: false
+
+      - id: test-layers
+        name: tests all layers
+        entry: task test
+        language: system
+        types_or: [javascript, jsx, ts, tsx, svelte]
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: test-cover
+        name: coverage
+        entry: task test-cover
+        language: system
+        types_or: [javascript, jsx, ts, tsx, svelte]
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: bun-audit
+        name: bun audit
+        entry: task audit
+        language: system
+        files: '(package\.json|bun\.lock)$'
+        pass_filenames: false
+        stages: [pre-push]

@@ -1,0 +1,16 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "preserveSymlinks": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["src", "testing", "docs", ".astro/types.d.ts"],
+  "exclude": ["dist"]
+}
