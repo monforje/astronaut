@@ -1,0 +1,50 @@
+---
+import {
+  COMPANY_CITY,
+  COMPANY_LINE,
+  EMAIL,
+  MAILTO_URL,
+  TELEGRAM_URL,
+  TELEGRAM_USERNAME,
+} from "@/shared/config";
+import { Icon } from "@/shared/ui";
+
+/**
+ * Подвал (PLAN.md, «12. Подвал»): строка о компании из phrases.md, рядом город, Telegram, почта и год,
+ * каждый пункт со своей иконкой интерфейса. Почта здесь — второй запасной путь к нам после блока
+ * «Демо» (cta.md, «Подвал»). Год берётся при сборке: сайт статический. Линии сверху нет: подвал
+ * отделяет волна полосы «Демо» над ним.
+ */
+const year = new Date().getFullYear();
+
+const link =
+  "flex items-center gap-2 rounded underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-text hover:decoration-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong motion-reduce:transition-none";
+---
+
+<footer class="page-container">
+  <div class="flex flex-col gap-5 pt-4 pb-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:pb-10">
+    <p class="flex items-center gap-3 font-medium">
+      <img src="/brand/astronaut.svg" alt="" width="920" height="744" class="h-9 w-auto shrink-0" />
+      {COMPANY_LINE}
+    </p>
+    <ul class="flex flex-wrap gap-x-6 gap-y-2.5 text-[0.9375rem] text-muted">
+      <li class="flex items-center gap-2">
+        <Icon name="pin" size="sm" />
+        {COMPANY_CITY}
+      </li>
+      <li>
+        <a href={TELEGRAM_URL} class={link}>
+          <Icon name="send" size="sm" />
+          Telegram @{TELEGRAM_USERNAME}
+        </a>
+      </li>
+      <li>
+        <a href={MAILTO_URL} class={link}>
+          <Icon name="mail" size="sm" />
+          {EMAIL}
+        </a>
+      </li>
+      <li>© {year}</li>
+    </ul>
+  </div>
+</footer>

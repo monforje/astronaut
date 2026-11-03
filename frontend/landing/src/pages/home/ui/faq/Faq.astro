@@ -1,0 +1,151 @@
+---
+import { photo } from "@/shared/brand";
+import { EMAIL, MAILTO_URL, TELEGRAM_URL, TELEGRAM_USERNAME } from "@/shared/config";
+import { Band, Heading, Icon, JsonLd, PhotoSlot } from "@/shared/ui";
+
+/**
+ * Вопросы — возражения, которые лидогенератор и мы слышим чаще всего (PLAN.md, «10. Вопросы»).
+ * Ответы — 10-shpargalka.md, раздел 8, и phrases.md («Ответы на возражения»), сокращены до 2–3
+ * предложений; «Сколько стоит» — без цифр (цены — гипотеза), «Есть клиенты» — честно, кейса нет.
+ * «Вы в реестре российского ПО?» на сайт не выносим, отвечаем лично: ответ пока «нет, прорабатываем».
+ *
+ * Разметка — нативный `<details>`, без JS: открытие анимирует только CSS (плюс поворачивается в
+ * крестик, ответ выезжает), с prefers-reduced-motion — сразу. Из того же списка собирается `FAQPage`
+ * для поисковиков, поэтому вопрос на странице и в разметке не разойдутся. Под заголовком (на
+ * телефоне — после вопросов) карточка «Не нашли свой вопрос?» со ссылками на Telegram и почту
+ * (cta.md, «Сайт»): второй путь, не оранжевый — оранжевая кнопка ждёт в блоке «Демо». В карточке —
+ * круглое фото того, кто отвечает в Telegram: пишешь человеку, а не в форму. Имени на сайте нет,
+ * поэтому фото без подписи (`alt=""`); пока снимка нет — заглушка (`photo("ceo")`).
+ */
+const QUESTIONS = [
+  {
+    question: "У нас уже есть 1С. Зачем вы?",
+    answer:
+      "Мы не заменяем 1С. Мы связываем её с остальными программами и проверяем документы, которые 1С не сверяет между собой.",
+  },
+  {
+    question: "У нас есть программист, он всё сделает.",
+    answer:
+      "Хорошо, мы не хотим его заменить. Он получает готовые подключения и наблюдение за обменами, и ему не нужно писать каждую связку с нуля. А если он уйдёт, знание не пропадёт вместе с ним.",
+  },
+  {
+    question: "У нас Контур для ЭТрН.",
+    answer:
+      "Контур отправляет ЭТрН. Мы делаем так, чтобы в ней были те же данные, что в инвойсе, декларации и 1С, и смотрим за подписанием у всех операторов сразу.",
+  },
+  {
+    question: "Безопасно ли отдавать вам документы?",
+    answer:
+      "Подписи ставит ваш сотрудник в кабинете оператора, ключи подписи у нас не хранятся. Агент учится только на решениях вашей компании. Перед тем как документы попадут к нам, согласуем с юристом схему обработки персональных данных, и вы получите её письменно.",
+  },
+  {
+    question: "Сколько это стоит?",
+    answer:
+      "Зависит от того, что подключаете. Сначала хотим понять, сколько у вас сейчас стоят ошибки, чтобы цена окупалась.",
+  },
+  {
+    question: "У вас есть клиенты?",
+    answer: "Пока ищем первых партнёров для пилота. Готового кейса ещё нет.",
+  },
+  {
+    question: "Вы ускорите доставку?",
+    answer:
+      "Нет. Мы убираем задержки, которые вызваны ошибками в документах. Простои порта и нехватку платформ мы не решаем.",
+  },
+] as const;
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: QUESTIONS.map(({ question, answer }) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: { "@type": "Answer", text: answer },
+  })),
+};
+
+const link =
+  "flex items-center gap-2.5 rounded font-semibold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:decoration-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong motion-reduce:transition-none";
+---
+
+<Band id="faq" labelledby="faq-title">
+  <div class="grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-10 xl:gap-x-20">
+    <Heading id="faq-title">
+      <span class="block">Что обычно</span> <span class="block">спрашивают</span>
+    </Heading>
+
+    <div data-reveal="group" class="space-y-3 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+      {QUESTIONS.map(({ question, answer }, i) => (
+        <details
+          style={`--i: ${i}`}
+          class="qa group rounded-2xl bg-bg shadow-card ring-1 ring-line transition-shadow duration-300 open:shadow-lift hover:ring-accent/50 motion-reduce:transition-none"
+        >
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-5 rounded-2xl px-5 py-4 text-base leading-snug font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-strong lg:px-6 lg:py-5 lg:text-lg [&::-webkit-details-marker]:hidden">
+            {question}
+            <span
+              aria-hidden="true"
+              class="grid size-8 shrink-0 place-items-center rounded-full bg-tint text-accent-strong transition-[rotate,background-color,color] duration-300 group-open:rotate-45 group-open:bg-accent group-open:text-accent-contrast motion-reduce:transition-none"
+            >
+              <Icon name="plus" size="sm" />
+            </span>
+          </summary>
+          <p class="answer max-w-2xl px-5 pb-5 text-[0.9375rem] text-muted lg:px-6 lg:pb-6 lg:text-base">
+            {answer}
+          </p>
+        </details>
+      ))}
+    </div>
+
+    <aside
+      aria-labelledby="faq-ask-title"
+      data-reveal
+      class="max-w-md rounded-2xl bg-surface p-5 lg:sticky lg:top-24 lg:col-start-1 lg:row-start-2 lg:self-start lg:p-6"
+    >
+      <div class="flex items-center gap-4">
+        <div class="relative size-14 shrink-0 overflow-hidden rounded-full bg-bg ring-2 ring-bg shadow-card">
+          <PhotoSlot photo={photo("ceo")} alt="" sizes="3.5rem" widths={[112, 224]} />
+        </div>
+        <div>
+          <h3 id="faq-ask-title" class="text-lg font-bold">
+            Не нашли свой вопрос?
+          </h3>
+          <p class="mt-1 text-[0.9375rem] text-muted">Задайте его в Telegram или на почту.</p>
+        </div>
+      </div>
+      <ul class="mt-4 space-y-2.5 text-[0.9375rem]">
+        <li>
+          <a href={TELEGRAM_URL} class={link}>
+            <Icon name="send" size="sm" />
+            Telegram @{TELEGRAM_USERNAME}
+          </a>
+        </li>
+        <li>
+          <a href={MAILTO_URL} class={link}>
+            <Icon name="mail" size="sm" />
+            {EMAIL}
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+
+  <JsonLd data={faqPage} />
+</Band>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .qa[open] .answer {
+      animation: answer-in 0.45s var(--ease-out-expo) both;
+    }
+  }
+  @keyframes answer-in {
+    from {
+      opacity: 0;
+      translate: 0 -0.5rem;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+</style>

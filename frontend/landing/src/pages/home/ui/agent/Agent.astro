@@ -1,0 +1,299 @@
+---
+import { Image } from "astro:assets";
+import { astronautConsole } from "@/shared/brand";
+import { Band, Blob, Heading, Icon, Lead, Mono } from "@/shared/ui";
+
+/**
+ * «Попросите — агент сделает» — такт 5 (story.md): учить новую программу не придётся, контроль у
+ * человека. Заголовок — девиз из slogans.md, лид, чат и три правила — PLAN.md, «6. Агент»; кнопки
+ * подтверждения и поле ввода — cta.md («Кнопки в продукте»). Фразу про обезличенные данные не
+ * ставим: схему по персональным данным ещё не согласовали с юристом (questions.md).
+ *
+ * Чат — окно в духе ChatGPT, Gemini и Claude, чтобы человек сразу узнал привычный ИИ-чат: ваш вопрос
+ * справа в светлом пузыре, ответ агента без пузыря, рядом аватар-маскот, под ответом кнопки
+ * подтверждения и строка действий, внизу большое поле ввода с «+» и круглой кнопкой отправки. Это
+ * макет из разметки без своего JS: кнопки, поле и действия — `<span>`, скрыты от читалки, вопрос
+ * агента и так в тексте. При появлении на экране разговор проигрывается: вопрос, три точки, ответ
+ * выходит по словам, как в настоящем чате, потом кнопки. Без JS и с prefers-reduced-motion
+ * разговор виден сразу целиком.
+ *
+ * Под лидом — маскот у пульта (idea/skelet/brand/astronaut-console.png, сгенерирован по образцу
+ * двух иллюстраций бренда и перекрашен в палитру `design/recolor.py`): он не жмёт «Применить» сам, а
+ * протягивает экран с чатом человеку — решение за вами. Картинка неподвижна, за ней дышит пятно
+ * `spot`; смысл в тексте рядом, поэтому `alt=""`.
+ */
+const RULES = [
+  { icon: "shield", text: "Агент работает с вашими правами и не может больше, чем вы." },
+  {
+    icon: "check",
+    text: "Важное подтверждаете вы: изменения данных, повторную отправку документов.",
+  },
+  { icon: "cpu", text: "Модель выбираете вы, в том числе российскую или на вашем сервере." },
+] as const;
+
+/** Ответ агента по словам: `glue` — без пробела перед словом, `mono` — цифры, `strong` — что сделать. */
+interface Word {
+  w: string;
+  glue?: boolean;
+  mono?: boolean;
+  strong?: boolean;
+}
+const ANSWER: Word[] = [
+  ..."Обмен 1С → Контур не работает".split(" ").map((w) => ({ w })),
+  { w: "10 минут", mono: true },
+  { w: ".", glue: true },
+  ..."Истёк токен Контура.".split(" ").map((w) => ({ w })),
+  ..."Обновить токен в подключении?".split(" ").map((w) => ({ w, strong: true })),
+];
+
+const TOOLS = ["copy", "thumb-up", "thumb-down", "sync"] as const;
+---
+
+<Band id="agent" labelledby="agent-title">
+  <div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-6 xl:gap-x-20">
+    <div class="lg:col-start-1 lg:row-start-1">
+      <Heading id="agent-title">
+        <span class="block">Попросите&nbsp;—</span> <span class="block">агент сделает</span>
+      </Heading>
+      <Lead>
+        Не ищите кнопку. Напишите, что нужно, и агент сделает и покажет результат. Менять рабочие
+        данные и отправлять документы он будет только после вашего «да».
+      </Lead>
+    </div>
+
+    <figure
+      data-reveal
+      class="chat relative isolate py-6 sm:px-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:py-10 lg:pr-0 lg:pl-10"
+    >
+      <div class="absolute -inset-y-2 -right-4 left-0 -z-10 lg:-inset-y-4 lg:-right-[20%]">
+        <Blob shape="chat" duration={26} />
+      </div>
+      <figcaption class="sr-only">Пример разговора с агентом</figcaption>
+
+      <div class="mx-auto w-full max-w-[38rem] rounded-3xl bg-bg shadow-lift lg:mr-0">
+        <div
+          aria-hidden="true"
+          class="flex items-center gap-1.5 px-5 pt-4 pb-1 text-sm font-semibold"
+        >
+          Агент Astronaut
+          <span class="text-muted">
+            <Icon name="chevron-down" size="sm" />
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-5 px-5 pt-3 pb-5 text-[0.9375rem] lg:px-6 lg:text-base">
+          <p class="ask max-w-[80%] self-end rounded-3xl bg-surface px-4 py-2.5">
+            <span class="sr-only">Вы:</span> Почему упал обмен с 1С?
+          </p>
+
+          <div class="flex gap-3">
+            <span
+              aria-hidden="true"
+              class="avatar grid size-8 shrink-0 place-items-center rounded-full bg-bg ring-1 ring-line"
+            >
+              <img src="/brand/astronaut.svg" alt="" width="920" height="744" class="h-5 w-auto" />
+            </span>
+            <div class="grid min-w-0 flex-1">
+              <span
+                aria-hidden="true"
+                class="typing items-center gap-1 self-start pt-3 [grid-area:1/1]"
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              <div class="[grid-area:1/1]">
+                <p class="pt-1 leading-relaxed">
+                  <span class="sr-only">Агент:</span>{" "}
+                  {ANSWER.map(({ w, glue, mono, strong }, i) => (
+                    <>
+                      {i > 0 && !glue && " "}
+                      <span class="word" style={`--w: ${i}`}>
+                        {mono ? (
+                          <Mono>{w}</Mono>
+                        ) : strong ? (
+                          <strong class="font-semibold">{w}</strong>
+                        ) : (
+                          w
+                        )}
+                      </span>
+                    </>
+                  ))}
+                </p>
+                <div aria-hidden="true" class="after-answer mt-3.5">
+                  <div class="flex flex-wrap gap-2 text-sm font-semibold">
+                    <span class="rounded-full bg-text px-4 py-1.5 text-bg">Применить</span>
+                    <span class="rounded-full px-4 py-1.5 ring-1 ring-line">Отклонить</span>
+                  </div>
+                  <div class="mt-3 flex gap-1 text-muted">
+                    {TOOLS.map((name) => (
+                      <span class="grid size-7 place-items-center rounded-lg">
+                        <Icon name={name} size="sm" />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div aria-hidden="true" class="px-3 pb-3">
+          <div class="rounded-[1.75rem] bg-bg px-4 pt-3.5 pb-2.5 shadow-card ring-1 ring-line">
+            <span class="flex items-center gap-0.5 text-muted">
+              Что нужно сделать?
+              <span class="caret h-4 w-px bg-text"></span>
+            </span>
+            <span class="mt-3 flex items-center justify-between">
+              <span class="grid size-8 place-items-center rounded-full ring-1 ring-line">
+                <Icon name="plus" size="sm" />
+              </span>
+              <span class="grid size-8 place-items-center rounded-full bg-text text-bg">
+                <Icon name="arrow-up" size="sm" />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </figure>
+
+    <div
+      data-reveal
+      class="relative isolate mx-auto w-full max-w-sm sm:max-w-md lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-[25rem] lg:self-end"
+    >
+      <div class="absolute inset-x-[4%] top-[14%] bottom-0 -z-10">
+        <Blob shape="spot" duration={18} />
+      </div>
+      <Image
+        src={astronautConsole}
+        alt=""
+        widths={[480, 800, 1306]}
+        sizes="(min-width: 640px) 28rem, 100vw"
+        loading="lazy"
+        class="w-full"
+      />
+    </div>
+  </div>
+
+  <ul data-reveal="group" class="mt-10 grid gap-3 md:grid-cols-3 lg:mt-14 lg:gap-5">
+    {RULES.map(({ icon, text }, i) => (
+      <li
+        style={`--i: ${i}`}
+        class="flex items-start gap-3 rounded-2xl bg-bg p-4 text-[0.9375rem] shadow-card ring-1 ring-line lg:p-5"
+      >
+        <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-tint text-accent-strong">
+          <Icon name={icon} size="md" />
+        </span>
+        <span class="pt-1.5">{text}</span>
+      </li>
+    ))}
+  </ul>
+</Band>
+
+<style>
+  .typing {
+    display: none;
+  }
+  .typing span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background: var(--text-muted);
+  }
+  .caret {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ask,
+    .after-answer {
+      transition:
+        opacity 0.5s var(--ease-out-expo),
+        translate 0.5s var(--ease-out-expo);
+    }
+    .ask {
+      transition-delay: 0.2s;
+    }
+    .after-answer {
+      transition-delay: 2.6s;
+    }
+    :global(.js) .chat:not([data-inview]) .ask,
+    :global(.js) .chat:not([data-inview]) .after-answer {
+      opacity: 0;
+      translate: 0 0.5rem;
+    }
+    :global(.js) .chat:not([data-inview]) .word {
+      opacity: 0;
+    }
+    :global(.js) .chat[data-inview] .word {
+      animation: word-in 0.45s var(--ease-out-expo) both;
+      animation-delay: calc(1.5s + var(--w) * 60ms);
+    }
+    :global(.js) .chat[data-inview] .typing {
+      display: flex;
+      animation: typing-window 1s 0.5s both;
+    }
+    :global(.js) .chat[data-inview] .avatar {
+      animation: avatar-think 1s 0.5s ease-in-out;
+    }
+    .typing span {
+      animation: typing-dot 0.9s ease-in-out infinite;
+    }
+    .typing span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    .typing span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    :global(.js) .chat[data-inview] .caret {
+      animation: caret 1.1s steps(1) 3.2s infinite;
+    }
+  }
+  @keyframes word-in {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      filter: none;
+    }
+  }
+  @keyframes typing-window {
+    0% {
+      opacity: 0;
+    }
+    20%,
+    85% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  @keyframes typing-dot {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    50% {
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+  }
+  @keyframes avatar-think {
+    50% {
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+  }
+  @keyframes caret {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+</style>

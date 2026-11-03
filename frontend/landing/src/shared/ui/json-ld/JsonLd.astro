@@ -1,0 +1,15 @@
+---
+/**
+ * Разметка schema.org для поисковиков (`Organization` в Layout, `FAQPage` в вопросах): объект
+ * кладётся в `<script type="application/ld+json">` как есть. `<` экранирован, чтобы строка с
+ * `</script>` не закрыла тег раньше времени.
+ */
+interface Props {
+  data: Record<string, unknown>;
+}
+
+const { data } = Astro.props;
+const json = JSON.stringify(data).replaceAll("<", "\\u003c");
+---
+
+<script is:inline type="application/ld+json" set:html={json} />

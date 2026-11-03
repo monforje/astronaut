@@ -1,0 +1,39 @@
+---
+/**
+ * «Сообщение системы» — так Astronaut говорит с менеджером: что случилось и что сделать (голос
+ * интерфейса из cta.md, «Сообщения в интерфейсе»). Голос системы — голос бренда (story.md), поэтому
+ * сообщения показывают продукт лучше описаний.
+ *
+ * Вид (DESIGN.md, «Сообщение системы»): белая карточка уведомления на мятной полосе, только мягкая
+ * тень — без рамки и без реакции на наведение: это не кнопка. Сверху мелко — какая проверка
+ * прислала сообщение (`source`); времени нет, это были бы придуманные цифры.
+ * Точка статуса: teal-круг — сверено, система справилась сама (`ok`); кольцо с расходящимся
+ * пульсом — нужно действие человека (`action`). Цифры — `Mono`, расхождение — `Mono variant="spark"`,
+ * что сделать — `<strong>`.
+ */
+interface Props {
+  source: string;
+  status?: "ok" | "action";
+}
+
+const { source, status = "ok" } = Astro.props;
+---
+
+<div class="relative flex gap-3 rounded-2xl bg-bg px-4 py-3.5 shadow-card lg:gap-3.5 lg:px-5">
+  <span aria-hidden="true" class="relative mt-1.5 grid size-2.5 shrink-0 place-items-center">
+    {status === "ok" ? (
+      <span class="size-2.5 rounded-full bg-accent" />
+    ) : (
+      <>
+        <span class="absolute inset-0 rounded-full bg-accent motion-safe:animate-ping-soft" />
+        <span class="relative size-2.5 rounded-full border-2 border-accent-strong bg-bg" />
+      </>
+    )}
+  </span>
+  <div>
+    <p class="text-xs font-medium text-muted lg:text-[0.8125rem]">{source}</p>
+    <p class="mt-1 text-[0.9375rem] leading-snug [&_strong]:font-semibold lg:text-base">
+      <span class="sr-only">Сообщение системы:</span> <slot />
+    </p>
+  </div>
+</div>

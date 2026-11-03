@@ -1,0 +1,96 @@
+---
+import { Band, Button, Heading, Lead, Mono } from "@/shared/ui";
+import { PathStep } from "../path-step";
+
+/**
+ * «Путь одного контейнера» — такт 4 подробно (story.md), сердце страницы: продукт показан на одном
+ * грузе от нового клиента до ЭТрН, как в «дне экспедитора» (02-produkt.md). Шаги и сообщения
+ * системы — PLAN.md, «5. Путь одного контейнера»; голос сообщений — cta.md. Контейнер, Ромашка и
+ * цифры — сквозной пример (story.md), его подаём как пример, а не как случай из практики. Второе
+ * действие — ссылка, не оранжевая: оранжевая кнопка ждёт в блоке «Демо».
+ *
+ * Главная сцена страницы: при появлении шаги выходят по очереди, маршрут прорисовывается сверху
+ * вниз. С prefers-reduced-motion всё на месте сразу.
+ */
+---
+
+<Band id="how" labelledby="how-title" tone="tint">
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-x-12">
+    <div>
+      <Heading id="how-title">Путь одного контейнера</Heading>
+      <Lead>
+        Пример: импорт из Китая во Владивосток, контейнер <Mono>MSKU1234567</Mono>, клиент ООО
+        Ромашка.
+      </Lead>
+    </div>
+
+    <ol data-reveal="group" class="path mt-8 space-y-5 lg:col-span-2 lg:space-y-4">
+      <PathStep
+        n={1}
+        title="Новый клиент"
+        text="Менеджер вводит ИНН, реквизиты подтягиваются из реестров. Дубль клиента система ловит сама."
+        source="Справочник клиентов"
+        status="action"
+      >
+        Это уже заведённая ООО Ромашка.
+      </PathStep>
+      <PathStep
+        n={2}
+        title="Документы поставщика"
+        text="PDF инвойса и упаковочного листа, на английском или китайском, превращается в строки груза. Менеджер проверяет, а не перебивает."
+        source="Сверка: инвойс и упаковочный лист"
+        status="action"
+      >
+        В инвойсе <Mono>120</Mono> мест, в упаковочном листе <Mono variant="spark">118</Mono>.{" "}
+        <strong>Проверьте упаковочный лист.</strong>
+      </PathStep>
+      <PathStep
+        n={3}
+        title="Черновик коносамента"
+        text="Сверяется с карточкой, пока исправление ещё бесплатное."
+        source="Сверка: упаковочный лист и коносамент"
+        status="action"
+      >
+        Вес брутто: в упаковочном листе <Mono>18 420 кг</Mono>, в коносаменте{" "}
+        <Mono variant="spark">18 920 кг</Mono>. Разница <Mono>2,7 %</Mono>, это больше допуска.{" "}
+        <strong>Проверьте коносамент до выпуска.</strong>
+      </PathStep>
+      <PathStep
+        n={4}
+        title="Таможня"
+        text="Данные для декларации берутся из карточки. Перед подачей декларацию сверяют с остальными документами."
+        source="Сверка перед подачей декларации"
+      >
+        Документы по контейнеру <Mono>MSKU1234567</Mono> сверены. Расхождений&nbsp;нет.
+      </PathStep>
+      <PathStep
+        n={5}
+        title="Доставка по России"
+        text="ЭТрН собирается из той же карточки. Система видит, кто ещё не подписал, и напоминает."
+        source="Подписание ЭТрН"
+        last
+      >
+        ЭТрН № <Mono>518</Mono> не подписана перевозчиком <Mono>2 часа</Mono>. Напомнили&nbsp;ему.
+      </PathStep>
+    </ol>
+
+    <div class="mt-6 lg:col-start-2 lg:row-start-1 lg:mt-0">
+      <Button href="#contact" variant="link" size="lg">
+        Покажем этот путь на демо
+      </Button>
+    </div>
+  </div>
+</Band>
+
+<style>
+  .path :global(.route) {
+    transform-origin: top;
+    transition: scale 0.7s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 110ms + 350ms);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .path:not([data-inview]) :global(.route) {
+      scale: 1 0;
+    }
+  }
+</style>

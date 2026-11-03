@@ -1,0 +1,66 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { Icon } from "../icon";
+
+/**
+ * Фото в блоке или заглушка на его месте. Слот лежит поверх своей обёртки (`absolute inset-0`), а
+ * размер, форму и скругление задаёт место, где он стоит: обёртка `relative overflow-hidden
+ * rounded-2xl` с высотой или `aspect-*`. Поэтому фото, пришедшее позже, встанет без сдвига вёрстки,
+ * не растянет строку сетки своей высотой и обрежется по центру (`object-cover`).
+ *
+ * Снимок приходит из `photo("<имя>")` (`@/shared/brand`): файл в idea/skelet/brand/photos/
+ * появляется на сайте сам. Пока файла нет — мятная заглушка с уголками видоискателя: камера, мелко
+ * `[TODO] фото`, что снять и какой файл положить. Раскладка — по ширине места (container queries):
+ * в широкой низкой полосе камера слева от текста, в узкой карточке — над ним, в аватаре — только
+ * камера. Заглушка скрыта от читалки (DESIGN.md, «Заглушка [TODO]»).
+ */
+interface Props {
+  photo: { file: string; todo: string; src?: ImageMetadata };
+  /** Подпись для читалки; `""` — фото для настроения, смысл несёт текст рядом. */
+  alt: string;
+  /** Ширина фото на экране, как в `<img sizes>`. */
+  sizes: string;
+  widths?: number[];
+}
+
+const { photo, alt, sizes, widths = [480, 800, 1200, 1600] } = Astro.props;
+
+const CORNERS = [
+  "top-3 left-3 rounded-tl-md border-t-2 border-l-2",
+  "top-3 right-3 rounded-tr-md border-t-2 border-r-2",
+  "bottom-3 left-3 rounded-bl-md border-b-2 border-l-2",
+  "right-3 bottom-3 rounded-br-md border-r-2 border-b-2",
+] as const;
+---
+
+{photo.src ? (
+  <Image
+    src={photo.src}
+    alt={alt}
+    widths={widths}
+    sizes={sizes}
+    loading="lazy"
+    class="absolute inset-0 size-full object-cover"
+  />
+) : (
+  <div aria-hidden="true" class="@container absolute inset-0 bg-tint">
+    <div class="relative grid size-full place-items-center p-1 text-center @min-[8rem]:p-5">
+      {CORNERS.map((corner) => (
+        <span class:list={["absolute hidden size-4 border-accent/70 @min-[8rem]:block", corner]} />
+      ))}
+      <span class="flex flex-col items-center gap-2.5 @min-[24rem]:flex-row @min-[24rem]:gap-4 @min-[24rem]:text-left">
+        <span class="grid size-8 shrink-0 place-items-center text-accent-strong @min-[8rem]:size-10 @min-[8rem]:rounded-full @min-[8rem]:bg-bg @min-[8rem]:shadow-card">
+          <Icon name="camera" size="sm" />
+        </span>
+        <span class="hidden max-w-xs @min-[13rem]:block">
+          <span class="block font-mono text-xs text-muted">[TODO] фото</span>{" "}
+          <span class="mt-1 block text-sm text-balance">{photo.todo}</span>{" "}
+          <span class="mt-1.5 block font-mono text-[0.6875rem] text-muted">
+            photos/{photo.file}
+          </span>
+        </span>
+      </span>
+    </div>
+  </div>
+)}

@@ -2,6 +2,12 @@
 /**
  * SEO-теги страницы: title, description, canonical и Open Graph. Адрес собирается из `site`
  * (astro.config.ts, `PUBLIC_SITE_URL`) и пути страницы.
+ *
+ * [TODO] `og:image` 1200×630 — превью ссылки в Telegram и почте, главном канале (PLAN.md, «SEO»):
+ * маскот и заголовок «Документы без расхождений» на белом с off-white пятном, в стиле первого
+ * экрана. Картинку — в idea/skelet/brand/, ссылкой в brand/public/brand/og.png; здесь — `og:image`
+ * абсолютным адресом от `site`, плюс `og:image:width`, `og:image:height` и `og:image:alt`. Пока
+ * картинки нет, ссылка в Telegram выглядит голой.
  */
 interface Props {
   title: string;

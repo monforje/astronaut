@@ -4,62 +4,65 @@ import { createTheme, type MantineColorsTuple } from "@mantine/core";
  * Тема Mantine бренда Astronaut. Фирменный цвет каждой шкалы стоит на индексе 6 — его Mantine берёт
  * для заливки, поэтому кнопки точно в цвет бренда. Используется frontend/demo-site через симлинк
  * (src/shared/ui/theme/theme.ts) — правка здесь сразу видна в демке.
+ *
+ * Палитра 03.11.2026 стала светлее (design/README.md, «Цвета»): шкалы сдвинуты вслед за базовым
+ * цветом в OKLCH — светлота с затуханием к белому и чёрному, тон по базовому.
  */
 
-/** Electric Teal #00C4C0 — основной. */
+/** Electric Teal #00D4D0 — основной. */
 const brand: MantineColorsTuple = [
-  "#ecfaf9",
-  "#d0f2f0",
-  "#acebe8",
-  "#86e3df",
-  "#61dad6",
-  "#3bd0cb",
-  "#00c4c0",
-  "#15a19e",
-  "#00807e",
-  "#05615f",
+  "#edfcfb",
+  "#d3f6f4",
+  "#b0f1ee",
+  "#8bece8",
+  "#66e5e1",
+  "#3fded9",
+  "#00d4d0",
+  "#1baeab",
+  "#098b89",
+  "#0d6967",
 ];
 
-/** Warm Orange #F88030 — акцент: CTA и точечные выделения. */
+/** Warm Orange #FF9455 — акцент: CTA и точечные выделения. */
 const accent: MantineColorsTuple = [
-  "#fff4ef",
-  "#ffe2d3",
-  "#ffd0b7",
-  "#ffbd98",
-  "#fda97a",
-  "#ff9352",
-  "#f88030",
-  "#d3640d",
-  "#a84f08",
-  "#813a02",
+  "#fff6f2",
+  "#ffe7da",
+  "#ffd8c3",
+  "#ffc8aa",
+  "#ffb790",
+  "#ffa675",
+  "#ff9455",
+  "#da7537",
+  "#ae5c28",
+  "#864419",
 ];
 
-/** Off-white #F4ECE0 (индекс 1) — тёплые фоны и подложки. */
+/** Off-white #FBF5EB (индекс 1) — тёплые фоны и подложки. */
 const sand: MantineColorsTuple = [
-  "#fdf5ea",
-  "#f4ece0",
-  "#e4d2b8",
-  "#d5b991",
-  "#c8a470",
-  "#c1975a",
-  "#bd904e",
-  "#a77d3e",
-  "#956e35",
-  "#825e28",
+  "#fffaf2",
+  "#fbf5eb",
+  "#e8dbc5",
+  "#d7c19f",
+  "#c9ac7f",
+  "#c19f6b",
+  "#bd985f",
+  "#a7844e",
+  "#957542",
+  "#826434",
 ];
 
-/** Deep Navy #041A31 — тёмная схема: [0] текст … [7] фон страницы … [9] самый тёмный. */
+/** Deep Navy #082F53 — тёмная схема: [0] текст … [7] фон страницы … [9] самый тёмный. */
 const dark: MantineColorsTuple = [
-  "#cbd2da",
-  "#afb8c3",
-  "#8794a3",
-  "#607083",
-  "#3c4f64",
-  "#253a50",
-  "#152a41",
-  "#041a31",
-  "#001329",
-  "#000c1f",
+  "#cfd7e0",
+  "#b5c0cc",
+  "#90a0b2",
+  "#6a7f98",
+  "#46617e",
+  "#2e4e6d",
+  "#1e3e61",
+  "#082f53",
+  "#002445",
+  "#011a35",
 ];
 
 /** Семейства — из `@font-face` в tokens.css рядом. */
@@ -70,10 +73,10 @@ export const theme = createTheme({
   primaryShade: 6,
   /** Teal и orange светлые: на залитых кнопках текст автоматически становится тёмным. */
   autoContrast: true,
-  black: "#041A31",
-  white: "#FDFDFD",
+  black: "#082F53",
+  white: "#FFFFFF",
   colors: { brand, accent, sand, dark },
   fontFamily: SANS,
-  fontFamilyMonospace: '"JetBrains Mono", ui-monospace, monospace',
+  fontFamilyMonospace: '"Fira Code", ui-monospace, monospace',
   headings: { fontFamily: SANS, fontWeight: "800" },
 });

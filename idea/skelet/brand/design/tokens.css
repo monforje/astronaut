@@ -8,19 +8,19 @@
 }
 
 @font-face {
-  font-family: "JetBrains Mono";
-  src: url("fonts/JetBrainsMono[wght].ttf") format("truetype");
-  font-weight: 100 800;
+  font-family: "Fira Code";
+  src: url("fonts/FiraCode[wght].ttf") format("truetype");
+  font-weight: 300 700;
   font-display: swap;
 }
 
 :root {
-  --color-navy: #041a31;
-  --color-teal: #00c4c0;
-  --color-orange: #f88030;
-  --color-off-white: #f4ece0;
-  --color-white: #fdfdfd;
+  --color-navy: #082f53;
+  --color-teal: #00d4d0;
+  --color-orange: #ff9455;
+  --color-off-white: #fbf5eb;
+  --color-white: #ffffff;
 
   --font-sans: "Onest", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-mono: "Fira Code", ui-monospace, monospace;
 }

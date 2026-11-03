@@ -1,0 +1,35 @@
+---
+/**
+ * Текст по буквам (реф Split Text): буквы выезжают снизу из размытия одна за другой. Слово не
+ * рвётся (`whitespace-nowrap`), пробелы между словами — настоящие, поэтому для поиска и
+ * копирования текст обычный. Задержка буквы — вычисляемый `animation-delay`. С
+ * prefers-reduced-motion буквы стоят сразу (`motion-safe:`).
+ */
+interface Props {
+  text: string;
+  /** Задержка первой буквы, мс. */
+  delay?: number;
+  /** Шаг между буквами, мс. */
+  step?: number;
+}
+
+const { text, delay = 0, step = 32 } = Astro.props;
+const words = text.split(" ");
+const starts = words.map((_, w) => words.slice(0, w).join("").length);
+---
+
+{words.map((word, w) => (
+  <>
+    <span class="inline-block whitespace-nowrap">
+      {[...word].map((char, i) => (
+        <span
+          class="inline-block motion-safe:animate-letter"
+          style={`animation-delay: ${delay + (starts[w]! + i) * step}ms`}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+    {w < words.length - 1 && " "}
+  </>
+))}

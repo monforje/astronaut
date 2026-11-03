@@ -6,3 +6,6 @@
 /.task/
 /node_modules/
 /.astro/
+# Дампы упавшего bun (по 16 ГБ): без игнора Tailwind сканирует их как исходники.
+/core.[0-9]*
+/.impeccable/

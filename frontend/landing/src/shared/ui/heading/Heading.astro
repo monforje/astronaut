@@ -1,0 +1,22 @@
+---
+/**
+ * Заголовок секции. На странице один `h1` (первый экран), у каждой секции свой `h2` — он же цель
+ * её `aria-labelledby`, поэтому `id` обязателен. Строки переносим вручную: каждая строка — `<span
+ * class="block">` в слоте, между строками — `{" "}`: Astro сжимает HTML и без явного пробела
+ * склеивает строки для читалок и поисковиков («контейнер.Десять»). Шаг вниз от H1 первого экрана —
+ * на каждой ширине (DESIGN.md, «Шрифт»). Появляется при прокрутке (`data-reveal`).
+ */
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<h2
+  id={id}
+  data-reveal
+  class="text-[1.875rem] leading-[1.05] font-extrabold tracking-tight sm:text-4xl lg:text-[2.5rem] xl:text-[2.75rem] 2xl:text-[3.25rem]"
+>
+  <slot />
+</h2>

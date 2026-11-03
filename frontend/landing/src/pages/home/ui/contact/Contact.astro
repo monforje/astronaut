@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import { DemoButton } from "@/features/request-demo";
+import { astronautPlug } from "@/shared/brand";
+import { EMAIL, MAILTO_URL } from "@/shared/config";
+import { Band, Blob, Heading, Icon, Mono } from "@/shared/ui";
+
+/**
+ * Блок «Демо» — такт 8 (story.md): первый шаг маленький. Заголовок продолжает сквозной пример, текст и
+ * подписи — PLAN.md, «11. Демо»; кнопка — единственная оранжевая на экране, с магнитом, открывает чат
+ * с CEO в Telegram с набранным сообщением, почта — запасной путь (PLAN.md, «Как устроена заявка»).
+ * Формы нет: персональные данные сайт не собирает.
+ *
+ * Полоса off-white, как блок «Один контейнер»: история закольцована. За иллюстрацией дышит белое
+ * пятно. Иллюстрация — из бренда (idea/skelet/brand/illustration.png): астронавт вставляет разъём в
+ * порт. Порт обрезан по правому краю картинки, поэтому она прижата к правому краю экрана. Вылет за
+ * поля — через `--bleed` (поле `page-container` плюс половина остатка экрана за его 96rem), а не одним
+ * `calc` с процентом и `min()`: на таком выражении Lightning CSS зацикливается (CLAUDE.md).
+ */
+---
+
+<Band id="contact" labelledby="contact-title" tone="surface">
+  <div class="grid items-center gap-8 lg:grid-cols-2 lg:gap-0">
+    <div class="relative z-10 lg:py-6">
+      <Heading id="contact-title">
+        <span class="block">Покажем на одном</span> <span class="block">контейнере</span>
+      </Heading>
+      <p data-reveal class="mt-4 max-w-xl text-base md:text-lg lg:mt-5 2xl:text-xl">
+        За 20 минут проведём контейнер <Mono>MSKU1234567</Mono> от инвойса до ЭТрН и посмотрим, где
+        документы расходятся у&nbsp;вас.
+      </p>
+
+      <div data-reveal class="mt-7 lg:mt-9">
+        <DemoButton />
+        <p class="mt-3 text-sm text-muted">
+          Откроется Telegram, сообщение уже набрано, останется отправить.
+        </p>
+      </div>
+
+      <p
+        data-reveal
+        class="mt-7 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.9375rem] lg:mt-9"
+      >
+        <span class="text-accent-strong">
+          <Icon name="mail" size="sm" />
+        </span>
+        Или напишите на{" "}
+        <a
+          href={MAILTO_URL}
+          class="rounded font-semibold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:decoration-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong motion-reduce:transition-none"
+        >
+          {EMAIL}
+        </a>
+      </p>
+    </div>
+
+    <div class="relative isolate -mr-4 ml-auto w-[calc(100%+1rem)] md:-mr-8 md:w-[calc(100%+2rem)] lg:mr-[calc(-1*var(--bleed))] lg:w-[calc(100%_+_var(--bleed))] lg:[--bleed:calc(2rem_+_(100vw_-_min(100vw,96rem))_/_2)] xl:[--bleed:calc(3rem_+_(100vw_-_min(100vw,96rem))_/_2)]">
+      <div class="absolute inset-y-[4%] right-0 left-[8%] -z-10">
+        <Blob shape="contact" tone="bg" duration={20} />
+      </div>
+      <Image
+        src={astronautPlug}
+        alt=""
+        widths={[480, 800, 1200, 1600]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="lazy"
+        class="w-full"
+      />
+    </div>
+  </div>
+</Band>

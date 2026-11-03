@@ -1,2 +1,11 @@
+export { Band } from "./band";
+export { Blob } from "./blob";
 export { Button } from "./button";
+export { Heading } from "./heading";
+export { Icon } from "./icon";
+export { JsonLd } from "./json-ld";
+export { Lead } from "./lead";
+export { Mono } from "./mono";
+export { PhotoSlot } from "./photo-slot";
 export { SeoHead } from "./seo-head";
+export { SplitText } from "./split-text";

@@ -7,11 +7,11 @@ html {
 
 /*
  * Ширина контента всех секций: одна на сайт, чтобы шапка, Hero и блоки стояли по одной линии.
- * На широких экранах поля растут, а не остаются 300px пустоты, как с max-w-7xl.
+ * Края широких экранов заполняют полосы секций и волны (`Band`), контент остаётся читаемой ширины.
  */
 @utility page-container {
   width: 100%;
-  max-width: 110rem;
+  max-width: 96rem;
   margin-inline: auto;
   padding-inline: 1rem;
 
@@ -19,17 +19,21 @@ html {
     padding-inline: 2rem;
   }
   @variant xl {
-    padding-inline: 4rem;
+    padding-inline: 3rem;
   }
 }
 
 /*
- * Появление текста первого экрана: `motion-safe:animate-rise` (снизу вверх), задержки —
- * `[animation-delay:…]` в разметке. С prefers-reduced-motion классы `motion-safe:` не срабатывают,
- * и всё видно сразу. Иллюстрация не анимируется.
+ * Движение (DESIGN.md, «Движение»). Одна главная сцена — путь контейнера; остальное — короткие
+ * ответы на прокрутку и наведение. Всё под prefers-reduced-motion: с ним классы `motion-safe:` не
+ * срабатывают, анимации ниже не объявлены, контент виден сразу.
  */
 @theme {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-letter: letter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-twinkle: twinkle 3.6s ease-in-out infinite;
+  --animate-ping-soft: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 
   @keyframes rise {
     from {
@@ -41,10 +45,71 @@ html {
       transform: none;
     }
   }
+
+  /* Буква заголовка: выезжает снизу из размытия — «Split Text» первого экрана. */
+  @keyframes letter {
+    from {
+      opacity: 0;
+      transform: translateY(0.5em) rotate(4deg);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.35;
+      transform: scale(0.7);
+    }
+  }
+
+  /* Кольцо вокруг точки статуса «нужно действие»: расходится и гаснет. */
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    80%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+
+  /*
+   * Появление при прокрутке. `data-reveal` — сам элемент, `data-reveal="group"` — его дети по
+   * очереди (`--i` — номер ребёнка). `data-inview` ставит shared/lib/reveal, когда блок на экране.
+   * Пока JS не отработал (нет `.js` на <html>), всё видно: прятать без JS нельзя.
+   */
+  .js [data-reveal]:not([data-reveal="group"]),
+  .js [data-reveal="group"] > * {
+    opacity: 0;
+    translate: 0 1.5rem;
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      translate 0.8s var(--ease-out-expo);
+  }
+  .js [data-reveal="group"] > * {
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+  .js [data-reveal][data-inview]:not([data-reveal="group"]),
+  .js [data-reveal="group"][data-inview] > * {
+    opacity: 1;
+    translate: 0 0;
   }
 }

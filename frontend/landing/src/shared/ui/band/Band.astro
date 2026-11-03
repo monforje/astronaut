@@ -1,0 +1,57 @@
+---
+/**
+ * Полоса секции на всю ширину экрана. `plain` — белая, `surface` — off-white, `tint` — мятная. У
+ * цветной полосы сверху и снизу волна того же цвета. Волна неподвижная: перетекающий край мельтешил
+ * при прокрутке, анимацию убрали (03.11.2026). Сверху и снизу формы разные, чтобы край не выглядел
+ * штампом. Цветные полосы чередуются с белыми: блоки не склеены, края широкого экрана заняты цветом.
+ * Внутри — `page-container` со слотом; вылет к краю экрана (пятна, картинки) секция ставит
+ * `absolute` — полоса для него `relative`.
+ */
+interface Props {
+  id: string;
+  labelledby: string;
+  tone?: "plain" | "surface" | "tint";
+}
+
+const WAVES = {
+  top: "M0 35.1C120.0 26.4 240.0 36.3 360.0 30.2C480.0 20.4 600.0 50.1 720.0 44.2C840.0 35.0 960.0 34.2 1080.0 28.0C1200.0 21.7 1320.0 50.2 1440.0 41.0L1440 80L0 80Z",
+  bottom:
+    "M0 42.0C120.0 28.9 240.0 56.9 360.0 43.7C480.0 36.5 600.0 60.0 720.0 48.9C840.0 38.1 960.0 43.6 1080.0 33.8C1200.0 20.0 1320.0 54.3 1440.0 44.3L1440 80L0 80Z",
+} as const;
+
+const { id, labelledby, tone = "plain" } = Astro.props;
+const edges = tone === "plain" ? [] : (["top", "bottom"] as const);
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={[
+    "relative isolate scroll-mt-12",
+    tone === "surface" && "my-10 bg-surface lg:my-14",
+    tone === "tint" && "my-10 bg-tint lg:my-14",
+  ]}
+>
+  {edges.map((edge) => (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 1440 80"
+      preserveAspectRatio="none"
+      class:list={[
+        "pointer-events-none absolute inset-x-0 h-8 w-full lg:h-12",
+        edge === "top" ? "bottom-[calc(100%-1px)]" : "top-[calc(100%-1px)] -scale-y-100",
+        tone === "surface" ? "fill-surface" : "fill-tint",
+      ]}
+    >
+      <path d={WAVES[edge]} />
+    </svg>
+  ))}
+  <div
+    class:list={[
+      "page-container",
+      tone === "plain" ? "py-12 lg:py-16" : "py-12 lg:py-16 2xl:py-20",
+    ]}
+  >
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,79 @@
+---
+import { Band, Heading, Icon, Lead, Mono } from "@/shared/ui";
+import { DocsStack } from "../docs-stack";
+
+/**
+ * «Один контейнер. Десять документов.» — такты 1 и 2 (story.md): человек узнаёт свой день и видит,
+ * что это стоит денег. Заголовок, лид, четыре сцены и строка-вывод — PLAN.md, «3. Один контейнер,
+ * десять документов». Сцены собраны из открытых источников (03-cennost.md), а не из слов клиентов,
+ * поэтому они без кавычек, имён и должностей. Цифры — из сквозного примера (story.md); то, что не
+ * сходится, — `Mono variant="spark"`: глаз сам находит 118.
+ *
+ * Справа — веер документов (`DocsStack`): та же сцена на листах, похожих на настоящие (с размытыми
+ * реквизитами), и лупы над 120 и 118. Нарисованную иллюстрацию контейнера сюда больше не ждём:
+ * попросили фото документов. Появятся настоящие сканы с разрешением владельца — заменить JPEG в
+ * idea/skelet/brand/documents/.
+ */
+const SCENES = [
+  { icon: "box", fact: null, after: "Узнали на таможне." },
+  {
+    icon: "users",
+    fact: "ООО Ромашка в 1С, Ромашка ООО в CRM, Romashka в кабинете терминала.",
+    after: null,
+  },
+  { icon: "document", fact: "ЭТрН отклонили из-за опечатки в ИНН.", after: "Отгрузка стоит." },
+  {
+    icon: "sync",
+    fact: "Обмен 1С с сайтом упал вечером.",
+    after: "Заметили утром, когда позвонил клиент.",
+  },
+] as const;
+---
+
+<Band id="pain" labelledby="pain-title" tone="surface">
+  <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+    <div>
+      <Heading id="pain-title">
+        <span class="block">Один контейнер.</span> <span class="block">Десять документов.</span>
+      </Heading>
+      <Lead>
+        Инвойс, упаковочный лист, коносамент, предварительная информация, декларация, ЭТрН. Каждый
+        заполняет свой человек в своей программе, и вес с названием товара каждый раз вбивают
+        заново.
+      </Lead>
+
+      <ul data-reveal="group" class="mt-7 space-y-3 lg:mt-9">
+        {SCENES.map(({ icon, fact, after }, i) => (
+          <li style={`--i: ${i}`} class="flex items-start gap-3 text-[0.9375rem] lg:text-base">
+            <span class="grid size-8 shrink-0 place-items-center rounded-xl bg-bg text-accent-strong shadow-card ring-1 ring-line">
+              <Icon name={icon} size="sm" />
+            </span>
+            <span class="pt-1">
+              {fact ?? (
+                <>
+                  В инвойсе <Mono>120</Mono> мест, в коносаменте <Mono variant="spark">118</Mono>.
+                </>
+              )}
+              {after && (
+                <>
+                  {" "}
+                  <span class="text-muted">{after}</span>
+                </>
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <p
+        data-reveal
+        class="mt-7 max-w-xl text-lg leading-snug font-bold text-balance lg:mt-9 lg:text-xl"
+      >
+        Ошибку находят там, где она уже стоит денег: декларацию задерживают, накладную отклоняют,
+        коносамент правят за плату.
+      </p>
+    </div>
+
+    <DocsStack />
+  </div>
+</Band>

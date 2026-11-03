@@ -223,3 +223,38 @@ describe("границы сегментов", () => {
     expect(bad.map(rel)).toEqual([]);
   });
 });
+
+describe("сборка CSS", () => {
+  /** Каталоги, которые Tailwind не сканирует (или там нет наших текстов). */
+  const SKIP = new Set([
+    "node_modules",
+    "dist",
+    ".astro",
+    ".git",
+    "coverage",
+    "e2e-results",
+    "deploy",
+  ]);
+  const TEXT = /\.(astro|ts|mjs|js|md|css|html|json|ya?ml|txt)$/;
+
+  function texts(dir: string): string[] {
+    return readdirSync(dir).flatMap((name) => {
+      if (SKIP.has(name)) return [];
+      const path = join(dir, name);
+      if (!existsSync(path)) return [];
+      if (statSync(path).isDirectory()) return texts(path);
+      return TEXT.test(name) ? [path] : [];
+    });
+  }
+
+  it("нигде нет класса с calc(), где % смешан с min()/max()/clamp(): Lightning CSS на нём падает", () => {
+    // Tailwind сканирует все текстовые файлы проекта, документацию тоже: такой класс даже в примере
+    // раздувает dev-сервер и сборку до 10+ ГБ (CLAUDE.md, «calc gotcha»).
+    const risky = /\[[^\]\s]*calc\((?=[^\]\s]*%)(?=[^\]\s]*\b(?:min|max|clamp)\()[^\]\s]*\]/;
+    expect(
+      texts(ROOT)
+        .filter((f) => risky.test(read(f)))
+        .map(rel),
+    ).toEqual([]);
+  });
+});

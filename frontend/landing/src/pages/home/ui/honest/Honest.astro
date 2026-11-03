@@ -1,0 +1,59 @@
+---
+import { Band, Blob, Heading, Icon } from "@/shared/ui";
+
+/**
+ * «Чего мы не обещаем» — такт 7 (story.md): им можно верить. На обычных сайтах такого блока нет,
+ * поэтому его запоминают, и он заранее снимает вопрос «а вы кто такие». Текст — PLAN.md, «8. Чего мы
+ * не обещаем», разбит на строки почти дословно; источники — 10-shpargalka.md, раздел 7, и
+ * возражение «Вы новые» в phrases.md.
+ *
+ * Весь блок — записка на дышащем off-white пятне: это разговор, а не реклама. На узком экране пятно
+ * растянулось бы в вертикальную линзу и текст вылез бы за край, поэтому там записка — скруглённая
+ * off-white карточка, а пятно появляется с `lg`. Чего не обещаем — с крестиком, что делаем — с
+ * галочкой, ниже кто мы и как начинаем.
+ */
+const LIMITS = [
+  "Порт и железную дорогу мы не ускорим.",
+  "Ставки не снизим.",
+  "1С и программу брокера не заменим: мы работаем поверх них.",
+] as const;
+---
+
+<Band id="honest" labelledby="honest-title">
+  <div
+    data-reveal
+    class="relative isolate grid gap-6 rounded-[2rem] bg-surface px-5 py-8 sm:gap-8 sm:px-10 sm:py-12 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-14 lg:rounded-none lg:bg-transparent lg:px-16 lg:py-16 xl:px-20"
+  >
+    <div class="absolute -inset-x-6 inset-y-0 -z-10 hidden lg:block">
+      <Blob shape="note" duration={30} />
+    </div>
+
+    <Heading id="honest-title">
+      <span class="block">Чего мы</span> <span class="block">не обещаем</span>
+    </Heading>
+
+    <div class="max-w-2xl">
+      <ul class="space-y-2.5 text-[0.9375rem] lg:text-base">
+        {LIMITS.map((limit) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-bg text-muted shadow-card">
+              <Icon name="x" size="sm" />
+            </span>
+            {limit}
+          </li>
+        ))}
+        <li class="flex items-start gap-3 font-semibold">
+          <span class="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-accent text-accent-contrast">
+            <Icon name="check" size="sm" />
+          </span>
+          Мы убираем задержки, которые случаются из-за ошибок в документах.
+        </li>
+      </ul>
+      <p class="mt-6 text-[0.9375rem] text-muted lg:mt-8 lg:text-base">
+        Мы новая команда, готовых кейсов у нас пока нет. Поэтому начинаем с одного вашего потока
+        документов на реальных данных.{" "}
+        <strong class="font-bold text-text">Не покажем результат&nbsp;— не&nbsp;продолжаем.</strong>
+      </p>
+    </div>
+  </div>
+</Band>

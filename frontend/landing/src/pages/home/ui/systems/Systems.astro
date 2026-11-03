@@ -1,0 +1,158 @@
+---
+import { photo } from "@/shared/brand";
+import { Band, Heading, Icon, Lead, PhotoSlot } from "@/shared/ui";
+
+/**
+ * «Работает с тем, что у вас уже есть» — такт 6 (story.md) и главное возражение «у нас уже есть
+ * 1С». Заголовок и лид — PLAN.md, «7. Поверх ваших программ»; список систем — «Что войдёт в первую
+ * версию» (02-produkt.md), текстом, без чужих логотипов; две ценности — phrases.md («П1. Обмены»,
+ * «П2. Справочник»), карточками с иконками интерфейса: иконки бренда из трёх слов не повторяем.
+ *
+ * Схема: Astronaut сверху, от него teal-кабель (как у маскота) с отводом к каждой системе —
+ * «поверх ваших программ» видно без слов. На `lg` отводы двух длин через один: подписи стоят в одну
+ * строку и не сталкиваются; по шине и отводам бегут блики — данные идут. На телефоне кабель идёт
+ * вниз, системы — столбиком, без бликов.
+ *
+ * Справа от заголовка — фото рабочего места экспедитора (1С на мониторе, папки): «то, что у вас уже
+ * есть» узнаётся с первого взгляда. Фото стоит в колонке и кончается там же, где схема и карточки:
+ * вылет к краю экрана, как у иллюстрации «Демо», на широком экране выглядел обрезанным. Высоту
+ * задаёт колонка с текстом. Снимок — idea/skelet/brand/photos/office.jpg (`photo("office")`).
+ */
+const SYSTEMS = [
+  "1С",
+  "Битрикс24",
+  "Базы данных",
+  "Почта и Excel",
+  "Операторы ЭПД",
+  "ЕГРЮЛ",
+  "ГосЛог",
+  "Telegram",
+] as const;
+
+const VALUES = [
+  {
+    icon: "sync",
+    title: "Обмены, которые не ломаются молча",
+    text: "1С, CRM, сайт и кабинеты связаны, о сбое — сообщение в ту же минуту.",
+  },
+  {
+    icon: "users",
+    title: "Одна Ромашка вместо трёх",
+    text: "Клиенты, перевозчики и поставщики — один справочник на все системы, с проверкой по ЕГРЮЛ и ГосЛогу.",
+  },
+] as const;
+---
+
+<Band id="systems" labelledby="systems-title" tone="surface">
+  <div class="grid gap-6 lg:grid-cols-2 lg:gap-12">
+    <div>
+      <Heading id="systems-title">
+        <span class="block">Работает с тем,</span> <span class="block">что у вас уже есть</span>
+      </Heading>
+      <Lead>
+        Мы не заменяем 1С, программу брокера и оператора ЭПД. Мы связываем их между собой, и данные
+        о клиенте и грузе везде одинаковые.
+      </Lead>
+    </div>
+    <div data-reveal class="relative h-48 overflow-hidden rounded-2xl sm:h-56 lg:h-auto">
+      <PhotoSlot photo={photo("office")} alt="" sizes="(min-width: 1024px) 45vw, 100vw" />
+    </div>
+  </div>
+
+  <div data-reveal class="cable mt-9 lg:mt-12">
+    <h3 class="text-base font-bold lg:text-lg">Подключения первой версии</h3>
+    <div class="mt-5 lg:flex lg:items-start">
+      <span class="inline-flex items-center gap-2 rounded-full bg-text py-2 pr-4 pl-2 text-base leading-tight font-extrabold tracking-tight text-bg shadow-lift lg:shrink-0">
+        <img src="/brand/astronaut.svg" alt="" width="920" height="744" class="h-6 w-auto" />
+        Astronaut
+      </span>
+      <ul class="bus relative ml-5 pt-3 pl-8 text-base font-semibold before:absolute before:top-0 before:bottom-[1.05rem] before:left-0 before:w-[3px] before:rounded-full before:bg-accent lg:ml-0 lg:grid lg:flex-1 lg:grid-cols-8 lg:pt-0 lg:pl-0 lg:text-center lg:before:top-[1.1rem] lg:before:right-[6.25%] lg:before:bottom-auto lg:before:h-[3px] lg:before:w-auto xl:text-[1.0625rem]">
+        {SYSTEMS.map((name, i) => (
+          <li
+            style={`--i: ${i}`}
+            class="drop relative py-1.5 before:absolute before:top-1/2 before:-left-8 before:h-[3px] before:w-6 before:-translate-y-1/2 before:rounded-full before:bg-accent lg:px-1 lg:pt-14 lg:pb-0 lg:whitespace-nowrap lg:before:top-[1.1rem] lg:before:left-1/2 lg:before:h-10 lg:before:w-[3px] lg:before:translate-y-0 lg:before:-translate-x-1/2 lg:even:pt-[6.25rem] lg:even:before:h-[4.75rem]"
+          >
+            <span class="rounded-lg bg-bg px-2.5 py-1 shadow-card ring-1 ring-line lg:inline-block">
+              {name}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <ul data-reveal="group" class="mt-10 grid gap-4 md:grid-cols-2 lg:mt-14 lg:gap-6">
+    {VALUES.map(({ icon, title, text }, i) => (
+      <li
+        style={`--i: ${i}`}
+        class="flex items-start gap-4 rounded-2xl bg-bg p-5 shadow-card ring-1 ring-line lg:p-6"
+      >
+        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-tint text-accent-strong">
+          <Icon name={icon} size="lg" />
+        </span>
+        <span>
+          <h3 class="text-lg leading-tight font-bold text-balance lg:text-xl">{title}</h3>
+          <p class="mt-1.5 text-[0.9375rem] text-muted">{text}</p>
+        </span>
+      </li>
+    ))}
+  </ul>
+</Band>
+
+<style>
+  @media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
+    .bus::after,
+    .drop::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      background-repeat: no-repeat;
+      opacity: 0;
+    }
+    .bus::after {
+      top: 1.1rem;
+      left: 0;
+      right: 6.25%;
+      height: 3px;
+      background-image: linear-gradient(90deg, transparent, var(--bg), transparent);
+      background-size: 18% 100%;
+    }
+    .drop::after {
+      top: 1.1rem;
+      left: 50%;
+      width: 3px;
+      height: 2.5rem;
+      translate: -50% 0;
+      background-image: linear-gradient(180deg, transparent, var(--bg), transparent);
+      background-size: 100% 45%;
+    }
+    .drop:nth-child(even)::after {
+      height: 4.75rem;
+    }
+    .cable[data-inview] .bus::after {
+      opacity: 1;
+      animation: flow-x 3.2s linear infinite;
+    }
+    .cable[data-inview] .drop::after {
+      opacity: 1;
+      animation: flow-y 2.4s linear infinite;
+      animation-delay: calc(var(--i) * 0.3s);
+    }
+  }
+  @keyframes flow-x {
+    from {
+      background-position: -20% 0;
+    }
+    to {
+      background-position: 120% 0;
+    }
+  }
+  @keyframes flow-y {
+    from {
+      background-position: 0 -60%;
+    }
+    to {
+      background-position: 0 160%;
+    }
+  }
+</style>

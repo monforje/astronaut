@@ -1,0 +1,143 @@
+---
+import { Image } from "astro:assets";
+import {
+  docBillOfLading,
+  docDeclaration,
+  docInvoice,
+  docPackingList,
+  docPreInfo,
+  docWaybill,
+} from "@/shared/brand";
+import { Icon, Mono } from "@/shared/ui";
+
+/**
+ * «Один контейнер, десять документов» — веер настоящих на вид листов: от плашки контейнера
+ * MSKU1234567 расходятся документы из лида секции (PLAN.md, «3»). Листы — idea/skelet/brand/documents:
+ * по сквозному примеру, реквизиты размыты, как на фото документов. Цифры на них только из примера:
+ * инвойс — 120 мест, упаковочный лист — 118 и 18 420 кг, коносамент — 118 под оранжевым маркером и
+ * 18 920 кг. Мелкий шрифт листов в веере не прочесть, поэтому над инвойсом и коносаментом — лупы с
+ * тем же местом крупно: 120 CTNS против 118 PACKAGES.
+ *
+ * Задние листы левой половины лежат слева направо, правой — справа налево, спереди инвойс и
+ * коносамент. Лупы — отдельным слоем поверх всех листов, с той же геометрией, что у их листа: иначе
+ * коносамент перекрыл бы лупу инвойса.
+ *
+ * Движение: при появлении на экране листы раскрываются веером из стопки, лупы проявляются следом;
+ * при наведении веер чуть шире. Без JS и с prefers-reduced-motion всё на месте сразу. Для читалки
+ * блок скрыт — сцена 120/118 есть текстом рядом.
+ */
+const BACK = [
+  { src: docPackingList, r: "-16deg", x: "-64%", y: "2%" },
+  { src: docPreInfo, r: "-7deg", x: "-30%", y: "-8%" },
+  { src: docWaybill, r: "16deg", x: "64%", y: "2%" },
+  { src: docDeclaration, r: "7deg", x: "30%", y: "-8%" },
+] as const;
+
+const FRONT = [
+  {
+    src: docInvoice,
+    r: "-4deg",
+    x: "-40%",
+    y: "15%",
+    // Где на листе строка «TOTAL: 120 CTNS» — центр лупы, в долях листа.
+    loupe: { left: "50%", top: "60%", value: "120", unit: "CTNS", spark: false },
+  },
+  {
+    src: docBillOfLading,
+    r: "4deg",
+    x: "40%",
+    y: "17%",
+    loupe: { left: "42%", top: "50%", value: "118", unit: "PACKAGES", spark: true },
+  },
+] as const;
+
+const sheet = "doc absolute top-[8%] left-[30%] aspect-[3/4] w-[40%]";
+---
+
+<div
+  aria-hidden="true"
+  data-reveal
+  class="stack group @container relative mx-auto aspect-[6/5] w-full max-w-[34rem] select-none"
+>
+  {[...BACK, ...FRONT].map(({ src, r, x, y }, i) => (
+    <div
+      class:list={[
+        sheet,
+        "overflow-hidden rounded-[3px] bg-bg",
+        i < BACK.length ? "shadow-card" : "shadow-lift",
+      ]}
+      style={`--r: ${r}; --x: ${x}; --y: ${y}; --i: ${i}`}
+    >
+      <Image
+        src={src}
+        alt=""
+        widths={[240, 480, 720]}
+        sizes="(min-width: 1024px) 14rem, 40vw"
+        loading="lazy"
+        class="size-full object-cover"
+      />
+    </div>
+  ))}
+
+  {FRONT.map(({ r, x, y, loupe }, i) => (
+    <div
+      class={`${sheet} pointer-events-none`}
+      style={`--r: ${r}; --x: ${x}; --y: ${y}; --i: ${BACK.length + i}`}
+    >
+      <span
+        class="loupe absolute grid aspect-square w-[50%] -translate-1/2 place-items-center rounded-full bg-bg/95 shadow-lift ring-[3px] ring-text"
+        style={`left: ${loupe.left}; top: ${loupe.top}; --l: ${i}`}
+      >
+        <span class="text-center font-mono leading-none font-bold">
+          <span class="block text-[max(4.4cqi,0.9375rem)]">
+            {loupe.spark ? <Mono variant="spark">{loupe.value}</Mono> : loupe.value}
+          </span>
+          <span class="mt-[0.35em] block text-[max(1.7cqi,0.5625rem)] tracking-wider text-muted">
+            {loupe.unit}
+          </span>
+        </span>
+        <span class="absolute top-[85%] left-[85%] h-[12%] w-[38%] origin-left -translate-y-1/2 rotate-45 rounded-full bg-text" />
+      </span>
+    </div>
+  ))}
+
+  <div class="absolute bottom-[2%] left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-2xl bg-text px-4 py-2.5 font-mono text-xs text-bg shadow-lift sm:text-sm">
+    <span class="text-accent">
+      <Icon name="box" size="sm" />
+    </span>
+    MSKU1234567
+  </div>
+</div>
+
+<style>
+  .doc {
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+    transition: transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 70ms);
+  }
+  .stack:hover .doc {
+    transform: translate(calc(var(--x) * 1.08), calc(var(--y) - 2%)) rotate(calc(var(--r) * 1.15));
+    transition-delay: 0ms;
+  }
+  .loupe {
+    transition:
+      opacity 0.5s var(--ease-out-expo),
+      scale 0.6s var(--ease-out-expo);
+    transition-delay: calc(0.9s + var(--l) * 0.25s);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .stack:not([data-inview]) .doc {
+      transform: none;
+    }
+    :global(.js) .stack:not([data-inview]) .loupe {
+      opacity: 0;
+      scale: 0.6;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .doc,
+    .loupe {
+      transition: none;
+    }
+  }
+</style>

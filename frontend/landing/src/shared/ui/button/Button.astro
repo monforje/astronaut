@@ -1,27 +1,36 @@
 ---
 /**
- * Ссылка в виде кнопки: на лендинге все действия — переходы (якорь, почта, другой сайт), поэтому
- * разметка всегда `<a>`. `primary` — один главный призыв на экран, `link` — второй, текстом.
+ * Ссылка в виде кнопки: на лендинге все действия — переходы (якорь, почта, Telegram), поэтому
+ * разметка всегда `<a>`. `primary` — один главный призыв на экран, оранжевый; `secondary` — тот же
+ * призыв там, где рядом уже стоит `primary` (шапка над первым экраном), navy; `link` — второе
+ * действие, текстом. `magnet` — разметка для магнита (features/request-demo): атрибут и плавный
+ * возврат; сам скрипт подключает фича.
  */
 interface Props {
   href: string;
-  variant?: "primary" | "link";
+  variant?: "primary" | "secondary" | "link";
   size?: "md" | "lg";
+  magnet?: boolean;
 }
 
-const { href, variant = "primary", size = "md" } = Astro.props;
+const { href, variant = "primary", size = "md", magnet = false } = Astro.props;
+const pill = variant !== "link";
 ---
 
 <a
   href={href}
+  data-magnet={magnet ? "" : undefined}
   class:list={[
-    "group inline-flex items-center gap-2 font-semibold whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong",
-    variant === "primary" && "rounded-full bg-spark text-spark-contrast hover:bg-spark/85",
-    variant === "primary" && size === "md" && "px-5 py-2.5 text-sm lg:px-6 lg:py-3 lg:text-base",
-    variant === "primary" && size === "lg" && "px-7 py-4 text-base 2xl:px-8 2xl:py-5 2xl:text-lg",
+    "group inline-flex items-center gap-2 font-semibold whitespace-nowrap transition-[color,background-color,translate,box-shadow] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong motion-reduce:transition-none",
+    pill && "rounded-full",
+    variant === "primary" &&
+      "bg-spark text-spark-contrast shadow-[0_10px_24px_-12px_var(--color-spark)] hover:bg-spark/90",
+    variant === "secondary" && "bg-text text-bg hover:bg-text/85",
+    pill && size === "md" && "px-4 py-2 text-sm lg:px-5 lg:py-2.5",
+    pill && size === "lg" && "px-6 py-3.5 text-[0.9375rem] 2xl:px-7 2xl:text-base",
     variant === "link" && "rounded text-text",
-    variant === "link" && size === "md" && "py-2.5 text-sm",
-    variant === "link" && size === "lg" && "py-4 text-base 2xl:py-5 2xl:text-lg",
+    variant === "link" && size === "md" && "py-2 text-sm lg:py-2.5",
+    variant === "link" && size === "lg" && "py-3.5 text-[0.9375rem] 2xl:text-base",
   ]}
 >
   {variant === "link" ? (

@@ -1,0 +1,142 @@
+---
+import { photo } from "@/shared/brand";
+import { Band, Heading, Icon, PhotoSlot } from "@/shared/ui";
+
+/**
+ * «Почему сейчас» — такт 3 (story.md): дальше будет строже. Заголовок и три строки — PLAN.md,
+ * «4. Почему сейчас»; даты — 10-shpargalka.md, раздел 10; заголовок подкреплён 03-cennost.md
+ * («любая неточность в реквизитах превращается в остановку отгрузки»). Падение выручки на 15–50%
+ * сюда не берём: давит на больное и не про нас.
+ *
+ * Каждая строка: карточка даты (иконка, дата моноширинным, тема) — связка с узлом — карточка с
+ * тем, что это значит; узлы соединены вертикальной линией, как вехи. При появлении цифры даты
+ * выезжают по одной, как на табло, связки прорисовываются. Читалка получает дату словами
+ * (`sr-only`), цифры скрыты.
+ *
+ * Справа от заголовка — широкое фото над колонкой смыслов (та же сетка, что у строк): фуры у ворот
+ * терминала, «отгрузка стоит» видно без слов. Фото для настроения, `alt=""`; сгенерировано по
+ * промпту из idea/skelet/brand/photos/README.md (`photo("trucks")`, файл trucks.jpg).
+ */
+const GRID = "lg:grid-cols-[minmax(0,0.85fr)_4.5rem_minmax(0,1.15fr)]";
+const ROWS = [
+  {
+    icon: "document",
+    date: "01.09.2026",
+    datetime: "2026-09-01",
+    spoken: "1 сентября 2026",
+    topic: "Электронные перевозочные документы",
+    text: "Перевозочные документы только в электронном виде. Опечатка в реквизитах, и накладную отклоняют.",
+  },
+  {
+    icon: "shield",
+    date: "01.03.2027",
+    datetime: "2027-03-01",
+    spoken: "1 марта 2027",
+    topic: "Реестр перевозчиков",
+    text: "Договор можно заключить только с перевозчиком из государственного реестра.",
+  },
+  {
+    icon: "archive",
+    date: "3 года",
+    datetime: null,
+    spoken: "3 года",
+    topic: "Хранение сведений",
+    text: "Столько экспедитор хранит договоры и сведения о грузе и выдаёт их по запросу.",
+  },
+] as const;
+---
+
+<Band id="why-now" labelledby="why-now-title">
+  <div class:list={["grid gap-6 lg:items-end lg:gap-0", GRID]}>
+    <div class="lg:col-span-2">
+      <Heading id="why-now-title">
+        <span class="block">С сентября ошибка</span>{" "}
+        <span class="block">останавливает отгрузку</span>
+      </Heading>
+    </div>
+    <div data-reveal class="relative h-40 overflow-hidden rounded-2xl lg:h-36 2xl:h-44">
+      <PhotoSlot photo={photo("trucks")} alt="" sizes="(min-width: 1024px) 50vw, 100vw" />
+    </div>
+  </div>
+
+  <ol data-reveal="group" class="board mt-8 grid gap-4 lg:mt-8 lg:gap-5">
+    {ROWS.map(({ icon, date, datetime, spoken, topic, text }, i) => (
+      <li style={`--i: ${i}`} class:list={["grid gap-2 lg:gap-0", GRID]}>
+        <div class="flex items-center gap-4 rounded-2xl bg-bg p-4 shadow-card ring-1 ring-accent/45 lg:p-5">
+          <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-tint text-accent-strong lg:size-14">
+            <Icon name={icon} size="lg" />
+          </span>
+          <span class="min-w-0">
+            {datetime ? (
+              <time datetime={datetime} class="sr-only">
+                {spoken}
+              </time>
+            ) : (
+              <span class="sr-only">{spoken}</span>
+            )}{" "}
+            <span
+              aria-hidden="true"
+              class="block overflow-hidden font-mono text-[1.625rem] leading-tight font-semibold tracking-tight lg:text-[1.875rem] 2xl:text-[2.25rem]"
+            >
+              {[...date].map((char, d) => (
+                <span class="digit" style={`--d: ${d}`}>
+                  {char === " " ? " " : char}
+                </span>
+              ))}
+            </span>{" "}
+            <span class="mt-0.5 block text-sm text-muted">{topic}</span>
+          </span>
+        </div>{" "}
+        <span aria-hidden="true" class="wire relative hidden lg:block">
+          <span class="line absolute top-1/2 right-0 left-0 h-0.5 -translate-y-1/2 bg-accent/60" />
+          <span class="spine absolute left-1/2 w-0.5 -translate-x-1/2 bg-accent/30" />
+          <span class="node absolute top-1/2 left-1/2 size-3 -translate-1/2 rounded-full bg-bg ring-[3px] ring-accent" />
+        </span>{" "}
+        <p class="flex items-center rounded-2xl bg-surface px-5 py-4 text-[0.9375rem] lg:px-6 lg:text-base">
+          {text}
+        </p>
+      </li>
+    ))}
+  </ol>
+</Band>
+
+<style>
+  .spine {
+    top: -0.625rem;
+    bottom: -0.625rem;
+  }
+  li:first-child .spine {
+    top: 50%;
+  }
+  li:last-child .spine {
+    bottom: 50%;
+  }
+  .digit {
+    display: inline-block;
+    transition:
+      transform 0.6s var(--ease-out-expo),
+      opacity 0.6s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 140ms + var(--d) * 45ms + 250ms);
+  }
+  .line {
+    transform-origin: left;
+    transition: scale 0.7s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 140ms + 450ms);
+  }
+  .node {
+    transition: scale 0.5s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 140ms + 750ms);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .board:not([data-inview]) .digit {
+      transform: translateY(85%);
+      opacity: 0;
+    }
+    :global(.js) .board:not([data-inview]) .line {
+      scale: 0 1;
+    }
+    :global(.js) .board:not([data-inview]) .node {
+      scale: 0;
+    }
+  }
+</style>

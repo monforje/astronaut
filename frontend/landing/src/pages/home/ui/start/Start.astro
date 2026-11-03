@@ -1,0 +1,82 @@
+---
+import { Band, Heading, Icon, Lead } from "@/shared/ui";
+
+/**
+ * «Начинаем с малого» — такт 8 (story.md): первый шаг маленький и понятный. Этапы — PLAN.md, «9. Как
+ * начать» (из «Как клиент начинает», 02-produkt.md); лид — там же, короче. Сроки этапов не пишем:
+ * в 02-produkt.md они гипотеза, а cta.md просит не называть сроки, пока не решён формат пилота.
+ *
+ * Этапы — карточки с иконкой и моноширинным номером, между ними шеврон: шаги идут по порядку.
+ * Маршрут с кружками и teal-линией сюда не берём: он принадлежит пути контейнера, сердцу страницы.
+ * «Расширение» — карточка с пунктирной рамкой: туда идём, только если пилот показал результат.
+ * Рамка — `outline`, а не `border`: она не сдвигает содержимое, заголовки четырёх карточек на одной
+ * линии.
+ */
+const STAGES = [
+  {
+    icon: "monitor",
+    title: "Демо и знакомство",
+    text: "Показываем путь одного контейнера и разбираем, какие программы стоят у вас и где больнее всего.",
+  },
+  {
+    icon: "plug",
+    title: "Первое подключение",
+    text: "Одна сверка документов или наблюдение за обменами, которые уже есть.",
+  },
+  {
+    icon: "chart",
+    title: "Пилот на ваших сделках",
+    text: "Сверяем настоящие комплекты документов и считаем, сколько ошибок и часов сэкономили.",
+  },
+  {
+    icon: "layers",
+    title: "Расширение",
+    text: "Справочник, остальные подключения, агент. Только если пилот показал результат.",
+  },
+] as const;
+---
+
+<Band id="start" labelledby="start-title" tone="tint">
+  <Heading id="start-title">Начинаем с малого</Heading>
+  <Lead>
+    Подключаем по этапам, и каждый этап полезен сам по себе. Переходить на новую систему целиком не
+    нужно.
+  </Lead>
+
+  <ol data-reveal="group" class="mt-8 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-8">
+    {STAGES.map(({ icon, title, text }, i) => {
+      const last = i === STAGES.length - 1;
+      return (
+        <li style={`--i: ${i}`} class="relative">
+          {!last && (
+            <span
+              aria-hidden="true"
+              class="absolute top-1/2 -right-7 z-10 hidden size-6 -translate-y-1/2 place-items-center rounded-full bg-bg text-accent-strong shadow-card lg:grid"
+            >
+              <Icon name="chevron" size="sm" />
+            </span>
+          )}
+          <div
+            class:list={[
+              "h-full rounded-2xl p-5 lg:p-6",
+              last
+                ? "bg-bg/60 outline-2 -outline-offset-2 outline-accent/60 outline-dashed"
+                : "bg-bg shadow-card ring-1 ring-line",
+            ]}
+          >
+            <div class="flex items-center justify-between">
+              <span class="grid size-11 place-items-center rounded-xl bg-tint text-accent-strong">
+                <Icon name={icon} size="lg" />
+              </span>
+              <span aria-hidden="true" class="font-mono text-2xl font-semibold text-accent-strong">
+                {i + 1}
+              </span>
+            </div>
+            <h3 class="mt-4 text-lg leading-tight font-bold text-balance lg:text-xl">{title}</h3>
+            <p class="mt-2 text-[0.9375rem] text-muted">{text}</p>
+          </div>
+        </li>
+      );
+    })}
+  </ol>
+</Band>

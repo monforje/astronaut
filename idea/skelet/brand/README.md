@@ -8,10 +8,12 @@
 
 | Папка / файл | Что |
 | --- | --- |
-| `*.svg`, `*.png`, `*.ico` в корне | логотипы, маскот, иллюстрация, иконка приложения, favicon |
+| `*.svg`, `*.png`, `*.ico` в корне | логотипы, маскот, иллюстрации (астронавт на контейнере, с разъёмом, у пульта), иконка приложения, favicon. `astronaut-console.png` сгенерирован по образцу `illustration.png` и `astronaut-port.png` и перекрашен в палитру `design/recolor.py` |
 | [icons/](icons/) | иконки ценностей лендинга; шоукейс `preview.html` |
 | [animated/](animated/) | анимированные версии логотипов и лоадер; шоукейс `preview.html` |
-| [design/](design/README.md) | палитра (`tokens.css`), тема Mantine (`theme.ts`), шрифты |
+| [documents/](documents/) | листы сквозного примера для лендинга (инвойс, упаковочный лист, коносамент, предварительная информация, декларация, ЭТрН), JPEG с размытыми реквизитами; исходник и как пересобрать — `documents.html` |
+| [photos/](photos/README.md) | фото для блоков лендинга (фуры у терминала, рабочее место, портрет) и промпты для генерации; пока пусто — на сайте заглушки. Положенный файл встаёт на сайт сам |
+| [design/](design/README.md) | палитра (`tokens.css`), тема Mantine (`theme.ts`), шрифты Onest и Fira Code, картинка-образец (`specimen.html` → `specimen.png`) |
 | [messaging/](messaging/README.md) | голос, девизы, фразы, CTA |
 | `public/` | **общий `public/` обоих фронтов**: внутри только ссылки на файлы выше |
 
@@ -32,6 +34,8 @@
    `brand/public` целиком, оба фронта видят одно и то же. Своих файлов в `public/` фронта нет.
 4. Не в `public/`, а отдельной ссылкой во фронт:
    - растр, который лендинг оптимизирует через `astro:assets`, → `frontend/landing/src/shared/brand/`;
+   - фото блоков — ссылки не нужны: `photos/` подключена к лендингу целой папкой, файл под именем
+     места из `photos/README.md` встаёт на сайт сам;
    - палитра, шрифты, тема → `src/app/styles/{brand.css,fonts}`, `src/shared/ui/theme/theme.ts`.
    Полный список — `frontend/<фронт>/docs/codestyle/README.md`, раздел «Бренд».
 5. **В git — исходник и ссылка вместе**: `git add idea/skelet/brand/<файл> idea/skelet/brand/public/<путь>`.

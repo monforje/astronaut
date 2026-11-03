@@ -3,27 +3,34 @@
  * `bg-accent`, `text-muted`, `border-line`…
  *
  * Своих цветов и шрифтов здесь нет: палитра (`--color-navy`, `--color-teal`…) и шрифты приходят
- * из бренда — brand.css (симлинк на idea/skelet/brand/design/tokens.css). Сайт светлый, одна схема.
+ * из бренда — brand.css (симлинк на idea/skelet/brand/design/tokens.css). Оттенки — `color-mix` от
+ * фирменных цветов. Сайт светлый, одна схема.
  */
 :root {
   --bg: var(--color-white);
   --surface: var(--color-off-white);
+  /* Мятная подложка: полосы секций и плашки иконок. Свежее тёплого off-white, тот же teal бренда. */
+  --tint: color-mix(in srgb, var(--color-teal) 8%, var(--color-white));
   --text: var(--color-navy);
   --text-muted: color-mix(in srgb, var(--color-navy) 70%, var(--color-white));
-  --line: color-mix(in srgb, var(--color-navy) 15%, var(--color-white));
+  --line: color-mix(in srgb, var(--color-navy) 12%, var(--color-white));
   --accent: var(--color-teal);
   /* Teal светлый: текст на нём — navy, а не белый. */
   --accent-contrast: var(--color-navy);
-  /* Акцент-текст и фокус: teal темнее фирменного, чтобы читался на белом (контраст ≥ 3:1). */
-  --accent-strong: color-mix(in srgb, var(--color-teal) 55%, var(--color-navy));
+  /*
+   * Акцент-текст и фокус: teal темнее фирменного. 45% teal — контраст 5,1:1 на белом и 4,7:1 на
+   * off-white, годится и для текста.
+   */
+  --accent-strong: color-mix(in srgb, var(--color-teal) 45%, var(--color-navy));
   --spark: var(--color-orange);
-  /* Белый на оранжевом — 2,6:1, не читается; navy — 6,8:1. Текст на кнопках-«искрах» — navy. */
+  /* Белый на оранжевом не читается; navy — 6,2:1. Текст на кнопках-«искрах» — navy. */
   --spark-contrast: var(--color-navy);
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-tint: var(--tint);
   --color-text: var(--text);
   --color-muted: var(--text-muted);
   --color-line: var(--line);
@@ -36,4 +43,11 @@
   --color-teal: var(--color-teal);
   --default-font-family: var(--font-sans);
   --default-mono-font-family: var(--font-mono);
+  /* Мягкая тень карточек: смещение вниз и размытие, оттенок navy, без серого. */
+  --shadow-card:
+    0 1px 2px color-mix(in srgb, var(--color-navy) 6%, transparent),
+    0 12px 32px -16px color-mix(in srgb, var(--color-navy) 22%, transparent);
+  --shadow-lift:
+    0 2px 4px color-mix(in srgb, var(--color-navy) 6%, transparent),
+    0 20px 40px -18px color-mix(in srgb, var(--color-navy) 28%, transparent);
 }

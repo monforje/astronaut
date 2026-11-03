@@ -48,6 +48,9 @@
 | [brand/messaging/](brand/messaging/README.md) | слова бренда: сюжет рассказа ([story.md](brand/messaging/story.md)), голос, девизы, фразы, CTA |
 | [brand/](brand/README.md) | логотипы, иконки, иллюстрации; **как файл бренда попадает на фронты** (`brand/public/` — общий `public/` обоих фронтов) |
 | [brand/icons/](brand/icons/) | иконки ценностей лендинга (documents, status, exchanges, directory); шоукейс — `preview.html`; на фронтах — `/brand/icons/<имя>.svg` |
+| [brand/documents/](brand/documents/) | листы документов сквозного примера (JPEG, реквизиты размыты) для веера на лендинге; исходник — `documents.html` |
+| [brand/photos/](brand/photos/README.md) | фото для блоков лендинга: что снять, промпты для генерации, имена файлов, размеры; положенный файл встаёт на сайт сам |
+| [brand/design/](brand/design/README.md) | палитра, тема Mantine, шрифты Onest и Fira Code |
 | **utils/** | |
 | [utils/scripts/idea-pdf.py](utils/scripts/idea-pdf.py) | собирает всю папку в [astronaut-idea.pdf](astronaut-idea.pdf): `uv run idea/skelet/utils/scripts/idea-pdf.py` |
 

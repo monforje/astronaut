@@ -117,7 +117,7 @@ def doc_html(rel: str) -> str:
 
 CSS = """
 @font-face { font-family: Onest; src: url("%(onest)s"); font-weight: 100 900; }
-@font-face { font-family: JBM; src: url("%(mono)s"); font-weight: 100 800; }
+@font-face { font-family: "Fira Code"; src: url("%(mono)s"); font-weight: 300 700; }
 @page { size: A4; margin: 22mm 20mm 20mm 20mm;
   @bottom-center { content: counter(page); font: 9pt Onest; color: #8a94a0; } }
 @page :first { @bottom-center { content: none; } }
@@ -125,19 +125,19 @@ html { font-family: Onest, sans-serif; font-size: 10.5pt; line-height: 1.55; col
 body { margin: 0; }
 p, li { orphans: 3; widows: 3; }
 a { color: #007f7c; text-decoration: none; }
-code, pre { font-family: JBM, monospace; font-size: 0.85em; }
+code, pre { font-family: "Fira Code", monospace; font-size: 0.85em; }
 code { background: #f2eee7; padding: 0 0.2em; border-radius: 2px; }
 pre { background: #f6f3ee; padding: 8px 10px; white-space: pre-wrap; }
-h1, h2, h3, h4 { color: #041a31; line-height: 1.25; page-break-after: avoid; bookmark-level: none; }
+h1, h2, h3, h4 { color: #082f53; line-height: 1.25; page-break-after: avoid; bookmark-level: none; }
 h1.doc-title { font-size: 22pt; font-weight: 800; margin: 0 0 14pt; page-break-before: always; bookmark-level: 1; }
 h1:not(.doc-title) { font-size: 16pt; }
 h2 { font-size: 14pt; font-weight: 700; margin: 20pt 0 6pt; bookmark-level: 2; }
 h3 { font-size: 11.5pt; font-weight: 700; margin: 14pt 0 4pt; }
 h4 { font-size: 10.5pt; margin: 10pt 0 4pt; }
-blockquote { margin: 10pt 0; padding: 2pt 12pt; border-left: 3px solid #f88030; color: #34414f; }
+blockquote { margin: 10pt 0; padding: 2pt 12pt; border-left: 3px solid #ff9455; color: #34414f; }
 table { border-collapse: collapse; width: 100%%; margin: 10pt 0; font-size: 9pt; line-height: 1.4; }
 th, td { border-bottom: 1px solid #e2ddd4; padding: 4pt 6pt; vertical-align: top; text-align: left; }
-th { border-bottom: 2px solid #041a31; font-weight: 700; }
+th { border-bottom: 2px solid #082f53; font-weight: 700; }
 tr { page-break-inside: avoid; }
 td, th { hyphens: auto; }
 td a, td code { overflow-wrap: anywhere; }
@@ -160,7 +160,7 @@ hr { border: 0; border-top: 1px solid #e2ddd4; margin: 16pt 0; }
 .toc { page-break-before: always; }
 .toc h1 { font-size: 22pt; font-weight: 800; bookmark-level: 1; }
 .toc ul { list-style: none; padding: 0; margin: 0; }
-.toc .grp { font-weight: 700; margin: 14pt 0 4pt; color: #f88030; text-transform: uppercase; font-size: 9pt; letter-spacing: 0.06em; }
+.toc .grp { font-weight: 700; margin: 14pt 0 4pt; color: #ff9455; text-transform: uppercase; font-size: 9pt; letter-spacing: 0.06em; }
 .toc li a { display: block; color: #12202f; padding: 2pt 0; }
 .toc li a::after { content: leader(".") target-counter(attr(href), page); color: #8a94a0; }
 """
@@ -174,7 +174,7 @@ def main():
         toc.append(f'<li><a href="#{slug(rel)}">{html.escape(TITLES[rel])}</a></li>')
         body.append(f"<section>{doc_html(rel)}</section>")
 
-    css = CSS % {"onest": (FONTS / "Onest[wght].ttf").as_uri(), "mono": (FONTS / "JetBrainsMono[wght].ttf").as_uri()}
+    css = CSS % {"onest": (FONTS / "Onest[wght].ttf").as_uri(), "mono": (FONTS / "FiraCode[wght].ttf").as_uri()}
     page = f"""<!doctype html><html lang="ru"><head><meta charset="utf-8">
 <title>Astronaut — продукт простым языком</title><style>{css}</style></head><body>
 <section class="cover"><img src="{LOGO.as_uri()}"><h1>Astronaut</h1>

@@ -1,7 +1,31 @@
 ---
+import { Agent } from "../agent";
+import { Contact } from "../contact";
+import { Faq } from "../faq";
 import { Features } from "../features";
 import { Hero } from "../hero";
+import { Honest } from "../honest";
+import { How } from "../how";
+import { Pain } from "../pain";
+import { Start } from "../start";
+import { Systems } from "../systems";
+import { WhyNow } from "../why-now";
+
+/**
+ * Главная — тот же рассказ, что на встрече (story.md, «Сайт целиком»: 4 → 1 → 2 → 3 → 4 подробно →
+ * 5 → 6 → 7 → 8): одна секция — один такт и один экран ноутбука, у каждой свой якорь (PLAN.md,
+ * «Карта страницы»), чтобы лидогенератор мог прислать ссылку сразу на нужный кусок.
+ */
 ---
 
 <Hero />
 <Features />
+<Pain />
+<WhyNow />
+<How />
+<Agent />
+<Systems />
+<Honest />
+<Start />
+<Faq />
+<Contact />

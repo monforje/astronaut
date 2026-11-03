@@ -1,9 +1,16 @@
 ---
-import { SeoHead } from "@/shared/ui";
+import { COMPANY_CITY, COMPANY_LINE, COMPANY_NAME, EMAIL } from "@/shared/config";
+import { JsonLd, SeoHead } from "@/shared/ui";
+import { SiteFooter } from "@/widgets/footer";
 import { SiteHeader } from "@/widgets/header";
 import "../styles/index.css";
 
-/** Общая раскладка: `<head>`, ссылка «К содержимому», шапка и `<main>`, куда маршрут кладёт страницу. */
+/**
+ * Общая раскладка: `<head>` (SEO-теги и разметка Organization), ссылка «К содержимому», шапка,
+ * `<main>`, куда маршрут кладёт страницу, и подвал. Здесь же — флаг `.js` для стилей появления и
+ * `initReveal` (shared/lib/reveal): один на всю страницу скрипт, который ставит `data-inview`
+ * блокам при прокрутке. Без JS страница статична, но видна целиком.
+ */
 interface Props {
   title: string;
   description: string;
@@ -11,6 +18,18 @@ interface Props {
 }
 
 const { title, description, noindex = false } = Astro.props;
+const origin = Astro.site ?? Astro.url;
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: COMPANY_NAME,
+  description: COMPANY_LINE,
+  url: new URL("/", origin).href,
+  logo: new URL("/apple-touch-icon.png", origin).href,
+  email: EMAIL,
+  address: { "@type": "PostalAddress", addressLocality: COMPANY_CITY, addressCountry: "RU" },
+};
 ---
 
 <!doctype html>
@@ -18,13 +37,18 @@ const { title, description, noindex = false } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#041a31" />
+    <meta name="theme-color" content="#082f53" />
+    <!-- Флаг для стилей появления: блоки прячутся до прокрутки, только если JS работает. -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <SeoHead title={title} description={description} noindex={noindex} />
+    <JsonLd data={organization} />
   </head>
-  <body class="min-h-dvh overflow-x-clip bg-bg font-sans text-text">
+  <body class="min-h-dvh overflow-x-clip bg-bg font-sans text-text caret-accent-strong selection:bg-accent/30 selection:text-text">
     <a
       href="#content"
       class="sr-only rounded-full bg-accent px-4 py-2 font-semibold text-accent-contrast focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
@@ -32,8 +56,19 @@ const { title, description, noindex = false } = Astro.props;
       К содержимому
     </a>
     <SiteHeader />
-    <main id="content">
+    <!--
+      Пятна первого экрана и чата намеренно уходят за правый край экрана. `overflow-x: clip` у body
+      браузер переносит на окно как `hidden`, и прокрутка вбок остаётся доступной программно;
+      у <main> clip режет по-настоящему и не создаёт контейнер прокрутки, поэтому sticky внутри жив.
+    -->
+    <main id="content" class="overflow-x-clip">
       <slot />
     </main>
+    <SiteFooter />
+    <script>
+      import { initReveal } from "@/shared/lib/reveal";
+
+      initReveal();
+    </script>
   </body>
 </html>

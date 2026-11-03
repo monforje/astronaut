@@ -1,64 +1,74 @@
 ---
 import { Image } from "astro:assets";
+import { DemoButton } from "@/features/request-demo";
 import { astronautPort } from "@/shared/brand";
-import { Button } from "@/shared/ui";
+import { Blob, Button, SplitText } from "@/shared/ui";
 
 /**
- * Первый экран. Заголовок — ценность «А. Документы», подзаголовок — «одно предложение» о компании,
- * CTA — первый экран из cta.md (idea/skelet/brand/messaging).
+ * Первый экран, такт 4 и кнопка такта 8 (story.md). Заголовок — ценность «А. Документы»,
+ * подзаголовок — «одно предложение» о компании (phrases.md). Кнопки — первый экран из cta.md:
+ * «Записаться на демо» открывает Telegram, «Как это работает» ведёт к пути контейнера (#how).
+ *
+ * Движение первого экрана: заголовок по буквам (SplitText), подзаголовок и кнопки следом,
+ * пятно за иллюстрацией дышит, две звёздочки мерцают. Сама иллюстрация неподвижна (парение
+ * убрано 03.11.2026). Всё под prefers-reduced-motion.
  */
+const STARS = [
+  { at: "top-[6%] left-[8%]", delay: "0s", size: "size-4" },
+  { at: "bottom-[18%] right-[2%]", delay: "1.4s", size: "size-3" },
+] as const;
 ---
 
-<section aria-labelledby="hero-title" class="relative isolate">
-  <svg
-    aria-hidden="true"
-    viewBox="0 0 100 100"
-    preserveAspectRatio="none"
-    class="pointer-events-none absolute right-0 bottom-0 -z-10 h-[45%] w-full fill-surface lg:-top-36 lg:bottom-auto lg:h-[calc(100%+9rem)] lg:w-[52%]"
-  >
-    <path d="M34 0H100V94C86 100 64 99 50 90C34 80 12 76 5 58C-2 40 14 30 20 18C24 9 29 4 34 0Z"></path>
-  </svg>
+<section id="top" aria-labelledby="hero-title" class="relative isolate scroll-mt-8">
+  <div class="pointer-events-none absolute right-0 bottom-0 -z-10 h-[46%] w-[115%] translate-x-[8%] lg:-top-28 lg:bottom-auto lg:h-[calc(100%+5rem)] lg:w-[58%] lg:translate-x-[12%]">
+    <Blob shape="hero" duration={24} />
+  </div>
 
-  <div class="page-container grid items-center gap-8 pt-6 pb-12 lg:grid-cols-[1fr_1.1fr] lg:gap-0 lg:pt-10 lg:pb-16">
+  <div class="page-container grid items-center gap-8 pt-6 pb-10 lg:grid-cols-[1fr_1fr] lg:gap-6 lg:pt-10 lg:pb-14">
     <div class="relative z-10">
       <h1
         id="hero-title"
-        class="text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-6xl lg:-mr-56 lg:text-7xl xl:text-[5.5rem] 2xl:text-[6.5rem]"
+        class="text-[2.5rem] leading-[0.98] font-extrabold tracking-tight sm:text-5xl lg:-mr-24 lg:text-[3.5rem] xl:text-[4rem] 2xl:text-[4.75rem]"
       >
-        <span class="block motion-safe:animate-rise">Документы</span>{" "}
-        <span class="block motion-safe:animate-rise motion-safe:[animation-delay:120ms]">
-          без расхождений
+        <span class="block">
+          <SplitText text="Документы" />
+        </span>{" "}
+        <span class="block">
+          <SplitText text="без расхождений" delay={300} />
         </span>
       </h1>
-      <p class="mt-6 max-w-xl text-lg text-muted md:text-xl lg:mt-8 2xl:max-w-2xl 2xl:text-2xl motion-safe:animate-rise motion-safe:[animation-delay:260ms]">
+      <p class="mt-5 max-w-xl text-base text-muted md:text-lg lg:mt-6 2xl:text-xl motion-safe:animate-rise motion-safe:[animation-delay:700ms]">
         Astronaut связывает 1С, CRM, операторов ЭПД и таможенное ПО, чтобы данные о грузе были
         одинаковыми во всех документах и системах.
       </p>
-      <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-2 lg:mt-8 motion-safe:animate-rise motion-safe:[animation-delay:400ms]">
-        <Button href="#contact" size="lg">
-          Проверить мои документы
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 20 20"
-            class="size-5 fill-none stroke-current stroke-2 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
-          >
-            <path d="M4 10h12M11 5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </Button>
-        <Button href="#features" variant="link" size="lg">
-          Узнать больше
+      <div class="mt-6 flex flex-wrap items-center gap-x-7 gap-y-2 lg:mt-8 motion-safe:animate-rise motion-safe:[animation-delay:850ms]">
+        <DemoButton />
+        <Button href="#how" variant="link" size="lg">
+          Как это работает
         </Button>
       </div>
     </div>
 
-    <Image
-      src={astronautPort}
-      alt=""
-      widths={[480, 800, 1200, 1634]}
-      sizes="(min-width: 1024px) 50vw, 100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="mx-auto w-full max-w-xl lg:max-w-none"
-    />
+    <div class="relative mx-auto w-full max-w-lg lg:max-w-none">
+      {STARS.map(({ at, delay, size }) => (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          class:list={["absolute fill-text motion-safe:animate-twinkle", at, size]}
+          style={`animation-delay: ${delay}`}
+        >
+          <path d="M12 0c.8 6.4 5.6 11.2 12 12-6.4.8-11.2 5.6-12 12-.8-6.4-5.6-11.2-12-12C6.4 11.2 11.2 6.4 12 0z" />
+        </svg>
+      ))}
+      <Image
+        src={astronautPort}
+        alt=""
+        widths={[480, 800, 1200, 1634]}
+        sizes="(min-width: 1024px) 45vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="w-full"
+      />
+    </div>
   </div>
 </section>
