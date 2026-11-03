@@ -2,8 +2,8 @@
  * Токены по ролям (фон, текст, акцент). Компоненты берут значения только отсюда или из темы Mantine.
  *
  * Своих цветов здесь нет: палитра (`--color-*`) и шрифты приходят из бренда — brand.css (симлинк на
- * idea/brand/design/tokens.css), шкалы цветов — из темы Mantine (shared/ui/theme, симлинк на
- * idea/brand/design/theme.ts). Светлая и тёмная схема переключаются вместе с MantineProvider.
+ * idea/skelet/brand/design/tokens.css), шкалы цветов — из темы Mantine (shared/ui/theme, симлинк на
+ * idea/skelet/brand/design/theme.ts). Светлая и тёмная схема переключаются вместе с MantineProvider.
  */
 :root {
   --bg: var(--mantine-color-body);

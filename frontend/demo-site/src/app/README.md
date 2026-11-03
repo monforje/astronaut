@@ -3,15 +3,15 @@
 Слой приложения: запускается один раз на всё приложение. Не слайсится, но модули — как везде: папка
 с `index.ts` (steiger для `app` отключает `public-api` и `no-segmentless-slices`).
 
-| Модуль            | Что                                                                                                                                                                                                 |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `app/`            | `App` — дерево провайдеров: `MantineProvider` + `Notifications` → `ErrorBoundary` → `QueryProvider` → `RouterProvider`                                                                              |
-| `query-provider/` | `QueryProvider`, `createQueryClient`: `staleTime`, повтор только сетевых и 5xx ошибок                                                                                                               |
-| `error-boundary/` | последний рубеж: ошибка рендера → экран «обновите страницу»                                                                                                                                         |
-| `routes/`         | таблица маршрутов → страницы из `@/pages/*`; `createRouter`, `createTestRouter` для тестов                                                                                                          |
-| `layout/`         | общая раскладка: виджеты шапки/подвала + `<Outlet />`                                                                                                                                               |
-| `styles/`         | `index.css` — вход (бренд → Mantine → токены → глобальные); `brand.css` и `fonts/` — симлинки на `idea/brand/design`; `tokens.css` — роли поверх бренда и темы; `global.css` — сброс и общие классы |
-| `index.ts`        | что `app` отдаёт наружу (`main.tsx` и тесты)                                                                                                                                                        |
+| Модуль            | Что                                                                                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `app/`            | `App` — дерево провайдеров: `MantineProvider` + `Notifications` → `ErrorBoundary` → `QueryProvider` → `RouterProvider`                                                                                     |
+| `query-provider/` | `QueryProvider`, `createQueryClient`: `staleTime`, повтор только сетевых и 5xx ошибок                                                                                                                      |
+| `error-boundary/` | последний рубеж: ошибка рендера → экран «обновите страницу»                                                                                                                                                |
+| `routes/`         | таблица маршрутов → страницы из `@/pages/*`; `createRouter`, `createTestRouter` для тестов                                                                                                                 |
+| `layout/`         | общая раскладка: виджеты шапки/подвала + `<Outlet />`                                                                                                                                                      |
+| `styles/`         | `index.css` — вход (бренд → Mantine → токены → глобальные); `brand.css` и `fonts/` — симлинки на `idea/skelet/brand/design`; `tokens.css` — роли поверх бренда и темы; `global.css` — сброс и общие классы |
+| `index.ts`        | что `app` отдаёт наружу (`main.tsx` и тесты)                                                                                                                                                               |
 
 ## Правила
 

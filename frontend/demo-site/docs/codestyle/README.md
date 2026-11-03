@@ -43,22 +43,22 @@ task api-check    # клиент не отстал от контракта (пе
 
 ## Бренд
 
-Источник правды — `idea/brand/` в корне монорепо. Фронт ничего из бренда не копирует: нужные файлы
-подключены **симлинками** с именами по структуре фронта. Дизайнер меняет файл в `idea/brand` — dev-сервер
+Источник правды — `idea/skelet/brand/` в корне монорепо. Фронт ничего из бренда не копирует: нужные файлы
+подключены **симлинками** с именами по структуре фронта. Дизайнер меняет файл в `idea/skelet/brand` — dev-сервер
 сразу подхватывает правку (стили и тема — горячей заменой, картинки — при обновлении страницы).
 
-| Во фронте                      | Ссылка на                                              |
-| ------------------------------ | ------------------------------------------------------ |
-| `public/favicon.ico`, `.svg`   | `idea/brand/favicon.ico`, `favicon.svg`                |
-| `public/apple-touch-icon.png`  | `idea/brand/app-icon.png`                              |
-| `public/brand/<лого>.svg`      | `idea/brand/<лого>.svg` (по файлу)                     |
-| `src/app/styles/brand.css`     | `idea/brand/design/tokens.css` — палитра, `@font-face` |
-| `src/app/styles/fonts/`        | `idea/brand/design/fonts/`                             |
-| `src/shared/ui/theme/theme.ts` | `idea/brand/design/theme.ts` — тема Mantine            |
+| Во фронте                      | Ссылка на                                                     |
+| ------------------------------ | ------------------------------------------------------------- |
+| `public/favicon.ico`, `.svg`   | `idea/skelet/brand/favicon.ico`, `favicon.svg`                |
+| `public/apple-touch-icon.png`  | `idea/skelet/brand/app-icon.png`                              |
+| `public/brand/<лого>.svg`      | `idea/skelet/brand/<лого>.svg` (по файлу)                     |
+| `src/app/styles/brand.css`     | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face` |
+| `src/app/styles/fonts/`        | `idea/skelet/brand/design/fonts/`                             |
+| `src/shared/ui/theme/theme.ts` | `idea/skelet/brand/design/theme.ts` — тема Mantine            |
 
 - Ссылки относительные и хранятся в git как симлинки. Для них включены `preserveSymlinks` (vite, tsconfig)
-  и `server.fs.allow`; в Docker `idea/brand` монтируется в `/idea/brand` (`compose.yml`).
-- Переименовали или удалили файл в `idea/brand` — падает `codestyle.test.ts` («ссылки на бренд целы»):
+  и `server.fs.allow`; в Docker `idea/skelet/brand` монтируется в `/idea/skelet/brand` (`compose.yml`).
+- Переименовали или удалили файл в `idea/skelet/brand` — падает `codestyle.test.ts` («ссылки на бренд целы»):
   поправьте ссылку (`ln -sfn <путь> <ссылка>`).
 - Нужен новый файл бренда — новая ссылка с именем по структуре фронта, а не копия.
 - Во фронте поверх бренда — только роли (`app/styles/tokens.css`), своих цветов и шрифтов нет.

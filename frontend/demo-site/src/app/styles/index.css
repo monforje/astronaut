@@ -1,6 +1,6 @@
 /*
  * Точка входа стилей (импортирует main.tsx). Порядок важен: бренд → Mantine → токены → наши глобальные.
- * brand.css и fonts/ — симлинки на idea/brand/design: правка бренда сразу видна в dev-сервере.
+ * brand.css и fonts/ — симлинки на idea/skelet/brand/design: правка бренда сразу видна в dev-сервере.
  */
 @import "./brand.css";
 @import "@mantine/core/styles.css";

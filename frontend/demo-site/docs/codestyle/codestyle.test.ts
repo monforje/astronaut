@@ -101,7 +101,7 @@ describe("структура", () => {
     expect(bad).toEqual([]);
   });
 
-  it("ссылки на бренд целы: файл в idea/brand не переименован и не удалён", () => {
+  it("ссылки на бренд целы: файл в idea/skelet/brand не переименован и не удалён", () => {
     const broken = [SRC, join(ROOT, "public")].flatMap(links).filter((l) => !existsSync(l));
     expect(broken.map(rel)).toEqual([]);
   });

@@ -8,7 +8,7 @@ UI без предметной области. Базовые компонент
 
 ```
 ui/
-  theme/            тема Mantine (theme.ts — симлинк на idea/brand/design/theme.ts: правится в бренде)
+  theme/            тема Mantine (theme.ts — симлинк на idea/skelet/brand/design/theme.ts: правится в бренде)
   empty-state/      EmptyState — пустое состояние: заголовок, пояснение, действие
   error-state/      ErrorState — ошибка загрузки с повтором, role="alert"
   index.ts          наружу: EmptyState, ErrorState, theme

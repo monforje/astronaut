@@ -5,16 +5,16 @@ import path from "path";
 
 /**
  * Бренд — источник правды: лого, иконки, палитра, шрифты и тема Mantine подключены симлинками на
- * idea/brand (список — docs/codestyle/README.md, «Бренд»). Поэтому:
+ * idea/skelet/brand (список — docs/codestyle/README.md, «Бренд»). Поэтому:
  *  - `preserveSymlinks` — импорты из симлинка (`@mantine/core` в theme.ts, `fonts/` в brand.css) ищутся
  *    от места ссылки в проекте;
  *  - `fs.allow` — dev-сервер отдаёт файлы бренда, лежащие вне каталога фронта.
- * В Docker idea/brand монтируется в /idea/brand (compose.yml): относительные ссылки попадают туда же.
+ * В Docker idea/skelet/brand монтируется в /idea/skelet/brand (compose.yml): относительные ссылки попадают туда же.
  */
-const BRAND_DIR = path.resolve(import.meta.dirname, "../../idea/brand");
+const BRAND_DIR = path.resolve(import.meta.dirname, "../../idea/skelet/brand");
 
 /**
- * Картинки бренда (лого, иконки) лежат в public/ — за ними Vite не следит. Плагин смотрит в idea/brand
+ * Картинки бренда (лого, иконки) лежат в public/ — за ними Vite не следит. Плагин смотрит в idea/skelet/brand
  * и перезагружает страницу, когда меняется не-код. CSS и TS бренда (tokens.css, theme.ts) обновляются
  * горячей заменой через граф модулей, их не трогаем.
  */

@@ -13,9 +13,9 @@ services:
     command: ["bun", "run", "dev"]
     volumes:
       - .:/app
-      # Бренд подключён симлинками (../../../idea/brand/… из /app упирается в / и попадает сюда):
-      # правка в idea/brand сразу видна dev-серверу.
-      - ../../idea/brand:/idea/brand:ro
+      # Бренд подключён симлинками (../../../idea/skelet/brand/… из /app упирается в / и попадает сюда):
+      # правка в idea/skelet/brand сразу видна dev-серверу.
+      - ../../idea/skelet/brand:/idea/skelet/brand:ro
     networks:
       - traefik
     labels:
