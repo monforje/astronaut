@@ -55,6 +55,11 @@ lib/http-client/
 
 - UI-кит — **Mantine** (`@mantine/core`): кнопки, поля, раскладка (`Stack`, `Group`), таблицы, модалки
   берутся оттуда напрямую. Своё — в `shared/ui`, только поверх Mantine (`shared/ui/README.md`).
+- Для ИИ-агентов Mantine подключён так: MCP-сервер `mantine` (`.mcp.json` в корне репозитория:
+  `search_docs`, `get_item_doc`, `get_item_props`, `list_items`, `get_api`), скиллы
+  `mantine-form` / `mantine-combobox` / `mantine-custom-components` (`.claude/skills/`, версии в
+  `skills-lock.json`), справка для LLM — `https://mantine.dev/llms.txt` (всё одним файлом —
+  `llms-full.txt`, ~4,6 МБ, целиком не читать). Перед нестандартным пропсом Mantine сверяйся с MCP, не с памятью.
 - Компоненты — функции `export function Name(props) {}`; пропсы — деструктуризация с типом в
   сигнатуре; значения по умолчанию — в деструктуризации (`size = "md"`).
 - Маленький вспомогательный компонент, нужный одному файлу, живёт в этом файле без экспорта
