@@ -1,0 +1,48 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Onest, Arial, sans-serif",
+    "fontSize": "20px",
+    "primaryColor": "#dffbfa",
+    "primaryTextColor": "#082f53",
+    "primaryBorderColor": "#00a8a5",
+    "lineColor": "#082f53",
+    "secondaryColor": "#fbf5eb",
+    "tertiaryColor": "#ffffff",
+    "edgeLabelBackground": "#ffffff",
+    "clusterBkg": "#ffffff",
+    "clusterBorder": "#b8c6d4",
+    "actorBkg": "#dffbfa",
+    "actorBorder": "#00a8a5",
+    "actorTextColor": "#082f53",
+    "actorLineColor": "#9fb2c4",
+    "signalColor": "#082f53",
+    "signalTextColor": "#082f53",
+    "labelBoxBkgColor": "#fbf5eb",
+    "noteBkgColor": "#ffe3d1",
+    "noteBorderColor": "#ff9455",
+    "attributeBackgroundColorOdd": "#ffffff",
+    "attributeBackgroundColorEven": "#fbf5eb"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "curve": "basis",
+    "nodeSpacing": 50,
+    "rankSpacing": 70,
+    "padding": 20,
+    "useMaxWidth": false,
+    "wrappingWidth": 360
+  },
+  "sequence": {
+    "mirrorActors": false,
+    "actorMargin": 50,
+    "messageMargin": 40,
+    "useMaxWidth": false,
+    "messageFontSize": 18,
+    "actorFontSize": 18
+  },
+  "er": {
+    "useMaxWidth": false,
+    "fontSize": 18
+  }
+}

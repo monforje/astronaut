@@ -1,0 +1,1 @@
+../skelet/product/mvp-promises.md

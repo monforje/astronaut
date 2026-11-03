@@ -1,0 +1,6 @@
+@font-face {
+  font-family: "Onest";
+  src: url("file:///home/dan/projects/astronaut/idea/skelet/brand/design/fonts/Onest%5Bwght%5D.ttf") format("truetype");
+  font-weight: 100 900;
+}
+.cluster-label span, .cluster-label .nodeLabel { font-weight: 700; font-size: 22px; }
