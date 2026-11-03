@@ -24,7 +24,7 @@
 | Типы            | TypeScript 6 + `astro check` (`@astrojs/check`; TypeScript 7 пока не поддерживается)                   |
 | Линт и формат   | oxlint, steiger (FSD), oxfmt для `.ts/.css/.md`, **prettier + prettier-plugin-astro** для `.astro`     |
 | Тесты           | vitest (`getViteConfig` из Astro), Container API; Playwright для E2E                                   |
-| Пакеты и запуск | bun в контейнере `oven/bun` (go-task); локально — `bun run <скрипт>`                                   |
+| Пакеты и запуск | bun в контейнере `oven/bun` через go-task: `task bun -- run <скрипт>`, на хосте bun не запускаем       |
 
 Скрипты вызывают Astro через `bun --bun`: системный Node может быть старше, чем требует Astro.
 Бэкенда у лендинга нет, API-клиента, контракта и моков тоже.

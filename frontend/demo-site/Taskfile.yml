@@ -17,6 +17,9 @@ env:
     sh: id -g
 
 vars:
+  # Бренд подключён симлинками на idea/skelet/brand: без этого монтирования в контейнере `task bun`
+  # они битые (как в compose.yml для dev-сервера).
+  DOCKER_BUN_RUN_ARGS: '-v "{{.ROOT_DIR}}/../../idea/skelet/brand":/idea/skelet/brand:ro'
   # Пока бэкенда нет, контракт живёт во фронте (contract/openapi.yaml), а API отвечают моки (mocks/).
   # Появится backend/${BACKEND} со своим контрактом — берём его.
   BACKEND_CONTRACT: '../../backend/{{.BACKEND | default "astronaut"}}/schema/openapi/openapi.yaml'

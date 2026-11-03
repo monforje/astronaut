@@ -91,7 +91,7 @@ import { useItems } from "@/entities/item/api/use-items"; // ✗
 `mocks/` (`mocks/README.md`):
 
 ```bash
-task gen-api             # в контейнере; локально — bun run api:gen
+task gen-api             # orval в контейнере (монтируется корень монорепо)
 ```
 
 - Результат — `src/shared/api/generated/`: `items/items.ts` (хуки TanStack Query:
@@ -166,4 +166,4 @@ task bun -- run verify         # всё сразу: check + lint + format:check 
 ```
 
 `task bun -- run <скрипт>` запускает скрипт из `package.json` в контейнере
-`oven/bun`; локально те же скрипты работают как `bun run <скрипт>`.
+`oven/bun`; на хосте bun не запускаем.

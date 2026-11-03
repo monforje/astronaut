@@ -1,7 +1,7 @@
 /**
  * Проверки код-стайла, которых нет в oxlint и steiger: имена, расположение файлов, границы
  * ответственности сегментов. Правила словами — codestyle.md и fsd.md рядом. Запуск:
- * `bun run lint:style` (входит в `bun run lint` и `task codestyle`).
+ * `task bun -- run lint:style` (входит в `task lint` и `task codestyle`).
  */
 import { existsSync, lstatSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";

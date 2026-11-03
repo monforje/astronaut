@@ -16,6 +16,11 @@ env:
   DOCKER_GID:
     sh: id -g
 
+vars:
+  # Бренд подключён симлинками на idea/skelet/brand: без этого монтирования в контейнере `task bun`
+  # они битые (как в compose.yml для dev-сервера).
+  DOCKER_BUN_RUN_ARGS: '-v "{{.ROOT_DIR}}/../../idea/skelet/brand":/idea/skelet/brand:ro'
+
 includes:
   base:
     taskfile: ./deploy/local/Taskfile.yml

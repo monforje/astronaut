@@ -111,6 +111,7 @@ tasks:
           -v "{{.TASKFILE_DIR}}":/opt/deploy:ro \
           -e HOME=/tmp \
           -v "${BUN_CACHE_DIR:-$HOME/.cache/bun}":/tmp/bun-cache -e BUN_INSTALL_CACHE_DIR=/tmp/bun-cache \
+          {{.DOCKER_BUN_RUN_ARGS}} \
           {{.DOCKER_BUN_IMAGE_NAME}} \
           {{.RUN_COMMAND}}
 

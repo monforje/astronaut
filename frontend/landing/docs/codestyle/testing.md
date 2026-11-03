@@ -25,5 +25,5 @@
   `E2E_BASE_URL`, по умолчанию `https://landing.astronaut.localhost`.
 - Селекторы — по ролям и подписям (`getByRole`, `getByLabel`), как видит пользователь; не по классам.
 - Сценарии — `testing/e2e/*.e2e.ts`, пример — `home.e2e.ts`.
-- Проверить, что конфиг валиден и тесты находятся: `bunx playwright test --list --config testing/playwright.config.ts`.
+- Проверить, что конфиг валиден и тесты находятся: `task bunx -- playwright test --list --config testing/playwright.config.ts`.
 - Отчёты (`testing/e2e-results`, `e2e-report`) в git не попадают.

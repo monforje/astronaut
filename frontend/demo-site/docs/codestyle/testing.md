@@ -31,5 +31,5 @@
 - Данные уникальны на запуск (`e2e-${Date.now()}`), чтобы не зависеть от состояния базы.
 - Сценарии — `testing/e2e/*.e2e.ts`, пример — `home.e2e.ts`. Данные, без которых сценарию нечего
   показать, — в `build/local/seed.sql` бэкенда.
-- Проверить, что конфиг валиден и тесты находятся: `bunx playwright test --list --config testing/playwright.config.ts`.
+- Проверить, что конфиг валиден и тесты находятся: `task bunx -- playwright test --list --config testing/playwright.config.ts`.
 - Отчёты (`testing/e2e-results`, `e2e-report`) в git не попадают.
