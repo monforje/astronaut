@@ -44,9 +44,7 @@ task bun -- run lint:style   # только codestyle.test.ts
 
 | В лендинге                    | Ссылка на                                                     |
 | ----------------------------- | ------------------------------------------------------------- |
-| `public/favicon.ico`, `.svg`  | `idea/skelet/brand/favicon.ico`, `favicon.svg`                |
-| `public/apple-touch-icon.png` | `idea/skelet/brand/app-icon.png`                              |
-| `public/brand/<лого>.svg`     | `idea/skelet/brand/<лого>.svg` (по файлу)                     |
+| `public/` (вся папка целиком) | `idea/skelet/brand/public/` — внутри симлинки на файлы бренда |
 | `src/app/styles/brand.css`    | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face` |
 | `src/app/styles/fonts/`       | `idea/skelet/brand/design/fonts/`                             |
 
