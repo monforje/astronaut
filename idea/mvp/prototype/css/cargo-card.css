@@ -1,0 +1,430 @@
+/* Карточка груза: шапка, вкладки, компоненты вкладок */
+
+h1.mono {
+  font-size: 1.625rem;
+}
+
+.card-meta {
+  --gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.where-now {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+.where-now strong {
+  font-size: 1.05rem;
+}
+
+/* Сведения */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem 2rem;
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.facts dt {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Загрузка документов */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.75rem 1rem;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone:hover,
+.dropzone.is-over {
+  border-color: var(--accent);
+  background: var(--tint);
+}
+
+.uploads {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.uploads li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1rem;
+  align-items: center;
+}
+
+.uploads .progress {
+  grid-column: 1 / -1;
+}
+
+/* Расхождения */
+/* Состояние — цветом рамки и точкой у текста, без толстой полосы сбоку */
+.disc {
+  --state: var(--danger);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--state) 35%, var(--line));
+  border-radius: var(--radius-chip);
+  background: var(--bg);
+}
+
+.disc.is-assigned {
+  --state: var(--spark);
+}
+
+.disc.is-closed {
+  --state: var(--ok);
+  background: var(--surface);
+}
+
+.disc__text {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.disc__text::before {
+  content: "";
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--state);
+}
+
+.disc__sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Документ как лист бумаги: просмотр рядом со строками, окно «Открыть», разбор расхождения */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  background: var(--bg);
+  box-shadow: var(--elevation-card);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  overflow-x: auto;
+}
+
+.sheet__title {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+}
+
+.sheet__meta {
+  color: var(--text-muted);
+}
+
+.sheet table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sheet th,
+.sheet td {
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.sheet th {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.sheet__total td {
+  font-weight: 700;
+}
+
+.sheet .is-hl {
+  background: var(--warn-bg);
+  outline: 2px solid var(--spark);
+  outline-offset: -2px;
+  font-weight: 700;
+}
+
+/* Строки груза: таблица и документ рядом */
+.lines-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+/* Таблица рядом с документом — плотнее обычной */
+.lines-grid .table th,
+.lines-grid .table td {
+  padding: 0.55rem 0.5rem;
+}
+
+.lines-grid .table th:first-child,
+.lines-grid .table td:first-child {
+  padding-left: 0.9rem;
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: sticky;
+  top: 1rem;
+}
+
+.cell-link {
+  padding: 0.1rem 0.3rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline dotted var(--text-muted);
+  text-underline-offset: 3px;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.cell-link:hover {
+  background: var(--tint);
+}
+
+.input--cell {
+  width: 5.5rem;
+  padding: 0.3rem 0.5rem;
+  text-align: right;
+}
+
+.row--edit td {
+  background: var(--tint);
+}
+
+@media (max-width: 64rem) {
+  .lines-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .viewer {
+    position: static;
+  }
+}
+
+/* События */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0 0 0 1.75rem;
+  list-style: none;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline li {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  align-items: baseline;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: 0.3rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+
+.timeline li:last-child::before {
+  background: var(--accent);
+}
+
+.timeline__date {
+  width: 3.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.timeline__text {
+  font-weight: 600;
+}
+
+.max-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.max-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.max-preview p {
+  align-self: flex-start;
+  max-width: 90%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  background: var(--bg);
+  box-shadow: var(--elevation-card);
+  font-size: 0.875rem;
+}
+
+/* Перевозка */
+.titles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+/* Состояние титула — полоской-индикатором внутри карточки, а не рамкой */
+.title-step {
+  --state: var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-chip);
+  background: var(--surface);
+}
+
+.title-step::before {
+  content: "";
+  height: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--state);
+}
+
+.title-step.is-signed {
+  --state: var(--ok);
+}
+
+.title-step.is-waiting {
+  --state: var(--spark);
+}
+
+.title-step.is-rejected {
+  --state: var(--danger);
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 0.75rem;
+}
+
+.prefill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.prefill div {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-chip);
+  background: var(--tint);
+  font-size: 0.875rem;
+}
+
+.prefill span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.prefill .is-bad {
+  background: var(--danger-bg);
+  outline: 2px solid var(--danger);
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.result-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+@media (max-width: 48rem) {
+  .compare,
+  .max-grid,
+  .titles {
+    grid-template-columns: 1fr;
+  }
+}

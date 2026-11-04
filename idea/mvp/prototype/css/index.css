@@ -1,0 +1,69 @@
+/* Главная: «Что зависло», мои задачи */
+
+.ask {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--elevation-card);
+}
+
+.ask__input {
+  flex: 1;
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding-inline: 1rem;
+}
+
+.ask__input:focus {
+  box-shadow: none;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tasks li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.tasks li:last-child {
+  border-bottom: 0;
+}
+
+.task__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.task__title {
+  font-weight: 600;
+}
+
+.task__dot {
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.task__dot--warn {
+  background: var(--spark);
+}
+
+.task__dot--done {
+  background: var(--ok);
+}

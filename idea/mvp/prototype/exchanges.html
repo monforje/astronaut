@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обмены — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/exchanges.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/exchanges.js" defer></script>
+</head>
+<body data-page="exchanges">
+  <!-- Юзкейсы 08 и 13: idea/mvp/usecases/08-exchange-monitoring/ -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Обмены</h1>
+          <p class="muted">Что работает, что нет. Обмены не ломаются молча: о сбое приходит сообщение в MAX</p>
+        </div>
+        <button class="btn btn--secondary js-admin" data-open="notify-dialog">Уведомления</button>
+        <a class="btn btn--primary js-admin" href="exchange-builder.html">Собрать обмен</a>
+      </header>
+
+      <div class="js-head-note"></div>
+      <div class="grid js-tiles" style="--min:12rem"></div>
+
+      <div class="tabs js-admin" role="tablist">
+        <button class="tabs__tab" role="tab" data-tab="list">Обмены</button>
+        <button class="tabs__tab" role="tab" data-tab="journal">Журнал действий</button>
+      </div>
+
+      <section class="tab-panel stack" data-panel="list">
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Обмен</th><th>Состояние</th><th class="num">Сообщений сегодня</th><th class="num">Недоставлено</th><th class="js-admin">Среда</th></tr></thead>
+            <tbody class="ex-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="tab-panel stack" data-panel="journal">
+        <input class="input journal-search" type="search" placeholder="Поиск: кто, что, обмен" aria-label="Поиск по журналу">
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Когда</th><th>Кто</th><th>Что</th></tr></thead>
+            <tbody class="journal-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

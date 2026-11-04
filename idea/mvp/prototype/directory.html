@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Справочник — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/directory.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/directory.js" defer></script>
+</head>
+<body data-page="directory">
+  <!-- Юзкейс 02: idea/mvp/usecases/02-directory/ -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Справочник</h1>
+          <p class="muted">Клиенты, поставщики, перевозчики и брокеры. Каждый заведён один раз, документы ссылаются на запись</p>
+        </div>
+        <button class="btn btn--primary" data-act="add">Добавить</button>
+      </header>
+
+      <div class="tabs" role="tablist">
+        <button class="tabs__tab" role="tab" data-tab="list">Контрагенты</button>
+        <button class="tabs__tab" role="tab" data-tab="dupes">Очередь проверки дублей <span class="count js-dupes-count"></span></button>
+      </div>
+
+      <section class="tab-panel stack" data-panel="list">
+        <div class="row">
+          <input class="input dir-search" type="search" placeholder="Название или ИНН" aria-label="Поиск" style="flex:1 1 18rem;width:auto">
+          <div class="row segmented" role="group" aria-label="Фильтр">
+            <button class="btn btn--sm btn--secondary" data-filter="all" aria-pressed="true">Все</button>
+            <button class="btn btn--sm btn--ghost" data-filter="dupes" aria-pressed="false">Дубли</button>
+            <button class="btn btn--sm btn--ghost" data-filter="problems" aria-pressed="false">Проблемы</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Название</th><th>Кто это</th><th>ИНН / КПП</th><th>Проверки</th><th class="num">Грузов</th></tr></thead>
+            <tbody class="dir-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="tab-panel stack" data-panel="dupes"></section>
+    </main>
+  </div>
+
+  <!-- Добавить контрагента -->
+  <dialog class="dialog dialog--wide" id="add-dialog">
+    <div class="dialog__body">
+      <h2>Добавить контрагента</h2>
+      <div class="row segmented" role="group" aria-label="Какая компания">
+        <button class="btn btn--sm btn--secondary" data-kind="ru" aria-pressed="true">Российская</button>
+        <button class="btn btn--sm btn--ghost" data-kind="foreign" aria-pressed="false">Иностранная</button>
+      </div>
+
+      <div class="add-ru stack">
+        <div class="form-grid">
+          <label class="field">
+            <span>ИНН</span>
+            <input class="input mono add-inn" placeholder="0000000007" inputmode="numeric">
+            <span class="field__hint">Попробуйте: 0000000007 (новая), 0000000001 (уже есть), 0000000004 (ликвидирована), 1234567890 (нет в реестре)</span>
+          </label>
+          <label class="field">
+            <span>Кто это</span>
+            <select class="select add-role">
+              <option>Клиент</option>
+              <option>Перевозчик</option>
+              <option>Поставщик</option>
+              <option>Брокер</option>
+            </select>
+          </label>
+        </div>
+        <div class="row"><button class="btn btn--secondary add-find">Найти в ЕГРЮЛ</button></div>
+        <div class="add-result stack"></div>
+      </div>
+
+      <div class="add-foreign stack" hidden>
+        <div class="alert alert--info"><div>Для иностранной компании реестровых данных нет: проверить по ЕГРЮЛ нельзя, запись сохранится как есть.</div></div>
+        <div class="form-grid">
+          <label class="field"><span>Название на латинице</span><input class="input" placeholder="Shenzhen Example Trading Co., Ltd"></label>
+          <label class="field"><span>Название по-китайски</span><input class="input" placeholder="深圳示例贸易有限公司"></label>
+          <label class="field"><span>Код USCC</span><input class="input mono" placeholder="18 знаков"></label>
+          <label class="field"><span>Телефон</span><input class="input" placeholder="+86 …"></label>
+        </div>
+      </div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary add-save">Сохранить</button>
+    </div>
+  </dialog>
+
+  <!-- Подтверждение слияния -->
+  <dialog class="dialog" id="merge-dialog">
+    <div class="dialog__body">
+      <h2>Объединить записи?</h2>
+      <p class="merge-text"></p>
+      <div class="alert alert--warn"><div>Отменить слияние в первой версии нельзя. Проверьте, что это одна компания.</div></div>
+      <p class="small muted">[TODO: может ли менеджер объединять сам или только предлагать — 02-directory/business-logic.md]</p>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary merge-ok">Объединить</button>
+    </div>
+  </dialog>
+</body>
+</html>

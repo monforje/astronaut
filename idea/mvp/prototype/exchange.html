@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обмен — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/exchange.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/exchange.js" defer></script>
+</head>
+<body data-page="exchange">
+  <!-- Юзкейс 08: путь сообщения, повтор недоставленных -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <p class="crumbs"><a href="exchanges.html">Обмены</a> / <span class="js-name"></span></p>
+          <h1 class="js-name"></h1>
+          <div class="row js-meta" style="--gap:0.5rem"></div>
+        </div>
+        <a class="btn btn--secondary" href="exchange-builder.html?state=pass">Открыть в конструкторе</a>
+      </header>
+
+      <div class="js-banner"></div>
+
+      <section class="card">
+        <div class="card__head"><h2>Путь сообщения</h2><span class="small muted js-msg-name"></span></div>
+        <ol class="path"></ol>
+      </section>
+
+      <section class="card">
+        <div class="tabs" role="tablist">
+          <button class="tabs__tab" role="tab" data-tab="in">Как пришло</button>
+          <button class="tabs__tab" role="tab" data-tab="out">Как ушло</button>
+        </div>
+        <div class="tab-panel" data-panel="in"></div>
+        <div class="tab-panel" data-panel="out"></div>
+      </section>
+
+      <section class="card js-undelivered"></section>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="retry-dialog">
+    <div class="dialog__body">
+      <h2>Повторить отправку ЭТрН?</h2>
+      <p>Повторная отправка электронных документов — всегда с подтверждением. Дубля не будет: у каждого сообщения есть ключ, Контур примет его один раз.</p>
+      <ul class="retry-list"></ul>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary retry-ok">Повторить</button>
+    </div>
+  </dialog>
+</body>
+</html>

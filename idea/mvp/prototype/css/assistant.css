@@ -1,0 +1,95 @@
+/* Экран-чат: история слева, чат справа */
+
+.assistant-page {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  gap: 1.5rem;
+  height: 100vh;
+  max-width: none;
+  /* Снизу место под переключатель состояний */
+  padding-bottom: 4.5rem;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history__list button {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 0;
+  border-radius: var(--radius-chip);
+  background: transparent;
+  font: inherit;
+  font-size: 0.875rem;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.history__list button:hover,
+.history__list button[aria-current="true"] {
+  background: var(--bg);
+}
+
+.history__list small {
+  display: block;
+  color: var(--text-muted);
+}
+
+.assistant-chat {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+.assistant-chat__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.assistant-chat .chat__log {
+  padding: 1.5rem;
+}
+
+.assistant-chat .chat__msg {
+  max-width: 70%;
+}
+
+.assistant-chat .chat__form {
+  align-items: flex-end;
+  padding: 1rem 1.5rem;
+}
+
+.assistant-chat .chat__input {
+  min-height: 3rem;
+}
+
+@media (max-width: 48rem) {
+  .assistant-page {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .assistant-chat {
+    min-height: 70vh;
+  }
+}

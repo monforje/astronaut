@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Подключения — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/connections.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/connections.js" defer></script>
+</head>
+<body data-page="connections">
+  <!-- Юзкейс 01: idea/mvp/usecases/01-connect/ -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Подключения</h1>
+          <p class="muted">Системы, из которых берём данные и куда отправляем. Секреты хранятся зашифрованно</p>
+        </div>
+        <a class="btn btn--secondary" href="exchange-builder.html">Собрать обмен</a>
+        <button class="btn btn--primary" data-act="add">Добавить</button>
+      </header>
+      <div class="js-alerts stack"></div>
+      <div class="grid conn-grid" style="--min:18rem"></div>
+    </main>
+  </div>
+
+  <!-- Мастер подключения -->
+  <dialog class="dialog dialog--wide" id="wizard">
+    <div class="dialog__body">
+      <div class="row">
+        <h2 style="flex:1">Новое подключение</h2>
+        <ol class="steps"><li data-step="1">Тип</li><li data-step="2">Параметры</li><li data-step="3">Проверка</li></ol>
+      </div>
+      <div class="wiz-step" data-step-panel="1">
+        <p class="muted">Что подключаем?</p>
+        <div class="type-grid"></div>
+      </div>
+      <div class="wiz-step stack" data-step-panel="2" hidden></div>
+      <div class="wiz-step stack" data-step-panel="3" hidden>
+        <ul class="check-list"></ul>
+        <div class="wiz-result"></div>
+      </div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <span class="spacer"></span>
+      <button class="btn btn--secondary wiz-back" hidden>Назад</button>
+      <button class="btn btn--primary wiz-next" disabled>Дальше</button>
+    </div>
+  </dialog>
+
+  <!-- Настройки подключения -->
+  <dialog class="dialog dialog--wide" id="settings-dialog">
+    <div class="dialog__body">
+      <h2 class="settings__title"></h2>
+      <div class="settings__form stack"></div>
+      <ul class="check-list settings__checks"></ul>
+      <div class="settings__off"></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--ghost settings__disable" style="color:var(--danger)">Отключить</button>
+      <span class="spacer"></span>
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary settings__save">Сохранить и проверить</button>
+    </div>
+  </dialog>
+
+  <!-- Обновить токен -->
+  <dialog class="dialog" id="token-dialog">
+    <div class="dialog__body">
+      <h2>Обновить токен Контура</h2>
+      <p class="muted">Новый токен возьмите в кабинете Контура, раздел «Интеграции» [TODO: уточнить путь]</p>
+      <label class="field"><span>Токен</span><input class="input mono" value="••••••••••••••••" aria-label="Токен"></label>
+      <ul class="check-list token-checks"></ul>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary token-ok">Проверить и сохранить</button>
+    </div>
+  </dialog>
+</body>
+</html>

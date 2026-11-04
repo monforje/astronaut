@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Карточка груза — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/cargo-card.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/cargo-card.js" defer></script>
+</head>
+<body data-page="cargo-card">
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <p class="crumbs"><a href="cargo.html">Грузы</a> / <span class="js-id"></span></p>
+          <h1 class="mono js-id"></h1>
+          <div class="row card-meta"></div>
+        </div>
+        <div class="row">
+          <button class="btn btn--secondary" data-open="order-dialog">Подготовить поручение</button>
+        </div>
+      </header>
+
+      <div class="where-now"></div>
+
+      <div class="tabs" role="tablist">
+        <button class="tabs__tab" role="tab" data-tab="info">Сведения</button>
+        <button class="tabs__tab" role="tab" data-tab="documents">Документы</button>
+        <button class="tabs__tab" role="tab" data-tab="discrepancies">Расхождения <span class="count js-disc-count" hidden></span></button>
+        <button class="tabs__tab" role="tab" data-tab="events">События</button>
+        <button class="tabs__tab" role="tab" data-tab="transport">Перевозка <span class="count js-transport-count" hidden></span></button>
+      </div>
+
+      <section class="tab-panel stack" data-panel="info" role="tabpanel"></section>
+      <section class="tab-panel stack" data-panel="documents" role="tabpanel"></section>
+      <section class="tab-panel stack" data-panel="discrepancies" role="tabpanel"></section>
+      <section class="tab-panel stack" data-panel="events" role="tabpanel"></section>
+      <section class="tab-panel stack" data-panel="transport" role="tabpanel"></section>
+    </main>
+  </div>
+
+  <!-- Разбор расхождения (юзкейс 12) -->
+  <dialog class="dialog dialog--wide" id="resolve-dialog">
+    <div class="dialog__body">
+      <h2>Разобрать расхождение</h2>
+      <p class="resolve__text"></p>
+      <div class="compare"></div>
+      <label class="field">
+        <span>Комментарий</span>
+        <textarea class="textarea resolve__comment" placeholder="Почему так решили — останется в истории"></textarea>
+      </label>
+      <label class="field resolve__assign" hidden>
+        <span>Кому назначить</span>
+        <select class="select resolve__person"></select>
+        <span class="field__hint">Задача уйдёт в MAX, расхождение останется открытым</span>
+      </label>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <span class="spacer"></span>
+      <button class="btn btn--secondary" data-resolve="assign">Назначить</button>
+      <button class="btn btn--secondary" data-resolve="fix">Исправить документ</button>
+      <button class="btn btn--primary" data-resolve="accept">Принять как норму</button>
+    </div>
+  </dialog>
+
+  <!-- Просмотр документа (юзкейс 04) -->
+  <dialog class="dialog dialog--wide" id="doc-dialog">
+    <div class="dialog__body">
+      <h2 class="doc-dialog__title"></h2>
+      <p class="small muted">Так документ выглядит после распознавания. Оригинал файла в прототипе не хранится</p>
+      <div class="doc-dialog__sheet"></div>
+    </div>
+    <div class="dialog__actions"><button class="btn btn--secondary" data-close>Закрыть</button></div>
+  </dialog>
+
+  <!-- Письмо в линию (юзкейс 05) -->
+  <dialog class="dialog" id="letter-dialog">
+    <div class="dialog__body">
+      <h2>Письмо в линию</h2>
+      <p class="muted">Текст подготовлен по расхождениям драфта. Проверьте и отправьте из своей почты.</p>
+      <textarea class="textarea letter__text" rows="10"></textarea>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Закрыть</button>
+      <button class="btn btn--primary letter__copy">Скопировать</button>
+    </div>
+  </dialog>
+
+  <!-- Пакет для брокера (юзкейс 06) -->
+  <dialog class="dialog" id="package-dialog">
+    <div class="dialog__body">
+      <h2>Пакет для брокера</h2>
+      <p class="muted">Данные из карточки для программы брокера. Декларацию подаёт брокер у себя, мы в ФТС не ходим.</p>
+      <label class="field">
+        <span>Брокер</span>
+        <select class="select package__broker"></select>
+      </label>
+      <div>
+        <p class="small muted">Что войдёт в пакет</p>
+        <ul class="package__list"></ul>
+      </div>
+      <div class="alert alert--info"><div class="small">Формат обмена с программой брокера не проверен, пока выгружаем файлом [TODO]</div></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--secondary" data-toast="Файл пакета скачан (в прототипе файла нет)">Скачать файлом</button>
+      <button class="btn btn--primary package__send">Отправить брокеру</button>
+    </div>
+  </dialog>
+
+  <!-- Отметить событие (юзкейс 10) -->
+  <dialog class="dialog" id="event-dialog">
+    <div class="dialog__body">
+      <h2>Отметить событие</h2>
+      <p class="muted">Если терминал не отдаёт данные, отметьте сами. Событие будет помечено «отмечено менеджером».</p>
+      <div class="form-grid">
+        <label class="field">
+          <span>Событие</span>
+          <select class="select event__type">
+            <option>Выгружен на терминале</option>
+            <option>Выпущен таможней</option>
+            <option>Вывезен</option>
+            <option>Прибыл на склад получателя</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Дата</span>
+          <input class="input event__date" value="14.11">
+        </label>
+      </div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary event__save">Отметить</button>
+    </div>
+  </dialog>
+
+  <!-- Что слать клиенту в MAX (юзкейс 10) -->
+  <dialog class="dialog dialog--wide" id="max-dialog">
+    <div class="dialog__body">
+      <h2>Что слать клиенту в MAX</h2>
+      <div class="max-grid">
+        <div class="stack" style="--gap:0.6rem">
+          <p class="small muted">ООО «Ромашка» подписано на груз. Сообщение уходит при каждом выбранном событии.</p>
+          <div class="max__toggles stack" style="--gap:0.5rem"></div>
+        </div>
+        <div>
+          <p class="small muted">Так увидит клиент</p>
+          <div class="max-preview"></div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary" data-close data-toast="Настройки сообщений сохранены">Сохранить</button>
+    </div>
+  </dialog>
+
+  <!-- Новая заявка перевозчику (юзкейс 07) -->
+  <dialog class="dialog dialog--wide" id="carrier-dialog">
+    <div class="dialog__body">
+      <h2>Заявка перевозчику</h2>
+      <div class="form-grid">
+        <label class="field">
+          <span>Перевозчик</span>
+          <select class="select carrier__select"></select>
+        </label>
+        <label class="field">
+          <span>Маршрут</span>
+          <input class="input" value="Владивосток → Хабаровск">
+        </label>
+      </div>
+      <div class="carrier__check"></div>
+      <div>
+        <p class="small muted">Подставлено из карточки груза</p>
+        <div class="prefill carrier__prefill"></div>
+      </div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary carrier__submit">Подготовить ЭТрН</button>
+    </div>
+  </dialog>
+
+  <!-- Повторная отправка ЭТрН (юзкейс 07) -->
+  <dialog class="dialog" id="resend-dialog">
+    <div class="dialog__body">
+      <h2>Отправить ЭТрН заново?</h2>
+      <p>Проверьте, что исправили ИНН грузополучателя. Без исправления оператор отклонит документ снова, а лишняя отправка может создать дубль.</p>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary resend__ok">Отправить заново</button>
+    </div>
+  </dialog>
+
+  <!-- Поручение экспедитору (юзкейс 03) -->
+  <dialog class="dialog" id="order-dialog">
+    <div class="dialog__body">
+      <h2>Поручение экспедитору</h2>
+      <p class="muted">Данные подставлены из карточки, остаётся отправить на подпись</p>
+      <div class="prefill order__prefill"></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary" data-close data-toast="Поручение отправлено клиенту на подпись">Отправить на подпись</button>
+    </div>
+  </dialog>
+</body>
+</html>

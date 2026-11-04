@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Главная — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/index.js" defer></script>
+</head>
+<body data-page="index">
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1 class="js-hello">Добрый день</h1>
+          <p class="muted js-hello-sub">Что зависло и что ждёт вас</p>
+        </div>
+      </header>
+
+      <form class="ask">
+        <input class="input ask__input" placeholder="Спросите или создайте: «сверь документы по MSKU1234567»" aria-label="Спросить помощника">
+        <button class="btn btn--primary">Спросить</button>
+      </form>
+
+      <section class="grid stuck-tiles" style="--min:13rem" aria-label="Что зависло"></section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2 class="js-tasks-title">Мои задачи</h2>
+          <div class="row task-filter" role="group" aria-label="Фильтр задач">
+            <button class="btn btn--sm btn--secondary" data-filter="open" aria-pressed="true">Открытые</button>
+            <button class="btn btn--sm btn--ghost" data-filter="done" aria-pressed="false">Закрытые</button>
+          </div>
+        </div>
+        <ul class="tasks"></ul>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>Обмены</h2>
+          <a class="btn btn--ghost btn--sm" href="exchanges.html">Все обмены</a>
+        </div>
+        <div class="exchanges-brief"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

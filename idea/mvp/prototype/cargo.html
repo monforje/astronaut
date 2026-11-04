@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Грузы — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/cargo.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/cargo.js" defer></script>
+</head>
+<body data-page="cargo">
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Грузы</h1>
+          <!-- Юзкейсы 03 и 10 -->
+          <p class="muted">Найти груз и увидеть, где что зависло</p>
+        </div>
+        <a class="btn btn--primary" href="cargo-new.html">Новый груз</a>
+      </header>
+
+      <div class="filters row">
+        <input class="input filters__search" type="search" placeholder="Номер контейнера или клиент" aria-label="Поиск">
+        <select class="select filters__client" aria-label="Клиент">
+          <option value="">Все клиенты</option>
+        </select>
+        <select class="select filters__status" aria-label="Статус">
+          <option value="">Все статусы</option>
+        </select>
+        <label class="switch">
+          <input type="checkbox" class="filters__stuck">
+          <span>Только зависшие</span>
+        </label>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Контейнер</th>
+              <th>Клиент</th>
+              <th>Маршрут</th>
+              <th>Статус</th>
+              <th>Обновлено</th>
+              <th>Требует внимания</th>
+            </tr>
+          </thead>
+          <tbody class="cargo-rows"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

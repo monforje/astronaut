@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контрагент — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/counterparty.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/counterparty.js" defer></script>
+</head>
+<body data-page="counterparty">
+  <!-- Юзкейс 02: карточка контрагента -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <p class="crumbs"><a href="directory.html">Справочник</a> / <span class="js-name"></span></p>
+          <h1 class="js-name"></h1>
+          <div class="row js-badges" style="--gap:0.5rem"></div>
+        </div>
+        <button class="btn btn--secondary js-edit">Редактировать</button>
+        <span class="small muted js-readonly" hidden>Руководитель только смотрит</span>
+      </header>
+      <div class="js-alerts stack"></div>
+      <div class="cp-grid">
+        <section class="card">
+          <h2>Реквизиты</h2>
+          <p class="small muted">Рядом с каждым полем — откуда оно пришло</p>
+          <div class="table-wrap"><table class="table"><tbody class="js-fields"></tbody></table></div>
+        </section>
+        <div class="stack">
+          <section class="card">
+            <h2>Связанные грузы</h2>
+            <ul class="links js-cargos"></ul>
+          </section>
+          <section class="card">
+            <h2>История</h2>
+            <ul class="history js-history"></ul>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="edit-dialog">
+    <div class="dialog__body">
+      <h2>Редактировать реквизиты</h2>
+      <p class="muted small">Изменения увидят все грузы и документы, которые ссылаются на запись</p>
+      <div class="edit-fields stack" style="--gap:0.75rem"></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary edit-save">Сохранить</button>
+    </div>
+  </dialog>
+</body>
+</html>

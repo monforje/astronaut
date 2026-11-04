@@ -1,0 +1,153 @@
+/* Конструктор обмена */
+
+.lifecycle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.lifecycle li {
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+}
+
+.lifecycle li.is-done {
+  background: var(--tint);
+  border-color: transparent;
+  color: var(--accent-strong);
+}
+
+.lifecycle li.is-on {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.template {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+button.template {
+  cursor: pointer;
+}
+
+button.template:hover {
+  border-color: var(--accent);
+  background: var(--tint);
+}
+
+.scheme {
+  display: grid;
+  grid-template-columns: 9rem 1fr 9rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scheme__steps {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.scheme__steps .scheme__node:not(:last-child)::after {
+  content: "→";
+  margin-left: 0.5rem;
+  color: var(--text-muted);
+}
+
+.scheme__node {
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-chip);
+  background: var(--surface);
+  font-size: 0.875rem;
+}
+
+.scheme__node--end {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  background: var(--tint);
+  border: 1px solid var(--accent);
+}
+
+.field-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 22rem;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-chip);
+}
+
+.field-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.field-option:last-child {
+  border-bottom: 0;
+}
+
+.field-option:has(input:checked) {
+  background: var(--tint);
+}
+
+.field-option input {
+  accent-color: var(--accent-strong);
+}
+
+.map-arrow {
+  color: var(--text-muted);
+}
+
+.versions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.versions li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (max-width: 48rem) {
+  .start-grid,
+  .scheme {
+    grid-template-columns: 1fr;
+  }
+}

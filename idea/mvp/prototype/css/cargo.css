@@ -1,0 +1,35 @@
+/* Список грузов */
+
+.filters__search {
+  flex: 1 1 18rem;
+  width: auto;
+}
+
+.filters .select {
+  width: auto;
+}
+
+.cargo-id {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.cargo-id small {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.problems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.stuck-note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  color: var(--warn);
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Новый груз — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/cargo-new.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/cargo-new.js" defer></script>
+</head>
+<body data-page="cargo-new">
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <p class="crumbs"><a href="cargo.html">Грузы</a> / Новый груз</p>
+          <h1>Новый груз</h1>
+          <p class="muted">Сведения вводятся один раз, документы потом собираются из карточки</p>
+        </div>
+      </header>
+
+      <div class="new-cargo">
+        <form class="card new-cargo__form" novalidate>
+          <div class="save-error alert alert--danger" hidden>
+            <div><strong>Не удалось сохранить.</strong> Сведения не потерялись, попробуйте ещё раз.</div>
+          </div>
+
+          <h2>Клиент и поставщик</h2>
+          <div class="form-grid">
+            <label class="field">
+              <span>Клиент</span>
+              <select class="select" name="client">
+                <option value="">Выберите из Справочника</option>
+              </select>
+              <button type="button" class="btn btn--ghost btn--sm add-client" data-open="client-dialog">Нет в списке? Завести клиента</button>
+            </label>
+            <label class="field">
+              <span>Поставщик</span>
+              <input class="input" name="supplier" list="suppliers" placeholder="Название на латинице">
+              <datalist id="suppliers"></datalist>
+            </label>
+          </div>
+
+          <h2>Контейнер и маршрут</h2>
+          <div class="form-grid">
+            <label class="field">
+              <span>Номер контейнера</span>
+              <input class="input mono" name="container" placeholder="MSKU1234567" maxlength="11" autocomplete="off">
+              <span class="container-msg field__hint">4 буквы и 7 цифр</span>
+            </label>
+            <label class="field">
+              <span>Тип</span>
+              <select class="select" name="type">
+                <option>40HC</option>
+                <option>40DC</option>
+                <option>20DC</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Откуда</span>
+              <input class="input" name="from" placeholder="Шэньчжэнь">
+            </label>
+            <label class="field">
+              <span>Куда</span>
+              <input class="input" name="to" value="Владивосток">
+            </label>
+          </div>
+
+          <h2>Что везём</h2>
+          <div class="form-grid">
+            <label class="field">
+              <span>Наименование товара</span>
+              <input class="input" name="goods" placeholder="Светотехника и кабель">
+            </label>
+            <label class="field">
+              <span>Число мест</span>
+              <input class="input" name="places" inputmode="numeric" placeholder="120">
+            </label>
+            <label class="field">
+              <span>Вес брутто, кг</span>
+              <input class="input" name="gross" inputmode="numeric" placeholder="18 420">
+            </label>
+          </div>
+
+          <div class="row">
+            <button type="submit" class="btn btn--primary">Сохранить</button>
+            <button type="button" class="btn btn--secondary upload-docs" disabled title="Сначала заполните обязательные сведения">Загрузить документы</button>
+            <button type="button" class="btn btn--ghost demo-fill">Заполнить примером</button>
+          </div>
+        </form>
+
+        <aside class="card checklist" aria-live="polite">
+          <div class="card__head">
+            <h2>Чек-лист</h2>
+            <span class="checklist__count badge badge--plain"></span>
+          </div>
+          <div class="progress"><span class="checklist__bar"></span></div>
+          <ul class="checklist__items"></ul>
+          <p class="small muted">Состав обязательных сведений — черновик, уточним у брокеров [TODO]</p>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="client-dialog">
+    <form class="dialog__body" method="dialog">
+      <h2>Завести клиента</h2>
+      <p class="muted">Введите ИНН — подтянем название, адрес и статус из ЕГРЮЛ</p>
+      <label class="field">
+        <span>ИНН</span>
+        <div class="row">
+          <input class="input mono client-inn" style="flex:1" placeholder="0000000005" inputmode="numeric">
+          <button type="button" class="btn btn--secondary client-find">Найти</button>
+        </div>
+      </label>
+      <div class="client-result"></div>
+      <p class="small muted">Полный экран Справочника — юзкейс 02</p>
+    </form>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+    </div>
+  </dialog>
+</body>
+</html>

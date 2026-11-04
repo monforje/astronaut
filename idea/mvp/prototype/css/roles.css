@@ -1,0 +1,48 @@
+/*
+ * Роли дизайн-системы Astronaut: единый слой между палитрой бренда (tokens.css) и витринами —
+ * лендингом (Tailwind) и демо-сайтом (Mantine). Не зависит от фреймворка: только CSS-переменные.
+ *
+ * Компоненты берут цвета, тени и скругления ролями отсюда, а не палитрой и не HEX. Нужен новый оттенок —
+ * `color-mix` от фирменных цветов здесь. Схема одна, светлая. Подключается после tokens.css (бренд).
+ * Правила применения — design/README.md, «Дизайн-система».
+ */
+:root {
+  /* Цвет */
+  --bg: var(--color-white);
+  --surface: var(--color-off-white);
+  /* Мятная подложка: полосы секций, плашки иконок. Свежее тёплого off-white, тот же teal бренда. */
+  --tint: color-mix(in srgb, var(--color-teal) 8%, var(--color-white));
+  --text: var(--color-navy);
+  /* navy 70% на белом — 5,4:1 */
+  --text-muted: color-mix(in srgb, var(--color-navy) 70%, var(--color-white));
+  --line: color-mix(in srgb, var(--color-navy) 12%, var(--color-white));
+  --accent: var(--color-teal);
+  /* Teal светлый: текст на нём — navy, а не белый. */
+  --accent-contrast: var(--color-navy);
+  /* Акцент-текст и фокус: 5,1:1 на белом, 4,7:1 на off-white. */
+  --accent-strong: color-mix(in srgb, var(--color-teal) 45%, var(--color-navy));
+  --spark: var(--color-orange);
+  /* Белый на оранжевом не читается; navy — 6,2:1. */
+  --spark-contrast: var(--color-navy);
+
+  /* Тени: оттенок navy, не серый */
+  --elevation-card:
+    0 1px 2px color-mix(in srgb, var(--color-navy) 6%, transparent),
+    0 12px 32px -16px color-mix(in srgb, var(--color-navy) 22%, transparent);
+  --elevation-lift:
+    0 2px 4px color-mix(in srgb, var(--color-navy) 6%, transparent),
+    0 20px 40px -18px color-mix(in srgb, var(--color-navy) 28%, transparent);
+
+  /* Скругления: плашка иконки / карточка / окно и подложка. Кнопки — пилюля. */
+  --radius-chip: 0.75rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+  --radius-pill: 999px;
+
+  /* Движение */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Фокус: везде одинаковый */
+  --focus-width: 2px;
+  --focus-offset: 4px;
+}

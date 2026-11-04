@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Конструктор обмена — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/exchange-builder.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/exchange-builder.js" defer></script>
+</head>
+<body data-page="exchange-builder">
+  <!-- Юзкейс 13 (живёт в 01-connect): шаблон или агент → схема → тест → выкат -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <p class="crumbs"><a href="exchanges.html">Обмены</a> / Конструктор</p>
+          <h1>Собрать обмен</h1>
+          <ol class="lifecycle"></ol>
+        </div>
+      </header>
+
+      <section class="card js-start">
+        <h2>С чего начать</h2>
+        <div class="start-grid">
+          <button class="template" data-template>
+            <span class="badge badge--plain">Шаблон</span>
+            <strong>Заявки из 1С в Контур для ЭТрН</strong>
+            <span class="small muted">Новые заказы из 1С становятся ЭТрН у оператора. 6 полей уже сопоставлены</span>
+          </button>
+          <div class="template template--ask">
+            <span class="badge badge--plain">Помощник</span>
+            <strong>Опишите, что нужно</strong>
+            <textarea class="textarea ask-text" rows="3" placeholder="Например: собери обмен заявок из 1С в Контур"></textarea>
+            <button class="btn btn--secondary btn--sm ask-btn">Попросить помощника</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="js-builder stack" hidden>
+        <section class="card">
+          <div class="card__head"><h2>Схема</h2><span class="badge badge--plain js-env"></span></div>
+          <div class="scheme">
+            <div class="scheme__node scheme__node--end"><span class="small muted">Откуда</span><strong>1С</strong><span class="small">Заказы</span></div>
+            <div class="scheme__steps">
+              <div class="scheme__node">Взять новые заказы</div>
+              <div class="scheme__node">Разложить поля</div>
+              <div class="scheme__node">Проверить ИНН и массу</div>
+              <div class="scheme__node">Отправить на подпись</div>
+            </div>
+            <div class="scheme__node scheme__node--end"><span class="small muted">Куда</span><strong>Контур</strong><span class="small">ЭТрН</span></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Соответствие полей</h2>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Поле 1С</th><th></th><th>Поле ЭТрН в Контуре</th><th>Пример</th><th></th></tr></thead>
+              <tbody class="map-rows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card__head">
+            <h2>Тестовый запуск</h2>
+            <button class="btn btn--secondary test-btn">Тестовый запуск</button>
+          </div>
+          <p class="small muted">Данные идут по схеме, но в Контур ничего не записывается</p>
+          <div class="test-result"></div>
+        </section>
+
+        <section class="card">
+          <div class="card__head">
+            <h2>Версии</h2>
+            <button class="btn btn--primary deploy-btn" disabled title="Сначала тестовый запуск">Выкатить в Продуктив</button>
+          </div>
+          <ul class="versions"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="deploy-dialog">
+    <div class="dialog__body">
+      <h2>Выкатить в Продуктив?</h2>
+      <p>Обмен начнёт отправлять настоящие ЭТрН в Контур. Подтверждает админ.</p>
+      <ul>
+        <li>Что выкатываем: <span class="js-deploy-version"></span></li>
+        <li>Тестовый запуск: прошёл</li>
+        <li>Откатить можно на любую версию</li>
+      </ul>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary deploy-ok">Выкатить</button>
+    </div>
+  </dialog>
+
+  <!-- Выбор поля источника -->
+  <dialog class="dialog" id="field-dialog">
+    <div class="dialog__body">
+      <h2>Откуда брать «<span class="field__target"></span>»</h2>
+      <p class="small muted">Поля 1С и пример значения из последнего заказа. После правки появится новая версия-черновик — выкатить её можно только после теста</p>
+      <div class="field-list"></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary field-apply">Применить</button>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Доступ к данным — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/data-access.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/data-access.js" defer></script>
+</head>
+<body data-page="data-access">
+  <!-- Юзкейс 11: idea/mvp/usecases/11-data-access/ -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page">
+      <header class="page-head">
+        <div>
+          <h1>Доступ к данным</h1>
+          <p class="muted">Данные 1С и Справочника в нормальном виде — для сайта, отчётов и кабинета клиента. Без отдельной выгрузки под каждый сервис</p>
+        </div>
+      </header>
+
+      <div class="js-alerts stack"></div>
+
+      <div class="grid" style="--min:20rem">
+        <section class="card">
+          <div class="card__head">
+            <h2>Витрина в PostgreSQL</h2>
+            <label class="switch"><input type="checkbox" class="sw-vitrina"><span class="js-vitrina-label"></span></label>
+          </div>
+          <p class="small muted">Таблицы для BI и аналитиков. Данные очищены, без дублей, из Справочника</p>
+          <div class="js-vitrina"></div>
+        </section>
+        <section class="card">
+          <div class="card__head">
+            <h2>Data API</h2>
+            <label class="switch"><input type="checkbox" class="sw-api"><span class="js-api-label"></span></label>
+          </div>
+          <p class="small muted">REST для сайта и кабинета клиента. Ключи, права, лимиты</p>
+          <div class="js-api"></div>
+        </section>
+      </div>
+
+      <section class="card">
+        <div class="card__head"><h2>Таблицы</h2><span class="small muted js-updated"></span></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Таблица</th><th>Имя в витрине и API</th><th class="num">Строк</th><th>Обновлено</th></tr></thead>
+            <tbody class="tables-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card js-keys-card">
+        <div class="card__head"><h2>Ключи API</h2><button class="btn btn--primary btn--sm" data-open="key-dialog">Создать ключ</button></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Ключ</th><th>Права</th><th>Лимит</th><th></th></tr></thead>
+            <tbody class="keys-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head"><h2>События</h2><button class="btn btn--secondary btn--sm" data-open="hook-dialog">Добавить подписку</button></div>
+        <p class="small muted">Когда в данных что-то меняется, отправим запрос на ваш адрес</p>
+        <ul class="hooks"></ul>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="dialog" id="key-dialog">
+    <div class="dialog__body">
+      <h2>Новый ключ API</h2>
+      <label class="field"><span>Для чего</span><input class="input key-name" placeholder="Кабинет клиента на сайте"></label>
+      <label class="field"><span>Права</span>
+        <select class="select key-rights">
+          <option>клиент видит только свои грузы</option>
+          <option>чтение всех таблиц</option>
+          <option>только грузы и контейнеры</option>
+        </select>
+      </label>
+      <label class="field"><span>Лимит</span>
+        <select class="select key-limit">
+          <option>60 запросов в минуту</option>
+          <option>600 запросов в минуту</option>
+        </select>
+      </label>
+      <div class="key-created"></div>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Закрыть</button>
+      <button class="btn btn--primary key-ok">Создать</button>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog--wide" id="docs-dialog">
+    <div class="dialog__body">
+      <h2>Документация API</h2>
+      <p class="muted">Собирается сама по таблицам. Заглушка: показываем, что можно спросить</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Запрос</th><th>Что вернёт</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">GET /shipments</td><td>Грузы: контейнер, клиент, маршрут, статус. Ключ клиента — только его грузы</td></tr>
+            <tr><td class="mono">GET /shipments/{id}</td><td>Один груз с лентой событий</td></tr>
+            <tr><td class="mono">GET /containers</td><td>Контейнеры и где они сейчас</td></tr>
+            <tr><td class="mono">GET /clients</td><td>Клиенты из Справочника</td></tr>
+            <tr><td class="mono">GET /documents?shipment={id}</td><td>Документы по грузу</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">Лимит превышен — что отвечаем: [TODO]</p>
+    </div>
+    <div class="dialog__actions"><button class="btn btn--secondary" data-close>Закрыть</button></div>
+  </dialog>
+
+  <dialog class="dialog" id="hook-dialog">
+    <div class="dialog__body">
+      <h2>Подписка на событие</h2>
+      <label class="field"><span>Событие</span>
+        <select class="select hook-event">
+          <option>Груз выпущен</option>
+          <option>Груз вывезен</option>
+          <option>Найдено расхождение</option>
+          <option>ЭТрН подписана</option>
+        </select>
+      </label>
+      <label class="field"><span>Куда отправлять</span><input class="input mono hook-url" value="https://example.ru/hooks/"></label>
+    </div>
+    <div class="dialog__actions">
+      <button class="btn btn--secondary" data-close>Отмена</button>
+      <button class="btn btn--primary hook-ok">Добавить</button>
+    </div>
+  </dialog>
+</body>
+</html>

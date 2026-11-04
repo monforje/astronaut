@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Помощник — Astronaut</title>
+  <link rel="icon" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/roles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/assistant.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/common.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/assistant.js" defer></script>
+</head>
+<body data-page="assistant">
+  <!-- Юзкейс 09: экран-чат для долгой работы. Боковая панель на остальных экранах — js/chat.js -->
+  <div class="app">
+    <nav class="side-nav" aria-label="Главное меню"></nav>
+    <main class="page assistant-page">
+      <aside class="history">
+        <button class="btn btn--primary history__new">Новый чат</button>
+        <p class="small muted">История</p>
+        <ul class="history__list"></ul>
+      </aside>
+      <section class="assistant-chat">
+        <header class="assistant-chat__head">
+          <h1>Помощник</h1>
+          <p class="small muted">Отвечает и делает по просьбе. Что меняет данные — только после вашего «Подтвердить». Горячая клавиша на любом экране: Ctrl+/</p>
+        </header>
+        <div class="chat__log"></div>
+        <form class="chat__form">
+          <textarea class="textarea chat__input" rows="2" placeholder="Спросите или попросите своими словами…" aria-label="Сообщение помощнику"></textarea>
+          <button class="btn btn--primary">Отправить</button>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
