@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Astronaut: гипотезы и предложение пилотам</title>
+<!--
+  Короткая презентация для компаний-пилотов: 5 слайдов. Сборка в PDF: bash idea/accelerator/pilot-deck/build.sh
+  Гипотезы и пороги: idea/questions.md («Проверить на разговорах»). Отличия: idea/skelet/product/differentiators.md.
+  Что даём: idea/mvp/mvp-usecases.md. Условия: idea/product/05-stoimost.md («Первые три пилота»).
+  Слово MVP не используем. Новых цифр нет.
+-->
+<style>
+@font-face { font-family: "Onest"; src: url("../../skelet/brand/design/fonts/Onest[wght].ttf") format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "Fira Code"; src: url("../../skelet/brand/design/fonts/FiraCode[wght].ttf") format("truetype"); font-weight: 300 700; }
+
+:root {
+  --navy: #082f53;
+  --teal: #00d4d0;
+  --orange: #ff9455;
+  --off: #fbf5eb;
+  --white: #ffffff;
+  --tint: color-mix(in oklab, var(--teal) 8%, white);
+  --muted: color-mix(in oklab, var(--navy) 70%, white);
+  --line: color-mix(in oklab, var(--navy) 12%, white);
+  --accent-strong: color-mix(in oklab, var(--teal) 45%, var(--navy));
+  --on-navy: color-mix(in oklab, white 78%, var(--navy));
+  --shadow-card: 0 1px 2px rgb(8 47 83 / .06), 0 14px 36px -10px rgb(8 47 83 / .18);
+  --shadow-lift: 0 2px 4px rgb(8 47 83 / .06), 0 28px 64px -16px rgb(8 47 83 / .28);
+  --sans: "Onest", system-ui, sans-serif;
+  --mono: "Fira Code", ui-monospace, monospace;
+}
+
+@page { size: 1920px 1080px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); color: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 150px 120px 80px; break-after: page; isolation: isolate; }
+.slide:last-child { break-after: auto; }
+.bg-white { background: var(--white); }
+.bg-off { background: var(--off); }
+.bg-tint { background: var(--tint); }
+.bg-navy { background: var(--navy); color: var(--white); }
+
+.top { position: absolute; top: 52px; left: 120px; right: 120px; display: flex; justify-content: space-between; align-items: center; }
+.top .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 26px; letter-spacing: -.01em; }
+.top .brand img { height: 38px; }
+.top .num { font-family: var(--mono); font-weight: 500; font-size: 18px; color: var(--muted); }
+.bg-navy .top .num { color: var(--on-navy); }
+
+.kicker { font-family: var(--mono); font-weight: 600; font-size: 22px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-strong); }
+.bg-navy .kicker { color: var(--teal); }
+h1 { font-weight: 800; font-size: 100px; line-height: 1; letter-spacing: -.035em; }
+h2 { font-weight: 800; font-size: 72px; line-height: 1.04; letter-spacing: -.03em; margin-top: 18px; }
+h3 { font-weight: 700; font-size: 30px; line-height: 1.15; letter-spacing: -.01em; }
+.lead { font-size: 28px; line-height: 1.42; color: var(--muted); }
+.mono { font-family: var(--mono); font-weight: 600; }
+
+/* 1. Обложка */
+.s1 .wrap { display: grid; grid-template-columns: 1fr 700px; align-items: center; height: 100%; }
+.s1 h1 { margin-top: 28px; }
+.s1 .lead { margin-top: 36px; max-width: 980px; }
+.s1 .art { position: relative; height: 600px; }
+.s1 .art img { position: absolute; width: 900px; right: -230px; top: 30px; }
+.s1 .deal { margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 980px; }
+.s1 .deal div { background: var(--off); border-radius: 22px; padding: 24px 28px; font-size: 22px; line-height: 1.4; }
+.s1 .deal b { display: block; font-size: 26px; margin-bottom: 6px; }
+.chip { display: inline-flex; padding: 12px 26px; border-radius: 999px; background: var(--tint); font-size: 22px; font-weight: 600; color: var(--accent-strong); }
+
+/* 2. Гипотезы */
+.hyps { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.hyp { background: var(--white); border-radius: 24px; box-shadow: var(--shadow-card); padding: 32px 30px 28px; display: flex; flex-direction: column; }
+.hyp .n { font-family: var(--mono); font-weight: 600; font-size: 22px; color: var(--accent-strong); }
+.hyp h3 { margin-top: 18px; font-size: 29px; }
+.hyp .why { margin-top: 14px; font-size: 21px; line-height: 1.42; color: var(--muted); }
+.hyp .check { margin-top: auto; padding-top: 22px; }
+.hyp .lbl { font-size: 16px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.hyp .check p { margin-top: 6px; font-size: 21px; line-height: 1.4; }
+.hyp .bar { margin-top: 18px; border-top: 1.5px solid var(--line); padding-top: 16px; display: flex; align-items: baseline; gap: 12px; font-size: 19px; color: var(--muted); }
+.hyp .bar .mono { font-size: 30px; color: var(--navy); white-space: nowrap; }
+.s2 .foot { position: absolute; left: 120px; right: 120px; bottom: 40px; font-size: 21px; color: var(--muted); }
+
+/* 3. Что даём */
+.s3 .grid { margin-top: 44px; display: grid; grid-template-columns: 860px 1fr; gap: 56px; align-items: start; }
+.gives { display: flex; flex-direction: column; gap: 0; }
+.give { display: grid; grid-template-columns: 64px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1.5px solid var(--line); }
+.give:first-child { padding-top: 6px; }
+.give:last-child { border-bottom: 0; }
+.ic { width: 64px; height: 64px; border-radius: 18px; background: var(--white); display: grid; place-items: center; color: var(--accent-strong); box-shadow: var(--shadow-card); }
+.ic svg { width: 32px; height: 32px; }
+.give h3 { font-size: 29px; }
+.give p { margin-top: 6px; font-size: 21px; line-height: 1.42; color: var(--muted); }
+.shot { border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-lift); background: var(--white); }
+.shot .bar { height: 36px; border-bottom: 1.5px solid var(--line); display: flex; align-items: center; gap: 8px; padding: 0 16px; }
+.shot .bar i { width: 12px; height: 12px; border-radius: 50%; background: var(--line); }
+.shot img { display: block; width: 100%; }
+.shot-cap { margin-top: 18px; font-size: 19px; color: var(--muted); }
+
+/* 4. Почему мы */
+.cmp { margin-top: 44px; border-radius: 26px; overflow: hidden; background: var(--white); box-shadow: var(--shadow-card); }
+.cmp .r { display: grid; grid-template-columns: 330px 1fr 1fr; }
+.cmp .r > div { padding: 22px 30px; font-size: 22px; line-height: 1.4; border-top: 1.5px solid var(--line); }
+.cmp .r:first-child > div { border-top: 0; font-size: 17px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 22px; padding-bottom: 14px; }
+.cmp .r > div:first-child { font-weight: 700; }
+.cmp .r > div:nth-child(2) { color: var(--muted); }
+.cmp .r > div:nth-child(3) { background: var(--tint); font-weight: 500; }
+.cmp .r:first-child > div:nth-child(3) { color: var(--accent-strong); }
+.s4 .foot { margin-top: 26px; font-size: 20px; color: var(--muted); }
+
+/* 5. Пилот */
+.s5 .grid { margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+.s5 h2 { color: var(--white); }
+.col h3 { font-size: 28px; margin-bottom: 6px; color: var(--teal); font-weight: 700; letter-spacing: .02em; }
+.li { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1.5px solid rgb(255 255 255 / .12); font-size: 27px; line-height: 1.38; }
+.li:last-child { border-bottom: 0; }
+.li .m { width: 38px; height: 38px; border-radius: 50%; background: var(--teal); color: var(--navy); display: grid; place-items: center; font-weight: 800; font-size: 18px; margin-top: 1px; }
+.li .m.o { background: transparent; box-shadow: inset 0 0 0 2px rgb(255 255 255 / .35); color: var(--white); }
+.li span.sub { display: block; color: var(--on-navy); font-size: 21px; margin-top: 2px; }
+.cta-row { position: absolute; left: 120px; right: 120px; bottom: 64px; display: flex; align-items: center; gap: 40px; }
+.cta { background: var(--orange); color: var(--navy); border-radius: 999px; padding: 20px 38px; font-weight: 700; font-size: 25px; text-decoration: none; white-space: nowrap; }
+.contacts { display: flex; gap: 44px; font-size: 20px; color: var(--on-navy); }
+.contacts b { display: block; color: var(--white); font-size: 24px; font-weight: 600; margin-top: 2px; }
+.contacts a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ============ 1. Обложка ============ -->
+<section class="slide s1 bg-white">
+  <svg style="position:absolute; z-index:-1; right:-200px; top:110px; width:1040px; height:860px" viewBox="0 0 600 500" preserveAspectRatio="none"><path fill="#e9faf9" d="M318 18c88-6 190 34 240 112 49 77 43 189-12 262-56 73-160 104-262 98C183 484 82 444 36 368-10 292 2 182 58 112 114 43 230 24 318 18z"/></svg>
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">Владивосток · 2026</div></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Предложение компаниям-пилотам</span>
+      <h1>Три пилота.<br>Четыре гипотезы.<br>Четыре недели.</h1>
+      <p class="lead">Ищем трёх экспедиторов во Владивостоке. На их сделках проверим, где Astronaut экономит деньги и часы: одна карточка груза, сверка документов до отправки, обмены между программами под присмотром.</p>
+      <div class="deal">
+        <div><b>Вы даёте</b>реальные сделки и 30 минут в неделю на обратную связь</div>
+        <div><b>Мы даём</b>продукт, доработку под вас, −30% и гарантию результата</div>
+      </div>
+    </div>
+    <div class="art"><img src="../../skelet/brand/illustration.png" alt=""></div>
+  </div>
+</section>
+
+<!-- ============ 2. Гипотезы ============ -->
+<section class="slide s2 bg-off">
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">02 / 05</div></div>
+  <div class="kicker">Что мы думаем</div>
+  <h2>Четыре гипотезы, которые проверим<br>на ваших сделках</h2>
+  <div class="hyps">
+    <div class="hyp">
+      <div class="n">01</div>
+      <h3>Расхождения в документах стоят денег</h3>
+      <div class="why">Инвойс, упаковочный лист, коносамент, декларацию и ЭТрН сверяют руками. Ошибку находят на таможне: груз стоит, коносамент правят за плату.</div>
+      <div class="check"><div class="lbl">Проверим</div><p>Сверяем ваши комплекты, считаем пойманные расхождения и часы</p></div>
+      <div class="bar"><span class="mono">≥&nbsp;5</span>из 10 компаний подтверждают</div>
+    </div>
+    <div class="hyp">
+      <div class="n">02</div>
+      <h3>ЭТрН отклоняют из-за реквизитов</h3>
+      <div class="why">С 1 сентября 2026 перевозочные документы только электронные. Опечатка в ИНН, адресе или массе, и отгрузка стоит.</div>
+      <div class="check"><div class="lbl">Проверим</div><p>Сверяем ЭТрН с карточкой груза до отправки, смотрим причины отказов</p></div>
+      <div class="bar"><span class="mono">≥&nbsp;4</span>из 10 компаний подтверждают</div>
+    </div>
+    <div class="hyp">
+      <div class="n">03</div>
+      <h3>Обмены с 1С падают молча</h3>
+      <div class="why">Связки 1С с CRM и операторами ЭПД писали на заказ. О сбое узнают через день, когда данные уже разошлись.</div>
+      <div class="check"><div class="lbl">Проверим</div><p>Ставим наблюдение на ваши обмены и считаем сбои</p></div>
+      <div class="bar"><span class="mono">≥&nbsp;5</span>из 10 компаний подтверждают</div>
+    </div>
+    <div class="hyp">
+      <div class="n">04</div>
+      <h3>«Где мой контейнер» отнимает день</h3>
+      <div class="why">Клиент звонит третий раз за день. Менеджер собирает статус из кабинета линии, терминала и почты.</div>
+      <div class="check"><div class="lbl">Проверим</div><p>Ведём ленту событий по заявке, клиенту уходят уведомления в MAX</p></div>
+      <div class="bar"><span class="mono">≥&nbsp;5</span>из 10 называют это нагрузкой</div>
+    </div>
+  </div>
+  <div class="foot">Если гипотеза не подтвердится, убираем её из продукта. Пилот нужен, чтобы узнать это на реальных данных, а не по открытым источникам.</div>
+</section>
+
+<!-- ============ 3. Что даём ============ -->
+<section class="slide s3 bg-white">
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">03 / 05</div></div>
+  <div class="kicker">Что получает пилот</div>
+  <h2>Что вы получаете<br>с первого дня пилота</h2>
+  <div class="grid">
+    <div class="gives">
+      <div class="give"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13l2 2 4-4"/></svg></div><div><h3>Сверка документов по грузу</h3><p>Карточка груза, позиции из PDF инвойса, сверка с упаковочным листом, драфтом коносамента, пакетом для декларации и ЭТрН.</p></div></div>
+      <div class="give"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg></div><div><h3>Обмены под присмотром</h3><p>1С, Битрикс24, почта, Excel, один-два оператора ЭПД. Упал обмен: сообщение в MAX в ту же минуту.</p></div></div>
+      <div class="give"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 010 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg></div><div><h3>Один справочник клиентов</h3><p>Новый клиент по ИНН, проверка по ЕГРЮЛ и ГосЛогу. Одна Ромашка вместо трёх.</p></div></div>
+      <div class="give"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><div><h3>Где контейнер</h3><p>Море, ЖД и Владивосток в одной ленте по заявке.</p></div></div>
+      <div class="give"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10.5h6"/></svg></div><div><h3>Агент поверх всего</h3><p>«Сверь документы по контейнеру». Агент делает, важное подтверждаете вы.</p></div></div>
+    </div>
+    <div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="img/card-discrepancies.jpg" alt=""></div>
+      <p class="shot-cap">Карточка груза: в упаковочном листе 120 мест, в драфте коносамента 118. Пример на вымышленных данных.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. Почему мы ============ -->
+<section class="slide s4 bg-tint">
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">04 / 05</div></div>
+  <div class="kicker">Почему с нами</div>
+  <h2>Делаем то, чего на рынке<br>пока нет</h2>
+  <div class="cmp">
+    <div class="r"><div></div><div>Что есть на рынке</div><div>Astronaut</div></div>
+    <div class="r"><div>Сверка</div><div>Бухгалтерская: акты, счета-фактуры, НДС. Или проверка одной декларации перед подачей</div><div>Сверяем документы груза между собой: инвойс, упаковочный лист, коносамент, декларацию, ЭТрН</div></div>
+    <div class="r"><div>Где живут данные</div><div>Каждая система хранит груз у себя: 1С, Контур, кабинет линии</div><div>Работаем поверх всех ваших систем. 1С и Контур остаются</div></div>
+    <div class="r"><div>Интеграции</div><div>Универсальные шины без логистики, под крупные проекты</div><div>Готовые подключения для логистики и мониторинг обменов</div></div>
+    <div class="r"><div>AI</div><div>Точечный: распознать инвойс, подсказать внутри одной программы</div><div>Агент со всей платформой: сверяет, подключает, объясняет сбой</div></div>
+    <div class="r"><div>Под кого</div><div>Общий продукт, доработки за отдельные деньги</div><div>Первые три пилота решают, что делаем дальше. Одна доработка на выбор без доплаты</div></div>
+  </div>
+  <p class="foot">По открытым источникам: сайты, обзоры и материалы вендоров. На пилоте проверяем это вместе с вами.</p>
+</section>
+
+<!-- ============ 5. Условия ============ -->
+<section class="slide s5 bg-navy">
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark-mono.svg" alt="" style="filter:brightness(0) invert(1)">Astronaut</div><div class="num">05 / 05</div></div>
+  <div class="kicker">Пилот</div>
+  <h2>4 недели на ваших сделках.<br>Нет эффекта, месяц бесплатно.</h2>
+  <div class="grid">
+    <div class="col">
+      <h3>Мы даём первым трём</h3>
+      <div class="li"><span class="m">✓</span><div>−30% на подписку и подключение<span class="sub">первые 12 месяцев</span></div></div>
+      <div class="li"><span class="m">✓</span><div>Цена заморожена на 24 месяца</div></div>
+      <div class="li"><span class="m">✓</span><div>Чат с разработчиками и одна доработка на ваш выбор</div></div>
+      <div class="li"><span class="m">✓</span><div>Гарантия: нет эффекта за 4 недели, пилотный месяц бесплатно</div></div>
+    </div>
+    <div class="col">
+      <h3>Нужно от вас</h3>
+      <div class="li"><span class="m o">1</span><div>Обезличенные комплекты документов по сделкам</div></div>
+      <div class="li"><span class="m o">2</span><div>30 минут в неделю на обратную связь</div></div>
+      <div class="li"><span class="m o">3</span><div>Минимум 4 недели реальных сделок</div></div>
+      <div class="li"><span class="m o">4</span><div>Подписи остаются у вас в кабинете оператора<span class="sub">Ключи у нас не хранятся, агент ничего не меняет без вашего «да»</span></div></div>
+    </div>
+  </div>
+  <div class="cta-row">
+    <a class="cta" href="https://t.me/monforje">Покажем на одном контейнере за 20 минут →</a>
+    <div class="contacts">
+      <div>Даниил Комаров<b><a href="https://t.me/monforje">@monforje</a></b></div>
+      <div>Почта<b><a href="mailto:komarov.di@dvfu.ru">komarov.di@dvfu.ru</a></b></div>
+      <div>Телефон<b>8 910 597-74-57</b></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
