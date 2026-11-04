@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Astronaut: цены для первых трёх пилотов</title>
+<!--
+  Питч-дек для компаний-пилотов, 10 слайдов 16:9. Сборка PDF: bash idea/accelerator/pilot-deck/build.sh
+  Сценарии: idea/mvp/mvp-usecases.md и idea/mvp/usecases/*/user-view.md.
+  Условия пилота: дословно idea/product/05-stoimost.md, раздел «Первые три пилота».
+  Сроки этапов: idea/product/02-produkt.md (ориентир). Даты закона: idea/product/10-shpargalka.md, idea/skelet/audience/pains.md.
+  Вопросы на последнем слайде: idea/questions.md, «Проверить на разговорах».
+  Слово MVP не используем. Новых цифр нет.
+-->
+<style>
+@font-face { font-family: "Onest"; src: url("../../skelet/brand/design/fonts/Onest[wght].ttf") format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "Fira Code"; src: url("../../skelet/brand/design/fonts/FiraCode[wght].ttf") format("truetype"); font-weight: 300 700; }
+:root {
+  --navy: #082f53;
+  --teal: #00d4d0;
+  --orange: #ff9455;
+  --off: #fbf5eb;
+  --white: #ffffff;
+  --muted: color-mix(in oklab, var(--navy) 74%, white);
+  --faint: color-mix(in oklab, var(--navy) 70%, white);
+  --line: color-mix(in oklab, var(--navy) 13%, white);
+  --tint: color-mix(in oklab, var(--teal) 10%, white);
+  --accent: color-mix(in oklab, var(--teal) 42%, var(--navy));
+  --on-navy: color-mix(in oklab, white 74%, var(--navy));
+  --navy-card: color-mix(in oklab, white 7%, var(--navy));
+  --sans: "Onest", system-ui, sans-serif;
+  --mono: "Fira Code", ui-monospace, monospace;
+}
+@page { size: 1920px 1080px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); color: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; background: var(--white); }
+.slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 148px 120px 100px; break-after: page; display: flex; flex-direction: column; }
+.slide:last-child { break-after: auto; }
+.off { background: var(--off); }
+.navy { background: var(--navy); color: var(--white); }
+
+/* шапка и подвал */
+.top { position: absolute; top: 54px; left: 120px; right: 120px; display: flex; justify-content: space-between; align-items: center; }
+.brand { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 26px; letter-spacing: -.01em; }
+.brand img { height: 36px; }
+.num { font-family: var(--mono); font-size: 18px; color: var(--faint); }
+.navy .num { color: var(--on-navy); }
+.foot { position: absolute; left: 120px; right: 120px; bottom: 44px; font-size: 19px; line-height: 1.45; color: var(--faint); }
+.navy .foot { color: var(--on-navy); }
+
+/* типографика */
+.kicker { font-family: var(--mono); font-weight: 600; font-size: 21px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.navy .kicker { color: var(--teal); }
+h1 { font-weight: 800; font-size: 112px; line-height: .98; letter-spacing: -.04em; }
+h2 { font-weight: 800; font-size: 66px; line-height: 1.04; letter-spacing: -.03em; margin-top: 16px; max-width: 1680px; }
+h3 { font-weight: 700; font-size: 30px; line-height: 1.16; letter-spacing: -.01em; }
+.lead { font-size: 30px; line-height: 1.4; color: var(--muted); }
+p.t { font-size: 22px; line-height: 1.42; color: var(--muted); }
+.navy p.t, .navy .lead { color: var(--on-navy); }
+.big { font-family: var(--mono); font-weight: 600; letter-spacing: -.03em; line-height: 1; color: var(--navy); }
+.navy .big { color: var(--teal); }
+.ex { font-family: var(--mono); font-size: 19px; line-height: 1.45; color: var(--navy); background: var(--tint); border-radius: 12px; padding: 12px 16px; }
+.ex b { color: #c2571a; font-weight: 600; }
+
+/* карточки */
+.card { background: var(--white); border-radius: 24px; border: 1.5px solid var(--line); padding: 34px 34px 28px; display: flex; flex-direction: column; }
+.off .card { border-color: transparent; box-shadow: 0 1px 2px rgb(8 47 83 / .05), 0 16px 40px -14px rgb(8 47 83 / .16); }
+.tag { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--faint); letter-spacing: .02em; }
+.vote { margin-top: auto; padding-top: 18px; border-top: 1.5px dashed var(--line); display: flex; gap: 26px; font-size: 18px; color: var(--muted); }
+.vote span::before { content: ""; display: inline-block; width: 18px; height: 18px; border: 2px solid var(--faint); border-radius: 5px; vertical-align: -3px; margin-right: 9px; }
+
+/* 1. обложка */
+.s1 { padding-top: 0; padding-bottom: 0; justify-content: center; }
+.s1 .logo { height: 64px; align-self: flex-start; position: absolute; top: 72px; left: 120px; }
+.s1 h1 { margin-top: 30px; max-width: 1400px; }
+.s1 .lead { margin-top: 40px; max-width: 1180px; }
+.s1 .three { margin-top: 64px; display: flex; gap: 18px; }
+.s1 .three span { font-weight: 700; font-size: 26px; padding: 16px 30px; border-radius: 999px; background: var(--white); box-shadow: 0 10px 30px -14px rgb(8 47 83 / .25); }
+.s1 .three span i { font-style: normal; font-family: var(--mono); color: var(--accent); margin-right: 12px; font-weight: 600; }
+.s1 .contact { position: absolute; left: 120px; right: 120px; bottom: 64px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 24px; color: var(--muted); }
+.s1 .contact b { color: var(--navy); font-weight: 700; display: block; font-size: 28px; margin-bottom: 4px; }
+.s1 .contact .mono { font-family: var(--mono); font-size: 22px; }
+
+/* 2. почему сейчас */
+.stats { margin-top: auto; margin-bottom: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+.stat { border-top: 4px solid var(--navy); padding-top: 36px; }
+.stat:nth-child(1) { border-color: var(--orange); }
+.stat .big { font-size: 92px; }
+.stat .big small { font-size: 38px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+.stat h3 { margin-top: 32px; font-size: 34px; }
+.stat p.t { margin-top: 14px; font-size: 24px; }
+
+/* 3. четыре результата */
+.four { margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; flex: 1; max-height: 560px; }
+.four .card { padding: 40px 36px; }
+.four .big { font-size: 96px; }
+.four .unit { font-family: var(--mono); font-size: 26px; color: var(--accent); font-weight: 600; margin-top: 10px; }
+.four h3 { margin-top: auto; }
+.four p.t { margin-top: 12px; }
+
+/* 4–5. сценарии */
+.grid3 { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+.uc h3 { margin-top: 12px; font-size: 28px; }
+.uc p.t { margin-top: 10px; font-size: 21px; }
+.uc .ex, .uc .fig { margin-top: 16px; }
+.uc .fig { display: flex; align-items: baseline; gap: 14px; }
+.uc .fig .big { font-size: 46px; color: var(--accent); }
+.uc .fig span { font-size: 19px; color: var(--muted); line-height: 1.35; }
+
+/* 6. груз и помощник */
+.grid2 { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; }
+.grid2 .card { padding: 44px 44px 34px; }
+.grid2 .tag { font-size: 19px; }
+.grid2 h3 { font-size: 46px; margin-top: 18px; }
+.grid2 p.t { font-size: 28px; margin-top: 22px; }
+.grid2 .ex { font-size: 23px; margin-top: 30px; padding: 18px 22px; }
+.grid2 .fig { margin-top: 30px; display: flex; align-items: baseline; gap: 20px; }
+.grid2 .fig .big { font-size: 88px; color: var(--accent); }
+.grid2 .fig span { font-size: 24px; color: var(--muted); }
+.grid2 .vote { font-size: 20px; }
+
+/* 7. как идёт пилот */
+.steps { margin-top: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.steps::before { content: ""; position: absolute; left: 0; right: 0; top: 26px; height: 3px; background: var(--line); }
+.step { position: relative; padding-right: 40px; }
+.step .dot { width: 54px; height: 54px; border-radius: 50%; background: var(--navy); color: var(--white); font-family: var(--mono); font-weight: 600; font-size: 22px; display: grid; place-items: center; position: relative; }
+.step:nth-child(3) .dot { background: var(--teal); color: var(--navy); }
+.step .big { font-size: 56px; margin-top: 34px; }
+.step h3 { margin-top: 18px; font-size: 32px; }
+.step p.t { margin-top: 12px; font-size: 24px; }
+.need { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.need .card { padding: 28px 32px; flex-direction: row; align-items: center; gap: 24px; }
+.need .big { font-size: 40px; color: var(--accent); white-space: nowrap; }
+.need p.t { font-size: 21px; color: var(--navy); }
+
+/* 8. деньги */
+.money { margin-top: 44px; display: grid; grid-template-columns: 1fr 520px; gap: 48px; align-items: start; }
+table { width: 100%; border-collapse: collapse; font-size: 30px; }
+th { text-align: left; font-weight: 600; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); padding: 0 0 18px; border-bottom: 2px solid var(--navy); }
+td { padding: 19px 0; border-bottom: 1.5px solid var(--line); }
+td.n, th.n { text-align: right; font-family: var(--mono); white-space: nowrap; }
+th.n { font-family: var(--sans); }
+td.n { color: var(--muted); }
+td.p { color: var(--navy); font-weight: 600; }
+tr.sum td { font-weight: 800; border-bottom: 2px solid var(--navy); }
+tr.sum td.n { color: var(--navy); }
+tr.sum td.p { color: var(--accent); }
+tr.gap td { padding-top: 34px; }
+.minus { background: var(--navy); color: var(--white); border-radius: 28px; padding: 48px 44px; }
+.minus .big { font-size: 150px; color: var(--teal); }
+.minus h3 { margin-top: 22px; font-size: 32px; }
+.minus p.t { margin-top: 14px; color: var(--on-navy); font-size: 22px; }
+
+/* 9. сверх скидки */
+.perks { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.perk { padding: 30px 32px 30px; }
+.perk .n { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--accent); }
+.perk h3 { margin-top: 12px; font-size: 27px; }
+.perk p.t { margin-top: 10px; font-size: 20px; }
+.terms { margin-top: 26px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 22px; }
+.terms > div { border-radius: 20px; padding: 24px 30px; font-size: 21px; line-height: 1.45; }
+.terms .no { background: color-mix(in oklab, var(--orange) 14%, white); }
+.terms .yes { background: var(--tint); }
+.terms b { display: block; font-size: 17px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; color: var(--muted); font-weight: 600; }
+
+/* 10. отзыв */
+.s10 .cols { margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; }
+.qs { display: flex; flex-direction: column; gap: 18px; }
+.q { background: var(--navy-card); border-radius: 20px; padding: 24px 30px; display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: baseline; }
+.q .n { font-family: var(--mono); font-size: 22px; color: var(--teal); font-weight: 600; }
+.q p { font-size: 25px; line-height: 1.35; }
+.ask { display: flex; flex-direction: column; }
+.ask .lead { color: var(--on-navy); font-size: 28px; }
+.ask .three { margin-top: 30px; display: flex; gap: 18px; }
+.ask .three span { flex: 1; height: 180px; border: 2px dashed color-mix(in oklab, white 35%, var(--navy)); border-radius: 18px; display: grid; place-items: center; font-family: var(--mono); color: var(--on-navy); font-size: 22px; }
+.ask .cta { margin-top: auto; background: var(--teal); color: var(--navy); border-radius: 26px; padding: 38px 42px; }
+.ask .cta h3 { font-size: 38px; }
+.ask .cta p { margin-top: 12px; font-size: 24px; line-height: 1.4; }
+.ask .cta .mono { font-family: var(--mono); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- Цены для первых трёх пилотов: вынесены из дека отдельно -->
+<section class="slide off">
+  <div class="top"><div class="brand"><img src="../../skelet/brand/logo-mark.svg" alt="">Astronaut</div></div>
+  <div class="kicker">Первые три пилота · деньги</div>
+  <h2>Первым трём компаниям — минус 30% на год</h2>
+  <div class="money">
+    <table>
+      <thead><tr><th>Пакет «Старт», в месяц</th><th class="n">Обычная цена</th><th class="n">Цена пилота</th></tr></thead>
+      <tbody>
+        <tr><td>Платформа «Старт»</td><td class="n">6 120 ₽</td><td class="n p">4 284 ₽</td></tr>
+        <tr><td>Распознавание</td><td class="n">8 990 ₽</td><td class="n p">6 293 ₽</td></tr>
+        <tr><td>Сверка</td><td class="n">12 000 ₽</td><td class="n p">8 400 ₽</td></tr>
+        <tr class="sum"><td>Итого в месяц</td><td class="n">27 110 ₽</td><td class="n p">18 977 ₽</td></tr>
+        <tr><td>Статус груза, за контейнер</td><td class="n">250 ₽</td><td class="n p">175 ₽</td></tr>
+        <tr class="gap"><td>Подключение, разово</td><td class="n">11 700 ₽</td><td class="n p">8 190 ₽</td></tr>
+        <tr><td>«Корпоративный», подписка</td><td class="n">от 150 000 ₽</td><td class="n p">от 105 000 ₽</td></tr>
+      </tbody>
+    </table>
+    <div class="minus">
+      <div class="big">−30%</div>
+      <h3>на подписку и внедрение</h3>
+      <p class="t">Скидка действует первые 12 месяцев. Платите только за то, что включили.</p>
+    </div>
+  </div>
+  <div class="foot">В тариф «Старт» входит до 10 пользователей, до 5 подключённых систем и до 100 сделок в месяц. Цены предварительные.</div>
+</section>
+
+</body>
+</html>

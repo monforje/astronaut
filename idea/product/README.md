@@ -20,6 +20,7 @@
 | [08-intervyu.md](08-intervyu.md) | Как выйти на логистов, сценарий проблемного интервью, проверка готовности купить |
 | [09-pisma.md](09-pisma.md) | Письма компаниям и бриф для лидгенераторов |
 | [10-shpargalka.md](10-shpargalka.md) | Шпаргалка для заучивания: фразы, вопросы и ответы, даты |
+| [11-pisma-trekingu.md](11-pisma-trekingu.md) | Письма агрегаторам трекинга (CargoTime, TimeToCargo): куда писать, что спросить, тексты |
 | [product.pdf](product.pdf) | Все файлы папки одним PDF (обложка, оглавление). Собирает [utils/scripts/product-pdf.py](utils/scripts/product-pdf.py): `uv run idea/product/utils/scripts/product-pdf.py` |
 
 ## Откуда что взято
