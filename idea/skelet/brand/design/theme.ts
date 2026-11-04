@@ -1,24 +1,29 @@
-import {
-  ActionIcon,
-  Button,
-  Card,
-  createTheme,
-  Modal,
-  Paper,
-  type MantineColorsTuple,
-} from "@mantine/core";
-
 /*
- * Тема Mantine бренда Astronaut. Фирменный цвет каждой шкалы стоит на индексе 6 — его Mantine берёт
- * для заливки, поэтому кнопки точно в цвет бренда. Используется frontend/demo-site через симлинк
- * (src/shared/ui/theme/theme.ts) — правка здесь сразу видна в демке.
+ * Тема бренда Astronaut для демо-сайта — без UI-кита, просто данные: шкалы цветов, шрифты, скругления,
+ * тени и умолчания компонентов. Свой UI-кит демо-сайта будет брать значения отсюда. Используется
+ * frontend/demo-site через симлинк (src/shared/ui/theme/theme.ts) — правка здесь сразу видна в демке.
  *
+ * Шкалы по 10 оттенков, фирменный цвет на индексе 6 (`theme.primaryShade`) — его берут для заливки.
  * Палитра 03.11.2026 стала светлее (design/README.md, «Цвета»): шкалы сдвинуты вслед за базовым
  * цветом в OKLCH — светлота с затуханием к белому и чёрному, тон по базовому.
  */
 
+/** Шкала из 10 оттенков: [0] самый светлый … [9] самый тёмный. */
+export type ColorScale = readonly [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+];
+
 /** Electric Teal #00D4D0 — основной. */
-const brand: MantineColorsTuple = [
+const brand: ColorScale = [
   "#edfcfb",
   "#d3f6f4",
   "#b0f1ee",
@@ -32,7 +37,7 @@ const brand: MantineColorsTuple = [
 ];
 
 /** Warm Orange #FF9455 — акцент: CTA и точечные выделения. */
-const accent: MantineColorsTuple = [
+const accent: ColorScale = [
   "#fff6f2",
   "#ffe7da",
   "#ffd8c3",
@@ -46,7 +51,7 @@ const accent: MantineColorsTuple = [
 ];
 
 /** Off-white #FBF5EB (индекс 1) — тёплые фоны и подложки. */
-const sand: MantineColorsTuple = [
+const sand: ColorScale = [
   "#fffaf2",
   "#fbf5eb",
   "#e8dbc5",
@@ -60,7 +65,7 @@ const sand: MantineColorsTuple = [
 ];
 
 /** Deep Navy #082F53 — тёмная схема: [0] текст … [7] фон страницы … [9] самый тёмный. */
-const dark: MantineColorsTuple = [
+const dark: ColorScale = [
   "#cfd7e0",
   "#b5c0cc",
   "#90a0b2",
@@ -76,17 +81,15 @@ const dark: MantineColorsTuple = [
 /** Семейства — из `@font-face` в tokens.css рядом. */
 const SANS = "Onest, system-ui, sans-serif";
 
-export const theme = createTheme({
+export const theme = {
   primaryColor: "brand",
   primaryShade: 6,
-  /** Teal и orange светлые: на залитых кнопках текст автоматически становится тёмным. */
-  autoContrast: true,
   black: "#082F53",
   white: "#FFFFFF",
   colors: { brand, accent, sand, dark },
   fontFamily: SANS,
   fontFamilyMonospace: '"Fira Code", ui-monospace, monospace',
-  headings: { fontFamily: SANS, fontWeight: "800" },
+  headings: { fontFamily: SANS, fontWeight: 800 },
   /** Скругления и тени — роли из roles.css (одни на лендинг и демо). */
   radius: {
     xs: "0.25rem",
@@ -94,6 +97,7 @@ export const theme = createTheme({
     md: "var(--radius-chip)",
     lg: "var(--radius-card)",
     xl: "var(--radius-panel)",
+    pill: "var(--radius-pill)",
   },
   defaultRadius: "md",
   shadows: {
@@ -103,13 +107,14 @@ export const theme = createTheme({
     lg: "var(--elevation-lift)",
     xl: "var(--elevation-lift)",
   },
+  /** Умолчания компонентов: кнопки — пилюли, как на лендинге; карточки — белые, скруглённые, с мягкой navy-тенью. */
   components: {
-    /** Кнопки — пилюли, как на лендинге. */
-    Button: Button.extend({ defaultProps: { radius: "xl", fw: 600 } }),
-    ActionIcon: ActionIcon.extend({ defaultProps: { radius: "xl" } }),
-    /** Карточки — белые, скруглённые, с мягкой navy-тенью. */
-    Paper: Paper.extend({ defaultProps: { radius: "lg" } }),
-    Card: Card.extend({ defaultProps: { radius: "lg", shadow: "sm", withBorder: false } }),
-    Modal: Modal.extend({ defaultProps: { radius: "xl" } }),
+    button: { radius: "pill", fontWeight: 600 },
+    iconButton: { radius: "pill" },
+    paper: { radius: "lg" },
+    card: { radius: "lg", shadow: "sm", border: false },
+    modal: { radius: "xl" },
   },
-});
+} as const;
+
+export type Theme = typeof theme;

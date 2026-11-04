@@ -72,20 +72,22 @@ uv run idea/skelet/brand/design/recolor.py --from <старые hex через �
 
 `tokens.css` — CSS-переменные цветов и шрифтов плюс `@font-face` для локальных файлов.
 
-`theme.ts` — тема для Mantine: шкалы по 10 оттенков `brand` (teal, основной), `accent` (orange),
-`sand` (off-white), `dark` (navy для тёмной темы), шрифты. Фирменный цвет в каждой шкале
-стоит на индексе 6 — его Mantine берёт для заливки, так что кнопки точно в цвет бренда.
+`theme.ts` — тема демо-сайта без фреймворка (просто данные; от Mantine отказались 04.11.2026, свой
+UI-кит будет брать значения отсюда): шкалы по 10 оттенков `brand` (teal, основной), `accent` (orange),
+`sand` (off-white), `dark` (navy для тёмной темы), шрифты, радиусы, тени и умолчания компонентов.
+Фирменный цвет в каждой шкале стоит на индексе 6 (`primaryShade`) — его берут для заливки, так что
+кнопки точно в цвет бренда.
 
 `roles.css` — **роли дизайн-системы**, общий слой между палитрой и витринами (лендинг на Tailwind,
-демо на Mantine). Без фреймворка, только CSS-переменные: цвет (`--bg`, `--surface`, `--tint`, `--text`,
+демо-сайт со своим UI-китом). Без фреймворка, только CSS-переменные: цвет (`--bg`, `--surface`, `--tint`, `--text`,
 `--text-muted`, `--line`, `--accent`, `--accent-strong`, `--spark` и их `*-contrast`), тени
 (`--elevation-card`, `--elevation-lift`), скругления (`--radius-chip|card|panel|pill`), `--ease-out-expo`,
 фокус (`--focus-width`, `--focus-offset`). Компонент берёт роль, а не палитру и не HEX; новый оттенок —
 `color-mix` от фирменных цветов здесь, чтобы его увидели обе витрины.
 
 Слои, сверху вниз: `tokens.css` (палитра, шрифты) → `roles.css` (роли) → тема витрины
-(`frontend/landing/src/app/styles/tokens.css` — имена утилит Tailwind; `theme.ts` — Mantine: радиусы, тени,
-кнопки-пилюли, карточки). Визуальные правила и компоненты — `frontend/landing/DESIGN.md`.
+(`frontend/landing/src/app/styles/tokens.css` — имена утилит Tailwind; `theme.ts` — демо-сайт: шкалы, радиусы,
+тени, кнопки-пилюли, карточки). Визуальные правила и компоненты — `frontend/landing/DESIGN.md`.
 
 ```html
 <link rel="stylesheet" href="design/tokens.css">

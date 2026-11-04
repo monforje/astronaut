@@ -53,25 +53,19 @@ lib/http-client/
 
 ## React
 
-- UI-кит — **Mantine** (`@mantine/core`): кнопки, поля, раскладка (`Stack`, `Group`), таблицы, модалки
-  берутся оттуда напрямую. Своё — в `shared/ui`, только поверх Mantine (`shared/ui/README.md`).
-- Для ИИ-агентов Mantine подключён так: MCP-сервер `mantine` (`.mcp.json` в корне репозитория:
-  `search_docs`, `get_item_doc`, `get_item_props`, `list_items`, `get_api`), скиллы
-  `mantine-form` / `mantine-combobox` / `mantine-custom-components` (`.claude/skills/`, версии в
-  `skills-lock.json`), справка для LLM — `https://mantine.dev/llms.txt` (всё одним файлом —
-  `llms-full.txt`, ~4,6 МБ, целиком не читать). Перед нестандартным пропсом Mantine сверяйся с MCP, не с памятью.
+- Готового UI-кита нет (от Mantine отказались 04.11.2026), свой напишем позже в `shared/ui`. Пока —
+  обычный HTML и временные глобальные классы `.button`, `.skeleton` (`shared/ui/README.md`). Сторонний
+  UI-кит не подключаем.
 - Компоненты — функции `export function Name(props) {}`; пропсы — деструктуризация с типом в
   сигнатуре; значения по умолчанию — в деструктуризации (`size = "md"`).
 - Маленький вспомогательный компонент, нужный одному файлу, живёт в этом файле без экспорта
   (`Row` в `ItemsPage.tsx`).
 - Логика — в хуках сегмента `model/` (`useArchiveItem`), разметка — в `ui/`. Компонент страницы
   собирает, а не считает.
-- Состояния «загрузка / ошибка / пусто» показываются явно: `Skeleton` из Mantine, `ErrorState` с
+- Состояния «загрузка / ошибка / пусто» показываются явно: заглушка `.skeleton` с `aria-busy`, `ErrorState` с
   повтором, `EmptyState` из `@/shared/ui`.
-- Формы — `useForm` из `@mantine/form`, проверка — схема **valibot** через
-  `schemaResolver(schema, { sync: true })`. Схема лежит в `model/` фичи; ошибки бэкенда под полем —
-  `form.setFieldError("email", fieldError(e, "email"))`.
-- Уведомления — `notifications.show` из `@mantine/notifications` (провайдер подключён в `app`).
+- Формы — проверка схемой **valibot**, схема лежит в `model/` фичи; ошибки бэкенда под полем —
+  `fieldError(e, "email")`. Состояние формы и уведомления решим вместе со своим UI-китом.
 - Доступность — часть кода: кнопки с `aria-label`, группы с подписью, `role="alert"` для ошибок.
   Тесты ищут элементы по ролям — если не находят, это баг доступности.
 - Тексты интерфейса — по-русски, прямо в JSX; склонения — `plural`, цены — `formatPrice`.
@@ -98,9 +92,9 @@ lib/http-client/
 
 ## Стили
 
-- Цвета, шрифты, радиусы — тема Mantine (`shared/ui/theme`): пропсы `c="dimmed"`, `color="accent"`,
-  `radius="md"`. В CSS — роли из `app/styles/roles.css` (симлинк на бренд, общие с лендингом) (`var(--text-muted)`,
-  `var(--border)`), они ссылаются на переменные той же темы.
+- Цвета, шрифты, радиусы в CSS — роли из `app/styles/roles.css` (симлинк на бренд, общие с лендингом):
+  `var(--text-muted)`, `var(--line)`, `var(--radius-card)`. Шкалы цветов и умолчания компонентов для
+  своего UI-кита — тема `shared/ui/theme` (симлинк на `idea/skelet/brand/design/theme.ts`).
 - CSS Modules на компонент — для раскладки; глобально — только `app/styles/` (`index.css` — вход,
   `tokens.css`, `global.css`).
 - Без инлайн-стилей и магических цветов: цвет и отступы — тема и токены.

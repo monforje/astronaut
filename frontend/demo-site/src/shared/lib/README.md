@@ -7,7 +7,7 @@
 | `errors/`     | `errorMessage(e)` — текст по `code` ошибки (словарь покрывает весь `ErrorCode` контракта — проверяет tsc), `fieldError(e, field)`, `isApiError(e, ...codes)` |
 | `use-title/`  | `useTitle` — заголовок вкладки «Раздел · `APP_NAME`»                                                                                                         |
 | `cn/`         | склейка классов                                                                                                                                              |
-| `test-utils/` | `renderWithTheme`, `renderWithClient`, `renderApp`, `mockApi`, `mockFetch` — только для тестов; импорт `@/shared/lib/test-utils`                             |
+| `test-utils/` | `renderWithClient`, `renderApp`, `mockApi`, `mockFetch` — только для тестов; импорт `@/shared/lib/test-utils`                                                |
 
 - Новый код ошибки в контракте → строка в словаре `errors/errors.ts` (без неё не соберётся `tsc`).
 - Функция нужна одному слайсу — она живёт в его `model/`/`lib/`, а не здесь.

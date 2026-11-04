@@ -1,10 +1,8 @@
 import { vi } from "vitest";
-import type { ReactElement, ReactNode } from "react";
-import { MantineProvider } from "@mantine/core";
+import type { ReactElement } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router";
-import { theme } from "@/shared/ui";
 
 /** Свежий `QueryClient` без повторов запросов: тест видит ошибку сразу. */
 function testClient() {
@@ -13,28 +11,12 @@ function testClient() {
   });
 }
 
-/** Тема приложения; `env="test"` выключает анимации и порталы Mantine — тест видит результат сразу. */
-function ThemeProvider({ children }: { children: ReactNode }) {
-  return (
-    <MantineProvider theme={theme} env="test">
-      {children}
-    </MantineProvider>
-  );
-}
-
-/** Рендер компонента без запросов: только тема Mantine. */
-export function renderWithTheme(ui: ReactElement) {
-  return render(ui, { wrapper: ThemeProvider });
-}
-
 /** Рендер в свежем `QueryClient` без повторов запросов — для тестов хуков TanStack Query. */
 export function renderWithClient(ui: ReactElement) {
   const client = testClient();
   return {
     client,
-    ...render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>, {
-      wrapper: ThemeProvider,
-    }),
+    ...render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>),
   };
 }
 
@@ -123,7 +105,6 @@ export function renderApp(
     <QueryClientProvider client={client}>
       <RouterProvider router={router} />
     </QueryClientProvider>,
-    { wrapper: ThemeProvider },
   );
   return { client, router, ...view };
 }

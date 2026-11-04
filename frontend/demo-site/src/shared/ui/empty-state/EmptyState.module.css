@@ -1,4 +1,8 @@
 .state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   padding-block: 48px;
   text-align: center;
 }
@@ -7,6 +11,12 @@
   padding-block: 20px;
 }
 
+.title {
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+
 .text {
   max-width: 48ch;
+  color: var(--text-muted);
 }

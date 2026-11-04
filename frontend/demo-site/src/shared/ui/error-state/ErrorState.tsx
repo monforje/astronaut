@@ -1,4 +1,3 @@
-import { Button } from "@mantine/core";
 import { EmptyState } from "../empty-state";
 
 interface ErrorStateProps {
@@ -17,9 +16,9 @@ export function ErrorState({ message, onRetry, compact }: ErrorStateProps) {
         compact={compact}
         action={
           onRetry && (
-            <Button variant="outline" onClick={onRetry}>
+            <button type="button" className="button button-outline" onClick={onRetry}>
               Повторить
-            </Button>
+            </button>
           )
         }
       />

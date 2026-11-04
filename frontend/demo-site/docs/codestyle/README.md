@@ -47,13 +47,13 @@ task api-check    # клиент не отстал от контракта (пе
 подключены **симлинками** с именами по структуре фронта. Дизайнер меняет файл в `idea/skelet/brand` — dev-сервер
 сразу подхватывает правку (стили и тема — горячей заменой, картинки — при обновлении страницы).
 
-| Во фронте                      | Ссылка на                                                        |
-| ------------------------------ | ---------------------------------------------------------------- |
-| `public/` (вся папка целиком)  | `idea/skelet/brand/public/` — внутри симлинки на файлы бренда    |
-| `src/app/styles/brand.css`     | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face`    |
-| `src/app/styles/roles.css`     | `idea/skelet/brand/design/roles.css` — роли: цвет, тени, радиусы |
-| `src/app/styles/fonts/`        | `idea/skelet/brand/design/fonts/`                                |
-| `src/shared/ui/theme/theme.ts` | `idea/skelet/brand/design/theme.ts` — тема Mantine               |
+| Во фронте                      | Ссылка на                                                          |
+| ------------------------------ | ------------------------------------------------------------------ |
+| `public/` (вся папка целиком)  | `idea/skelet/brand/public/` — внутри симлинки на файлы бренда      |
+| `src/app/styles/brand.css`     | `idea/skelet/brand/design/tokens.css` — палитра, `@font-face`      |
+| `src/app/styles/roles.css`     | `idea/skelet/brand/design/roles.css` — роли: цвет, тени, радиусы   |
+| `src/app/styles/fonts/`        | `idea/skelet/brand/design/fonts/`                                  |
+| `src/shared/ui/theme/theme.ts` | `idea/skelet/brand/design/theme.ts` — тема: шкалы, шрифты, радиусы |
 
 - Ссылки относительные и хранятся в git как симлинки. Для них включены `preserveSymlinks` (vite, tsconfig)
   и `server.fs.allow`; в Docker `idea/skelet/brand` монтируется в `/idea/skelet/brand` (`compose.yml`).

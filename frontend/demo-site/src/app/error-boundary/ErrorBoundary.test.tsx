@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { screen } from "@testing-library/react";
-import { renderWithTheme } from "@/shared/lib/test-utils";
+import { render, screen } from "@testing-library/react";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 function Boom(): never {
@@ -10,7 +9,7 @@ function Boom(): never {
 describe("ErrorBoundary", () => {
   it("вместо белого экрана показывает понятную страницу с перезагрузкой", () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    renderWithTheme(
+    render(
       <ErrorBoundary>
         <Boom />
       </ErrorBoundary>,
@@ -21,7 +20,7 @@ describe("ErrorBoundary", () => {
   });
 
   it("без ошибки отдаёт содержимое как есть", () => {
-    renderWithTheme(
+    render(
       <ErrorBoundary>
         <p>ok</p>
       </ErrorBoundary>,

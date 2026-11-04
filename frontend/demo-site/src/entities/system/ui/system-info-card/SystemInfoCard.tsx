@@ -1,5 +1,4 @@
-import { Skeleton } from "@mantine/core";
-import { errorMessage } from "@/shared/lib";
+import { cn, errorMessage } from "@/shared/lib";
 import { ErrorState } from "@/shared/ui";
 import { useSystemInfo } from "../../api/use-system-info";
 import styles from "./SystemInfoCard.module.css";
@@ -11,8 +10,8 @@ export function SystemInfoCard() {
   if (isPending) {
     return (
       <div className={styles.card} aria-busy="true" aria-label="Загрузка">
-        <Skeleton width="60%" height={20} aria-hidden />
-        <Skeleton width="30%" height={16} aria-hidden />
+        <span className={cn("skeleton", styles.lineWide)} aria-hidden />
+        <span className={cn("skeleton", styles.lineNarrow)} aria-hidden />
       </div>
     );
   }

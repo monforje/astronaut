@@ -4,9 +4,9 @@ import { msw } from "msw/vite";
 import path from "path";
 
 /**
- * Бренд — источник правды: лого, иконки, палитра, шрифты и тема Mantine подключены симлинками на
+ * Бренд — источник правды: лого, иконки, палитра, шрифты и тема подключены симлинками на
  * idea/skelet/brand (список — docs/codestyle/README.md, «Бренд»). Поэтому:
- *  - `preserveSymlinks` — импорты из симлинка (`@mantine/core` в theme.ts, `fonts/` в brand.css) ищутся
+ *  - `preserveSymlinks` — импорты из симлинка (`fonts/` в brand.css) ищутся
  *    от места ссылки в проекте;
  *  - `fs.allow` — dev-сервер отдаёт файлы бренда, лежащие вне каталога фронта.
  * В Docker idea/skelet/brand монтируется в /idea/skelet/brand (compose.yml): относительные ссылки попадают туда же.

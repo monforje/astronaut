@@ -11,9 +11,7 @@
 
 - Окружение — happy-dom, API Testing Library; запускаются из `src/` (`testing/` vitest не трогает).
 - Запросы мокаются на границе мутатора — подменой `fetch`: `mockApi([{path, reply}])` или `mockFetch(status, body)`
-  из `@/shared/lib/test-utils`; компонент без запросов — `renderWithTheme(ui)` (тема Mantine); страницы целиком — `renderApp(ui, {route, path})`; сессия — `signIn()` / `signOut()`. Сгенерированный код orval и хуки TanStack Query при этом работают настоящие.
-- Все хелперы рендера оборачивают в `MantineProvider` (`env="test"`: без анимаций и порталов) — голый
-  `render` компонентам Mantine не подходит.
+  из `@/shared/lib/test-utils`; компонент без запросов — обычный `render(ui)` из Testing Library; страницы целиком — `renderApp(ui, {route, path})`; сессия — `signIn()` / `signOut()`. Сгенерированный код orval и хуки TanStack Query при этом работают настоящие.
 - Компоненты, которые ходят в API, рендерятся через `renderWithClient(<Comp />)` — свежий `QueryClient`
   без повторов запросов; после теста `vi.unstubAllGlobals()`.
 - Мок-бэкенд `mocks/` в компонентных тестах не участвует: граница — `fetch`. Логику самих моков проверяют

@@ -1,13 +1,10 @@
 /*
  * Токены демо-сайта. Роли (фон, текст, акцент, тени, скругления) — общие с лендингом: roles.css
- * (симлинк на idea/skelet/brand/design/roles.css). Mantine получает те же значения через тему
- * (shared/ui/theme, симлинк на idea/skelet/brand/design/theme.ts). Здесь только то, чего нет в
- * общем слое: статусы, раскладка и алиасы шрифтов. Схема одна, светлая.
+ * (симлинк на idea/skelet/brand/design/roles.css). Шкалы цветов и умолчания компонентов — тема
+ * shared/ui/theme (симлинк на idea/skelet/brand/design/theme.ts). Здесь только то, чего нет в
+ * общем слое: раскладка и алиасы шрифтов. Схема одна, светлая.
  */
 :root {
-  --danger: var(--mantine-color-error);
-  --ok: var(--mantine-color-green-filled);
-
   --font: var(--font-sans);
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 32px);

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Stack, Text, Title } from "@mantine/core";
 import { cn } from "@/shared/lib";
 import styles from "./EmptyState.module.css";
 
@@ -13,16 +12,10 @@ interface EmptyStateProps {
 /** Пустое состояние страницы или блока: заголовок, пояснение и действие. */
 export function EmptyState({ title, text, action, compact }: EmptyStateProps) {
   return (
-    <Stack align="center" gap="sm" className={cn(styles.state, compact && styles.compact)}>
-      <Title order={2} size="h3">
-        {title}
-      </Title>
-      {text && (
-        <Text c="dimmed" className={styles.text}>
-          {text}
-        </Text>
-      )}
+    <div className={cn(styles.state, compact && styles.compact)}>
+      <h2 className={styles.title}>{title}</h2>
+      {text && <p className={styles.text}>{text}</p>}
       {action}
-    </Stack>
+    </div>
   );
 }

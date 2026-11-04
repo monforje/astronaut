@@ -1,5 +1,4 @@
 import { Component, type ReactNode } from "react";
-import { Button } from "@mantine/core";
 import { EmptyState } from "@/shared/ui";
 
 type State = { error: Error | null };
@@ -19,7 +18,11 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
         <EmptyState
           title="Что-то пошло не так"
           text="Страница не смогла показаться. Обновите её — обычно этого достаточно."
-          action={<Button onClick={() => location.reload()}>Обновить страницу</Button>}
+          action={
+            <button type="button" className="button" onClick={() => location.reload()}>
+              Обновить страницу
+            </button>
+          }
         />
       </div>
     );

@@ -13,7 +13,7 @@
 | [animated/](animated/) | анимированные версии логотипов и лоадер; шоукейс `preview.html` |
 | [documents/](documents/) | листы сквозного примера для лендинга (инвойс, упаковочный лист, коносамент, предварительная информация, декларация, ЭТрН), JPEG с размытыми реквизитами; исходник и как пересобрать — `documents.html` |
 | [photos/](photos/README.md) | фото для блоков лендинга (фуры у терминала, рабочее место, портрет) и промпты для генерации; пока пусто — на сайте заглушки. Положенный файл встаёт на сайт сам |
-| [design/](design/README.md) | палитра (`tokens.css`), тема Mantine (`theme.ts`), шрифты Onest и Fira Code, картинка-образец (`specimen.html` → `specimen.png`) |
+| [design/](design/README.md) | палитра (`tokens.css`), тема демо-сайта (`theme.ts`), шрифты Onest и Fira Code, картинка-образец (`specimen.html` → `specimen.png`) |
 | [messaging/](messaging/README.md) | голос, девизы, фразы, CTA |
 | `public/` | **общий `public/` обоих фронтов**: внутри только ссылки на файлы выше |
 
