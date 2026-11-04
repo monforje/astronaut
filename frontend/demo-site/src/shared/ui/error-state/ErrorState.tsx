@@ -3,20 +3,18 @@ import { EmptyState } from "../empty-state";
 interface ErrorStateProps {
   message: string;
   onRetry?: () => void;
-  compact?: boolean;
 }
 
 /** Ошибка загрузки: понятное сообщение и повтор; объявляется скринридеру (`role="alert"`). */
-export function ErrorState({ message, onRetry, compact }: ErrorStateProps) {
+export function ErrorState({ message, onRetry }: ErrorStateProps) {
   return (
     <div role="alert">
       <EmptyState
         title="Не удалось загрузить"
         text={message}
-        compact={compact}
         action={
           onRetry && (
-            <button type="button" className="button button-outline" onClick={onRetry}>
+            <button type="button" onClick={onRetry}>
               Повторить
             </button>
           )

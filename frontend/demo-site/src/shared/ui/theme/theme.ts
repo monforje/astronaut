@@ -1,1 +1,0 @@
-../../../../../../idea/skelet/brand/design/theme.ts

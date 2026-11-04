@@ -101,22 +101,29 @@ describe("структура", () => {
     expect(bad).toEqual([]);
   });
 
+  // public/ необязателен: у проекта без бренда его нет, и проверки ниже его не требуют.
+  const publicDir = join(ROOT, "public");
+  const hasPublic = existsSync(publicDir);
+
   it("ссылки на бренд целы: файл в idea/skelet/brand не переименован и не удалён", () => {
-    const broken = [SRC, join(ROOT, "public")].flatMap(links).filter((l) => !existsSync(l));
+    const dirs = hasPublic ? [SRC, publicDir] : [SRC];
+    const broken = dirs.flatMap(links).filter((l) => !existsSync(l));
     expect(broken.map(rel)).toEqual([]);
   });
 
-  it("public/ — ссылка на idea/skelet/brand/public, внутри только ссылки на файлы бренда", () => {
-    const publicDir = join(ROOT, "public");
-    expect(lstatSync(publicDir).isSymbolicLink()).toBe(true);
-    const shared = realpathSync(publicDir);
-    const brand = dirname(shared);
-    const copies = walk(publicDir).filter((f) => {
-      const real = realpathSync(f);
-      return !real.startsWith(brand + sep) || real.startsWith(shared + sep);
-    });
-    expect(copies.map(rel)).toEqual([]);
-  });
+  it.skipIf(!hasPublic)(
+    "public/ — ссылка на idea/skelet/brand/public, внутри только ссылки на файлы бренда",
+    () => {
+      expect(lstatSync(publicDir).isSymbolicLink()).toBe(true);
+      const shared = realpathSync(publicDir);
+      const brand = dirname(shared);
+      const copies = walk(publicDir).filter((f) => {
+        const real = realpathSync(f);
+        return !real.startsWith(brand + sep) || real.startsWith(shared + sep);
+      });
+      expect(copies.map(rel)).toEqual([]);
+    },
+  );
 
   it("картинка /brand/… из кода есть в public/", () => {
     // `/brand/icons/${icon}.svg` проверяется до `${`: должна быть папка /brand/icons/.

@@ -44,7 +44,7 @@ Astro 7 + Tailwind 4, FSD, static, no backend. All sections are built; the page 
 
 ## Demo site (`frontend/demo-site/`)
 
-Bun + Vite + React 19 (no UI kit: Mantine was dropped, our own kit comes later in `shared/ui`; the brand theme is plain data in `idea/skelet/brand/design/theme.ts`) + TanStack Query + valibot + zustand; FSD architecture. Tooling is oxlint/oxfmt/steiger (not eslint/prettier).
+Bun + Vite + React 19 + TanStack Query + valibot + zustand; FSD architecture. Currently a bare FSD skeleton: `app` (routes, layout, providers, error boundary), pages `home` / `not-found`, `entities/system` (the example chain contract → generated hook → entity UI), `shared/{api,config,lib,ui}`. No design or styling yet: no `public/`, no CSS, no brand links — components are plain HTML. Tooling is oxlint/oxfmt/steiger (not eslint/prettier).
 
 ```bash
 task bun -- run verify      # tsc + oxlint + steiger + codestyle.test.ts + oxfmt --check + vitest

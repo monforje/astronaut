@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "@/app";
 import { env } from "@/shared/config";
-import "@/app/styles/index.css";
 
 /** Бэкенда пока нет: до первого запроса поднимаем мок-бэкенд (mocks/README.md). */
 async function start() {

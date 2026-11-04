@@ -11,7 +11,7 @@ describe("SystemInfoCard", () => {
     mockApi([{ path: "/api/v1/system/info", reply: SYSTEM_INFO }]);
     renderWithClient(<SystemInfoCard />);
 
-    expect(screen.getByLabelText("Загрузка")).toBeTruthy();
+    expect(screen.getByText("Загрузка…")).toBeTruthy();
     expect(await screen.findByText("astronaut-http")).toBeTruthy();
     expect(screen.getByText("dev")).toBeTruthy();
   });
