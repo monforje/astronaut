@@ -12,14 +12,6 @@
 
 Подключение в соседний фронт: `"@astronaut/ui-kit": "file:../ui-kit"` (после `task -d ../ui-kit lib-build`) либо tarball `file:../ui-kit/dist-pack/astronaut-ui-kit-<версия>.tgz`; нужны `react` и `react-dom` 19.x, один раз `import "@astronaut/ui-kit/styles.css"` и `data-theme="light" | "dark"` на `<html>`. Импорт компонентов: `import { Button } from "@astronaut/ui-kit"` (внутри кита тот же API из `@/ui`). Подробности (ресурсы и шрифты, `exports`, обновление): `CLAUDE.md`, раздел «Пакет».
 
-## Публикация (GitHub Pages)
-
-Живой словарь: https://monforje.github.io/astronaut/. Публикует workflow `.github/workflows/ui-kit-pages.yml` при каждом push в `main`, затронувшем `frontend/ui-kit/**` или `idea/skelet/brand/**`: проверяет, что README и `llms*.txt` сгенерированы (`bun run docs`), гоняет `verify`, собирает сайт с `BASE_PATH=/astronaut/` и `SITE_URL=https://monforje.github.io/astronaut/` и выкладывает `dist/`.
-
-Собрать локально под подпуть: `task pages-build` (результат в `dist/`; другие значения: `task pages-build BASE_PATH=/ SITE_URL=https://kit.example.com/`).
-
-Свой домен: указать его в Settings → Pages, в `env` workflow поставить `BASE_PATH: /` и `SITE_URL: https://<домен>/`.
-
 ## Вкладки страницы
 
 У каждой записи две вкладки: «Хореография» (спецификация: анатомия, варианты, состояния, правила, токены и сворачиваемый README) и «Компонент» (импорт, живые примеры с кодом и кнопкой «Копировать», пропсы и доступность из раздела «Как использовать» в README.md). Адреса: `#/button` и `#/button/states` — спецификация, `#/button/component` и `#/button/component/props` — компонент. Для записей основ (цвета, типографика) вкладка «Компонент» скрыта. Подробности: `CLAUDE.md`, раздел «Вкладки страницы компонента и CodeBlock».

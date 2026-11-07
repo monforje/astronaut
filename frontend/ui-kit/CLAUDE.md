@@ -80,16 +80,6 @@ mcp/                      MCP-сервер кита: main.ts (stdio), server.ts 
 - Раздача: плагин `agentDocs` в `vite.config.ts` отдаёт `/llms.txt`, `/llms-full.txt` и `/entries/<id>.md` (README) в dev и копирует их в `dist/` при сборке. `public/` — симлинк на бренд, туда генерируемое не пишем. Ссылки в `llms.txt` — пути от корня хоста (`/entries/<id>.md`). Плагин подхватывается только при старте dev-сервера: после его правки `task stop && task start -- -d`.
 - Новый компонент: после `doc.tsx` запустить `docs`, README создастся сам; закоммитить его вместе с `src/generated/`.
 
-## Публикация (GitHub Pages)
-
-Сайт: https://monforje.github.io/astronaut/ (проектная страница, hash-роутер — rewrite не нужен; `404.html` — копия `index.html`).
-
-- Workflow `/.github/workflows/ui-kit-pages.yml`: push в `main` с изменениями в `frontend/ui-kit/**`, `idea/skelet/brand/**` или в самом workflow, и `workflow_dispatch`. Job `build`: `bun install --frozen-lockfile`, `bun run docs` + `git diff --exit-code` (README и llms устарели — сборка падает), `bun run verify`, `bun run build` с `BASE_PATH` и `SITE_URL`, `upload-pages-artifact`. Job `deploy`: `deploy-pages`, environment `github-pages`. Версия bun зафиксирована в `env.BUN_VERSION` (как образ в `Taskfile.yml`).
-- `BASE_PATH` (по умолчанию `/`) → vite `base`; `SITE_URL` (по умолчанию `https://ui-kit.astronaut.localhost/`) → абсолютные ссылки на `/entries/<id>.md` и `/llms-full.txt` в отдаваемых `llms.txt`/`llms-full.txt` (исходники в `src/generated/` остаются с путями от корня). Пути к файлам бренда в коде — `import.meta.env.BASE_URL + "brand/…"`, не `"/brand/…"`.
-- Симлинки `public/` и `src/styles/{brand.css,fonts}` ведут в `idea/skelet/brand`, внутри репозитория: checkout сохраняет их, `vite build` кладёт в `dist/` реальные файлы.
-- Локально проверить сборку под подпуть: `task pages-build` (по умолчанию `/astronaut/` и адрес Pages; свои значения: `task pages-build BASE_PATH=/ SITE_URL=https://kit.example.com/`). Результат в `dist/`.
-- Свой домен: в Settings → Pages указать домен, в `env` workflow поставить `BASE_PATH: /` и `SITE_URL: https://<домен>/`; DNS CNAME на `monforje.github.io`.
-
 ## MCP-сервер и скилл
 
 Агенты, которые пишут интерфейс (например `frontend/demo-site`), берут компоненты из кита через MCP-сервер `astronaut-ui-kit` и проектный скилл `ui-kit` (`/.claude/skills/ui-kit/SKILL.md`: сначала найти, прочитать, импортировать, не изобретать).

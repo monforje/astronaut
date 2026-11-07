@@ -59,22 +59,6 @@ tasks:
       - task: start
         vars: { CLI_ARGS: "-d --wait" }
 
-  pages-build:
-    desc: "Сборка под подпуть GitHub Pages (BASE_PATH=/astronaut/, SITE_URL) в dist/; свои значения: task pages-build BASE_PATH=/ SITE_URL=https://kit.example.com/"
-    vars:
-      BASE_PATH: '{{.BASE_PATH | default "/astronaut/"}}'
-      SITE_URL: '{{.SITE_URL | default "https://monforje.github.io/astronaut/"}}'
-    cmds:
-      - |
-        docker run --rm \
-          -u {{.USERID}}:{{.GROUPID}} \
-          -v "{{.ROOT_DIR}}":{{.APP_WORKING_DIR}} -w {{.APP_WORKING_DIR}} \
-          -e HOME=/tmp \
-          -e BASE_PATH={{.BASE_PATH}} -e SITE_URL={{.SITE_URL}} \
-          {{.DOCKER_BUN_RUN_ARGS}} \
-          {{.DOCKER_BUN_IMAGE_NAME}} \
-          bun run build
-
   lib-build:
     desc: "Пакет @astronaut/ui-kit: сборка в dist-lib (js, d.ts, styles.css, tokens.css, assets)"
     cmds:
