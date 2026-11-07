@@ -38,10 +38,15 @@ export default defineConfig({
   plugins: [react(), msw({ mode: "worker-only" }), brandReload()],
   resolve: {
     preserveSymlinks: true,
+    // Один React: пакет кита лежит симлинком на ../ui-kit, где свой node_modules.
+    dedupe: ["react", "react-dom"],
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
+  // Кит (node_modules/@astronaut/ui-kit → ../ui-kit/dist-lib) отдаём модулями, а не предсобранным кэшем:
+  // после `task ui-kit` изменения видны без сброса .vite.
+  optimizeDeps: { exclude: ["@astronaut/ui-kit"] },
   server: {
     port: 80,
     host: "0.0.0.0",

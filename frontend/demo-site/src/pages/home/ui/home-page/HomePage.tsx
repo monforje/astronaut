@@ -1,15 +1,16 @@
 import { SystemInfoCard } from "@/entities/system";
-import { APP_NAME } from "@/shared/config";
 import { useTitle } from "@/shared/lib";
+import styles from "./HomePage.module.css";
 
-/** Стартовый экран: показывает, что фронт видит свой бэкенд через контракт. Замените своим. */
+/**
+ * Стартовый экран: показывает, что фронт видит свой бэкенд через контракт. Заголовка нет: название страницы
+ * несут крошки в топбаре (DESIGN.md). Бизнес-экраны появятся здесь и в соседних страницах.
+ */
 export function HomePage() {
   useTitle();
   return (
-    <section>
-      <h1>{APP_NAME}</h1>
-      <p>Фронтенд работает и видит свой бэкенд через контракт:</p>
+    <div className={styles.page}>
       <SystemInfoCard />
-    </section>
+    </div>
   );
 }

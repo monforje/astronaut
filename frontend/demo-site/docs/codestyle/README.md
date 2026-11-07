@@ -43,9 +43,11 @@ task api-check    # клиент не отстал от контракта (пе
 
 ## Бренд
 
-> Сейчас в demo-site бренд и стили не подключены: нет `public/`, `src/app/styles/`, `shared/ui/theme`,
-> CSS Modules и глобальных классов (`.button`, `.skeleton`, `.container`). Компоненты — голый HTML. Ниже —
-> как подключать, когда дойдёт до оформления; проверки `public/` в `codestyle.test.ts` без папки пропускаются.
+> В demo-site бренд подключён так: `public/` — симлинк на `idea/skelet/brand/public` (favicon, логотипы по URL);
+> шрифты Onest и Fira Code, палитра и роли цвета приходят из пакета `@astronaut/ui-kit` (`styles.css`), поэтому
+> `src/app/styles/`, `roles.css` и `theme.ts` здесь не нужны. Пакет — симлинк `node_modules/@astronaut/ui-kit` →
+> `frontend/ui-kit` (в Docker — `/ui-kit`, монтируется в `compose.yml` и `DOCKER_BUN_RUN_ARGS`), собирается
+> `task ui-kit`. Таблица ниже — для проектов, где бренд подключается без кита.
 
 Источник правды — `idea/skelet/brand/` в корне монорепо. Фронт ничего из бренда не копирует: нужные файлы
 подключены **симлинками** с именами по структуре фронта. Дизайнер меняет файл в `idea/skelet/brand` — dev-сервер
@@ -67,7 +69,7 @@ task api-check    # клиент не отстал от контракта (пе
   (`/brand/…`) — ссылкой в `idea/skelet/brand/public/`, в самом фронте ничего не трогаем: порядок шагов —
   `idea/skelet/brand/README.md`. `codestyle.test.ts` проверяет, что в `public/` только ссылки на файлы
   бренда и что каждый `/brand/…` из кода там есть.
-- Во фронте поверх бренда — только роли (`app/styles/tokens.css`), своих цветов и шрифтов нет.
+- Во фронте поверх бренда — только роли (`app/styles/tokens.css`) или токены кита, своих цветов и шрифтов нет.
 
 ## Команды
 

@@ -26,6 +26,9 @@ tasks:
   deploy:
     desc: "Развернуть все проекты, в конце — адреса сайтов"
     cmds:
+      # Пакет кита нужен demo-site, а проекты деплоятся параллельно: собираем его заранее, чтобы
+      # demo-site и ui-kit не ставили зависимости и не писали dist-lib одновременно.
+      - task -d frontend/demo-site ui-kit
       - task: all:deploy
       - task: where
 

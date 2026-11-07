@@ -13,7 +13,14 @@ export default defineConfig({
   use: {
     baseURL,
     ...devices["Desktop Chrome"],
-    launchOptions: { args: [`--host-resolver-rules=MAP *.astronaut.localhost ${hostIP}`] },
+    // --ignore-certificate-errors: без него Chromium не регистрирует service worker моков (MSW) на хосте с
+    // сертификатом локального CA ("SSL certificate error occurred when fetching the script"), и страница не рисуется.
+    launchOptions: {
+      args: [
+        `--host-resolver-rules=MAP *.astronaut.localhost ${hostIP}`,
+        "--ignore-certificate-errors",
+      ],
+    },
     // Сертификат стенда подписан локальным CA (ao): в контейнере Playwright его нет в доверенных.
     ignoreHTTPSErrors: true,
     trace: "retain-on-failure",

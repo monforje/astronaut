@@ -1,0 +1,42 @@
+.shell {
+  height: 100dvh;
+}
+
+.skip {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: var(--r-control);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+  transform: translateY(-200%);
+}
+
+.skip:focus-visible {
+  transform: none;
+}
+
+.menu {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .menu {
+    display: contents;
+  }
+}
+
+/* Сайдбар кита внутри Sheet: на всю ширину панели, без бренда (его несёт шапка оболочки) и без рамки. */
+.drawerNav {
+  width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+.drawerNav :global(.ds-side__brand) {
+  display: none;
+}

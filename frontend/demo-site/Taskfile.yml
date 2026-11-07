@@ -18,8 +18,9 @@ env:
 
 vars:
   # Бренд подключён симлинками на idea/skelet/brand: без этого монтирования в контейнере `task bun`
-  # они битые (как в compose.yml для dev-сервера).
-  DOCKER_BUN_RUN_ARGS: '-v "{{.ROOT_DIR}}/../../idea/skelet/brand":/idea/skelet/brand:ro'
+  # они битые (как в compose.yml для dev-сервера). Кит — зависимость `file:../ui-kit`: `bun install`
+  # кладёт в node_modules симлинк на ../ui-kit, и из /app он ведёт в /ui-kit (то же монтирование — в compose.yml).
+  DOCKER_BUN_RUN_ARGS: '-v "{{.ROOT_DIR}}/../../idea/skelet/brand":/idea/skelet/brand:ro -v "{{.ROOT_DIR}}/../ui-kit":/ui-kit:ro'
   # Пока бэкенда нет, контракт живёт во фронте (contract/openapi.yaml), а API отвечают моки (mocks/).
   # Появится backend/${BACKEND} со своим контрактом — берём его.
   BACKEND_CONTRACT: '../../backend/{{.BACKEND | default "astronaut"}}/schema/openapi/openapi.yaml'
@@ -69,22 +70,63 @@ tasks:
         untracked=$(git ls-files --others --exclude-standard -- src/shared/api/generated)
         if [ -n "$untracked" ]; then echo "Новые файлы клиента не в git:"; echo "$untracked"; exit 1; fi
 
+  ui-kit:
+    desc: "Пакет @astronaut/ui-kit: сборка ../ui-kit/dist-lib (только если исходники кита новее) и симлинк в node_modules"
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - task: ui-kit-build
+      - task: ui-kit-link
+
+  ui-kit-build:
+    internal: true
+    dir: "{{.ROOT_DIR}}"
+    method: timestamp
+    sources:
+      - ../ui-kit/src/**/*
+      - exclude: ../ui-kit/src/{app,docgen,engine,generated}/**/*
+      - exclude: ../ui-kit/src/entries/*/{doc.tsx,demo.tsx,README.md,*.force.css}
+      - ../ui-kit/{package.json,vite.lib.config.ts,tsconfig.lib.json,tsconfig.json}
+      - ../ui-kit/scripts/lib-finish.ts
+      - ../../idea/skelet/brand/design/**/*
+    generates:
+      - ../ui-kit/dist-lib/index.js
+      - ../ui-kit/dist-lib/styles.css
+      - ../ui-kit/dist-lib/tokens.css
+    cmds:
+      - task -d ../ui-kit deps-install
+      - task -d ../ui-kit lib-build
+
+  # `bun install` не умеет ссылку на каталог: `file:../ui-kit` он копирует (вместе с node_modules кита, 240 МБ,
+  # и тащит devDependencies кита в lock), `link:` ищет пакет в реестре `bun link`. Поэтому пакета нет в
+  # package.json, а симлинк кладёт эта задача: относительный, из /app он ведёт в /ui-kit (монтирование в compose.yml
+  # и DOCKER_BUN_RUN_ARGS). vite и tsc читают его через preserveSymlinks, правка кита видна без переустановки.
+  ui-kit-link:
+    internal: true
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - mkdir -p node_modules/@astronaut
+      - ln -sfn ../../../ui-kit node_modules/@astronaut/ui-kit
+
   project_deploy:
     internal: true
     cmds:
       - task: trust
       - task: init-hooks
         if: '[ -e "{{.ROOT_DIR}}/.pre-commit-config.yaml" ]'
+      - task: ui-kit
       - task: deps-install
+      - task: ui-kit-link
       - task: proxy-start
       - task: start
         vars: { CLI_ARGS: "-d --wait" }
 
   deps-install:
-    desc: "bun install — только если менялись package.json/bun.lock"
+    desc: "bun install — только если менялись package.json/bun.lock; перед ним собирается пакет кита"
+    deps: [ui-kit]
     sources: [package.json, bun.lock]
     status:
-      - test -d node_modules
+      - test -d node_modules/react
     cmds:
       - task: bun
         vars: { BUN_COMMAND: "install" }
+      - task: ui-kit-link

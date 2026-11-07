@@ -3,7 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Astronaut</title>
+    <script>
+      /* Тема до первой отрисовки: запомненная или системная, без вспышки светлой темы.
+         Ключ тот же, что THEME_KEY в features/theme-switch (проверяет themeStore.test.ts). */
+      (function () {
+        var theme;
+        try {
+          theme = localStorage.getItem("astronaut:theme");
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

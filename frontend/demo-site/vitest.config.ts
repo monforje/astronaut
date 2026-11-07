@@ -9,6 +9,8 @@ export default mergeConfig(
       environment: "happy-dom",
       exclude: [...configDefaults.exclude, "testing/**"],
       globals: true,
+      // Пакет кита — симлинк на ../ui-kit: через Vite (preserveSymlinks), а не Node, иначе второй React.
+      server: { deps: { inline: ["@astronaut/ui-kit"] } },
       coverage: {
         provider: "istanbul",
         include: ["src/**/*.{ts,tsx}"],

@@ -12,7 +12,8 @@ task bun -- x vitest run src/path/File.test.tsx      # one test file
 task bun -- x vitest run -t "название теста"         # one test by name (names are Russian)
 task format                            # oxfmt --write . (only oxfmt/oxlint/steiger; no eslint/prettier)
 task gen-api / task api-check          # orval client from the contract; api-check fails on git diff
-task deploy → task start -- -d         # dev server at https://demo.astronaut.localhost
+task ui-kit                            # builds ../ui-kit/dist-lib if kit sources are newer + node_modules/@astronaut/ui-kit symlink
+task deploy → task start -- -d         # dev server at https://demo.astronaut.localhost (deploy builds the kit first)
 task test-e2e                          # Playwright (testing/e2e), needs the running stand
 ```
 
@@ -40,8 +41,10 @@ Read `DESIGN.md` (this folder) before any UI work. Source of truth is the UI kit
 - **Do NOT use `frontend/landing` or the existing demo-site styles as a reference.** Don't carry over buttons, radii, shadows or layout tricks from the current front.
 - Colors only as kit roles (no HEX), Onest for the UI, Fira Code only for code and logs; numbers and IDs are not mono.
 - If `DESIGN.md` changes, update it in the same change as the code.
-- How the kit is wired into demo-site (package / workspace) is not decided yet: `[TODO]` in `DESIGN.md`, section "Как подключить кит". Don't copy kit components or tokens into `src/`.
+- The kit is the package `@astronaut/ui-kit` (import `{ Button, Card, … } from "@astronaut/ui-kit"`, styles once in `main.tsx`). It is a symlink `node_modules/@astronaut/ui-kit` → `../ui-kit`, deliberately NOT in `package.json` (bun copies `file:` dirs, `link:` means `bun link`); `task ui-kit` creates it and builds `dist-lib`. Details: `DESIGN.md`, section "Как подключить кит". Never copy kit components or tokens into `src/`.
+- **Changing the kit** (it is a separate project, edit only on request): `task -d ../ui-kit lib-build` (or just `task ui-kit`), then the dev server picks the new `dist-lib` up; verify the kit with `task -d ../ui-kit bun -- run verify`. A missing export is a kit change, not a workaround here.
+- `frontend/demo-site/.mcp.json` points the `astronaut-ui-kit` MCP server at `-d ../ui-kit` (the root `.mcp.json` uses a path relative to the repo root, which breaks when the agent starts in this folder). Skill `ui-kit` is in the repo-root `.claude/skills/`.
 
 ## State of the project
 
-Bare skeleton: no brand symlinks, `public/`, CSS or design tokens yet — components are plain HTML, UI texts are Russian inline in JSX. `DESIGN.md` is written; the UI kit is not yet connected (`[TODO]`, see above), so styling has not started. `widgets/app-shell` and `app/layout/Layout.tsx` are in progress (uncommitted). When styling starts, wire the brand the way `docs/codestyle/README.md` ("Бренд") describes (symlinks into `idea/skelet/brand/`, and mount the brand folder in `compose.yml` and `DOCKER_BUN_RUN_ARGS`), following `DESIGN.md`.
+The shell is built on the kit: `app/layout` → `widgets/app-shell` (`AppFrame`: `AppShell` + `Sidebar` + `Topbar` with crumbs from route `handle.crumb`, search stub, `ThemeSwitch`, guest profile, `Sheet` menu below 760 px), `features/theme-switch` (zustand store; `data-theme` on `<html>`, script in `index.html` against the flash), `Toaster` in `app/app`. Pages: `home` (system status in `entities/system`: Skeleton / Alert with retry / empty / ok) and `not-found`. `public/` is a symlink to `idea/skelet/brand/public`; fonts and tokens come from the kit. Open `[TODO]` (see `DESIGN.md`): agent tab and panel (`AgentTab`, `AgentPanel`) are not connected, search and profile are stubs, no other screens yet (cargo, discrepancies, connections).

@@ -14,7 +14,7 @@ Astronaut is a data-integration platform for logistics/transport companies (1C, 
 | `idea/questions.md` | Single list of open questions for the whole project |
 | `content/` | Telegram post drafts, one `NNN-slug/` folder per post (own `CLAUDE.md`: formats, preview render, text rules). Nothing is sent to the channel without the user's explicit "да" |
 | `frontend/demo-site/` | React demo site |
-| `frontend/ui-kit/` | UI kit (design-system dictionary + components in `@/ui`), `https://ui-kit.astronaut.localhost`, published on GitHub Pages `https://monforje.github.io/astronaut/` (`.github/workflows/ui-kit-pages.yml`, `task pages-build`); MCP server `astronaut-ui-kit` (`.mcp.json`, `task mcp`) and skill `ui-kit` (`.claude/skills/ui-kit/`) — agents building UI take components from it |
+| `frontend/ui-kit/` | UI kit (design-system dictionary + components in `@/ui`), `https://ui-kit.astronaut.localhost`; MCP server `astronaut-ui-kit` (`.mcp.json`, `task mcp`) and skill `ui-kit` (`.claude/skills/ui-kit/`) — agents building UI take components from it |
 | `frontend/landing/` | Astro landing (own `CLAUDE.md`, `DESIGN.md`, and `PLAN.md` — section order and copy, following the shared story arc in `idea/skelet/brand/messaging/story.md`) |
 
 Conventions for `idea/` (from README files): every decision goes to `idea/skelet/decisions.md` with a status; unresolved items go to `idea/questions.md`; new terms go to `idea/skelet/glossary/terms.md`; each new file is added to the map in the folder README. Never invent facts or numbers — missing data becomes `[TODO]`. Prices in `idea/product/05-stoimost.md` are a starting hypothesis, not validated. Old material lives only on git branch `old` (`begining/`), read-only reference.
@@ -45,7 +45,7 @@ Astro 7 + Tailwind 4, FSD, static, no backend. All sections are built; the page 
 
 ## Demo site (`frontend/demo-site/`)
 
-Bun + Vite + React 19 + TanStack Query + valibot + zustand; FSD architecture. Currently a bare FSD skeleton: `app` (routes, layout, providers, error boundary), pages `home` / `not-found`, `entities/system` (the example chain contract → generated hook → entity UI), `shared/{api,config,lib,ui}`. No design or styling yet: no `public/`, no CSS, no brand links — components are plain HTML. Tooling is oxlint/oxfmt/steiger (not eslint/prettier).
+Bun + Vite + React 19 + TanStack Query + valibot + zustand; FSD architecture. The UI is built on the package `@astronaut/ui-kit` (`frontend/ui-kit`; symlink in `node_modules`, built by `task ui-kit`, which `task deploy` runs first; the folder is mounted as `/ui-kit` next to the brand in the containers): `app/layout` → `widgets/app-shell`, theme in `features/theme-switch`, pages `home` / `not-found`, `entities/system` (the example chain contract → generated hook → entity UI), `shared/{api,config,lib,ui}`. Tooling is oxlint/oxfmt/steiger (not eslint/prettier).
 
 Design: read `frontend/demo-site/DESIGN.md`; the reference is the UI kit `frontend/ui-kit`, not the landing.
 

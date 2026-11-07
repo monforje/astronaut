@@ -30,13 +30,13 @@
 
 Токены не копируем и не переопределяем в demo-site.
 
-| Что | Где |
-|---|---|
-| Роли цвета, радиусы, высоты, размеры текста, тени, длительности — светлая тема (`:root`) и тёмная (`:root[data-theme="dark"]`) | `frontend/ui-kit/src/styles/tokens.css` |
-| Палитра бренда (`--color-navy #082f53`, `--color-teal #00d4d0`, `--color-orange #ff9455`, `--color-off-white`), шрифты Onest и Fira Code, `@font-face` | `idea/skelet/brand/design/tokens.css`, `idea/skelet/brand/design/fonts/` |
-| Описание палитры, пропорций, контраста | `idea/skelet/brand/design/README.md` |
-| Логотипы, иконки, анимации бренда | `idea/skelet/brand/` (`logo-*.svg`, `icons/`, `animated/`) |
-| Цвета, типографика, радиусы и размеры, слои состояний — страницы кита | `frontend/ui-kit/src/entries/{colors,typography,radii-sizes,state-layers}/README.md` |
+| Что                                                                                                                                                    | Где                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Роли цвета, радиусы, высоты, размеры текста, тени, длительности — светлая тема (`:root`) и тёмная (`:root[data-theme="dark"]`)                         | `frontend/ui-kit/src/styles/tokens.css`                                              |
+| Палитра бренда (`--color-navy #082f53`, `--color-teal #00d4d0`, `--color-orange #ff9455`, `--color-off-white`), шрифты Onest и Fira Code, `@font-face` | `idea/skelet/brand/design/tokens.css`, `idea/skelet/brand/design/fonts/`             |
+| Описание палитры, пропорций, контраста                                                                                                                 | `idea/skelet/brand/design/README.md`                                                 |
+| Логотипы, иконки, анимации бренда                                                                                                                      | `idea/skelet/brand/` (`logo-*.svg`, `icons/`, `animated/`)                           |
+| Цвета, типографика, радиусы и размеры, слои состояний — страницы кита                                                                                  | `frontend/ui-kit/src/entries/{colors,typography,radii-sizes,state-layers}/README.md` |
 
 Основное из кита:
 
@@ -115,27 +115,27 @@
 
 Перед использованием компонента читать его `frontend/ui-kit/src/entries/<id>/README.md`: варианты, состояния, анатомия, правила, доступность, хореография, открытые `[TODO]`.
 
-| Задача | Компонент кита | Документация |
-|---|---|---|
-| Каркас всех экранов, паттерны страниц | AppShell | `frontend/ui-kit/src/entries/app-shell/README.md` |
-| Меню разделов слева, rail 56 px | Sidebar | `frontend/ui-kit/src/entries/sidebar/README.md` |
-| Верхняя панель: крошки, поиск Ctrl K, тема, уведомления, профиль | Topbar | `frontend/ui-kit/src/entries/topbar/README.md` |
-| Путь до страницы вместо заголовка | Breadcrumb | `frontend/ui-kit/src/entries/breadcrumb/README.md` |
-| Переключение представлений одного экрана, статусы над таблицей | Tabs | `frontend/ui-kit/src/entries/tabs/README.md` |
-| Шаги процесса (сверка, отправка) | Stepper | `frontend/ui-kit/src/entries/stepper/README.md` |
-| Действие: сохранить, принять, удалить | Button | `frontend/ui-kit/src/entries/button/README.md` |
-| Статус, количество, категория | Badge | `frontend/ui-kit/src/entries/badge/README.md` |
-| Человек или организация | Avatar | `frontend/ui-kit/src/entries/avatar/README.md` |
-| Текстовое поле, поиск | Input | `frontend/ui-kit/src/entries/input/README.md` |
-| Выбор одного значения из списка | Select | `frontend/ui-kit/src/entries/select/README.md` |
-| Рабочий список: поиск, фильтры, сортировка, выбор строк | DataTable | `frontend/ui-kit/src/entries/data-table/README.md` |
-| Группа связанных данных, KPI, подключение | Card | `frontend/ui-kit/src/entries/card/README.md` |
-| Решение «да / нет» | Dialog | `frontend/ui-kit/src/entries/dialog/README.md` |
-| Карточка объекта, длинная форма, панель агента | Sheet | `frontend/ui-kit/src/entries/sheet/README.md` |
-| Сообщение в потоке страницы, ошибка с «Повторить» | Alert | `frontend/ui-kit/src/entries/alert/README.md` |
-| Подтверждение действия в углу экрана | Toast | `frontend/ui-kit/src/entries/toast/README.md` |
-| Язычок вызова агента у правого края | AgentTab | `frontend/ui-kit/src/entries/agent-tab/README.md` |
-| Чат с агентом: подсказки, ответ, подтверждение | AgentPanel | `frontend/ui-kit/src/entries/agent-panel/README.md` |
+| Задача                                                           | Компонент кита | Документация                                        |
+| ---------------------------------------------------------------- | -------------- | --------------------------------------------------- |
+| Каркас всех экранов, паттерны страниц                            | AppShell       | `frontend/ui-kit/src/entries/app-shell/README.md`   |
+| Меню разделов слева, rail 56 px                                  | Sidebar        | `frontend/ui-kit/src/entries/sidebar/README.md`     |
+| Верхняя панель: крошки, поиск Ctrl K, тема, уведомления, профиль | Topbar         | `frontend/ui-kit/src/entries/topbar/README.md`      |
+| Путь до страницы вместо заголовка                                | Breadcrumb     | `frontend/ui-kit/src/entries/breadcrumb/README.md`  |
+| Переключение представлений одного экрана, статусы над таблицей   | Tabs           | `frontend/ui-kit/src/entries/tabs/README.md`        |
+| Шаги процесса (сверка, отправка)                                 | Stepper        | `frontend/ui-kit/src/entries/stepper/README.md`     |
+| Действие: сохранить, принять, удалить                            | Button         | `frontend/ui-kit/src/entries/button/README.md`      |
+| Статус, количество, категория                                    | Badge          | `frontend/ui-kit/src/entries/badge/README.md`       |
+| Человек или организация                                          | Avatar         | `frontend/ui-kit/src/entries/avatar/README.md`      |
+| Текстовое поле, поиск                                            | Input          | `frontend/ui-kit/src/entries/input/README.md`       |
+| Выбор одного значения из списка                                  | Select         | `frontend/ui-kit/src/entries/select/README.md`      |
+| Рабочий список: поиск, фильтры, сортировка, выбор строк          | DataTable      | `frontend/ui-kit/src/entries/data-table/README.md`  |
+| Группа связанных данных, KPI, подключение                        | Card           | `frontend/ui-kit/src/entries/card/README.md`        |
+| Решение «да / нет»                                               | Dialog         | `frontend/ui-kit/src/entries/dialog/README.md`      |
+| Карточка объекта, длинная форма, панель агента                   | Sheet          | `frontend/ui-kit/src/entries/sheet/README.md`       |
+| Сообщение в потоке страницы, ошибка с «Повторить»                | Alert          | `frontend/ui-kit/src/entries/alert/README.md`       |
+| Подтверждение действия в углу экрана                             | Toast          | `frontend/ui-kit/src/entries/toast/README.md`       |
+| Язычок вызова агента у правого края                              | AgentTab       | `frontend/ui-kit/src/entries/agent-tab/README.md`   |
+| Чат с агентом: подсказки, ответ, подтверждение                   | AgentPanel     | `frontend/ui-kit/src/entries/agent-panel/README.md` |
 
 Остальные записи (Tooltip, Popover, Dropdown, Checkbox, Radio, Switch, Skeleton, Loader, Spinner, Progress, Chart, ServiceCard, SlaChip, Voyage, DatePicker и другие) — список в `frontend/ui-kit/src/generated/llms.txt` и на https://ui-kit.astronaut.localhost/llms.txt. Если нужного компонента в ките нет, не рисовать свой по образцу лендинга: добавить запись в кит или пометить `[TODO]`.
 
@@ -143,7 +143,18 @@
 
 ## Как подключить кит
 
-[TODO] Способ подключения ещё не решён: пакет, воркспейс или иное. Пока не копировать компоненты и стили кита в demo-site и не делать копий токенов; решение и шаги (импорт `@/ui`, подключение `tokens.css`, шрифтов и бренда в Docker) записать здесь, когда оно будет принято. Бренд-ссылки demo-site — по разделу «Бренд» в `docs/codestyle/README.md`.
+Кит подключён как пакет `@astronaut/ui-kit` (в реестры не публикуется). Копировать компоненты, стили и токены кита в demo-site нельзя.
+
+- **Пакет.** `node_modules/@astronaut/ui-kit` — относительный симлинк `../../../ui-kit` на `frontend/ui-kit`; его `exports` отдают `dist-lib/` (`index.js`, `styles.css`, `tokens.css`, `assets/`). Симлинк кладёт `task ui-kit`: `bun install` каталог не линкует (`file:../ui-kit` он копирует вместе с `node_modules` кита, `link:` ищет пакет в реестре `bun link`), поэтому в `package.json` пакета нет. `react` и `react-dom` берутся из demo-site (`preserveSymlinks` и `resolve.dedupe` в `vite.config.ts`).
+- **Сборка пакета.** `task ui-kit` (из `frontend/demo-site`) собирает `../ui-kit/dist-lib` (`task -d ../ui-kit lib-build`), только если исходники кита новее сборки. Его вызывают `task deploy` demo-site и корня и `deps-install`. Изменили кит — `task ui-kit`: dev-сервер читает пакет модулями (`optimizeDeps.exclude`), перезапуск не нужен; не подхватил — `task containers -- restart frontend`.
+- **Docker.** `frontend/ui-kit` монтируется в контейнеры как `/ui-kit` (read-only): в `compose.yml` и в `DOCKER_BUN_RUN_ARGS` рядом с `idea/skelet/brand`. Из `/app` симлинк `../../../ui-kit` ведёт именно туда.
+- **Стили и шрифты.** Один раз, в `src/main.tsx`: `import "@astronaut/ui-kit/styles.css"` (токены, Onest и Fira Code, база, стили компонентов). Своего глобального CSS и копий токенов нет; CSS Modules рядом с компонентом — только раскладка.
+- **Тема.** Атрибут `data-theme="light" | "dark"` на `<html>`: стор `features/theme-switch` (значение по умолчанию — `prefers-color-scheme`, выбор в `localStorage` через `shared/lib/storage`), до первой отрисовки её ставит скрипт в `index.html` (тот же ключ `astronaut:theme`, сверка — в `themeStore.test.ts`).
+- **Бренд.** `public/` — симлинк на `idea/skelet/brand/public` (favicon, `apple-touch-icon`); знак в сайдбаре — `MARK_SRC` из пакета, без копий. Правила — раздел «Бренд» в `docs/codestyle/README.md`.
+- **Оболочка.** `app/layout` → `widgets/app-shell` (`AppFrame`): `AppShell` + `Sidebar` (rail 56 px запоминается, `Ctrl \`) + `Topbar` (крошки из `handle.crumb` маршрутов вместо заголовка, поиск, `ThemeSwitch`, профиль). В узком виде (≤ 760 px) сайдбар скрыт, меню открывается `Sheet`. Уведомления — `toast()`, `<Toaster />` в `app/app`.
+- **Пока не сделано.** [TODO] Язычок и панель агента (`AgentTab`, `AgentPanel`) не подключены: подсказки и ответы были бы выдуманной функциональностью, пока у агента нет бэкенда и сценариев. [TODO] Поиск в топбаре без источника данных: Enter показывает тост «Поиск пока недоступен». [TODO] Профиль гостя («Демо-режим») без реального пользователя. [TODO] Уведомления (колокольчик) не подключены: нечего показывать.
+
+Агентам: MCP `astronaut-ui-kit` (из `frontend/demo-site` его видит `frontend/demo-site/.mcp.json` с путём `-d ../ui-kit`, из корня репозитория — `.mcp.json` корня), скилл `ui-kit` (`.claude/skills/ui-kit`).
 
 ## Чек-лист нового экрана
 

@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import { Button } from "@astronaut/ui-kit";
 import { EmptyState } from "@/shared/ui";
 
 type State = { error: Error | null };
@@ -18,11 +19,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
         <EmptyState
           title="Что-то пошло не так"
           text="Страница не смогла показаться. Обновите её — обычно этого достаточно."
-          action={
-            <button type="button" onClick={() => location.reload()}>
-              Обновить страницу
-            </button>
-          }
+          action={<Button onClick={() => location.reload()}>Обновить страницу</Button>}
         />
       </div>
     );

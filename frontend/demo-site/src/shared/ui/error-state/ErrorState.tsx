@@ -1,25 +1,25 @@
-import { EmptyState } from "../empty-state";
+import { Alert, Button } from "@astronaut/ui-kit";
 
 interface ErrorStateProps {
   message: string;
   onRetry?: () => void;
 }
 
-/** Ошибка загрузки: понятное сообщение и повтор; объявляется скринридеру (`role="alert"`). */
+/** Ошибка загрузки плашкой рядом с блоком: понятное сообщение и «Повторить». Объявляется скринридеру (`role="alert"`). */
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
   return (
-    <div role="alert">
-      <EmptyState
-        title="Не удалось загрузить"
-        text={message}
-        action={
-          onRetry && (
-            <button type="button" onClick={onRetry}>
-              Повторить
-            </button>
-          )
-        }
-      />
-    </div>
+    <Alert
+      tone="err"
+      layout="stacked"
+      title="Не удалось загрузить"
+      hint={message}
+      actions={
+        onRetry && (
+          <Button size="sm" variant="outline" onClick={onRetry}>
+            Повторить
+          </Button>
+        )
+      }
+    />
   );
 }

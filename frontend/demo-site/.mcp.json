@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "astronaut-ui-kit": {
+      "command": "task",
+      "args": ["-d", "../ui-kit", "mcp"]
+    }
+  }
+}

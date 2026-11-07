@@ -9,7 +9,7 @@ describe("NotFoundPage", () => {
     const { router } = renderApp(<NotFoundPage />, { route: "/missing" });
 
     expect(screen.getByRole("heading", { name: "Страница не найдена" })).toBeTruthy();
-    await userEvent.click(screen.getByRole("link", { name: "На главную" }));
+    await userEvent.click(screen.getByRole("button", { name: "На главную" }));
     expect(router.state.location.pathname).toBe("/");
   });
 });

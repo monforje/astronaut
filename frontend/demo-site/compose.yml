@@ -16,6 +16,9 @@ services:
       # Бренд подключён симлинками (../../../idea/skelet/brand/… из /app упирается в / и попадает сюда):
       # правка в idea/skelet/brand сразу видна dev-серверу.
       - ../../idea/skelet/brand:/idea/skelet/brand:ro
+      # Кит — зависимость `file:../ui-kit`: node_modules/@astronaut/ui-kit это симлинк ../../../ui-kit, из /app он ведёт сюда.
+      # Пакету нужен собранный dist-lib (task ui-kit).
+      - ../ui-kit:/ui-kit:ro
     networks:
       - traefik
     labels:

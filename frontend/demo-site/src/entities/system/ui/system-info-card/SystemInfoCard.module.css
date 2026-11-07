@@ -1,0 +1,26 @@
+.card {
+  max-width: 480px;
+}
+
+.skeletonRows {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 24px;
+  margin: 12px 0 0;
+}
+
+.list dt {
+  color: var(--text-3);
+}
+
+.list dd {
+  margin: 0;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
