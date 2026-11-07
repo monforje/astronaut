@@ -169,6 +169,8 @@ Voyage показывает, где сейчас судно, одним взгл
 
 ## Как использовать
 
+Импорт: в ките — `import { Voyage } from "@/ui"`, в приложении — `import { Voyage } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Voyage`. Типы: `VoyageProps`, `VoyageStatus`.
 

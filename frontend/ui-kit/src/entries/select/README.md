@@ -261,6 +261,8 @@ const sorts = [
 
 ## Как использовать
 
+Импорт: в ките — `import { Select } from "@/ui"`, в приложении — `import { Select } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Select` (кнопка `aria-haspopup="listbox"` и список под ней). Типы: `SelectProps`, `SelectOption`, `SelectVariant`, `SelectOpenReason`.
 

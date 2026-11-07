@@ -152,6 +152,8 @@ SLA-чип отвечает в строке таблицы на один воп�
 
 ## Как использовать
 
+Импорт: в ките — `import { SlaChip } from "@/ui"`, в приложении — `import { SlaChip } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `SlaChip`. Тип: `SlaChipProps`, `SlaChipSize`.
 

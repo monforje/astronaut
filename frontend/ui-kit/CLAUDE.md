@@ -18,6 +18,9 @@ task format                        # oxfmt --write .
 task bun -- x vitest run -t "имя"
 task bun -- run build              # статика в dist/ (hash-роутер, любой статический сервер)
 task mcp                           # MCP-сервер кита по stdio (см. «MCP-сервер и скилл»)
+task lib-build                     # пакет @astronaut/ui-kit в dist-lib/ (см. «Пакет»)
+task pack                          # lib-build + tarball dist-pack/astronaut-ui-kit-<версия>.tgz
+task lib-check                     # pack + проверка содержимого + смоук-потребитель (Vite, tsc, vitest)
 ```
 
 `deploy/local/` — тот же шаблон, что у `demo-site` и `landing` (менять сразу во всех копиях). Хост — в `ao.toml` и `.env.example` (`ui-kit.astronaut.localhost`). Бренд: `public/` → `idea/skelet/brand/public`, `src/styles/brand.css` и `src/styles/fonts` → `idea/skelet/brand/design/*`; папка бренда смонтирована в `compose.yml` и `DOCKER_BUN_RUN_ARGS` (Taskfile). `src/ui/assets/ai-logo-1.png` — копия из temp, [TODO] перенести в brand после выбора варианта логотипа агента.
@@ -30,12 +33,15 @@ src/
   engine/                 движок страницы: DocPage (шапка, вкладки), SpecTab, ComponentTab, Tabs, route, readme, CodeBlock + highlight, Markdown + markdown, blocks/*, Playback («Проиграть»), Toc, Callout (Marks), Rich, Icon, registry, types, engine.css, entry.css (вкладки, код, markdown)
                           Section: якорь `s-<id>`, прокрутка учитывает липкую шапку (scroll-padding в base.css); theme.ts: начальную тему ставит скрипт в index.html (без вспышки)
   entries/<kebab-id>/     ОДИН компонент = одна папка: doc.tsx + <имя>.css + demo.tsx (+ Name.tsx, index.ts, Name.test.tsx у реализованных)
-  ui/                     публичная точка входа кита (index.ts), internal/ (общий внутренний слой), assets, test-setup
+  ui/                     публичная точка входа кита (index.ts), internal/ (общий внутренний слой), assets (знак агента PNG и симлинки на brand/animated), test-setup
+  index.ts, tokens.ts     входы пакета: index.ts = стили + `export * from "./ui"`, tokens.ts = только brand.css и tokens.css (см. «Пакет»)
   entries/_planned.ts     список «скоро» (строки скрываются сами, когда появляется doc.tsx с тем же id)
   styles/                 brand.css (симлинк), tokens.css (роли из макета, светлая и тёмная), base.css
   entries.test.ts         проверяет схему всех doc.tsx, префиксы классов в css, README и llms
   docgen/                 генератор README/llms (render.ts, files.ts) и design-rules.md
   generated/              llms.txt, llms-full.txt (в git, генерируются)
+tests/consumer/           фикстура смоук-теста пакета: Vite + React + vitest, импортирует кит из tarball
+vite.lib.config.ts, tsconfig.lib.json   сборка пакета; scripts/{lib-finish,check-lib,smoke-consumer}.ts
 mcp/                      MCP-сервер кита: main.ts (stdio), server.ts (инструменты и ресурсы), tools.ts (ответы), kit.ts (чтение файлов), server.test.ts
 ```
 
@@ -110,6 +116,73 @@ mcp/                      MCP-сервер кита: main.ts (stdio), server.ts 
 - Правила кода те же: лицензия первой строкой, без комментариев, логи только в `process.stderr`.
 - Добавили компонент: серверу ничего менять не нужно (читает папки). Новый вид данных или инструмент — `mcp/tools.ts` и `mcp/server.ts`, тест, строка в этой таблице.
 
+## Пакет @astronaut/ui-kit
+
+Кит собирается в пакет, который подключают соседние фронты (прежде всего `frontend/demo-site`). Пакет **не публикуется** ни в npm, ни в другие реестры: репозиторий публичный, лицензия проприетарная (файл `LICENSE`, `"license": "UNLICENSED"`), поэтому `"private": true` в `package.json` остаётся и пакет потребляется по пути внутри монорепо.
+
+### Сборка
+
+```bash
+task lib-build     # → dist-lib/
+task pack          # lib-build + bun pm pack → dist-pack/astronaut-ui-kit-<версия>.tgz (dist-lib и dist-pack в .gitignore)
+task lib-check     # pack + scripts/check-lib.ts + scripts/smoke-consumer.ts: зелёный = пакет годен к подключению
+```
+
+`lib:build` (скрипт `package.json`) делает четыре шага: `vite build -c vite.lib.config.ts` (js + `styles.css`), тот же конфиг с `--mode tokens` (`tokens.css`), `tsc -p tsconfig.lib.json` (только `.d.ts`), `scripts/lib-finish.ts` (убирает служебный `_tokens.js`, проверяет наличие файлов).
+
+### Что в пакете
+
+```
+dist-lib/
+  index.js, index.d.ts       публичный API: ровно то, что экспортирует src/ui/index.ts (146 имён: компоненты, Icon, хуки, toast, типы)
+  ui/…, entries/…            модули кита один в один (preserveModules): tree-shaking у потребителя, d.ts рядом
+  styles.css                 brand.css (@font-face) + tokens.css + base.css + стили всех компонентов, один файл
+  tokens.css                 только @font-face, палитра и роли (светлая и тёмная), без компонентных стилей и без base.css
+  assets/                    Onest-VF-<hash>.ttf, FiraCode-VF-<hash>.ttf, ai-logo-1.png, loader.svg, logo-mark.svg
+```
+
+В пакет не попадают `engine/`, `app/`, `docgen/`, `generated/`, `demo.tsx`, `doc.tsx`, `*.force.css`, тесты, README записей, `mcp/`: `files: ["dist-lib", "LICENSE"]` (README.md корня кита npm/bun добавляют сами), а `scripts/check-lib.ts` ищет утечки в `dist-lib` и в tarball (пути, `@/…`, `/engine/`, `/demo`, `react-router`, `@modelcontextprotocol`). Публичный API совпадает с `@/ui`: `src/ui/exports.test.ts` сверяет экспорты с `index.ts` записей, MCP (`list_components`) и README.
+
+`exports` в `package.json`:
+
+| Путь             | Файл                                                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `.`              | `dist-lib/index.js` (+ `types` → `dist-lib/index.d.ts`); `main`, `module`, `types` продублированы для старых инструментов |
+| `./styles.css`   | `dist-lib/styles.css`                                                                                                     |
+| `./tokens.css`   | `dist-lib/tokens.css`                                                                                                     |
+| `./assets/*`     | `dist-lib/assets/*` (файлы, на которые ссылаются css и js)                                                                |
+| `./package.json` | сам манифест                                                                                                              |
+
+`sideEffects: ["**/*.css"]`. `dependencies` у пакета нет (иначе tarball притащил бы второй React): `react` и `react-dom` — `peerDependencies` (`^19.0.0`, в коде `ref` как обычный проп) и external при сборке вместе с `react/jsx-runtime`; всё остальное (`@modelcontextprotocol/sdk`, `react-router`, тестовые инструменты) — `devDependencies` словаря.
+
+### Ресурсы и шрифты (решение)
+
+Режим библиотеки Vite всегда встраивает ресурсы в js и css base64 (шрифты дали бы 600 КБ css, знак агента 205 КБ js), поэтому конфиг это обходит (`vite.lib.config.ts`):
+
+- **Шрифты** (Onest, Fira Code): `url(./assets/…ttf)` в `styles.css` и `tokens.css` (плагин добавляет `?no-inline` к `url()` в `brand.css`). Потребитель на Vite получает их из своей сборки с хешами; css обрабатывает его Vite и в dev, и в build.
+- **PNG и SVG из js** (`Avatar`/`AgentTab`/`AgentBubble`, `Loader`, `PageLoader`, `BusyOverlay`): плагин `lib-external-assets` не встраивает их, а копирует в `dist-lib/assets/<имя>` и оставляет в js обычный импорт `import logo from "../../assets/ai-logo-1.png"`. Бандлер потребителя сам кладёт файл в сборку с хешем (в dev prebundle Vite даёт `?import`), в vitest то же. Конструкция `new URL(…, import.meta.url)` не используется: после prebundle в dev она ломается.
+- `LOADER_SRC` и `MARK_SRC` (экспорт `Loader`) теперь хешированные URL ресурсов, а не `/brand/animated/…`: потребителю не нужно копировать brand в `public/`. Исходники лежат симлинками `src/ui/assets/{loader,logo-mark}.svg` на `idea/skelet/brand/animated/`; в Docker для `task bun` нужен смонтированный brand (уже есть в `DOCKER_BUN_RUN_ARGS`).
+- Те же файлы доступны по `@astronaut/ui-kit/assets/<имя>`, если нужен URL вне компонентов.
+
+Смоук `tests/consumer` проверяет это на настоящей сборке потребителя: `vite build` кладёт в `dist/assets` оба шрифта, `ai-logo-1`, `loader` и css; vitest рендерит приложение из пакета.
+
+### Подключение в соседний фронт
+
+1. Зависимость в `package.json` потребителя:
+   - рядом в монорепо: `"@astronaut/ui-kit": "file:../ui-kit"` (нужен собранный `dist-lib`: `task -d ../ui-kit lib-build`; после пересборки кита проверьте, что `node_modules/@astronaut/ui-kit` свежий, иначе переустановите). Эта форма смоуком не проверялась: смоук ставит tarball; либо
+   - tarball: `"@astronaut/ui-kit": "file:../ui-kit/dist-pack/astronaut-ui-kit-0.1.0.tgz"` (`task -d ../ui-kit pack`).
+   - В Docker (`task bun`, `compose.yml`) папка `frontend/ui-kit` должна быть смонтирована в тот же относительный путь (как `idea/skelet/brand`), иначе `file:` не найдётся.
+2. Peer-зависимости: потребителю нужны `react` и `react-dom` 19.x (один экземпляр: пакет их не тянет). TypeScript: `moduleResolution: "Bundler"` (в `.d.ts` относительные пути без расширений), `skipLibCheck` не обязателен.
+3. Один раз в точке входа: `import "@astronaut/ui-kit/styles.css";` (токены, шрифты, база и стили компонентов; нужен только `tokens.css` — когда стили компонентов подключены иначе). Тему задаёт атрибут `data-theme="light" | "dark"` на `<html>` (скрипт без вспышки — в `index.html` словаря).
+4. Импорт: `import { Button, Select, Dialog, toast, Toaster } from "@astronaut/ui-kit";`. В vitest потребителя пакет из `node_modules` (tarball) работает без дополнительных настроек: проверено смоуком (Vitest 4, happy-dom).
+5. `styles.css` содержит `base.css` кита (reset `margin: 0`, `box-sizing`, фон и шрифт `body`, фокус-кольцо): для приложения на ките это нужная база; если нужны только токены, берите `tokens.css` и добавьте `.ds-icon`/`.ds-agent-mark` вручную.
+
+### Как обновлять
+
+Изменили компонент или токены: `task bun -- run docs` (README и `llms*.txt`), `task bun -- run verify`, `task lib-check`. Повышайте `version` в `package.json` по смыслу (патч: правки без смены API; минор: новые компоненты и пропсы; до `1.0` ломающие правки тоже в минор) и меняйте путь tarball у потребителей. Новый экспорт появляется сам: пакет собирается из `src/ui/index.ts`. Новый ресурс (png/svg) импортируйте из `src/ui/assets` относительным путём, `@/` в `src/entries` и `src/ui` не использовать (проверит `check-lib`).
+
+Известные ограничения: `src/entries/*/*.css` попадают в `styles.css` целиком (нет разбиения по компонентам); знак агента `ai-logo-1.png` весит 154 КБ (грузится только вместе с Avatar-агентом, AgentTab, AgentBubble).
+
 ## Реализация компонентов
 
 Эталон — `button`, `badge`, `avatar` (смотрите их папки). Реализованная запись = словарь + настоящий компонент в одной папке; ещё не реализованные записи остаются демо-разметкой в `demo.tsx` (проверки реализации их пропускают).
@@ -126,7 +199,7 @@ demo.tsx            демо-обвязка словаря: оборачивае
 doc.tsx, README.md  как раньше
 ```
 
-- **Публичный API — `src/ui/index.ts`**: `export * from "../entries/<id>"`. Приложение импортирует `import { Button } from "@/ui"`. Записи не импортируют `@/ui` (только `@/ui/assets/*`) и берут общие примитивы из внутреннего слоя относительным путём `../../ui/internal` (см. «Внутренний слой»), а демо — компонент из своей папки (`./index`), иначе цикл. Ни компонент, ни `src/ui` не зависят от `engine/` (иконки — `Icon` из внутреннего слоя или `ReactNode` от вызывающего, знак агента лежит в `src/ui/assets`); наоборот, `engine/Icon` реэкспортирует `Icon` кита.
+- **Публичный API — `src/ui/index.ts`**: `export * from "../entries/<id>"`. Приложение импортирует `import { Button } from "@/ui"`. Записи не импортируют `@/ui` и берут общие примитивы из внутреннего слоя относительным путём `../../ui/internal` (см. «Внутренний слой»), а демо — компонент из своей папки (`./index`), иначе цикл. Ни компонент, ни `src/ui` не зависят от `engine/` (иконки — `Icon` из внутреннего слоя или `ReactNode` от вызывающего, ресурсы (знак агента, `loader.svg`, `logo-mark.svg`) лежат в `src/ui/assets` и подключаются относительным путём `../../ui/assets/…`, без алиаса `@/`: пакет собирается без переписывания путей); наоборот, `engine/Icon` реэкспортирует `Icon` кита.
 - **Пропсы**: `interface NameProps extends ComponentPropsWithRef<"button" | "span" | …>` плюс свои (`variant`, `size`, `loading`, `icon: ReactNode`, …). `ref` — обычный проп (React 19), без `forwardRef`. Нативные атрибуты (`aria-*`, `data-*`, `onClick`, `disabled`, `type`) приходят через `...rest` и ставятся на корневой элемент; свои классы добавляются к классам компонента через `cx` из `../../ui/internal`. Значения по умолчанию — в деструктуризации. Варианты и размеры — союзы строк, выражаются классами `ds-<имя>--<значение>`; состояния — атрибутами (`aria-busy`, `aria-pressed`, `data-status`).
 - **Доступность в компоненте**: `loading` → `aria-busy`, клик гасится (`preventDefault`, без `onClick`), кнопка не `disabled`; `disabled` — нативный; декоративное (значки, точки, спиннер) — `aria-hidden`; у `role="img"` подпись из `aria-label` или имени.
 - **`force` только в демо**: в `Name.tsx` и `name.css` нет `force` и `data-force`. Демо-обёртка (`DemoButton`) принимает `force` и ставит `data-force` на корень (компонент пробрасывает `data-*`); правила `[data-force]` — в `name.force.css`. Чтобы порядок каскада не менялся, у force-правил в `:not()` исключены состояния, которые в исходнике побеждали по порядку (`:disabled`, `[aria-pressed="true"]`). Тест `entries.test.ts` это проверяет.

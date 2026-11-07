@@ -178,6 +178,8 @@ Checkbox отвечает «да / нет» в форме или выбирае�
 
 ## Как использовать
 
+Импорт: в ките — `import { Checkbox, CheckboxGroup } from "@/ui"`, в приложении — `import { Checkbox, CheckboxGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Checkbox` (`<input type="checkbox">`) и `CheckboxGroup` (`<div role="group">`). Типы: `CheckboxProps`, `CheckboxVariant`, `CheckboxGroupProps`.
 

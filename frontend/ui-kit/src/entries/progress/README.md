@@ -176,6 +176,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@/ui"`, в приложении — `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@/ui"`.
 

@@ -159,6 +159,8 @@ Toggle держит один независимый флажок рядом с �
 
 ## Как использовать
 
+Импорт: в ките — `import { Toggle } from "@/ui"`, в приложении — `import { Toggle } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Toggle` (`<button aria-pressed>`). Типы: `ToggleProps`, `ToggleVariant`, `ToggleSize`.
 

@@ -138,6 +138,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { TimeSlot, TimeSlots } from "@/ui"`, в приложении — `import { TimeSlot, TimeSlots } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `TimeSlots` (сетка слотов) и `TimeSlot` (одна кнопка). Типы: `TimeSlotsProps`, `TimeSlotProps`.
 

@@ -45,7 +45,7 @@ export function createServer(root: string = KIT_ROOT): McpServer {
     { name: "astronaut-ui-kit", version: "0.1.0" },
     {
       instructions:
-        "UI-кит Astronaut. Перед созданием интерфейса найдите готовый компонент (search, list_components), прочитайте get_component и импортируйте из @/ui. Не изобретайте компоненты и не копируйте стили из других фронтов. Общие правила: get_design_rules.",
+        "UI-кит Astronaut. Перед созданием интерфейса найдите готовый компонент (search, list_components), прочитайте get_component и импортируйте: внутри кита из @/ui, в приложении-потребителе (demo-site и др.) из @astronaut/ui-kit с подключением @astronaut/ui-kit/styles.css. Не изобретайте компоненты и не копируйте стили из других фронтов. Общие правила: get_design_rules.",
     },
   );
 
@@ -54,7 +54,7 @@ export function createServer(root: string = KIT_ROOT): McpServer {
     {
       title: "Список компонентов кита",
       description:
-        'Список записей UI-кита по группам: id, название, статус (реализован / только спецификация / запланирован), описание и строка импорта `import { X } from "@/ui"`. Фильтры: group (id или название группы: actions, Поля), query (слова по названию, описанию, ключевым словам). Only read.',
+        'Список записей UI-кита по группам: id, название, статус (реализован / только спецификация / запланирован), описание и строки импорта `import { X } from "@/ui"` (кит) и `import { X } from "@astronaut/ui-kit"` (приложение). Фильтры: group (id или название группы: actions, Поля), query (слова по названию, описанию, ключевым словам). Only read.',
       inputSchema: {
         group: z
           .string()

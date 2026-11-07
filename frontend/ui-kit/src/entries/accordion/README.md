@@ -175,6 +175,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Accordion, AccordionItem } from "@/ui"`, в приложении — `import { Accordion, AccordionItem } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Accordion`, `AccordionItem`. Типы: `AccordionProps`, `AccordionType`, `AccordionVariant`, `AccordionItemProps`, `AccordionPanelStatus`.
 

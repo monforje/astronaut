@@ -162,6 +162,8 @@ const [to, setTo] = useState("19:00");
 
 ## Как использовать
 
+Импорт: в ките — `import { TimeField, TimePanel, TimePicker } from "@/ui"`, в приложении — `import { TimeField, TimePanel, TimePicker } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `TimePicker` (поле и панель), части `TimeField` и `TimePanel`. Типы: `TimePickerProps`, `TimeFieldProps`, `TimePanelProps`, `TimeValue`. Логика (разбор `чч:мм`, шаги, округление к шагу) — `time-picker/time.ts` с тестами.
 

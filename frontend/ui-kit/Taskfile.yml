@@ -75,6 +75,28 @@ tasks:
           {{.DOCKER_BUN_IMAGE_NAME}} \
           bun run build
 
+  lib-build:
+    desc: "Пакет @astronaut/ui-kit: сборка в dist-lib (js, d.ts, styles.css, tokens.css, assets)"
+    cmds:
+      - task: bun
+        vars: { BUN_COMMAND: "run lib:build" }
+
+  pack:
+    desc: "tarball пакета в dist-pack/ (bun pm pack после lib-build); подключение: file:../ui-kit/dist-pack/astronaut-ui-kit-<версия>.tgz"
+    cmds:
+      - task: lib-build
+      - task: bun
+        vars: { BUN_COMMAND: "pm pack --destination dist-pack" }
+
+  lib-check:
+    desc: "Пакет: сборка, tarball без исходников словаря и с LICENSE, смоук потребителя (Vite + React, tsc, vitest)"
+    cmds:
+      - task: pack
+      - task: bun
+        vars: { BUN_COMMAND: "run lib:verify" }
+      - task: bun
+        vars: { BUN_COMMAND: "run lib:smoke" }
+
   deps-install:
     desc: "bun install — только если менялись package.json/bun.lock"
     sources: [package.json, bun.lock]

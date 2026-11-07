@@ -246,6 +246,8 @@ const [messages, setMessages] = useState<AgentMessage[]>([
 
 ## Как использовать
 
+Импорт: в ките — `import { AgentPanel } from "@/ui"`, в приложении — `import { AgentPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { AgentPanel } from "@/ui"`. Компонент — оболочка чата: шапка, история, переписка, поле ввода. Данные и обработчики приходят пропсами, стриминг показывается из `messages`.
 

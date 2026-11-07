@@ -20,5 +20,13 @@ export default defineConfig({
     // `import "./styles/index.css"` в main.tsx и css рядом с doc.tsx — штатные побочные импорты.
     "import/no-unassigned-import": "off",
   },
-  ignorePatterns: ["node_modules", "dist", "coverage", "*.config.ts"],
+  ignorePatterns: [
+    "node_modules",
+    "dist",
+    "dist-lib",
+    "dist-pack",
+    "coverage",
+    "*.config.ts",
+    "tests/consumer/node_modules",
+  ],
 });

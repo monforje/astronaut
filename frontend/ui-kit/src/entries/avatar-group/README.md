@@ -166,6 +166,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { AvatarGroup } from "@/ui"`, в приложении — `import { AvatarGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `AvatarGroup`. Типы: `AvatarGroupProps`, `AvatarGroupPerson`, `AvatarGroupSize`. Внутри используется `Avatar`.
 

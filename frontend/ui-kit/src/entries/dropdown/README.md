@@ -211,6 +211,8 @@ Dropdown раскрывает список действий над объект�
 
 ## Как использовать
 
+Импорт: в ките — `import { Dropdown, DropdownItem, DropdownHeader, DropdownLabel, DropdownMenu, DropdownSeparator, DropdownTrigger } from "@/ui"`, в приложении — `import { Dropdown, DropdownItem, DropdownHeader, DropdownLabel, DropdownMenu, DropdownSeparator, DropdownTrigger } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Dropdown` (кнопка + меню `role="menu"`), `DropdownItem`, `DropdownLabel`, `DropdownSeparator`, `DropdownHeader`; низкоуровневые `DropdownMenu`, `DropdownTrigger`. Типы: `DropdownProps`, `DropdownItemProps`, `DropdownHeaderProps`, `DropdownKind`, `DropdownOpenReason`.
 

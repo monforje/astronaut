@@ -228,6 +228,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Card, CardBar, CardBody, CardFooter, CardHeader, KpiCard } from "@/ui"`, в приложении — `import { Card, CardBar, CardBody, CardFooter, CardHeader, KpiCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Card` (контейнер), части `CardHeader`, `CardFooter`, `CardBar` (плашка заголовка для карточки без полей), `CardBody`, и готовая плитка `KpiCard` (внутри `Delta` и `Sparkline` из `Chart`). Типы: `CardProps`, `CardVariant`, `CardTone`, `CardElement`, `CardHeaderProps`, `CardFooterProps`, `CardBarProps`, `KpiCardProps`.
 

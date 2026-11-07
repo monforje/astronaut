@@ -922,6 +922,8 @@ Teal-текст, стрелка › сдвигается вправо на hover
 
 ## Как использовать
 
+Импорт: в ките — `import { Button, ButtonGroup, LinkButton } from "@/ui"`, в приложении — `import { Button, ButtonGroup, LinkButton } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Button`, `ButtonGroup`, `LinkButton` (текст-ссылка на `<button>`). Типы: `ButtonProps`, `ButtonVariant`, `ButtonSize`, `ButtonGroupProps`, `LinkButtonProps`, `LinkButtonKind`, `LinkButtonSize`.
 
@@ -1132,6 +1134,8 @@ Toggle держит один независимый флажок рядом с �
 
 ## Как использовать
 
+Импорт: в ките — `import { Toggle } from "@/ui"`, в приложении — `import { Toggle } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Toggle` (`<button aria-pressed>`). Типы: `ToggleProps`, `ToggleVariant`, `ToggleSize`.
 
@@ -1336,6 +1340,8 @@ ToggleGroup меняет вид или фильтр одной строкой: �
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { ToggleGroup, ToggleGroupItem } from "@/ui"`, в приложении — `import { ToggleGroup, ToggleGroupItem } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты `ToggleGroup` (`<div role="radiogroup">`) и `ToggleGroup.Item` (он же `ToggleGroupItem`, `<button role="radio">`). Типы: `ToggleGroupProps`, `ToggleGroupItemProps`, `ToggleGroupSize`.
@@ -1595,6 +1601,8 @@ Dropdown раскрывает список действий над объект�
 
 ## Как использовать
 
+Импорт: в ките — `import { Dropdown, DropdownItem, DropdownHeader, DropdownLabel, DropdownMenu, DropdownSeparator, DropdownTrigger } from "@/ui"`, в приложении — `import { Dropdown, DropdownItem, DropdownHeader, DropdownLabel, DropdownMenu, DropdownSeparator, DropdownTrigger } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Dropdown` (кнопка + меню `role="menu"`), `DropdownItem`, `DropdownLabel`, `DropdownSeparator`, `DropdownHeader`; низкоуровневые `DropdownMenu`, `DropdownTrigger`. Типы: `DropdownProps`, `DropdownItemProps`, `DropdownHeaderProps`, `DropdownKind`, `DropdownOpenReason`.
 
@@ -1828,6 +1836,8 @@ Input принимает короткий текст или число: номе
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { InlineInput, Input, SearchInput, Textarea } from "@/ui"`, в приложении — `import { InlineInput, Input, SearchInput, Textarea } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты `Input`, `Textarea`, `InlineInput`, `SearchInput`. Типы: `InputProps`, `TextareaProps`, `InlineInputProps`, `SearchInputProps`.
@@ -2142,6 +2152,8 @@ const sorts = [
 
 ## Как использовать
 
+Импорт: в ките — `import { Select } from "@/ui"`, в приложении — `import { Select } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Select` (кнопка `aria-haspopup="listbox"` и список под ней). Типы: `SelectProps`, `SelectOption`, `SelectVariant`, `SelectOpenReason`.
 
@@ -2370,6 +2382,8 @@ Checkbox отвечает «да / нет» в форме или выбирае�
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Checkbox, CheckboxGroup } from "@/ui"`, в приложении — `import { Checkbox, CheckboxGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты `Checkbox` (`<input type="checkbox">`) и `CheckboxGroup` (`<div role="group">`). Типы: `CheckboxProps`, `CheckboxVariant`, `CheckboxGroupProps`.
@@ -2603,6 +2617,8 @@ Radio выбирает ровно один вариант из 2-5, когда �
 
 ## Как использовать
 
+Импорт: в ките — `import { Radio, RadioGroup } from "@/ui"`, в приложении — `import { Radio, RadioGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Radio` (`<input type="radio">`) и `RadioGroup` (`<div role="radiogroup">`). Типы: `RadioProps`, `RadioGroupProps`, `RadioVariant`.
 
@@ -2799,6 +2815,8 @@ Switch лежит в строке настроек: заголовок и поя
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { SettingRow, Switch } from "@/ui"`, в приложении — `import { SettingRow, Switch } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты `Switch` (`<input type="checkbox" role="switch">`) и `SettingRow` (строка настроек). Типы: `SwitchProps`, `SwitchSize`, `SettingRowProps`.
@@ -3072,6 +3090,8 @@ Dropzone принимает документы по грузу (накладна
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Dropzone, DropzoneArea, DropzoneFileRow } from "@/ui"`, в приложении — `import { Dropzone, DropzoneArea, DropzoneFileRow } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты `Dropzone` (зона с выбором и перетаскиванием файлов, список, строка сообщений), низкоуровневые `DropzoneArea` и `DropzoneFileRow`. Типы: `DropzoneProps`, `DropzoneFile`, `DropzoneRejection`, `DropzoneRejectReason`, `ZoneKind`.
@@ -3456,6 +3476,8 @@ MSKU4821907ДООО «Дальснаб»3/32/33/30/3СвереноЖдём на�
 
 ## Как использовать
 
+Импорт: в ките — `import { DataTable } from "@/ui"`, в приложении — `import { DataTable } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: обобщённый `DataTable<Row>`. Типы: `DataTableProps<Row>`, `DataTableColumn<Row>`, `DataTableTab<Row>`, `DataTableSort`, `DataTableFilterChip`, `DataTableState`, `DataTableDensity`, `DataTableLines`, `SortDirection`. Данные приходят пропсами: сортировка, поиск, фильтр вкладки и страницы считаются на клиенте по переданным `rows`. Корень собран на `Card flush`.
 
@@ -3719,6 +3741,8 @@ const columns: DataTableColumn<Cargo>[] = [
 
 ## Как использовать
 
+Импорт: в ките — `import { Tab, TabList, TabPanel, Tabs } from "@/ui"`, в приложении — `import { Tab, TabList, TabPanel, Tabs } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Tabs`, `TabList`, `Tab`, `TabPanel`. Типы: `TabsProps`, `TabsSize`, `TabListProps`, `TabProps`, `TabPanelProps`.
 
@@ -3956,6 +3980,8 @@ import { Tab, TabList, TabPanel, Tabs } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { Breadcrumb } from "@/ui"`, в приложении — `import { Breadcrumb } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Breadcrumb`. Типы: `BreadcrumbProps`, `BreadcrumbItem`, `BreadcrumbSize`, `BreadcrumbMenuKey`.
 
@@ -4183,6 +4209,8 @@ import { Breadcrumb } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { Accordion, AccordionItem } from "@/ui"`, в приложении — `import { Accordion, AccordionItem } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Accordion`, `AccordionItem`. Типы: `AccordionProps`, `AccordionType`, `AccordionVariant`, `AccordionItemProps`, `AccordionPanelStatus`.
 
@@ -4378,6 +4406,8 @@ import { Accordion, AccordionItem } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { SectionHeader, Separator } from "@/ui"`, в приложении — `import { SectionHeader, Separator } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты: `Separator`, `SectionHeader`. Типы: `SeparatorProps`, `SeparatorOrientation`, `SectionHeaderProps`.
@@ -4588,6 +4618,8 @@ import { SectionHeader, Separator } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { ScrollArea } from "@/ui"`, в приложении — `import { ScrollArea } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `ScrollArea`. Типы: `ScrollAreaProps`, `ScrollAreaDirection`, `ScrollAreaStart`.
@@ -4829,6 +4861,8 @@ Stepper показывает, где объект в последователь�
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Stepper } from "@/ui"`, в приложении — `import { Stepper } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `Stepper`. Типы: `StepperProps`, `StepperStep`, `StepperVariant`, `StepperStatus`.
@@ -5094,6 +5128,8 @@ import { Stepper } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { Sidebar } from "@/ui"`, в приложении — `import { Sidebar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Sidebar`. Типы: `SidebarProps`, `SidebarGroup`, `SidebarItem`, `SidebarToggleProps`.
 
@@ -5334,6 +5370,8 @@ import { Sidebar } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Topbar, TopbarAction, TopbarProfile, TopbarSearch } from "@/ui"`, в приложении — `import { Topbar, TopbarAction, TopbarProfile, TopbarSearch } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты: `Topbar`, `TopbarSearch`, `TopbarAction`, `TopbarProfile`. Типы: `TopbarProps`, `TopbarCrumb`, `TopbarSearchHotkey`, `TopbarSearchProps`, `TopbarSearchRootProps`, `TopbarActionProps`, `TopbarProfileProps`, `TopbarMenuItem`.
@@ -5602,6 +5640,8 @@ AppShell задаёт каркас всех экранов: слева сайд�
 
 ## Как использовать
 
+Импорт: в ките — `import { AppShell } from "@/ui"`, в приложении — `import { AppShell } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `AppShell`. Типы: `AppShellProps`, `AppShellContentProps`. Без бизнес-логики и без роутера: области заполняются тем, что вы передали.
 
@@ -5816,6 +5856,8 @@ Alert сообщает о том, что относится к этому мес
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Alert } from "@/ui"`, в приложении — `import { Alert } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Alert } from "@/ui"`.
@@ -6109,6 +6151,8 @@ Toast отвечает «получилось» или «идёт», не отн
 
 ## Как использовать
 
+Импорт: в ките — `import { ToastCard, ToastContent, Toaster, TOAST_DURATION_MS, ToastStack } from "@/ui"`, в приложении — `import { ToastCard, ToastContent, Toaster, TOAST_DURATION_MS, ToastStack } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { toast, Toaster } from "@/ui"`. Положите `<Toaster />` один раз в корень приложения, вызывайте `toast(...)` откуда угодно.
 
@@ -6296,6 +6340,8 @@ toast.update(id, { loading: false, title: "Сверка завершена", ton
 
 ## Как использовать
 
+Импорт: в ките — `import { Spinner, SpinnerDots, SpinnerInline } from "@/ui"`, в приложении — `import { Spinner, SpinnerDots, SpinnerInline } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Spinner, SpinnerInline, SpinnerDots } from "@/ui"`. Токены и базовые стили подключены один раз в приложении.
 
@@ -6474,6 +6520,8 @@ Loader занимает место содержимого, пока оно гр�
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { BusyOverlay, LOADER_SRC, Loader, MARK_SRC, PageLoader } from "@/ui"`, в приложении — `import { BusyOverlay, LOADER_SRC, Loader, MARK_SRC, PageLoader } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Loader, BusyOverlay, PageLoader, LOADER_SRC, MARK_SRC } from "@/ui"`. Анимация только фирменная: `brand/animated/loader.svg` (`LOADER_SRC`), знак `logo-mark.svg` (`MARK_SRC`).
@@ -6679,6 +6727,8 @@ Loader занимает место содержимого, пока оно гр�
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@/ui"`, в приложении — `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Progress, ProgressCircle, ProgressSegments, ProgressButton } from "@/ui"`.
@@ -6897,6 +6947,8 @@ Skeleton показывает, что здесь будет: строки, пл�
 
 ## Как использовать
 
+Импорт: в ките — `import { Skeleton, SkeletonChart, SkeletonGroup, SkeletonRow } from "@/ui"`, в приложении — `import { Skeleton, SkeletonChart, SkeletonGroup, SkeletonRow } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Skeleton` (блок-заглушка), `SkeletonGroup` (обёртка с `aria-busy` и анимацией), пресеты `SkeletonRow` (аватар + две строки + плашка) и `SkeletonChart` (столбики). Типы: `SkeletonProps`, `SkeletonGroupProps`, `SkeletonRowProps`, `SkeletonChartProps`, `SkeletonShape`, `SkeletonAnimation`.
 
@@ -7097,6 +7149,8 @@ Tooltip называет элемент, у которого нет подпис
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Tooltip, TooltipCard } from "@/ui"`, в приложении — `import { Tooltip, TooltipCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Tooltip, TooltipCard } from "@/ui"`.
@@ -7311,6 +7365,8 @@ Popover показывает то, что не умещается в Tooltip и 
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Popover, PopoverBody, PopoverFoot, PopoverHead } from "@/ui"`, в приложении — `import { Popover, PopoverBody, PopoverFoot, PopoverHead } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Popover, PopoverHead, PopoverBody, PopoverFoot } from "@/ui"`.
@@ -7601,6 +7657,8 @@ Dialog останавливает работу, чтобы получить ре
 
 ## Как использовать
 
+Импорт: в ките — `import { Dialog, DialogPanel } from "@/ui"`, в приложении — `import { Dialog, DialogPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Dialog, DialogPanel } from "@/ui"`. Окно без крестика: «нет» слева, «да» справа, по 50 %.
 
@@ -7838,6 +7896,8 @@ Sheet показывает объект или процесс рядом со с
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { SHEET_NEXT_SIZE, SHEET_SIZE_LABEL, Sheet, SheetPanel } from "@/ui"`, в приложении — `import { SHEET_NEXT_SIZE, SHEET_SIZE_LABEL, Sheet, SheetPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { Sheet, SheetPanel } from "@/ui"`. Панель справа с крестиком и тремя режимами ширины: `panel` (430 px), `wide` (760 px), `full` (весь экран).
@@ -8113,6 +8173,8 @@ const [shown, setShown] = useState(true);
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { AGENT_BUBBLE_DURATION_MS, AgentBubble, AgentTab } from "@/ui"`, в приложении — `import { AGENT_BUBBLE_DURATION_MS, AgentBubble, AgentTab } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Импорт: `import { AgentTab, AgentBubble } from "@/ui"`. Оба компонента `position: fixed` у правого края окна, `z-index: 810` (над `Dialog` и `Sheet`, под `Popover`).
@@ -8396,6 +8458,8 @@ const [messages, setMessages] = useState<AgentMessage[]>([
 
 ## Как использовать
 
+Импорт: в ките — `import { AgentPanel } from "@/ui"`, в приложении — `import { AgentPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { AgentPanel } from "@/ui"`. Компонент — оболочка чата: шапка, история, переписка, поле ввода. Данные и обработчики приходят пропсами, стриминг показывается из `messages`.
 
@@ -8603,6 +8667,8 @@ const [messages, setMessages] = useState<AgentMessage[]>([
 
 ## Как использовать
 
+Импорт: в ките — `import { Avatar } from "@/ui"`, в приложении — `import { Avatar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Avatar` (`<span role="img">`). Типы: `AvatarProps`, `AvatarKind`, `AvatarSize`, `AvatarPresence`. Группа аватаров — отдельная запись `avatar-group`.
 
@@ -8808,6 +8874,8 @@ import { Avatar } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { AvatarGroup } from "@/ui"`, в приложении — `import { AvatarGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `AvatarGroup`. Типы: `AvatarGroupProps`, `AvatarGroupPerson`, `AvatarGroupSize`. Внутри используется `Avatar`.
@@ -9028,6 +9096,8 @@ import { AvatarGroup } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Mention, UserChip } from "@/ui"`, в приложении — `import { Mention, UserChip } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты: `UserChip` (чип человека или организации), `Mention` (упоминание в тексте). Типы: `UserChipProps`, `MentionProps`. Внутри используется `Avatar`.
@@ -9391,6 +9461,8 @@ Enter — отправитьОтправить
 
 ## Как использовать
 
+Импорт: в ките — `import { DEFAULT_EMOJIS, Thread, ThreadComposer, ThreadTyping } from "@/ui"`, в приложении — `import { DEFAULT_EMOJIS, Thread, ThreadComposer, ThreadTyping } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Thread` (лента и поле ввода), `ThreadComposer` (поле отдельно), `ThreadTyping`. Хелпер `toggleReaction`. Типы: `ThreadProps`, `ThreadComposerProps`, `ThreadMessage`, `ThreadDraft`, `ThreadSubmit`, `ThreadPerson`, `ThreadFile`, `ThreadStream`, `ThreadMenu`, `ThreadAgentAction`, `ThreadPartData`. Компонент держит только состояние интерфейса (черновик, меню, подсветка цитаты, анимации); данные и их изменение — у вас, через пропсы и колбэки.
 
@@ -9677,6 +9749,8 @@ const [messages, setMessages] = useState(initial);
 
 ## Как использовать
 
+Импорт: в ките — `import { Calendar } from "@/ui"`, в приложении — `import { Calendar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Calendar`. Типы: `CalendarProps`, `CalendarSingleProps`, `CalendarRangeProps`, `CalendarDayData`, `DateRangeValue`.
 
@@ -9893,6 +9967,8 @@ const [date, setDate] = useState<Date | null>(inTwoDays);
 
 ## Как использовать
 
+Импорт: в ките — `import { DatePicker, PickerBox, PickerButton, PickerClear, PickerField, PickerFooter, PickerPopover, PickerSpacer } from "@/ui"`, в приложении — `import { DatePicker, PickerBox, PickerButton, PickerClear, PickerField, PickerFooter, PickerPopover, PickerSpacer } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `DatePicker` и общие части поля и панели, которые используют также `TimePicker` и `RangePicker`: `PickerField`, `PickerBox`, `PickerPopover`, `PickerFooter`, `PickerButton`, `PickerSpacer`, `PickerClear`. `PickerPopover` с `anchorRef` — плавающий слой (`Layer`: портал в body, `position: fixed`, закрытие по клику мимо, Esc и уходу фокуса); без `anchorRef` или с `inline` — обычная панель. Типы: `DatePickerProps`, `PickerFieldProps`, `PickerBoxProps`, `PickerPopoverProps`, `PickerButtonProps`.
 
@@ -10091,6 +10167,8 @@ const [range, setRange] = useState<[Date, Date] | null>(lastSevenDays);
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { DEFAULT_RANGE_PRESETS, RangePicker, RangePickerPanel, RangePickerTrigger } from "@/ui"`, в приложении — `import { DEFAULT_RANGE_PRESETS, RangePicker, RangePickerPanel, RangePickerTrigger } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты: `RangePicker` (поле-кнопка, панель, быстрые периоды), части `RangePickerTrigger` и `RangePickerPanel`, готовый список `DEFAULT_RANGE_PRESETS`. Типы: `RangePickerProps`, `RangePickerTriggerProps`, `RangePickerPanelProps`, `RangePreset`, `DatePair`.
@@ -10300,6 +10378,8 @@ const [to, setTo] = useState("19:00");
 
 ## Как использовать
 
+Импорт: в ките — `import { TimeField, TimePanel, TimePicker } from "@/ui"`, в приложении — `import { TimeField, TimePanel, TimePicker } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `TimePicker` (поле и панель), части `TimeField` и `TimePanel`. Типы: `TimePickerProps`, `TimeFieldProps`, `TimePanelProps`, `TimeValue`. Логика (разбор `чч:мм`, шаги, округление к шагу) — `time-picker/time.ts` с тестами.
 
@@ -10478,6 +10558,8 @@ import { TimePicker } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { TimeSlot, TimeSlots } from "@/ui"`, в приложении — `import { TimeSlot, TimeSlots } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `TimeSlots` (сетка слотов) и `TimeSlot` (одна кнопка). Типы: `TimeSlotsProps`, `TimeSlotProps`.
 
@@ -10649,6 +10731,8 @@ import { TimeSlots } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { RelativeTime } from "@/ui"`, в приложении — `import { RelativeTime } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `RelativeTime`. Тип: `RelativeTimeProps`. Единый таймер для всех подписей лежит в `relative-time/ticker.ts` (его же использует `Countdown`).
@@ -10839,6 +10923,8 @@ import { RelativeTime } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Countdown, CountdownBadge, CountdownText } from "@/ui"`, в приложении — `import { Countdown, CountdownBadge, CountdownText } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты: `Countdown` (блоки «дн ч мин сек»), `CountdownBadge` (краткая запись в бейдже), `CountdownText` (текстовая плашка). Типы: `CountdownProps`, `CountdownBadgeProps`, `CountdownTextProps`, `CountdownTone`. Таймер общий с `RelativeTime` (`relative-time/ticker.ts`).
@@ -11052,6 +11138,8 @@ Voyage показывает, где сейчас судно, одним взгл
 
 ## Как использовать
 
+Импорт: в ките — `import { Voyage } from "@/ui"`, в приложении — `import { Voyage } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Voyage`. Типы: `VoyageProps`, `VoyageStatus`.
 
@@ -11259,6 +11347,8 @@ import { Voyage } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { WeekAgenda, WeekAgendaDay, WeekAgendaEvent } from "@/ui"`, в приложении — `import { WeekAgenda, WeekAgendaDay, WeekAgendaEvent } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `WeekAgenda` (неделя и список дня), части `WeekAgendaDay` и `WeekAgendaEvent`. Типы: `WeekAgendaProps`, `AgendaEvent`, `AgendaTone`, `WeekAgendaDayProps`, `WeekAgendaEventProps`. Логика дат — `calendar/dates.ts`.
 
@@ -11451,6 +11541,8 @@ SLA-чип отвечает в строке таблицы на один воп�
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { SlaChip } from "@/ui"`, в приложении — `import { SlaChip } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `SlaChip`. Тип: `SlaChipProps`, `SlaChipSize`.
@@ -11721,6 +11813,8 @@ import { SlaChip } from "@/ui";
 
 ## Как использовать
 
+Импорт: в ките — `import { Card, CardBar, CardBody, CardFooter, CardHeader, KpiCard } from "@/ui"`, в приложении — `import { Card, CardBar, CardBody, CardFooter, CardHeader, KpiCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Card` (контейнер), части `CardHeader`, `CardFooter`, `CardBar` (плашка заголовка для карточки без полей), `CardBody`, и готовая плитка `KpiCard` (внутри `Delta` и `Sparkline` из `Chart`). Типы: `CardProps`, `CardVariant`, `CardTone`, `CardElement`, `CardHeaderProps`, `CardFooterProps`, `CardBarProps`, `KpiCardProps`.
 
@@ -11946,6 +12040,8 @@ import { Card, CardHeader, CardFooter, KpiCard } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Badge } from "@/ui"`, в приложении — `import { Badge } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент `Badge` (`<span>`). Типы: `BadgeProps`, `BadgeTone`, `BadgeForm`, `BadgeSize`.
@@ -12214,6 +12310,8 @@ import { Badge } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { ServiceCard } from "@/ui"`, в приложении — `import { ServiceCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компонент: `ServiceCard` (собран на `Card`, `Badge`). Типы: `ServiceCardProps`, `ServiceStatus`, `ServiceBrand`, `ServiceMetric`. Данных внутри нет: всё приходит пропсами, кнопки подвала передаются как `actions`.
@@ -12529,6 +12627,8 @@ import { ServiceCard, Button } from "@/ui";
 <!-- gen:end -->
 
 ## Как использовать
+
+Импорт: в ките — `import { Donut, HBar, LineChart, Delta, Sparkline } from "@/ui"`, в приложении — `import { Donut, HBar, LineChart, Delta, Sparkline } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
 
 <!-- manual:start -->
 Компоненты (чистый SVG, без внешних библиотек, данные приходят пропсами): `LineChart`, `Donut`, `HBar`, `Sparkline`, `Delta`. Типы: `LineChartProps`, `ChartSeries`, `DonutProps`, `DonutPart`, `HBarProps`, `HBarRow`, `SparklineProps`, `DeltaProps`, `DeltaTone`, `ChartColor` (`"teal" | "orange" | "danger" | "info" | "muted"`).

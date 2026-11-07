@@ -313,6 +313,8 @@ Enter — отправитьОтправить
 
 ## Как использовать
 
+Импорт: в ките — `import { DEFAULT_EMOJIS, Thread, ThreadComposer, ThreadTyping } from "@/ui"`, в приложении — `import { DEFAULT_EMOJIS, Thread, ThreadComposer, ThreadTyping } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Thread` (лента и поле ввода), `ThreadComposer` (поле отдельно), `ThreadTyping`. Хелпер `toggleReaction`. Типы: `ThreadProps`, `ThreadComposerProps`, `ThreadMessage`, `ThreadDraft`, `ThreadSubmit`, `ThreadPerson`, `ThreadFile`, `ThreadStream`, `ThreadMenu`, `ThreadAgentAction`, `ThreadPartData`. Компонент держит только состояние интерфейса (черновик, меню, подсветка цитаты, анимации); данные и их изменение — у вас, через пропсы и колбэки.
 

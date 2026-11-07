@@ -149,6 +149,8 @@ Tooltip называет элемент, у которого нет подпис
 
 ## Как использовать
 
+Импорт: в ките — `import { Tooltip, TooltipCard } from "@/ui"`, в приложении — `import { Tooltip, TooltipCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Tooltip, TooltipCard } from "@/ui"`.
 

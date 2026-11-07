@@ -153,6 +153,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Spinner, SpinnerDots, SpinnerInline } from "@/ui"`, в приложении — `import { Spinner, SpinnerDots, SpinnerInline } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Spinner, SpinnerInline, SpinnerDots } from "@/ui"`. Токены и базовые стили подключены один раз в приложении.
 

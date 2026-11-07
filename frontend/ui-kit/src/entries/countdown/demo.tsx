@@ -1,7 +1,7 @@
 /** © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
 import { useState } from "react";
 import { Countdown, CountdownBadge, CountdownText } from "./Countdown";
-import { compactLeft, splitSeconds, toneOf } from "./countdown";
+import { compactLeft, splitSeconds, toneOf } from "./countdown-time";
 
 export const ARRIVAL_SECONDS = (2 * 24 + 4) * 3600 + 15 * 60 + 30;
 export const split = splitSeconds;

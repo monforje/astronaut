@@ -154,6 +154,8 @@ Switch лежит в строке настроек: заголовок и поя
 
 ## Как использовать
 
+Импорт: в ките — `import { SettingRow, Switch } from "@/ui"`, в приложении — `import { SettingRow, Switch } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Switch` (`<input type="checkbox" role="switch">`) и `SettingRow` (строка настроек). Типы: `SwitchProps`, `SwitchSize`, `SettingRowProps`.
 

@@ -275,6 +275,8 @@ Teal-текст, стрелка › сдвигается вправо на hover
 
 ## Как использовать
 
+Импорт: в ките — `import { Button, ButtonGroup, LinkButton } from "@/ui"`, в приложении — `import { Button, ButtonGroup, LinkButton } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Button`, `ButtonGroup`, `LinkButton` (текст-ссылка на `<button>`). Типы: `ButtonProps`, `ButtonVariant`, `ButtonSize`, `ButtonGroupProps`, `LinkButtonProps`, `LinkButtonKind`, `LinkButtonSize`.
 

@@ -199,6 +199,8 @@ Stepper показывает, где объект в последователь�
 
 ## Как использовать
 
+Импорт: в ките — `import { Stepper } from "@/ui"`, в приложении — `import { Stepper } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Stepper`. Типы: `StepperProps`, `StepperStep`, `StepperVariant`, `StepperStatus`.
 

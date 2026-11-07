@@ -164,6 +164,8 @@ ToggleGroup меняет вид или фильтр одной строкой: �
 
 ## Как использовать
 
+Импорт: в ките — `import { ToggleGroup, ToggleGroupItem } from "@/ui"`, в приложении — `import { ToggleGroup, ToggleGroupItem } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `ToggleGroup` (`<div role="radiogroup">`) и `ToggleGroup.Item` (он же `ToggleGroupItem`, `<button role="radio">`). Типы: `ToggleGroupProps`, `ToggleGroupItemProps`, `ToggleGroupSize`.
 

@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { Icon, cx, useMergedRefs, usePresence } from "../../ui/internal";
-import agentLogo from "@/ui/assets/ai-logo-1.png";
+import agentLogo from "../../ui/assets/ai-logo-1.png";
 import { Button } from "../button/Button";
 import "./agent-tab.css";
 

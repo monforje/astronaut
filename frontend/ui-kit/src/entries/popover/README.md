@@ -184,6 +184,8 @@ Popover показывает то, что не умещается в Tooltip и 
 
 ## Как использовать
 
+Импорт: в ките — `import { Popover, PopoverBody, PopoverFoot, PopoverHead } from "@/ui"`, в приложении — `import { Popover, PopoverBody, PopoverFoot, PopoverHead } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Popover, PopoverHead, PopoverBody, PopoverFoot } from "@/ui"`.
 

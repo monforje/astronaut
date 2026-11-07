@@ -166,6 +166,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { ScrollArea } from "@/ui"`, в приложении — `import { ScrollArea } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `ScrollArea`. Типы: `ScrollAreaProps`, `ScrollAreaDirection`, `ScrollAreaStart`.
 

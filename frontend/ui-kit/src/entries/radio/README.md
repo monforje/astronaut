@@ -178,6 +178,8 @@ Radio выбирает ровно один вариант из 2-5, когда �
 
 ## Как использовать
 
+Импорт: в ките — `import { Radio, RadioGroup } from "@/ui"`, в приложении — `import { Radio, RadioGroup } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Radio` (`<input type="radio">`) и `RadioGroup` (`<div role="radiogroup">`). Типы: `RadioProps`, `RadioGroupProps`, `RadioVariant`.
 

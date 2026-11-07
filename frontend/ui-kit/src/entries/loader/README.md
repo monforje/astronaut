@@ -153,6 +153,8 @@ Loader занимает место содержимого, пока оно гр�
 
 ## Как использовать
 
+Импорт: в ките — `import { BusyOverlay, LOADER_SRC, Loader, MARK_SRC, PageLoader } from "@/ui"`, в приложении — `import { BusyOverlay, LOADER_SRC, Loader, MARK_SRC, PageLoader } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Loader, BusyOverlay, PageLoader, LOADER_SRC, MARK_SRC } from "@/ui"`. Анимация только фирменная: `brand/animated/loader.svg` (`LOADER_SRC`), знак `logo-mark.svg` (`MARK_SRC`).
 

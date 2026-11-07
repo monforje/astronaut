@@ -1,6 +1,6 @@
 /** © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
 import { describe, expect, it } from "vitest";
-import { compactLeft, secondsLeft, splitSeconds, toneOf } from "./countdown";
+import { compactLeft, secondsLeft, splitSeconds, toneOf } from "./countdown-time";
 
 describe("отсчёт: разбор секунд", () => {
   it("раскладывает на дни, часы, минуты, секунды", () => {

@@ -5,6 +5,7 @@ import {
   Kit,
   KitError,
   LICENSE_LINE,
+  packageImportLine,
   queryTokens,
   splitReadme,
   splitSections,
@@ -87,10 +88,12 @@ function requireReadme(kit: Kit, entry: Entry): string {
 
 const header = (entry: Entry): string => {
   const imp = importLine(entry);
+  const pkg = packageImportLine(entry);
   return [
     `# ${entry.title}`,
     `\`${entry.id}\` · ${entry.groupTitle} · ${STATUS_LABEL[entry.status]}`,
-    imp ? `Импорт: \`${imp}\`` : "",
+    imp ? `Импорт в ките: \`${imp}\`` : "",
+    pkg ? `Импорт в приложении (пакет, нужен \`@astronaut/ui-kit/styles.css\`): \`${pkg}\`` : "",
     entry.summary ? `> ${entry.summary}` : "",
   ]
     .filter(Boolean)
@@ -123,12 +126,16 @@ export function listComponents(kit: Kit, args: { group?: string; query?: string 
       lines.push("", `## ${group}`);
     }
     const imp = importLine(e);
+    const pkg = packageImportLine(e);
     lines.push(
-      `- \`${e.id}\` **${e.title}** [${STATUS_LABEL[e.status]}]: ${e.summary}${imp ? ` Импорт: \`${imp}\`.` : ""}`,
+      `- \`${e.id}\` **${e.title}** [${STATUS_LABEL[e.status]}]: ${e.summary}${imp ? ` Импорт в ките: \`${imp}\`; в приложении: \`${pkg}\`.` : ""}`,
     );
   }
   const implemented = entries.filter((e) => e.status === "implemented").length;
-  return [`Записей: ${entries.length}, реализовано в @/ui: ${implemented}.`, ...lines].join("\n");
+  return [
+    `Записей: ${entries.length}, реализовано (в ките @/ui, в приложении @astronaut/ui-kit): ${implemented}.`,
+    ...lines,
+  ].join("\n");
 }
 
 interface UsageParts {
@@ -183,7 +190,7 @@ export function getComponent(
   const parts: string[] = [header(entry)];
   if (entry.status === "spec") {
     parts.push(
-      "> Компонент не реализован в `@/ui`: это только спецификация. Не импортируйте его и не копируйте стили из demo-site и landing.",
+      "> Компонент не реализован ни в `@/ui`, ни в `@astronaut/ui-kit`: это только спецификация. Не импортируйте его и не копируйте стили из demo-site и landing.",
     );
   }
   const generatedBlock = (section: ComponentSection): string | null => {

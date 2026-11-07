@@ -5,7 +5,13 @@ import { Badge } from "../badge";
 import { pad2 } from "../calendar/dates";
 import { toDate } from "../relative-time/relative";
 import { useTicker } from "../relative-time/ticker";
-import { compactLeft, secondsLeft, splitSeconds, toneOf, type CountdownTone } from "./countdown";
+import {
+  compactLeft,
+  secondsLeft,
+  splitSeconds,
+  toneOf,
+  type CountdownTone,
+} from "./countdown-time";
 import "./countdown.css";
 
 export interface CountdownProps extends Omit<ComponentPropsWithRef<"span">, "children"> {

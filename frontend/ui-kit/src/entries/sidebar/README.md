@@ -218,6 +218,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Sidebar } from "@/ui"`, в приложении — `import { Sidebar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Sidebar`. Типы: `SidebarProps`, `SidebarGroup`, `SidebarItem`, `SidebarToggleProps`.
 

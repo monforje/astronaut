@@ -12,7 +12,7 @@ describe("Loader", () => {
     expect(root.textContent).toBe("Загружаем грузыПара секунд");
     const img = container.querySelector("img");
     expect(img?.getAttribute("src")).toBe(LOADER_SRC);
-    expect(LOADER_SRC.startsWith("/brand/animated/")).toBe(true);
+    expect(LOADER_SRC).toContain("loader");
     expect(img?.getAttribute("alt")).toBe("");
   });
 

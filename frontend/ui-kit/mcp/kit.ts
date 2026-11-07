@@ -1,6 +1,7 @@
 /** © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { exportedComponents, importFrom, KIT_ALIAS, KIT_PACKAGE } from "../src/docgen/exports";
 
 export const KIT_ROOT = join(import.meta.dirname, "..");
 
@@ -102,19 +103,6 @@ export function splitReadme(readme: string): ReadmeParts {
     manual: between(MANUAL_START, MANUAL_END),
   };
 }
-
-const exportedComponents = (indexSource: string): string[] => {
-  const names: string[] = [];
-  for (const m of indexSource.matchAll(/export\s*\{([^}]*)\}/g)) {
-    for (const raw of m[1].split(",")) {
-      const item = raw.trim();
-      if (!item || item.startsWith("type ")) continue;
-      const name = item.split(/\s+as\s+/).pop() ?? "";
-      if (/^[A-Z]/.test(name) && !names.includes(name)) names.push(name);
-    }
-  }
-  return names;
-};
 
 const quoted = (source: string): string[] =>
   [...source.matchAll(/"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'/g)].map((m) => m[1] ?? m[2]);
@@ -250,5 +238,10 @@ export class Kit {
 
 export const importLine = (entry: Entry): string | null =>
   entry.status === "implemented" && entry.components.length
-    ? `import { ${entry.components.join(", ")} } from "@/ui"`
+    ? importFrom(entry.components, KIT_ALIAS)
+    : null;
+
+export const packageImportLine = (entry: Entry): string | null =>
+  entry.status === "implemented" && entry.components.length
+    ? importFrom(entry.components, KIT_PACKAGE)
     : null;

@@ -151,6 +151,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { SectionHeader, Separator } from "@/ui"`, в приложении — `import { SectionHeader, Separator } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Separator`, `SectionHeader`. Типы: `SeparatorProps`, `SeparatorOrientation`, `SectionHeaderProps`.
 

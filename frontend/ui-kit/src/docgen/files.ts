@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { entries, groupsWithEntries } from "@/engine/registry";
+import { exportedComponents } from "./exports";
 import { composeReadme, LICENSE_LINE } from "./render";
 
 const root = join(import.meta.dirname, "..");
@@ -17,7 +18,8 @@ const readIfExists = (path: string) => (existsSync(path) ? readFileSync(path, "u
 export const expectedReadme = (id: string): string => {
   const doc = entries.find((e) => e.id === id)?.doc;
   if (!doc) throw new Error(`нет doc.tsx для ${id}`);
-  return composeReadme(doc, readIfExists(readmePath(id)));
+  const index = readIfExists(join(entriesDir, id, "index.ts"));
+  return composeReadme(doc, readIfExists(readmePath(id)), index ? exportedComponents(index) : []);
 };
 
 const documented = () => entries.filter((e) => e.doc);

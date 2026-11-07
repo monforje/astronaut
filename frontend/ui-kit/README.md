@@ -6,6 +6,12 @@
 
 `task mcp` запускает MCP-сервер `astronaut-ui-kit` (stdio, Docker, только чтение): `list_components`, `get_component`, `get_component_source`, `search`, `get_tokens`, `get_design_rules`, `get_choreography` и ресурсы `uikit://llms.txt`, `uikit://llms-full.txt`, `uikit://component/<id>`. В Claude Code он подключён через `.mcp.json` в корне репозитория; рядом проектный скилл `ui-kit` (`.claude/skills/ui-kit/SKILL.md`). Подробности и проверка: `CLAUDE.md`, раздел «MCP-сервер и скилл».
 
+## Пакет @astronaut/ui-kit
+
+Кит собирается в пакет для соседних фронтов (в реестры не публикуется, лицензия проприетарная). `task lib-build` собирает `dist-lib/` (`index.js`, `.d.ts`, `styles.css`, `tokens.css`, `assets/`), `task pack` кладёт tarball в `dist-pack/`, `task lib-check` проверяет содержимое и собирает смоук-потребитель.
+
+Подключение в соседний фронт: `"@astronaut/ui-kit": "file:../ui-kit"` (после `task -d ../ui-kit lib-build`) либо tarball `file:../ui-kit/dist-pack/astronaut-ui-kit-<версия>.tgz`; нужны `react` и `react-dom` 19.x, один раз `import "@astronaut/ui-kit/styles.css"` и `data-theme="light" | "dark"` на `<html>`. Импорт компонентов: `import { Button } from "@astronaut/ui-kit"` (внутри кита тот же API из `@/ui`). Подробности (ресурсы и шрифты, `exports`, обновление): `CLAUDE.md`, раздел «Пакет».
+
 ## Публикация (GitHub Pages)
 
 Живой словарь: https://monforje.github.io/astronaut/. Публикует workflow `.github/workflows/ui-kit-pages.yml` при каждом push в `main`, затронувшем `frontend/ui-kit/**` или `idea/skelet/brand/**`: проверяет, что README и `llms*.txt` сгенерированы (`bun run docs`), гоняет `verify`, собирает сайт с `BASE_PATH=/astronaut/` и `SITE_URL=https://monforje.github.io/astronaut/` и выкладывает `dist/`.

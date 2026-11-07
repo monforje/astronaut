@@ -232,6 +232,8 @@ Dropzone принимает документы по грузу (накладна
 
 ## Как использовать
 
+Импорт: в ките — `import { Dropzone, DropzoneArea, DropzoneFileRow } from "@/ui"`, в приложении — `import { Dropzone, DropzoneArea, DropzoneFileRow } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Dropzone` (зона с выбором и перетаскиванием файлов, список, строка сообщений), низкоуровневые `DropzoneArea` и `DropzoneFileRow`. Типы: `DropzoneProps`, `DropzoneFile`, `DropzoneRejection`, `DropzoneRejectReason`, `ZoneKind`.
 

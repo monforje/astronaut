@@ -183,6 +183,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Topbar, TopbarAction, TopbarProfile, TopbarSearch } from "@/ui"`, в приложении — `import { Topbar, TopbarAction, TopbarProfile, TopbarSearch } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Topbar`, `TopbarSearch`, `TopbarAction`, `TopbarProfile`. Типы: `TopbarProps`, `TopbarCrumb`, `TopbarSearchHotkey`, `TopbarSearchProps`, `TopbarSearchRootProps`, `TopbarActionProps`, `TopbarProfileProps`, `TopbarMenuItem`.
 

@@ -175,6 +175,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Mention, UserChip } from "@/ui"`, в приложении — `import { Mention, UserChip } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `UserChip` (чип человека или организации), `Mention` (упоминание в тексте). Типы: `UserChipProps`, `MentionProps`. Внутри используется `Avatar`.
 

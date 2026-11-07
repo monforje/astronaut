@@ -151,6 +151,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Countdown, CountdownBadge, CountdownText } from "@/ui"`, в приложении — `import { Countdown, CountdownBadge, CountdownText } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Countdown` (блоки «дн ч мин сек»), `CountdownBadge` (краткая запись в бейдже), `CountdownText` (текстовая плашка). Типы: `CountdownProps`, `CountdownBadgeProps`, `CountdownTextProps`, `CountdownTone`. Таймер общий с `RelativeTime` (`relative-time/ticker.ts`).
 

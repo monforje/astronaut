@@ -241,6 +241,8 @@ const [shown, setShown] = useState(true);
 
 ## Как использовать
 
+Импорт: в ките — `import { AGENT_BUBBLE_DURATION_MS, AgentBubble, AgentTab } from "@/ui"`, в приложении — `import { AGENT_BUBBLE_DURATION_MS, AgentBubble, AgentTab } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { AgentTab, AgentBubble } from "@/ui"`. Оба компонента `position: fixed` у правого края окна, `z-index: 810` (над `Dialog` и `Sheet`, под `Popover`).
 

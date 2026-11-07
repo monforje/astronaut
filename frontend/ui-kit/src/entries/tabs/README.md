@@ -200,6 +200,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Tab, TabList, TabPanel, Tabs } from "@/ui"`, в приложении — `import { Tab, TabList, TabPanel, Tabs } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Tabs`, `TabList`, `Tab`, `TabPanel`. Типы: `TabsProps`, `TabsSize`, `TabListProps`, `TabProps`, `TabPanelProps`.
 

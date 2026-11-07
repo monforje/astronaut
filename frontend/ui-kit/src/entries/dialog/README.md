@@ -256,6 +256,8 @@ Dialog останавливает работу, чтобы получить ре
 
 ## Как использовать
 
+Импорт: в ките — `import { Dialog, DialogPanel } from "@/ui"`, в приложении — `import { Dialog, DialogPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Dialog, DialogPanel } from "@/ui"`. Окно без крестика: «нет» слева, «да» справа, по 50 %.
 

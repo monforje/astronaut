@@ -205,6 +205,8 @@ Sheet показывает объект или процесс рядом со с
 
 ## Как использовать
 
+Импорт: в ките — `import { SHEET_NEXT_SIZE, SHEET_SIZE_LABEL, Sheet, SheetPanel } from "@/ui"`, в приложении — `import { SHEET_NEXT_SIZE, SHEET_SIZE_LABEL, Sheet, SheetPanel } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Sheet, SheetPanel } from "@/ui"`. Панель справа с крестиком и тремя режимами ширины: `panel` (430 px), `wide` (760 px), `full` (весь экран).
 

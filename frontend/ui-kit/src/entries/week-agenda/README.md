@@ -161,6 +161,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { WeekAgenda, WeekAgendaDay, WeekAgendaEvent } from "@/ui"`, в приложении — `import { WeekAgenda, WeekAgendaDay, WeekAgendaEvent } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `WeekAgenda` (неделя и список дня), части `WeekAgendaDay` и `WeekAgendaEvent`. Типы: `WeekAgendaProps`, `AgendaEvent`, `AgendaTone`, `WeekAgendaDayProps`, `WeekAgendaEventProps`. Логика дат — `calendar/dates.ts`.
 

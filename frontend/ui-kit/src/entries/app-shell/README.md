@@ -210,6 +210,8 @@ AppShell задаёт каркас всех экранов: слева сайд�
 
 ## Как использовать
 
+Импорт: в ките — `import { AppShell } from "@/ui"`, в приложении — `import { AppShell } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `AppShell`. Типы: `AppShellProps`, `AppShellContentProps`. Без бизнес-логики и без роутера: области заполняются тем, что вы передали.
 

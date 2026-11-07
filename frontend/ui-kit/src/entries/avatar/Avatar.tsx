@@ -1,7 +1,7 @@
 /** © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
 import type { ComponentPropsWithRef } from "react";
 import { cx } from "../../ui/internal";
-import agentLogo from "@/ui/assets/ai-logo-1.png";
+import agentLogo from "../../ui/assets/ai-logo-1.png";
 import "./avatar.css";
 
 export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";

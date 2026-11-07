@@ -130,6 +130,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { RelativeTime } from "@/ui"`, в приложении — `import { RelativeTime } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `RelativeTime`. Тип: `RelativeTimeProps`. Единый таймер для всех подписей лежит в `relative-time/ticker.ts` (его же использует `Countdown`).
 

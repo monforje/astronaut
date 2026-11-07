@@ -1,10 +1,12 @@
 /** © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
 import type { ComponentPropsWithRef } from "react";
 import { cx } from "../../ui/internal";
+import loaderUrl from "../../ui/assets/loader.svg";
+import markUrl from "../../ui/assets/logo-mark.svg";
 import "./loader.css";
 
-export const LOADER_SRC = `${import.meta.env.BASE_URL}brand/animated/loader.svg`;
-export const MARK_SRC = `${import.meta.env.BASE_URL}brand/animated/logo-mark.svg`;
+export const LOADER_SRC: string = loaderUrl;
+export const MARK_SRC: string = markUrl;
 
 export type LoaderSize = "sm" | "md" | "page";
 

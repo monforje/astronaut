@@ -263,6 +263,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Donut, HBar, LineChart, Delta, Sparkline } from "@/ui"`, в приложении — `import { Donut, HBar, LineChart, Delta, Sparkline } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты (чистый SVG, без внешних библиотек, данные приходят пропсами): `LineChart`, `Donut`, `HBar`, `Sparkline`, `Delta`. Типы: `LineChartProps`, `ChartSeries`, `DonutProps`, `DonutPart`, `HBarProps`, `HBarRow`, `SparklineProps`, `DeltaProps`, `DeltaTone`, `ChartColor` (`"teal" | "orange" | "danger" | "info" | "muted"`).
 

@@ -224,6 +224,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Calendar } from "@/ui"`, в приложении — `import { Calendar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Calendar`. Типы: `CalendarProps`, `CalendarSingleProps`, `CalendarRangeProps`, `CalendarDayData`, `DateRangeValue`.
 

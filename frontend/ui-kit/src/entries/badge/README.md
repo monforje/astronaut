@@ -174,6 +174,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Badge } from "@/ui"`, в приложении — `import { Badge } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Badge` (`<span>`). Типы: `BadgeProps`, `BadgeTone`, `BadgeForm`, `BadgeSize`.
 

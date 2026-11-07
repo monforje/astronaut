@@ -170,6 +170,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Avatar } from "@/ui"`, в приложении — `import { Avatar } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент `Avatar` (`<span role="img">`). Типы: `AvatarProps`, `AvatarKind`, `AvatarSize`, `AvatarPresence`. Группа аватаров — отдельная запись `avatar-group`.
 

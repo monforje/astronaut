@@ -168,6 +168,8 @@ const [date, setDate] = useState<Date | null>(inTwoDays);
 
 ## Как использовать
 
+Импорт: в ките — `import { DatePicker, PickerBox, PickerButton, PickerClear, PickerField, PickerFooter, PickerPopover, PickerSpacer } from "@/ui"`, в приложении — `import { DatePicker, PickerBox, PickerButton, PickerClear, PickerField, PickerFooter, PickerPopover, PickerSpacer } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `DatePicker` и общие части поля и панели, которые используют также `TimePicker` и `RangePicker`: `PickerField`, `PickerBox`, `PickerPopover`, `PickerFooter`, `PickerButton`, `PickerSpacer`, `PickerClear`. `PickerPopover` с `anchorRef` — плавающий слой (`Layer`: портал в body, `position: fixed`, закрытие по клику мимо, Esc и уходу фокуса); без `anchorRef` или с `inline` — обычная панель. Типы: `DatePickerProps`, `PickerFieldProps`, `PickerBoxProps`, `PickerPopoverProps`, `PickerButtonProps`.
 

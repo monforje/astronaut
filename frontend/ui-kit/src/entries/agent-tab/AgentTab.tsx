@@ -11,7 +11,7 @@ import {
   type RefObject,
 } from "react";
 import { Icon, cx, useControlled, useMergedRefs } from "../../ui/internal";
-import agentLogo from "@/ui/assets/ai-logo-1.png";
+import agentLogo from "../../ui/assets/ai-logo-1.png";
 import { Badge } from "../badge/Badge";
 import "./agent-tab.css";
 

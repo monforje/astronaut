@@ -188,6 +188,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { Breadcrumb } from "@/ui"`, в приложении — `import { Breadcrumb } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `Breadcrumb`. Типы: `BreadcrumbProps`, `BreadcrumbItem`, `BreadcrumbSize`, `BreadcrumbMenuKey`.
 

@@ -167,6 +167,8 @@ Alert сообщает о том, что относится к этому мес
 
 ## Как использовать
 
+Импорт: в ките — `import { Alert } from "@/ui"`, в приложении — `import { Alert } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { Alert } from "@/ui"`.
 

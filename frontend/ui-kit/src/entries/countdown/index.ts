@@ -7,4 +7,4 @@ export {
   type CountdownProps,
   type CountdownTextProps,
 } from "./Countdown";
-export type { CountdownTone } from "./countdown";
+export type { CountdownTone } from "./countdown-time";

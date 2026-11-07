@@ -187,6 +187,8 @@ Input принимает короткий текст или число: номе
 
 ## Как использовать
 
+Импорт: в ките — `import { InlineInput, Input, SearchInput, Textarea } from "@/ui"`, в приложении — `import { InlineInput, Input, SearchInput, Textarea } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты `Input`, `Textarea`, `InlineInput`, `SearchInput`. Типы: `InputProps`, `TextareaProps`, `InlineInputProps`, `SearchInputProps`.
 

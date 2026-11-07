@@ -158,6 +158,8 @@ const [range, setRange] = useState<[Date, Date] | null>(lastSevenDays);
 
 ## Как использовать
 
+Импорт: в ките — `import { DEFAULT_RANGE_PRESETS, RangePicker, RangePickerPanel, RangePickerTrigger } from "@/ui"`, в приложении — `import { DEFAULT_RANGE_PRESETS, RangePicker, RangePickerPanel, RangePickerTrigger } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `RangePicker` (поле-кнопка, панель, быстрые периоды), части `RangePickerTrigger` и `RangePickerPanel`, готовый список `DEFAULT_RANGE_PRESETS`. Типы: `RangePickerProps`, `RangePickerTriggerProps`, `RangePickerPanelProps`, `RangePreset`, `DatePair`.
 

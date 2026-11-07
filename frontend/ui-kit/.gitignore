@@ -3,3 +3,6 @@
 /.task/
 /node_modules/
 /.playwright-mcp/
+/dist-lib/
+/dist-pack/
+/tests/consumer/node_modules/

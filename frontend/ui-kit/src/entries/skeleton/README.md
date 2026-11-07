@@ -185,6 +185,8 @@ Skeleton показывает, что здесь будет: строки, пл�
 
 ## Как использовать
 
+Импорт: в ките — `import { Skeleton, SkeletonChart, SkeletonGroup, SkeletonRow } from "@/ui"`, в приложении — `import { Skeleton, SkeletonChart, SkeletonGroup, SkeletonRow } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компоненты: `Skeleton` (блок-заглушка), `SkeletonGroup` (обёртка с `aria-busy` и анимацией), пресеты `SkeletonRow` (аватар + две строки + плашка) и `SkeletonChart` (столбики). Типы: `SkeletonProps`, `SkeletonGroupProps`, `SkeletonRowProps`, `SkeletonChartProps`, `SkeletonShape`, `SkeletonAnimation`.
 

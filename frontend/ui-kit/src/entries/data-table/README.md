@@ -330,6 +330,8 @@ MSKU4821907ДООО «Дальснаб»3/32/33/30/3СвереноЖдём на�
 
 ## Как использовать
 
+Импорт: в ките — `import { DataTable } from "@/ui"`, в приложении — `import { DataTable } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: обобщённый `DataTable<Row>`. Типы: `DataTableProps<Row>`, `DataTableColumn<Row>`, `DataTableTab<Row>`, `DataTableSort`, `DataTableFilterChip`, `DataTableState`, `DataTableDensity`, `DataTableLines`, `SortDirection`. Данные приходят пропсами: сортировка, поиск, фильтр вкладки и страницы считаются на клиенте по переданным `rows`. Корень собран на `Card flush`.
 

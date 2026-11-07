@@ -230,6 +230,8 @@
 
 ## Как использовать
 
+Импорт: в ките — `import { ServiceCard } from "@/ui"`, в приложении — `import { ServiceCard } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Компонент: `ServiceCard` (собран на `Card`, `Badge`). Типы: `ServiceCardProps`, `ServiceStatus`, `ServiceBrand`, `ServiceMetric`. Данных внутри нет: всё приходит пропсами, кнопки подвала передаются как `actions`.
 

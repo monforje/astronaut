@@ -260,6 +260,8 @@ Toast отвечает «получилось» или «идёт», не отн
 
 ## Как использовать
 
+Импорт: в ките — `import { ToastCard, ToastContent, Toaster, TOAST_DURATION_MS, ToastStack } from "@/ui"`, в приложении — `import { ToastCard, ToastContent, Toaster, TOAST_DURATION_MS, ToastStack } from "@astronaut/ui-kit"` (нужен `@astronaut/ui-kit/styles.css`).
+
 <!-- manual:start -->
 Импорт: `import { toast, Toaster } from "@/ui"`. Положите `<Toaster />` один раз в корень приложения, вызывайте `toast(...)` откуда угодно.
 

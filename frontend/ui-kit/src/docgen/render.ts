@@ -2,6 +2,7 @@
 import { createElement, Fragment, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { GROUPS, type DocSpec } from "@/engine/types";
+import { importsLine } from "./exports";
 
 export const GEN_START = "<!-- gen:start -->";
 export const GEN_END = "<!-- gen:end -->";
@@ -271,7 +272,11 @@ export function generatedPart(readme: string): string | null {
   return readme.slice(a + GEN_START.length, b).trim();
 }
 
-export function composeReadme(doc: DocSpec, existing: string | null): string {
+export function composeReadme(
+  doc: DocSpec,
+  existing: string | null,
+  components: string[] = [],
+): string {
   return [
     GEN_START,
     renderGenerated(doc),
@@ -279,6 +284,7 @@ export function composeReadme(doc: DocSpec, existing: string | null): string {
     "",
     "## Как использовать",
     "",
+    ...(components.length ? [importsLine(components), ""] : []),
     MANUAL_START,
     manualPart(existing),
     MANUAL_END,
