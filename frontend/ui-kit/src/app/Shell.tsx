@@ -40,7 +40,12 @@ export function Shell() {
           <Icon name="list" />
         </button>
         <Link to="/" className="dx-logo" onClick={() => setMenu(false)}>
-          <img src="/brand/logo-mark.svg" alt="" width={24} height={24} />
+          <img
+            src={`${import.meta.env.BASE_URL}brand/logo-mark.svg`}
+            alt=""
+            width={24}
+            height={24}
+          />
           <b>Astronaut</b>
           <span>Дизайн-система</span>
         </Link>

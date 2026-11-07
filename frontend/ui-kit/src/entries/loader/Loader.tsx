@@ -3,8 +3,8 @@ import type { ComponentPropsWithRef } from "react";
 import { cx } from "../../ui/internal";
 import "./loader.css";
 
-export const LOADER_SRC = "/brand/animated/loader.svg";
-export const MARK_SRC = "/brand/animated/logo-mark.svg";
+export const LOADER_SRC = `${import.meta.env.BASE_URL}brand/animated/loader.svg`;
+export const MARK_SRC = `${import.meta.env.BASE_URL}brand/animated/logo-mark.svg`;
 
 export type LoaderSize = "sm" | "md" | "page";
 

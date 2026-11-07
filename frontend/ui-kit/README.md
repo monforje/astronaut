@@ -6,6 +6,14 @@
 
 `task mcp` запускает MCP-сервер `astronaut-ui-kit` (stdio, Docker, только чтение): `list_components`, `get_component`, `get_component_source`, `search`, `get_tokens`, `get_design_rules`, `get_choreography` и ресурсы `uikit://llms.txt`, `uikit://llms-full.txt`, `uikit://component/<id>`. В Claude Code он подключён через `.mcp.json` в корне репозитория; рядом проектный скилл `ui-kit` (`.claude/skills/ui-kit/SKILL.md`). Подробности и проверка: `CLAUDE.md`, раздел «MCP-сервер и скилл».
 
+## Публикация (GitHub Pages)
+
+Живой словарь: https://monforje.github.io/astronaut/. Публикует workflow `.github/workflows/ui-kit-pages.yml` при каждом push в `main`, затронувшем `frontend/ui-kit/**` или `idea/skelet/brand/**`: проверяет, что README и `llms*.txt` сгенерированы (`bun run docs`), гоняет `verify`, собирает сайт с `BASE_PATH=/astronaut/` и `SITE_URL=https://monforje.github.io/astronaut/` и выкладывает `dist/`.
+
+Собрать локально под подпуть: `task pages-build` (результат в `dist/`; другие значения: `task pages-build BASE_PATH=/ SITE_URL=https://kit.example.com/`).
+
+Свой домен: указать его в Settings → Pages, в `env` workflow поставить `BASE_PATH: /` и `SITE_URL: https://<домен>/`.
+
 ## Вкладки страницы
 
 У каждой записи две вкладки: «Хореография» (спецификация: анатомия, варианты, состояния, правила, токены и сворачиваемый README) и «Компонент» (импорт, живые примеры с кодом и кнопкой «Копировать», пропсы и доступность из раздела «Как использовать» в README.md). Адреса: `#/button` и `#/button/states` — спецификация, `#/button/component` и `#/button/component/props` — компонент. Для записей основ (цвета, типографика) вкладка «Компонент» скрыта. Подробности: `CLAUDE.md`, раздел «Вкладки страницы компонента и CodeBlock».

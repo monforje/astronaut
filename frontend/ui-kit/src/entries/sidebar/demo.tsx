@@ -110,11 +110,23 @@ export function DemoSidebar({
         defaultClosedGroups={defaultClosed}
         brand={
           <>
-            <img src="/brand/logo-mark.svg" alt="" width={24} height={24} />
+            <img
+              src={`${import.meta.env.BASE_URL}brand/logo-mark.svg`}
+              alt=""
+              width={24}
+              height={24}
+            />
             Astronaut
           </>
         }
-        brandMark={<img src="/brand/logo-mark.svg" alt="" width={24} height={24} />}
+        brandMark={
+          <img
+            src={`${import.meta.env.BASE_URL}brand/logo-mark.svg`}
+            alt=""
+            width={24}
+            height={24}
+          />
+        }
         toggleProps={{ "data-force": force?.trigger }}
         groups={groups.map((g) => ({
           id: g.id,

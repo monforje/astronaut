@@ -52,7 +52,11 @@ function ReadmeSection({
       lead={
         <>
           Текстовое описание компонента, из которого читает агент:{" "}
-          <a href={`/entries/${doc.id}.md`} target="_blank" rel="noopener noreferrer">
+          <a
+            href={`${import.meta.env.BASE_URL}entries/${doc.id}.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             открыть README.md
           </a>
           . Генерируется из этой страницы командой <code>task bun -- run docs</code>.

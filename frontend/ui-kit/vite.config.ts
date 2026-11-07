@@ -30,13 +30,24 @@ function brandReload(): Plugin {
 
 const SRC_DIR = path.resolve(import.meta.dirname, "src");
 
+/** Подпуть публикации (GitHub Pages: `/astronaut/`) и абсолютный адрес сайта для ссылок в llms*.txt. */
+const withSlashes = (value: string) =>
+  `/${value.replace(/^\/+|\/+$/g, "")}/`.replace(/^\/\/$/, "/");
+const BASE_PATH = withSlashes(process.env.BASE_PATH || "/");
+const SITE_URL = (process.env.SITE_URL || "https://ui-kit.astronaut.localhost/").replace(
+  /\/*$/,
+  "/",
+);
+const absoluteLinks = (text: string | undefined) =>
+  text?.replace(/(?<![\w./])\/(entries\/[a-z0-9-]+\.md|llms-full\.txt)/g, `${SITE_URL}$1`);
+
 /** Текстовые материалы для агентов: /llms.txt, /llms-full.txt и /entries/<id>.md (README компонента) — в dev и в dist/. */
 function agentDocs(): Plugin {
   const read = (file: string) => (fs.existsSync(file) ? fs.readFileSync(file, "utf8") : undefined);
   const resolveUrl = (url: string): { body?: string; type: string } | undefined => {
     if (url === "/llms.txt" || url === "/llms-full.txt") {
       return {
-        body: read(path.join(SRC_DIR, "generated", url.slice(1))),
+        body: absoluteLinks(read(path.join(SRC_DIR, "generated", url.slice(1)))),
         type: "text/plain; charset=utf-8",
       };
     }
@@ -64,12 +75,16 @@ function agentDocs(): Plugin {
         res.end(hit.body);
       });
     },
+    writeBundle(options) {
+      const index = path.join(options.dir ?? "dist", "index.html");
+      if (fs.existsSync(index)) fs.copyFileSync(index, path.join(path.dirname(index), "404.html"));
+    },
     generateBundle() {
       const emit = (fileName: string, source: string | undefined) => {
         if (source !== undefined) this.emitFile({ type: "asset", fileName, source });
       };
-      emit("llms.txt", read(path.join(SRC_DIR, "generated", "llms.txt")));
-      emit("llms-full.txt", read(path.join(SRC_DIR, "generated", "llms-full.txt")));
+      emit("llms.txt", absoluteLinks(read(path.join(SRC_DIR, "generated", "llms.txt"))));
+      emit("llms-full.txt", absoluteLinks(read(path.join(SRC_DIR, "generated", "llms-full.txt"))));
       for (const id of fs.readdirSync(path.join(SRC_DIR, "entries"))) {
         emit(`entries/${id}.md`, read(path.join(SRC_DIR, "entries", id, "README.md")));
       }
@@ -78,6 +93,7 @@ function agentDocs(): Plugin {
 }
 
 export default defineConfig({
+  base: BASE_PATH,
   plugins: [react(), brandReload(), agentDocs()],
   resolve: {
     preserveSymlinks: true,

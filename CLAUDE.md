@@ -14,7 +14,7 @@ Astronaut is a data-integration platform for logistics/transport companies (1C, 
 | `idea/questions.md` | Single list of open questions for the whole project |
 | `content/` | Telegram post drafts, one `NNN-slug/` folder per post (own `CLAUDE.md`: formats, preview render, text rules). Nothing is sent to the channel without the user's explicit "да" |
 | `frontend/demo-site/` | React demo site |
-| `frontend/ui-kit/` | UI kit (design-system dictionary + components in `@/ui`), `https://ui-kit.astronaut.localhost`; MCP server `astronaut-ui-kit` (`.mcp.json`, `task mcp`) and skill `ui-kit` (`.claude/skills/ui-kit/`) — agents building UI take components from it |
+| `frontend/ui-kit/` | UI kit (design-system dictionary + components in `@/ui`), `https://ui-kit.astronaut.localhost`, published on GitHub Pages `https://monforje.github.io/astronaut/` (`.github/workflows/ui-kit-pages.yml`, `task pages-build`); MCP server `astronaut-ui-kit` (`.mcp.json`, `task mcp`) and skill `ui-kit` (`.claude/skills/ui-kit/`) — agents building UI take components from it |
 | `frontend/landing/` | Astro landing (own `CLAUDE.md`, `DESIGN.md`, and `PLAN.md` — section order and copy, following the shared story arc in `idea/skelet/brand/messaging/story.md`) |
 
 Conventions for `idea/` (from README files): every decision goes to `idea/skelet/decisions.md` with a status; unresolved items go to `idea/questions.md`; new terms go to `idea/skelet/glossary/terms.md`; each new file is added to the map in the folder README. Never invent facts or numbers — missing data becomes `[TODO]`. Prices in `idea/product/05-stoimost.md` are a starting hypothesis, not validated. Old material lives only on git branch `old` (`begining/`), read-only reference.
