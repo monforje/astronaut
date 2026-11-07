@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Astronaut: доклад</title>
+<!--
+  Доклад по дисциплине, 13 слайдов 16:9 (1920×1080). Сборка PDF: bash idea/course-talk/build.sh
+  Все цифры: idea/course-talk/numbers.md, у каждой метка «источник» или «допущение».
+  Текст доклада: speech.md, план: plan.md. Бренд и шрифты по относительным путям из idea/skelet/brand/.
+-->
+<style>
+@font-face { font-family: "Onest"; src: url("../skelet/brand/design/fonts/Onest[wght].ttf") format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "Fira Code"; src: url("../skelet/brand/design/fonts/FiraCode[wght].ttf") format("truetype"); font-weight: 300 700; }
+:root {
+  --navy: #082f53; --teal: #00d4d0; --orange: #ff9455; --off: #fbf5eb; --white: #fff;
+  --muted: color-mix(in oklab, var(--navy) 74%, white);
+  --faint: color-mix(in oklab, var(--navy) 70%, white);
+  --line: color-mix(in oklab, var(--navy) 13%, white);
+  --tint: color-mix(in oklab, var(--teal) 10%, white);
+  --accent: color-mix(in oklab, var(--teal) 42%, var(--navy));
+  --on-navy: color-mix(in oklab, white 74%, var(--navy));
+  --navy-card: color-mix(in oklab, white 7%, var(--navy));
+  --warn: #a3440e;
+  --sans: "Onest", system-ui, sans-serif;
+  --mono: "Fira Code", ui-monospace, monospace;
+}
+@page { size: 1920px 1080px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); color: var(--navy); -webkit-print-color-adjust: exact; print-color-adjust: exact; background: var(--white); }
+.slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 148px 120px 110px; break-after: page; display: flex; flex-direction: column; }
+.slide:last-child { break-after: auto; }
+.off { background: var(--off); }
+.navy { background: var(--navy); color: var(--white); }
+
+.top { position: absolute; top: 54px; left: 120px; right: 120px; display: flex; justify-content: space-between; align-items: center; }
+.brand { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 26px; letter-spacing: -.01em; }
+.brand img { height: 36px; }
+.num { font-family: var(--mono); font-size: 18px; color: var(--faint); }
+.navy .num { color: var(--on-navy); }
+.foot { position: absolute; left: 120px; right: 120px; bottom: 44px; font-size: 19px; line-height: 1.45; color: var(--faint); }
+.navy .foot { color: var(--on-navy); }
+
+.kicker { font-family: var(--mono); font-weight: 600; font-size: 21px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.navy .kicker { color: var(--teal); }
+h1 { font-weight: 800; font-size: 112px; line-height: .98; letter-spacing: -.04em; }
+h2 { font-weight: 800; font-size: 62px; line-height: 1.06; letter-spacing: -.03em; margin-top: 16px; max-width: 1680px; }
+h3 { font-weight: 700; font-size: 30px; line-height: 1.16; letter-spacing: -.01em; }
+.lead { font-size: 30px; line-height: 1.4; color: var(--muted); }
+p.t { font-size: 24px; line-height: 1.42; color: var(--muted); }
+.navy p.t, .navy .lead { color: var(--on-navy); }
+.big { font-family: var(--mono); font-weight: 600; letter-spacing: -.03em; line-height: 1; color: var(--navy); }
+.navy .big { color: var(--teal); }
+.ex { font-family: var(--mono); font-size: 24px; line-height: 1.5; color: var(--navy); background: var(--tint); border-radius: 14px; padding: 16px 22px; }
+.ex b { color: var(--warn); font-weight: 600; }
+
+.card { background: var(--white); border-radius: 24px; border: 1.5px solid var(--line); padding: 34px 38px; display: flex; flex-direction: column; }
+.off .card { border-color: transparent; box-shadow: 0 1px 2px rgb(8 47 83 / .05), 0 16px 40px -14px rgb(8 47 83 / .16); }
+
+/* метки источник / допущение */
+.m { display: inline-block; font-family: var(--mono); font-size: 16px; font-weight: 600; letter-spacing: .03em; padding: 3px 11px; border-radius: 999px; vertical-align: 3px; white-space: nowrap; }
+.m.s { background: color-mix(in oklab, var(--teal) 22%, white); color: var(--navy); }
+.m.a { background: color-mix(in oklab, var(--orange) 26%, white); color: #8a3a0d; }
+.navy .m.s { background: color-mix(in oklab, var(--teal) 28%, var(--navy)); color: var(--teal); }
+.navy .m.a { background: color-mix(in oklab, var(--orange) 30%, var(--navy)); color: var(--orange); }
+
+table { width: 100%; border-collapse: collapse; font-size: 28px; }
+th { text-align: left; font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); padding: 0 12px 16px 0; border-bottom: 2px solid var(--navy); }
+td { padding: 17px 12px 17px 0; border-bottom: 1.5px solid var(--line); vertical-align: top; line-height: 1.3; }
+td.n, th.n { text-align: right; font-family: var(--mono); white-space: nowrap; padding-right: 0; }
+th.n { font-family: var(--sans); }
+tr.sum td { font-weight: 800; border-bottom: 2px solid var(--navy); }
+
+/* 1 */
+.s1 { padding: 0 120px; justify-content: center; }
+.s1 .logo { position: absolute; top: 72px; left: 120px; height: 64px; }
+.s1 h1 { margin-top: 30px; max-width: 1500px; }
+.s1 .lead { margin-top: 40px; max-width: 1280px; }
+.s1 .three { margin-top: 60px; display: flex; gap: 18px; }
+.s1 .three span { font-weight: 700; font-size: 26px; padding: 16px 30px; border-radius: 999px; background: var(--white); box-shadow: 0 10px 30px -14px rgb(8 47 83 / .25); }
+.s1 .three span i { font-style: normal; font-family: var(--mono); color: var(--accent); margin-right: 12px; font-weight: 600; }
+.s1 .who { position: absolute; left: 120px; right: 120px; bottom: 64px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 24px; color: var(--muted); }
+.s1 .who b { color: var(--navy); font-weight: 700; display: block; font-size: 30px; margin-bottom: 4px; }
+.s1 .rule { max-width: 760px; text-align: right; font-size: 22px; line-height: 1.4; }
+
+/* 2 */
+.cols { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; flex: 1; min-height: 0; }
+.s2 .chain { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.s2 .chain .ex { font-size: 30px; padding: 22px 28px; }
+.s2 p.t { font-size: 28px; }
+.s2 .why { display: flex; flex-direction: column; gap: 22px; }
+.s2 .why .row { display: grid; grid-template-columns: 210px 1fr; gap: 24px; align-items: baseline; border-top: 3px solid var(--navy); padding-top: 18px; }
+.s2 .why .row:first-child { border-color: var(--orange); }
+.s2 .why .big { font-size: 40px; }
+.s2 .why .big small { font-size: 22px; color: var(--muted); font-weight: 500; letter-spacing: 0; display: block; margin-top: 8px; }
+
+/* 3 */
+.s3 .grid { margin-top: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; flex: 1; }
+.s3 .card { padding: 40px 38px; }
+.s3 .card h3 { margin-top: 18px; font-size: 40px; }
+.s3 .card p.t { margin-top: 20px; font-size: 28px; }
+.s3 .tag { font-family: var(--mono); font-size: 20px; color: var(--accent); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.s3 .nope { margin-top: 28px; background: color-mix(in oklab, var(--orange) 14%, white); border-radius: 18px; padding: 24px 32px; font-size: 28px; line-height: 1.4; }
+
+/* 4 */
+.s4 table { margin-top: 36px; font-size: 29px; }
+.s4 td { padding: 22px 16px 22px 0; }
+.s4 td:first-child { font-weight: 700; width: 420px; }
+.s4 td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 23px; margin-top: 4px; }
+.s4 .conf { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.s4 .conf div { background: color-mix(in oklab, var(--orange) 14%, white); border-radius: 18px; padding: 22px 30px; font-size: 26px; line-height: 1.4; }
+.s4 .conf b { display: block; font-size: 17px; letter-spacing: .08em; text-transform: uppercase; color: var(--warn); margin-bottom: 6px; }
+
+/* 5 */
+.s5 .money { margin-top: 48px; display: grid; grid-template-columns: 1fr 560px; gap: 56px; align-items: start; }
+.s5 table { font-size: 32px; }
+.s5 .note { margin-top: 28px; }
+.panel { background: var(--navy); color: var(--white); border-radius: 28px; padding: 48px 44px; }
+.panel .big { font-size: 92px; color: var(--teal); white-space: nowrap; }
+.panel h3 { margin-top: 22px; font-size: 32px; }
+.panel p.t { margin-top: 14px; color: var(--on-navy); font-size: 23px; }
+
+/* 6 */
+.s6 .money { margin-top: 40px; display: grid; grid-template-columns: 1fr 560px; gap: 56px; align-items: start; }
+.s6 table { font-size: 27px; }
+.s6 .prices { margin-top: 26px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.s6 .prices div { background: var(--white); border-radius: 18px; padding: 16px 20px; box-shadow: 0 1px 2px rgb(8 47 83 / .05), 0 12px 28px -14px rgb(8 47 83 / .16); }
+.s6 .prices b { display: block; font-family: var(--mono); font-size: 30px; }
+.s6 .prices span { font-size: 19px; color: var(--muted); }
+
+/* 7 */
+.s7 .row { margin-top: 30px; display: grid; grid-template-columns: 1fr 500px; gap: 56px; flex: 1; min-height: 0; }
+.chart { background: var(--white); border-radius: 24px; padding: 22px 26px 12px; box-shadow: 0 1px 2px rgb(8 47 83 / .05), 0 16px 40px -14px rgb(8 47 83 / .16); }
+.chart { display: flex; }
+.chart svg { flex: 1; min-height: 0; width: 100%; display: block; }
+.s7 .row { grid-template-columns: 1fr 520px; }
+.s7 .side { display: flex; flex-direction: column; gap: 22px; }
+.s7 .side p.t { font-size: 27px; }
+.s7 .formula { font-family: var(--mono); font-size: 29px; line-height: 1.55; background: var(--tint); border-radius: 18px; padding: 26px 30px; }
+.s7 .formula b { color: var(--accent); }
+
+/* 8 */
+.s8 table { margin-top: 40px; font-size: 31px; }
+.s8 td { padding: 26px 12px 26px 0; }
+.s8 th { font-size: 20px; }
+.s8 td.n.bad { color: var(--warn); font-weight: 700; }
+.s8 td.n.ok { color: var(--accent); font-weight: 700; }
+.s8 tr.hl td { background: var(--tint); }
+.s8 tr.hl td:first-child { padding-left: 16px; }
+.s8 tr.hl td:last-child { padding-right: 16px; }
+.s8 .warn { margin-top: 36px; background: var(--navy); color: var(--white); border-radius: 20px; padding: 30px 36px; font-size: 31px; line-height: 1.4; }
+.s8 .warn b { color: var(--orange); }
+
+/* 9 */
+.s9 table { margin-top: 30px; font-size: 28px; }
+.s9 td { padding: 18px 16px 18px 0; }
+.s9 td:first-child { font-weight: 700; width: 480px; }
+.s9 th { font-size: 20px; }
+.s9 .honest { margin-top: 28px; background: var(--tint); border-radius: 18px; padding: 22px 34px; font-size: 28px; }
+
+/* 10 */
+.s10 table { margin-top: 30px; font-size: 27px; }
+.s10 td { padding: 22px 14px 22px 0; }
+.s10 td:first-child { font-weight: 700; width: 470px; }
+.s10 td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 22px; margin-top: 4px; }
+.lvl { font-family: var(--mono); font-size: 19px; font-weight: 600; padding: 3px 12px; border-radius: 999px; white-space: nowrap; }
+.lvl.hi { background: color-mix(in oklab, var(--orange) 30%, white); color: #8a3a0d; }
+.lvl.mid { background: color-mix(in oklab, var(--teal) 22%, white); color: var(--navy); }
+.s10 td.l { width: 250px; white-space: nowrap; line-height: 2.1; }
+
+/* 11 */
+.s11 .three { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+.s11 .card { padding: 38px 40px 32px; }
+.s11 .card .n { font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--accent); }
+.s11 .card h3 { margin-top: 14px; font-size: 40px; }
+.s11 .card p.t { margin-top: 18px; font-size: 27px; }
+.s11 .card .stop { margin-top: auto; padding-top: 18px; border-top: 1.5px dashed var(--line); font-size: 26px; line-height: 1.4; color: var(--navy); }
+.s11 .card .stop b { color: var(--warn); }
+.s11 .rule { margin-top: 26px; background: var(--navy); color: var(--white); border-radius: 20px; padding: 22px 32px; font-size: 27px; }
+.s11 .rule b { color: var(--teal); }
+
+/* 12 */
+.s12 { justify-content: center; }
+.s12 .big { font-size: 170px; }
+.s12 .lead { margin-top: 28px; max-width: 1300px; }
+.s12 .rows { margin-top: 54px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.s12 .rows div { background: var(--navy-card); border-radius: 22px; padding: 28px 34px; font-size: 25px; line-height: 1.42; color: var(--on-navy); }
+.s12 .rows b { display: block; font-size: 18px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; font-family: var(--mono); }
+
+/* 13 */
+.s13 .cols { grid-template-columns: 1.15fr 1fr; margin-top: 34px; }
+.s13 .verdict { display: inline-block; font-family: var(--mono); font-weight: 600; font-size: 58px; color: var(--navy); background: var(--teal); border-radius: 22px; padding: 16px 40px; letter-spacing: -.02em; }
+.s13 ul { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.s13 li { font-size: 26px; line-height: 1.38; color: var(--muted); padding-left: 34px; position: relative; }
+.s13 li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+.s13 li b { color: var(--navy); }
+.s13 .col2 { display: flex; flex-direction: column; gap: 22px; }
+.s13 .col2 h3 { font-size: 28px; }
+.s13 .chg li::before { background: var(--orange); }
+.s13 .next { margin-top: auto; background: var(--navy); color: var(--white); border-radius: 24px; padding: 28px 34px; }
+.s13 .next h3 { color: var(--teal); font-family: var(--mono); font-size: 20px; letter-spacing: .08em; text-transform: uppercase; }
+.s13 .next ol { margin: 14px 0 0 0; padding: 0; list-style: none; counter-reset: n; font-size: 27px; line-height: 1.6; color: var(--on-navy); }
+.s13 .next li { counter-increment: n; font-size: 27px; color: var(--on-navy); padding-left: 44px; margin: 0; }
+.s13 .next li::before { content: counter(n); background: none; width: auto; height: auto; border-radius: 0; top: 0; font-family: var(--mono); color: var(--teal); font-weight: 600; }
+.s13 li { font-size: 28px; }
+.s13 .col2 h3 { font-size: 32px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Обложка -->
+<section class="slide off s1">
+  <img class="logo" src="../skelet/brand/logo-horizontal.svg" alt="Astronaut">
+  <div class="kicker">Доклад по дисциплине</div>
+  <h1>Порядок в данных логистической компании</h1>
+  <p class="lead">Программы обмениваются данными сами, а документы по грузу сверяются до отправки.</p>
+  <div class="three"><span><i>1</i>Одна карточка</span><span><i>2</i>Сверка до отправки</span><span><i>3</i>Сбой виден сразу</span></div>
+  <div class="who">
+    <div><b>Даниил Комаров</b>Дисциплина: [TODO: название]</div>
+    <div class="rule">Продаж и разговоров с клиентами пока нет. У каждой цифры метка:
+      <span class="m s">источник</span> <span class="m a">допущение</span></div>
+  </div>
+</section>
+
+<!-- 2. Проблема -->
+<section class="slide off s2">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">02 / 13</div></div>
+  <div class="kicker">1 · Проблема</div>
+  <h2>Данные переписывают руками, а каждая ошибка стоит денег</h2>
+  <div class="cols">
+    <div class="chain">
+      <p class="t">Контейнер из Китая во Владивосток: десять документов, каждый заполняет свой человек в своей программе.</p>
+      <div class="ex">Инвойс: <b>120</b> мест<br>Коносамент: <b>118</b> мест<br>→ узнают на таможне</div>
+      <div class="ex">1С: ООО Ромашка<br>CRM: Ромашка ООО<br>Терминал: Romashka<br>→ три записи вместо одной</div>
+      <p class="t">Итог: груз задержан, документ отклонён, платёж возвращён.</p>
+    </div>
+    <div class="why">
+      <div class="row"><div class="big">01.09.2026<small>с этой даты</small></div><p class="t">Перевозочные документы только электронные. Опечатка в ИНН значит остановку отгрузки. <span class="m s">источник</span></p></div>
+      <div class="row"><div class="big">01.03.2027<small>с этой даты</small></div><p class="t">Нельзя заключать договор с перевозчиком вне госреестра. <span class="m s">источник</span></p></div>
+      <div class="row"><div class="big">11 из 14<small>компаний базы</small></div><p class="t">У них выручка за 2025 год упала: от −7% до −53%. Лишних людей на ручную сверку нет. <span class="m s">источник: Чекко</span></p></div>
+    </div>
+  </div>
+  <div class="foot">Источники: idea/product/10-shpargalka.md, idea/skelet/audience/pains.md, companies.md.</div>
+</section>
+
+<!-- 3. Что за проект -->
+<section class="slide off s3">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">03 / 13</div></div>
+  <div class="kicker">1 · Что за проект</div>
+  <h2>Коммерческий проект для бизнеса: продаём подписку экспедиторам</h2>
+  <div class="grid">
+    <div class="card"><div class="tag">Тип</div><h3>Коммерческий, B2B</h3><p class="t">Продаём ПО по подписке. Первый рынок: Владивосток, морской импорт из Китая.</p></div>
+    <div class="card"><div class="tag">Платит</div><h3>Директор экспедитора</h3><p class="t">Компания на 20–200 человек. ИТ-отдела обычно нет, решает директор.</p></div>
+    <div class="card"><div class="tag">Пользуется</div><h3>Менеджер ВЭД, логист, главбух</h3><p class="t">Те, кто сегодня переписывает данные и ищет расхождения.</p></div>
+    <div class="card"><div class="tag">Что делает</div><h3>Карточка, сверка, обмены</h3><p class="t">Одна карточка груза, считывание PDF, сверка документов, связь 1С и других программ, помощник в чате.</p></div>
+  </div>
+  <div class="nope"><b>Не обещаем:</b> быструю доставку и снижение ставок. Убираем задержки, которые вызваны ошибками в документах.</div>
+</section>
+
+<!-- 4. Стейкхолдеры -->
+<section class="slide off s4">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">04 / 13</div></div>
+  <div class="kicker">2 · Стейкхолдеры</div>
+  <h2>У каждого свой критерий успеха</h2>
+  <table>
+    <thead><tr><th>Кто</th><th>Что для него успех</th></tr></thead>
+    <tbody>
+      <tr><td>Заказчик<small>директор экспедитора</small></td><td>Подписка окупается меньше чем за месяц: 80 ч × 500 ₽ = 40 000 ₽ выгоды против 27 110 ₽ <span class="m a">допущение</span></td></tr>
+      <tr><td>Пользователь<small>менеджер, логист</small></td><td>Проверить документ за минуту, а не за час ручного набора; видеть расхождение до отправки <span class="m a">допущение</span></td></tr>
+      <tr><td>Инвестор<small>внешних денег нет, 0 ₽</small></td><td>Проект сам покрывает инфраструктуру с первых платящих месяцев <span class="m a">допущение</span></td></tr>
+      <tr><td>Команда<small>Даниил Комаров, [TODO: состав]</small></td><td>Три пилота и первый кейс к 4-му месяцу; работа без зарплаты до выручки <span class="m a">допущение</span></td></tr>
+    </tbody>
+  </table>
+  <div class="conf">
+    <div><b>Конфликт 1</b>Заказчику нужно подешевле, нам нужна цена, которая окупает серверы.</div>
+    <div><b>Конфликт 2</b>Пользователи и программист 1С боятся замены. Отвечаем: работаем поверх 1С, не вместо.</div>
+  </div>
+</section>
+
+<!-- 5. Затраты -->
+<section class="slide off s5">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">05 / 13</div></div>
+  <div class="kicker">3 · Финансы: затраты</div>
+  <h2>Затраты только на инфраструктуру</h2>
+  <div class="money">
+    <div>
+      <table>
+        <thead><tr><th>Статья</th><th class="n">В год</th></tr></thead>
+        <tbody>
+          <tr><td>Серверы и языковые модели<br><span class="m a">допущение</span> 40 000 ₽ × 12 мес</td><td class="n">480 000 ₽</td></tr>
+          <tr><td>Разработка<br><span class="m a">допущение</span> команда без зарплат</td><td class="n">0 ₽</td></tr>
+          <tr class="sum"><td>Итого</td><td class="n">480 000 ₽</td></tr>
+        </tbody>
+      </table>
+      <p class="t note">Почему 40 000 ₽: ориентир из анкеты проекта, себестоимость серверов и моделей мы ещё не считали. Берём на весь год с запасом: в первые месяцы нагрузки почти нет.</p>
+    </div>
+    <div class="panel"><div class="big">480 000 ₽</div><h3>вся сумма, которую нужно вложить за год</h3><p class="t">Ключевое допущение: работа команды стоит 0 ₽. Если платить зарплату, добавится около 120 000 ₽ в месяц на человека. <span class="m a">допущение</span></p></div>
+  </div>
+</section>
+
+<!-- 6. Доход -->
+<section class="slide off s6">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">06 / 13</div></div>
+  <div class="kicker">3 · Финансы: доход</div>
+  <h2>Доход первого года: 1 751 559 ₽ от подписок и подключений</h2>
+  <div class="money">
+    <table>
+      <thead><tr><th>Период</th><th>Клиенты</th><th class="n">₽</th></tr></thead>
+      <tbody>
+        <tr><td>Месяцы 1–3</td><td>разработка, интервью</td><td class="n">0</td></tr>
+        <tr><td>Месяцы 4–6</td><td>3 пилота</td><td class="n">170 793</td></tr>
+        <tr><td>Месяцы 7–9</td><td>3 пилота + 3 клиента</td><td class="n">414 783</td></tr>
+        <tr><td>Месяцы 10–12</td><td>3 пилота + 7 клиентов</td><td class="n">740 103</td></tr>
+        <tr><td>Подключения разово</td><td>4 на клиента</td><td class="n">425 880</td></tr>
+        <tr class="sum"><td colspan="2">Итого за год</td><td class="n">1 751 559</td></tr>
+      </tbody>
+    </table>
+    <div class="panel"><div class="big" style="font-size:96px">27 110 ₽</div><h3>подписка клиента в месяц</h3><p class="t">Пилотам −30%: 18 977 ₽. Подключение системы 11 700 ₽ разово, пилотам 8 190 ₽.</p></div>
+  </div>
+  <div class="prices">
+    <div><b>6 120 ₽</b><span>платформа</span></div><div><b>8 990 ₽</b><span>распознавание</span></div><div><b>12 000 ₽</b><span>сверка</span></div><div><b>11 700 ₽</b><span>подключение, разово</span></div>
+  </div>
+  <div class="foot"><span class="m a">допущение</span> Все цены и число клиентов: клиентам цены не называли. Рынок × 0,9, где есть аналог; сверка по пользе, рынка нет. Расчёт: numbers.md.</div>
+</section>
+
+<!-- 7. Окупаемость -->
+<section class="slide off s7">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">07 / 13</div></div>
+  <div class="kicker">3 · Финансы: окупаемость</div>
+  <h2>Окупается с первого месяца продаж, в плюсе с 5-го месяца</h2>
+  <div class="row">
+    <div class="chart">
+      <!-- накопленный итог, тыс. ₽: -40 -80 -120 -4.8 12.1 29.1 267.7 366.0 464.3 858.2 1064.9 1271.6 ; масштаб 0.30 px на тыс. ₽, нулевая линия y=400 -->
+      <svg viewBox="0 0 1040 540" role="img" aria-label="Накопленный итог по месяцам">
+        <line x1="40" y1="400" x2="1020" y2="400" stroke="#082f53" stroke-width="2"/>
+        <g font-family="Fira Code" font-size="22" fill="#4d6a85" text-anchor="middle">
+          <text x="75" y="430">1</text><text x="154" y="430">2</text><text x="233" y="430">3</text><text x="312" y="430">4</text><text x="391" y="430">5</text><text x="470" y="430">6</text><text x="549" y="430">7</text><text x="628" y="430">8</text><text x="707" y="430">9</text><text x="786" y="430">10</text><text x="865" y="430">11</text><text x="944" y="430">12</text>
+        </g>
+        <g>
+          <rect x="55" y="400" width="40" height="12" fill="#ff9455"/>
+          <rect x="134" y="400" width="40" height="24" fill="#ff9455"/>
+          <rect x="213" y="400" width="40" height="36" fill="#ff9455"/>
+          <rect x="292" y="398.6" width="40" height="1.4" fill="#ff9455"/>
+          <rect x="371" y="396.4" width="40" height="3.6" fill="#00d4d0"/>
+          <rect x="450" y="391.3" width="40" height="8.7" fill="#00d4d0"/>
+          <rect x="529" y="319.7" width="40" height="80.3" fill="#00d4d0"/>
+          <rect x="608" y="290.2" width="40" height="109.8" fill="#00d4d0"/>
+          <rect x="687" y="260.7" width="40" height="139.3" fill="#00d4d0"/>
+          <rect x="766" y="142.5" width="40" height="257.5" fill="#00d4d0"/>
+          <rect x="845" y="80.5" width="40" height="319.5" fill="#00d4d0"/>
+          <rect x="924" y="18.5" width="40" height="381.5" fill="#00d4d0"/>
+        </g>
+        <g font-family="Fira Code" font-size="25" font-weight="600" fill="#082f53" text-anchor="middle">
+          <text x="75" y="396" fill="#c2571a">−40</text><text x="154" y="396" fill="#c2571a">−80</text><text x="233" y="396" fill="#c2571a">−120</text>
+          <text x="391" y="384">+12</text><text x="549" y="308">+268</text><text x="786" y="130">+858</text><text x="944" y="8">+1 272</text>
+        </g>
+        <text x="40" y="475" font-family="Onest" font-size="25" fill="#4d6a85">Накопленный итог по месяцам, тыс. ₽. Месяц 1 = ноябрь 2026.</text>
+        <text x="40" y="505" font-family="Onest" font-size="25" fill="#4d6a85">Оранжевое: в минусе. Бирюзовое: в плюсе. Допущения.</text>
+      </svg>
+    </div>
+    <div class="side">
+      <div class="formula">Окупаемость =<br>затраты ÷ доход в год<br><b>480 000 ÷ 1 751 559</b><br>= <b>0,27 года ≈ 3,3 мес</b></div>
+      <p class="t">4-й месяц: выручка 155 211 ₽ при затратах 40 000 ₽. Три пилота (3 × 18 977 = 56 931 ₽) уже покрывают серверы.</p>
+      <p class="t"><span class="m a">допущение</span> Расчёт целиком на допущениях, см. numbers.md.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Доход упал вдвое -->
+<section class="slide off s8">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">08 / 13</div></div>
+  <div class="kicker">3 · Финансы: если доход упадёт вдвое</div>
+  <h2>Вдвое меньше дохода: в плюсе. С юристом и продажами: в минусе</h2>
+  <table>
+    <thead><tr><th>Сценарий</th><th class="n">Доход</th><th class="n">Затраты</th><th class="n">Итог за год</th><th class="n">В плюс с</th></tr></thead>
+    <tbody>
+      <tr><td>Базовый, только инфраструктура</td><td class="n">1 751 559</td><td class="n">480 000</td><td class="n ok">+1 271 559</td><td class="n">5-го мес</td></tr>
+      <tr class="hl"><td>Доход ÷ 2, только инфраструктура</td><td class="n">875 780</td><td class="n">480 000</td><td class="n ok">+395 780</td><td class="n">8-го мес</td></tr>
+      <tr><td>Базовый, полный бюджет*</td><td class="n">1 751 559</td><td class="n">1 110 000</td><td class="n ok">+641 559</td><td class="n">10-го мес</td></tr>
+      <tr class="hl"><td>Доход ÷ 2, полный бюджет*</td><td class="n">875 780</td><td class="n">1 110 000</td><td class="n bad">−234 220</td><td class="n bad">не за год</td></tr>
+    </tbody>
+  </table>
+  <div class="warn"><b>Слабое место:</b> расчёт держится на двух допущениях: команда работает без зарплат, а продажи идут почти сами.</div>
+  <div class="foot"><span class="m a">допущение</span> Все четыре сценария. * Полный бюджет из анкеты проекта: инфраструктура 480 000 + продажи 360 000 + юрист 150 000 + бухгалтерия 120 000 = 1 110 000 ₽.</div>
+</section>
+
+<!-- 9. Выгоды кроме денег -->
+<section class="slide off s9">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">09 / 13</div></div>
+  <div class="kicker">4 · Выгоды кроме денег</div>
+  <h2>Пять выгод, и у каждой есть способ измерения</h2>
+  <table>
+    <thead><tr><th>Выгода</th><th>Для кого</th><th>Как измерить</th></tr></thead>
+    <tbody>
+      <tr><td>Репутация, кейс</td><td>команда</td><td>Число пилотов, разрешивших назвать компанию. Цель: 3</td></tr>
+      <tr><td>Лояльность клиентов экспедитора</td><td>экспедитор и его клиенты</td><td>Звонков «где мой контейнер» в день до и после пилота</td></tr>
+      <tr><td>Соответствие закону</td><td>экспедитор</td><td>Отклонённых электронных накладных в месяц до и после</td></tr>
+      <tr><td>Обучение команды</td><td>команда</td><td>Число рабочих подключений: 1С, операторы документов, помощник</td></tr>
+      <tr><td>Технологический задел</td><td>команда, будущие рынки</td><td>Число отраслей кроме логистики. Сейчас: 0</td></tr>
+    </tbody>
+  </table>
+  <div class="honest"><b>Честно:</b> проект прежде всего про деньги. Эти выгоды на решение не влияют.</div>
+</section>
+
+<!-- 10. Риски -->
+<section class="slide off s10">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">10 / 13</div></div>
+  <div class="kicker">5 · Риски</div>
+  <h2>Пять рисков и что с ними делаем</h2>
+  <table>
+    <thead><tr><th>Риск</th><th>Вероятность / влияние</th><th>Что делаем</th></tr></thead>
+    <tbody>
+      <tr><td>Рыночный<small>мало целей, выручка падает</small></td><td class="l"><span class="lvl mid">средняя</span> <span class="lvl hi">высокое</span></td><td>Малый пакет, который клиенту окупается за месяц; потом ж/д экспедиторы и крупные</td></tr>
+      <tr><td>Рыночный: конкурент<small>Контур делает сверку у себя</small></td><td class="l"><span class="lvl mid">средняя</span> <span class="lvl hi">высокое</span></td><td>Быстрый пилот на одной сверке; работаем поверх всех систем</td></tr>
+      <tr><td>Технический<small>нет API: Альта, ГосЛог, терминалы</small></td><td class="l"><span class="lvl hi">высокая</span> <span class="lvl mid">среднее</span></td><td>Старт с загрузки PDF и ручной отметки; письма поставщикам параллельно</td></tr>
+      <tr><td>Регуляторный<small>152-ФЗ, реестр российского ПО</small></td><td class="l"><span class="lvl mid">средняя</span> <span class="lvl hi">высокое</span></td><td>Юрист до первых документов; российский хостинг; крупным: свои серверы</td></tr>
+      <tr><td>Кадровый<small>маленькая команда без зарплат</small></td><td class="l"><span class="lvl hi">высокая</span> <span class="lvl hi">высокое</span></td><td>Малая инфраструктура; первую выручку направляем на найм</td></tr>
+    </tbody>
+  </table>
+  <div class="foot">Оценки вероятности и влияния — мои, не расчётные <span class="m a">допущение</span></div>
+</section>
+
+<!-- 11. Проверка до денег -->
+<section class="slide off s11">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">11 / 13</div></div>
+  <div class="kicker">6 · Что проверить до денег</div>
+  <h2>Три проверки, и у каждой есть условие остановки</h2>
+  <div class="three">
+    <div class="card"><div class="n">1 · РАБОТАЕТ ЛИ</div><h3>Сверка на живых документах</h3><p class="t">20–30 реальных комплектов, допуск ±0,5% по нетто. Ложных срабатываний быть не должно. <span class="m a">допущение</span></p><div class="stop"><b>Стоп:</b> ложные срабатывания → правим правила, клиентов не зовём.</div></div>
+    <div class="card"><div class="n">2 · КУПЯТ ЛИ</div><h3>Три пилота вместо рынка</h3><p class="t">Наш «1% пользователей»: 8–10 интервью, затем 3 пилота на 4 недели, −30%. Порог: 5 из 10 видят боль, 3 из 10 готовы платить. <span class="m a">допущение</span></p><div class="stop"><b>Стоп:</b> меньше 3 из 10 → меняем цену и состав.</div></div>
+    <div class="card"><div class="n">3 · ВЫДЕРЖИТ ЛИ</div><h3>Нагрузка ×10</h3><p class="t">Тариф: до 100 сделок в месяц. Прогоняем 1 000. Пока не проверено. <span class="m a">допущение</span></p><div class="stop"><b>Стоп:</b> не выдержит → сначала переделываем, потом зовём новых.</div></div>
+  </div>
+  <div class="rule"><b>Лучше потерять два месяца</b> на проверку, чем два года на то, что не нужно.</div>
+</section>
+
+<!-- 12. Главный метод -->
+<section class="slide navy s12">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">12 / 13</div></div>
+  <div class="kicker">7 · Главный метод</div>
+  <div class="big">Окупаемость</div>
+  <p class="lead">Проект коммерческий, поэтому решает один вопрос: когда вернутся вложенные деньги. У нас вложения это инфраструктура, а вернутся они с первого месяца продаж.</p>
+  <div class="rows">
+    <div><b>Второй метод</b>Сценарий «доход вдвое меньше». Показывает, где расчёт ломается.</div>
+    <div><b>Почему не остальные</b>Выгоды кроме денег не меняют решения. Доходность на три года без единого клиента считать нечем.</div>
+  </div>
+</section>
+
+<!-- 13. Решение -->
+<section class="slide off s13">
+  <div class="top"><div class="brand"><img src="../skelet/brand/logo-mark.svg" alt="">Astronaut</div><div class="num">13 / 13</div></div>
+  <div class="kicker">8 · Итоговое решение</div>
+  <div class="cols">
+    <div>
+      <div class="verdict">Запускать, малым шагом</div>
+      <ul>
+        <li><b>Затраты малы:</b> только инфраструктура, 480 000 ₽ в год.</li>
+        <li><b>Окупаемость быстрая:</b> с первого месяца продаж, в плюсе с 5-го.</li>
+        <li><b>Спрос создал закон:</b> электронные документы обязательны с 01.09.2026.</li>
+        <li><b>Проверка дешёвая:</b> два месяца, а не два года.</li>
+        <li><b>Но:</b> клиентов нет, расчёт на допущениях.</li>
+      </ul>
+    </div>
+    <div class="col2">
+      <div>
+        <h3>Что изменит решение</h3>
+        <ul class="chg">
+          <li>Меньше 3 из 10 готовы к пилоту: <b>переработать</b> цену и состав.</li>
+          <li>Контур выпустил сверку у себя: <b>переработать</b>, уйти в связь систем.</li>
+          <li>Юрист: без своего сервера нельзя: <b>отложить</b> «Старт».</li>
+          <li>Нужны зарплаты: <b>пересчитать</b>, по полному бюджету 7,6 мес.</li>
+        </ul>
+      </div>
+      <div class="next"><h3>Что дальше</h3><ol><li>8–10 интервью с экспедиторами</li><li>Письма поставщикам данных</li><li>Три пилота со скидкой 30%</li><li>Юрист по персональным данным</li></ol></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

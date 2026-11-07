@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Astronaut: раздатка</title>
+<!-- Раздатка к докладу: 1 страница A4. Цифры и метки: idea/course-talk/numbers.md. Сборка: bash idea/course-talk/build.sh -->
+<style>
+@font-face { font-family: "Onest"; src: url("../skelet/brand/design/fonts/Onest[wght].ttf") format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "Fira Code"; src: url("../skelet/brand/design/fonts/FiraCode[wght].ttf") format("truetype"); font-weight: 300 700; }
+:root { --navy:#082f53; --teal:#00d4d0; --orange:#ff9455; --off:#fbf5eb; --muted:#48678a; --line:#d6dde5; --tint:#e6fbfa; --accent:#057487; --warn:#c2571a; }
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Onest", sans-serif; color: var(--navy); font-size: 8.5pt; line-height: 1.36; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; height: 297mm; padding: 11mm 13mm 9mm; overflow: hidden; background: #fff; }
+header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--navy); padding-bottom: 3.5mm; }
+header img { height: 9mm; }
+header h1 { font-size: 17pt; font-weight: 800; letter-spacing: -.02em; margin-top: 2mm; }
+header .r { text-align: right; font-size: 8.5pt; color: var(--muted); }
+.one { margin-top: 3mm; font-size: 9.2pt; }
+.legend { margin-top: 2mm; font-size: 8.5pt; color: var(--muted); }
+.m { font-family: "Fira Code", monospace; font-size: 6.8pt; font-weight: 600; padding: .5mm 2.2mm; border-radius: 9px; white-space: nowrap; }
+.s { background: #bdf3f1; } .a { background: #ffdcc6; color: #8a3a0d; }
+h2 { font-size: 8pt; font-family: "Fira Code", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 4mm 0 1.4mm; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 7.4pt; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 0 2mm 1mm 0; border-bottom: 1.4px solid var(--navy); font-weight: 600; }
+td { padding: .8mm 2mm .8mm 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.n, th.n { text-align: right; font-family: "Fira Code", monospace; white-space: nowrap; padding-right: 0; }
+th.n { font-family: "Onest"; }
+tr.sum td { font-weight: 800; border-bottom: 1.4px solid var(--navy); }
+.bad { color: var(--warn); font-weight: 700; } .ok { color: var(--accent); font-weight: 700; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 7mm; }
+.box { background: var(--tint); border-radius: 3mm; padding: 2.4mm 3.4mm; margin-top: 1.6mm; }
+.box.o { background: #fff0e6; }
+ul { list-style: none; } li { padding-left: 3.4mm; position: relative; margin-top: .8mm; }
+li::before { content: ""; position: absolute; left: 0; top: 1.6mm; width: 1.5mm; height: 1.5mm; border-radius: 50%; background: var(--accent); }
+.verdict { margin-top: 1.6mm; background: var(--navy); color: #fff; border-radius: 3mm; padding: 3mm 4mm; }
+.verdict > b { color: var(--teal); font-size: 11pt; display: block; margin-bottom: 1mm; font-family: "Fira Code", monospace; }
+.verdict li b { color: var(--teal); }
+.verdict li::before { background: var(--teal); }
+footer { margin-top: 2.6mm; font-size: 7.6pt; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div><img src="../skelet/brand/logo-horizontal.svg" alt="Astronaut"><h1>Astronaut: порядок в данных логистической компании</h1></div>
+  <div class="r">Раздатка к докладу<br>Даниил Комаров · дисциплина [TODO]</div>
+</header>
+<p class="one"><b>Проблема:</b> данные о грузе переписывают вручную в десять документов и пять программ, на каждом шаге ошибка. <b>Проект:</b> коммерческий, B2B. <b>Платит:</b> директор экспедитора (20–200 человек, Владивосток). <b>Пользуются:</b> менеджер ВЭД, логист, главбух. Продаж и разговоров с клиентами пока нет.</p>
+<p class="legend">Каждая цифра: <span class="m s">источник</span> взято из документа или закона, <span class="m a">допущение</span> прикинуто нами.</p>
+
+<h2>Цифры</h2>
+<table>
+  <thead><tr><th>Показатель</th><th>Метка</th><th class="n">Значение</th></tr></thead>
+  <tbody>
+    <tr><td>Электронные перевозочные документы обязательны с</td><td><span class="m s">источник</span></td><td class="n">01.09.2026</td></tr>
+    <tr><td>Договор с перевозчиком вне госреестра нельзя с</td><td><span class="m s">источник</span></td><td class="n">01.03.2027</td></tr>
+    <tr><td>Компаний базы, у которых выручка 2025 упала (Чекко)</td><td><span class="m s">источник</span></td><td class="n">11 из 14</td></tr>
+    <tr><td>Подписка «Старт»: платформа 6 120 + распознавание 8 990 + сверка 12 000, в месяц; подключение 11 700 разово; пилотам −30%</td><td><span class="m a">допущение</span></td><td class="n">27 110 ₽</td></tr>
+    <tr><td>Затраты: серверы и языковые модели 40 000 ₽ × 12; разработка 0 ₽</td><td><span class="m a">допущение</span></td><td class="n">480 000 ₽</td></tr>
+    <tr><td>Доход за первый год: 3 пилота с 4-го мес., +3 клиента с 7-го, +4 с 10-го, подключения</td><td><span class="m a">допущение</span></td><td class="n">1 751 559 ₽</td></tr>
+    <tr class="sum"><td>Окупаемость = затраты ÷ доход в год = 480 000 ÷ 1 751 559</td><td><span class="m a">допущение</span></td><td class="n">0,27 года ≈ 3,3 мес</td></tr>
+    <tr><td>В плюс по накопленному итогу (с учётом трёх месяцев затрат до выручки)</td><td><span class="m a">допущение</span></td><td class="n">5-й месяц</td></tr>
+    <tr><td>Если доход вдвое меньше: доход 875 780 ₽, итог +395 780 ₽, в плюс с 8-го мес.</td><td><span class="m a">допущение</span></td><td class="n">≈ 6,6 мес</td></tr>
+    <tr><td>Полный бюджет анкеты проекта (+продажи 360 000, юрист 150 000, бухгалтерия 120 000)</td><td><span class="m a">допущение</span></td><td class="n">1 110 000 ₽</td></tr>
+    <tr><td>Полный бюджет: итог за год при базовом доходе / при доходе вдвое меньше</td><td><span class="m a">допущение</span></td><td class="n"><span class="ok">+641 559</span> / <span class="bad">−234 220</span></td></tr>
+  </tbody>
+</table>
+
+<div class="two">
+<div>
+<h2>Главные допущения и почему</h2>
+<ul>
+  <li><b>Работа команды 0 ₽.</b> Вклад собственными силами. Зарплата добавит около 120 000 ₽ в месяц на человека.</li>
+  <li><b>Инфраструктура 40 000 ₽ в месяц.</b> Ориентир из анкеты проекта; себестоимость не считали, берём на весь год с запасом.</li>
+  <li><b>Цены.</b> Где есть рыночный аналог, на 10% ниже; сверка по пользе, рынка нет. Клиентам цены не называли.</li>
+  <li><b>Клиентов 3, 6, 10.</b> Осторожный темп для региона, подтверждений нет.</li>
+  <li><b>Выгода заказчика:</b> 80 ч в месяц × 500 ₽ = 40 000 ₽ против подписки 27 110 ₽ (окупается за 0,68 мес).</li>
+</ul>
+<h2>Стейкхолдеры: критерий успеха</h2>
+<ul>
+  <li><b>Заказчик:</b> подписка окупается меньше чем за месяц.</li>
+  <li><b>Пользователь:</b> проверка документа за минуту, расхождение видно до отправки.</li>
+  <li><b>Инвестор:</b> внешних денег нет; проект сам покрывает инфраструктуру.</li>
+  <li><b>Команда:</b> три пилота и кейс к 4-му месяцу.</li>
+</ul>
+</div>
+<div>
+<h2>Риски: вероятность / влияние / ответ</h2>
+<ul>
+  <li><b>Рынок:</b> средняя / высокое. Малый пакет; потом ж/д и крупные.</li>
+  <li><b>Конкурент (Контур):</b> средняя / высокое. Быстрый пилот; поверх всех систем.</li>
+  <li><b>Нет API:</b> высокая / среднее. Старт с PDF и ручной отметки.</li>
+  <li><b>152-ФЗ, реестр ПО:</b> средняя / высокое. Юрист заранее; российский хостинг.</li>
+  <li><b>Команда без зарплат:</b> высокая / высокое. Малая инфраструктура; выручка на найм.</li>
+</ul>
+<h2>Проверка до денег</h2>
+<ul>
+  <li><b>Работает ли:</b> сверка на 20–30 реальных комплектах, допуск ±0,5% нетто.</li>
+  <li><b>Купят ли:</b> 8–10 интервью, затем 3 пилота. Порог: 5 из 10 видят боль, 3 из 10 готовы платить.</li>
+  <li><b>Выдержит ли:</b> нагрузка ×10, 1 000 сделок в месяц.</li>
+  <li><b>Стоп:</b> не подтвердилось — меняем цену и состав, новых не зовём.</li>
+</ul>
+</div>
+</div>
+
+<div class="verdict"><b>Решение: запускать, малым шагом</b>
+<ul>
+  <li><b>Главный метод:</b> окупаемость; второй — сценарий «доход вдвое меньше».</li>
+  <li><b>Почему:</b> затраты только инфраструктура, окупаемость с первого месяца продаж, закон создал спрос, проверка стоит два месяца. Но клиентов нет, расчёт на допущениях.</li>
+  <li><b>Изменит решение:</b> меньше 3 из 10 готовы к пилоту (переработать); Контур выпустил сверку (переработать); юрист требует свой сервер (отложить «Старт»); платить зарплаты (пересчитать).</li>
+  <li><b>Дальше:</b> интервью, письма поставщикам данных, три пилота со скидкой 30%, юрист по персональным данным.</li>
+</ul></div>
+<footer>Расчёты и источники каждой цифры: idea/course-talk/numbers.md</footer>
+</div>
+</body>
+</html>
