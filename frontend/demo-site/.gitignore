@@ -5,3 +5,4 @@
 /e2e-report/
 /.task/
 /node_modules/
+/.playwright-mcp/
