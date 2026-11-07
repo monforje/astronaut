@@ -1,0 +1,8 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-check[data-force="hover"]:not(:checked, :indeterminate, :disabled, [aria-invalid="true"]) {
+  border-color: var(--text);
+}
+.ds-check[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}

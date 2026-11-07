@@ -1,0 +1,77 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-thread__msg[data-force="hover"] {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__msg[data-cont][data-force="hover"] .ds-thread__hs {
+  opacity: 1;
+}
+.ds-thread__msg[data-force="hover"] .ds-thread__acts {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ds-thread__quote[data-force="hover"] {
+  background-color: color-mix(in srgb, var(--surface-muted), var(--ink) 9%);
+}
+.ds-thread__quote[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__rx[data-force="hover"]:not([aria-pressed="true"]) {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__rx[data-force="active"]:not([aria-pressed="true"]) {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 7%);
+}
+.ds-thread__rx[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__file[data-force="hover"] {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__file[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__ib[data-force="hover"]:not(:disabled) {
+  color: var(--text);
+}
+.ds-thread__ib[data-force="hover"]:not(:disabled, [aria-expanded="true"]) {
+  background: var(--layer-2);
+}
+.ds-thread__ib[data-force="active"]:not(:disabled, [aria-expanded="true"]) {
+  background: var(--layer-3);
+}
+.ds-thread__ib[data-force="focus"] {
+  outline: 2px solid var(--focus);
+}
+.ds-thread__item[data-force="hover"] {
+  background: var(--layer-2);
+}
+.ds-thread__box[data-force="hover"]:not(:focus-within, [data-invalid], [data-disabled]) {
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-thread__box[data-force="focus"]:not([data-invalid], [data-disabled]) {
+  box-shadow:
+    inset 0 0 0 1px var(--focus),
+    0 0 0 3px var(--selected);
+}
+.ds-thread__send[data-force="hover"]:not(:disabled) {
+  background: color-mix(in srgb, var(--primary), var(--navy) 12%);
+}
+.ds-thread__send[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-thread__toast .ds-thread__undo[data-force="hover"] {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__toast .ds-thread__undo[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.ds-thread__anat .ds-thread__msg[data-id="4"] .ds-thread__body > span {
+  padding-right: 8px;
+  margin-right: -8px;
+}

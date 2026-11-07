@@ -1,0 +1,23 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-progress-btn[data-force="hover"]:not([aria-busy="true"], [data-status="done"]) {
+  background: var(--layer-2);
+}
+.ds-progress-btn[data-force="active"]:not([aria-busy="true"], [data-status="done"]) {
+  background: var(--layer-3);
+}
+.ds-progress-btn[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-progress-file .ds-progress {
+  display: contents;
+}
+
+.ds-progress__anat .ds-progress__label {
+  padding-left: 8px;
+  margin-left: -8px;
+}
+.ds-progress__anat .ds-progress__value {
+  padding-top: 6px;
+  margin-top: -6px;
+}

@@ -1,0 +1,43 @@
+version: '3.53.1'
+
+env:
+  OGEN_VERSION: v1.24.0
+  OGEN_IMAGE: downtimesu/ogen:v1.24.0
+  OGEN_GO_IMAGE: golang:1.27.0-alpine3.23
+
+tasks:
+  ogen:
+    desc: "Выполняет команду ogen в контейнере в корне проекта"
+    cmds:
+      - task: ogen-run
+        vars:
+          RUN_COMMAND: 'ogen {{.OGEN_COMMAND | default .CLI_ARGS}}'
+
+  ogen-build:
+    internal: true
+    run: once
+    status:
+      - docker image inspect "$OGEN_IMAGE" >/dev/null 2>&1
+    cmds:
+      - |
+        docker build -t "$OGEN_IMAGE" \
+          --build-arg GO_IMAGE="$OGEN_GO_IMAGE" \
+          --build-arg OGEN_VERSION="$OGEN_VERSION" \
+          "{{.TASKFILE_DIR}}"
+
+  # RUN_COMMAND выполняется через sh -c в корне проекта, общий ogen.yml — /opt/ogen/ogen.yml.
+  ogen-run:
+    internal: true
+    dir: '{{.ROOT_DIR}}'
+    deps: [ogen-build]
+    requires:
+      vars: [RUN_COMMAND]
+    cmds:
+      - |
+        docker run --rm $([ -t 0 ] && echo -it) \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":/app -w /app \
+          -v "{{.TASKFILE_DIR}}":/opt/ogen:ro \
+          -e HOME=/tmp -e GOCACHE=/tmp/go-build \
+          "$OGEN_IMAGE" \
+          sh -c '{{.RUN_COMMAND}}'

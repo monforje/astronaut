@@ -1,0 +1,63 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-toast-stage {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--r-card);
+  background: color-mix(in srgb, var(--surface-muted) 70%, var(--page));
+  box-shadow: inset 0 0 0 1px var(--divider);
+  overflow: hidden;
+}
+.ds-toast-stage .ds-toaster {
+  position: absolute;
+  width: min(360px, calc(100% - 32px));
+  --ds-toast-gutter: 16px;
+}
+.ds-toast-stage--anat {
+  height: 150px;
+}
+.ds-toast-stage .ds-toaster[data-pos^="b"] {
+  bottom: 16px;
+}
+.ds-toast-stage .ds-toaster[data-pos^="t"] {
+  top: 16px;
+}
+.ds-toast-stage .ds-toaster[data-pos$="r"] {
+  right: 16px;
+}
+.ds-toast-stage .ds-toaster[data-pos$="l"] {
+  left: 16px;
+}
+.ds-toast-stage--sm {
+  height: 240px;
+}
+.ds-toast-stage__bar {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  z-index: 1;
+}
+
+.ds-toast[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.ds-toast-example {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+.ds-toast-example__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.ds-toast-example__status {
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}

@@ -1,0 +1,12 @@
+version: "2"
+run:
+  tests: false
+  relative-path-mode: wd
+linters:
+  default: none
+  enable:
+    - gosec
+  exclusions:
+    paths:
+      - tests/
+      - vendor/

@@ -1,0 +1,127 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-badge {
+  --ds-badge-c: var(--text-3);
+  --ds-badge-ct: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--ds-badge-c) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ds-badge-c) 28%, transparent);
+  color: color-mix(in srgb, var(--ds-badge-ct, var(--ds-badge-c)) 75%, var(--text));
+  transition:
+    background var(--dur-f),
+    color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ds-badge-c);
+  transition: background var(--dur-f);
+}
+.ds-badge__icon {
+  flex: none;
+  display: inline-flex;
+}
+.ds-badge__icon > svg {
+  width: 12px;
+  height: 12px;
+}
+.ds-badge--ok {
+  --ds-badge-c: var(--teal);
+  --ds-badge-ct: var(--ok-text);
+}
+.ds-badge--warn {
+  --ds-badge-c: var(--orange);
+  --ds-badge-ct: var(--warn-text);
+}
+.ds-badge--err {
+  --ds-badge-c: var(--danger);
+  --ds-badge-ct: var(--err-text);
+}
+.ds-badge--info {
+  --ds-badge-c: var(--info);
+  --ds-badge-ct: var(--info-text);
+}
+.ds-badge--idle {
+  --ds-badge-c: var(--text-3);
+  --ds-badge-ct: var(--text-2);
+}
+.ds-badge--sm {
+  height: 16px;
+  padding: 0 6px;
+  font-size: var(--fs-info);
+}
+.ds-badge--tag {
+  border-radius: var(--r-control);
+  font-size: var(--fs-info);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.ds-badge--solid {
+  background: var(--ds-badge-c);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.ds-badge--solid.ds-badge--err {
+  color: var(--on-danger);
+}
+.ds-badge--solid.ds-badge--info {
+  color: var(--on-danger);
+}
+.ds-badge--solid.ds-badge--idle {
+  color: var(--surface);
+}
+.ds-badge--counter {
+  position: relative;
+  isolation: isolate;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--danger);
+  color: var(--on-danger);
+  box-shadow: 0 0 0 2px var(--surface);
+  font-size: 10px;
+  font-weight: 700;
+}
+.ds-badge--pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--danger);
+  animation: ds-badge-ping calc(2.4s * var(--slow, 1)) ease-out infinite;
+}
+@keyframes ds-badge-ping {
+  0% {
+    scale: 1;
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    scale: 2.1;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-badge {
+    transition: none;
+  }
+  .ds-badge__dot {
+    transition: none;
+  }
+  .ds-badge--pulse::after {
+    animation: none;
+  }
+}

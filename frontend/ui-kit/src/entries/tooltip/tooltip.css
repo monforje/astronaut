@@ -1,0 +1,69 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-tooltip-anchor {
+  display: inline-flex;
+}
+.ds-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(36ch, calc(100vw - 16px));
+  padding: 6px 10px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  line-height: 1.35;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.ds-tooltip__kbd {
+  font-weight: 400;
+  font-size: var(--fs-info);
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.ds-tooltip--wrap {
+  white-space: normal;
+  width: max-content;
+}
+.ds-tooltip[data-side] {
+  animation: ds-tooltip-pop var(--dur-f) var(--ease);
+}
+.ds-tooltip[data-side="top"],
+.ds-tooltip[data-side="bottom"] {
+  --ds-tooltip-from: 0 -4px;
+}
+.ds-tooltip[data-side="right"] {
+  --ds-tooltip-from: -4px 0;
+}
+.ds-tooltip[data-side="left"] {
+  --ds-tooltip-from: 4px 0;
+}
+@keyframes ds-tooltip-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: var(--ds-tooltip-from);
+  }
+}
+.ds-tooltip--static {
+  display: inline-flex;
+}
+.ds-tooltip-anchor__why {
+  display: inline-flex;
+  border-radius: var(--r-item);
+}
+.ds-tooltip-anchor__why:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-tooltip[data-side] {
+    animation: none;
+  }
+}

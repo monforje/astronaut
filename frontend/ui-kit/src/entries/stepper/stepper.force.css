@@ -1,0 +1,76 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-stp__li[data-force="hover"] button.ds-stp__i:not(:disabled) .ds-stp__n {
+  box-shadow: inset 0 0 0 1.5px var(--text-3);
+}
+.ds-stp__li[data-status="done"][data-force="hover"] button.ds-stp__i .ds-stp__n {
+  background: color-mix(in oklch, var(--primary), #000 9%);
+  box-shadow: none;
+}
+.ds-stp__li[data-force="active"] button.ds-stp__i:not(:disabled) .ds-stp__n {
+  scale: 0.94;
+}
+.ds-stp__li[data-force="focus"] button.ds-stp__i {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: var(--r-item);
+}
+.ds-stp-wz {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  min-width: 0;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.ds-stp-wz__body {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 118px;
+}
+.ds-stp-wz__body > b {
+  font-size: var(--fs-qty);
+}
+.ds-stp-wz__opts {
+  display: grid;
+  gap: 8px;
+}
+.ds-stp-wz__opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--r-item);
+  box-shadow: inset 0 0 0 1px var(--border);
+  cursor: pointer;
+}
+.ds-stp-wz__opt:has(:checked) {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-stp-wz__opt small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-stp-wz__form {
+  display: grid;
+  gap: 10px;
+}
+.ds-stp-wz__ok {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--r-item);
+  background: color-mix(in srgb, var(--teal) 14%, var(--surface));
+  color: var(--text);
+}
+.ds-stp-wz__foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+}

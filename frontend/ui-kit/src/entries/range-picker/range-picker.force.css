@@ -1,0 +1,49 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-rangepicker__trigger[data-force="hover"]:not(
+    :disabled,
+    [aria-expanded="true"],
+    [data-invalid]
+  ) {
+  border-color: var(--text-3);
+}
+.ds-rangepicker__trigger[data-force="focus"]:not([data-invalid], :disabled) {
+  border-color: var(--focus);
+}
+.ds-rangepicker__trigger[data-force="focus"] {
+  box-shadow: 0 0 0 3px var(--selected);
+  outline: 0;
+}
+.ds-rangepicker__preset[data-force="hover"]:not([aria-pressed="true"]) {
+  background: var(--layer-2);
+}
+.ds-rangepicker__preset[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.ds-rangepicker__stage {
+  display: grid;
+  align-items: start;
+  justify-items: start;
+  min-height: 440px;
+  width: 100%;
+}
+.ds-rangepicker__anat {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  width: 448px;
+  zoom: 0.8;
+}
+.ds-rangepicker__fld {
+  width: 280px;
+}
+@media (max-width: 520px) {
+  .ds-rangepicker__anat {
+    zoom: 0.62;
+  }
+}
+
+.ds-rangepicker__example {
+  width: min(100%, 320px);
+}

@@ -1,0 +1,851 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-thread {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  height: var(--ds-thread-h, 460px);
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text);
+  font-size: var(--fs-body);
+  overflow: hidden;
+}
+.ds-thread--bare {
+  height: auto;
+  box-shadow: none;
+  background: none;
+  overflow: visible;
+}
+.ds-thread__scroll {
+  flex: 1;
+  min-height: 0;
+  padding: 4px 16px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.ds-thread__day {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 8px;
+  color: var(--text-3);
+  font-size: var(--fs-info);
+  font-weight: 600;
+}
+.ds-thread__day::before,
+.ds-thread__day::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--divider);
+}
+.ds-thread--bare .ds-thread__day {
+  margin-bottom: 18px;
+}
+.ds-thread__sys {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+  text-align: center;
+}
+.ds-thread__sys b {
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.ds-thread__msg {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  padding: 6px 8px;
+  margin: 0 -8px;
+  border-radius: var(--r-card);
+  transition:
+    background var(--dur-f),
+    opacity var(--dur);
+}
+.ds-thread__msg:hover,
+.ds-thread__msg:has(.ds-thread__acts [aria-expanded="true"]) {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__msg[data-cont] {
+  padding-top: 0;
+  padding-bottom: 2px;
+}
+.ds-thread__msg[data-cont] .ds-thread__head {
+  display: none;
+}
+.ds-thread__msg[data-cont] .ds-thread__ava {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+.ds-thread__hs {
+  display: none;
+}
+.ds-thread__msg[data-cont] .ds-thread__hs {
+  display: block;
+  position: absolute;
+  left: 8px;
+  top: 3px;
+  width: 32px;
+  text-align: center;
+  opacity: 0;
+  font-size: 10px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+.ds-thread__msg[data-cont]:hover .ds-thread__hs {
+  opacity: 1;
+}
+.ds-thread__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.ds-thread__head b {
+  font-weight: 700;
+}
+.ds-thread__head small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+  font-variant-numeric: tabular-nums;
+}
+.ds-thread__me {
+  color: var(--link-strong);
+  font-size: 10px;
+  font-weight: 700;
+}
+.ds-thread__body {
+  font-size: 13.5px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.ds-thread__body em {
+  margin-left: 4px;
+  color: var(--text-3);
+  font-style: normal;
+  font-size: 11px;
+}
+.ds-thread__mn {
+  padding: 0 3px;
+  border-radius: 4px;
+  background: var(--selected);
+  color: var(--link-strong);
+  font-weight: 600;
+}
+.ds-thread__msg[data-flash] {
+  animation: ds-thread-flash calc(1.4s * var(--slow, 1)) ease;
+}
+@keyframes ds-thread-flash {
+  0%,
+  60% {
+    background: color-mix(in srgb, var(--teal) 22%, transparent);
+  }
+}
+.ds-thread__msg[data-enter] {
+  animation: ds-thread-in var(--dur) var(--ease);
+}
+@keyframes ds-thread-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+.ds-thread__msg[data-leave] {
+  animation: ds-thread-out var(--dur) var(--ease) forwards;
+}
+@keyframes ds-thread-out {
+  to {
+    opacity: 0;
+    scale: 0.98;
+  }
+}
+
+.ds-thread__msg[data-status="sending"] .ds-thread__body {
+  opacity: 0.6;
+}
+.ds-thread__state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-thread__msg[data-status="failed"] .ds-thread__state {
+  color: var(--err-text);
+}
+.ds-thread__msg[data-status="failed"] .ds-thread__body {
+  color: var(--text-2);
+}
+.ds-thread__link {
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: var(--link-strong);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.ds-thread__link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-thread__spin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-top-color: currentColor;
+  animation: ds-thread-spin calc(0.8s * var(--slow, 1)) linear infinite;
+}
+@keyframes ds-thread-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.ds-thread__quote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 4px;
+  padding: 2px 10px 2px 6px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: var(--surface-muted);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--fs-control);
+  line-height: 1.4;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__quote:hover {
+  background-color: color-mix(in srgb, var(--surface-muted), var(--ink) 9%);
+}
+.ds-thread__quote:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__quote svg {
+  flex: none;
+  color: var(--text-3);
+}
+.ds-thread__quote b {
+  flex: none;
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-thread__quote span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ds-thread__rxs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 6px;
+}
+.ds-thread__rx {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-control);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__rx:hover {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__rx:active {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 7%);
+}
+.ds-thread__rx:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__rx[aria-pressed="true"] {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+  color: var(--link-strong);
+}
+.ds-thread__rx--add {
+  width: 22px;
+  padding: 0;
+  justify-content: center;
+  color: var(--text-3);
+}
+
+.ds-thread__file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 340px;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__file:hover {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__file:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-thread__fi {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-item);
+  background: color-mix(in srgb, var(--danger) 9%, var(--surface));
+  color: var(--err-text);
+  font-size: 10px;
+  font-weight: 800;
+}
+.ds-thread__ft {
+  display: grid;
+  min-width: 0;
+}
+.ds-thread__ft b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ds-thread__ft small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+
+.ds-thread__acts {
+  position: absolute;
+  right: 8px;
+  top: -14px;
+  z-index: 2;
+  display: flex;
+  gap: 1px;
+  padding: 2px;
+  border-radius: var(--r-item);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-f);
+}
+.ds-thread__msg:hover .ds-thread__acts,
+.ds-thread__msg:focus-within .ds-thread__acts,
+.ds-thread__msg:has(.ds-thread__acts [aria-expanded="true"]) .ds-thread__acts {
+  opacity: 1;
+  pointer-events: auto;
+}
+.ds-thread__ib {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__ib:hover {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-thread__ib:active {
+  background: var(--layer-3);
+}
+.ds-thread__ib:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-thread__ib:disabled {
+  color: var(--text-ph);
+  cursor: default;
+  background: none;
+}
+.ds-thread__ib[aria-expanded="true"] {
+  background: var(--layer-3);
+}
+
+.ds-thread__menu {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  gap: 2px;
+  min-width: 220px;
+  padding: 6px;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  animation: ds-thread-pop var(--dur-f) var(--ease);
+}
+.ds-thread__menu[data-inline="top"] {
+  bottom: calc(100% + 6px);
+  left: 0;
+}
+.ds-thread__menu[data-inline="msg"] {
+  right: 8px;
+  top: 14px;
+}
+@keyframes ds-thread-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 4px;
+  }
+}
+.ds-thread__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--h-sm);
+  padding: 1px 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__item:hover,
+.ds-thread__item[aria-selected="true"] {
+  background: var(--layer-2);
+}
+.ds-thread__item:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-thread__item--danger {
+  color: var(--err-text);
+}
+.ds-thread__item small {
+  display: block;
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-thread__item > span {
+  display: grid;
+}
+.ds-thread__emojis {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+}
+.ds-thread__emojis .ds-thread__ib {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.ds-thread__typing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 16px 0 58px;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-thread__dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.ds-thread__dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+  animation: ds-thread-dot calc(1.2s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-thread__dots i:nth-child(2) {
+  animation-delay: calc(0.15s * var(--slow, 1));
+}
+.ds-thread__dots i:nth-child(3) {
+  animation-delay: calc(0.3s * var(--slow, 1));
+}
+@keyframes ds-thread-dot {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+    opacity: 0.4;
+  }
+  30% {
+    translate: 0 -3px;
+    opacity: 1;
+  }
+}
+
+.ds-thread__comp {
+  position: relative;
+  flex: none;
+  padding: 6px 16px 14px;
+}
+.ds-thread__box {
+  border-radius: var(--r-popover);
+  background: var(--field);
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition: box-shadow var(--dur-f);
+}
+.ds-thread__box:hover:not([data-disabled]) {
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-thread__box:focus-within {
+  box-shadow:
+    inset 0 0 0 1px var(--focus),
+    0 0 0 3px var(--selected);
+}
+.ds-thread__box[data-invalid] {
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+.ds-thread__box[data-disabled] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text-ph);
+}
+.ds-thread__preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 12px;
+  border-bottom: 1px solid var(--divider);
+  color: var(--text-2);
+  font-size: var(--fs-control);
+  animation: ds-thread-prev var(--dur-f) var(--ease);
+}
+@keyframes ds-thread-prev {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+.ds-thread__preview > svg {
+  flex: none;
+  color: var(--link);
+}
+.ds-thread__prevtx {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-thread__prevtx b {
+  margin-right: 6px;
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-thread__prevtx em {
+  color: var(--text-3);
+  font-style: normal;
+}
+.ds-thread__input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  max-height: 140px;
+  padding: 10px 12px 2px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.5;
+  resize: none;
+}
+.ds-thread__input::placeholder {
+  color: var(--text-ph);
+}
+.ds-thread__bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px 6px;
+}
+.ds-thread__hint {
+  margin: 0 8px 0 auto;
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-thread__send {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--h-sm);
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: var(--primary);
+  color: var(--on-primary);
+  font: inherit;
+  font-size: var(--fs-control);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-thread__send:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary), var(--navy) 12%);
+}
+.ds-thread__send:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-thread__send:disabled {
+  background: var(--surface-muted);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-thread__err {
+  margin-top: 6px;
+  color: var(--err-text);
+  font-size: var(--fs-control);
+}
+
+.ds-thread__think {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  color: var(--text-2);
+  font-size: var(--fs-control);
+  font-weight: 600;
+}
+.ds-thread__think svg {
+  color: var(--link);
+}
+.ds-thread__shim {
+  color: var(--text-3);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  animation: ds-thread-shim calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-thread-shim {
+  50% {
+    opacity: 0.4;
+  }
+}
+.ds-thread__cur::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  margin-left: 2px;
+  background: var(--text);
+  vertical-align: -2px;
+  animation: ds-thread-blink calc(1s * var(--slow, 1)) steps(2) infinite;
+}
+@keyframes ds-thread-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.ds-thread__agact {
+  display: flex;
+  gap: 2px;
+  margin-top: 4px;
+  animation: ds-thread-in var(--dur) var(--ease);
+}
+.ds-thread__ib[data-on] {
+  color: var(--link-strong);
+}
+.ds-thread__tag {
+  padding: 0 6px;
+  border-radius: var(--r-control);
+  background: var(--selected);
+  color: var(--link-strong);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.ds-thread__center {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  height: 100%;
+  min-height: 160px;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-thread__center b {
+  color: var(--text);
+  font-size: var(--fs-body);
+}
+.ds-thread__skel {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+.ds-thread__skel i {
+  display: block;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background: var(--surface-muted);
+  animation: ds-thread-shim calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-thread__skel span {
+  display: grid;
+  gap: 6px;
+  align-content: center;
+}
+.ds-thread__skel u {
+  display: block;
+  height: 10px;
+  border-radius: var(--r-control);
+  background: var(--surface-muted);
+  animation: ds-thread-shim calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-thread__banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: var(--r-item);
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 30%, var(--surface));
+  color: var(--err-text);
+  font-size: var(--fs-control);
+}
+
+.ds-thread__toast {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 16px;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  animation: ds-thread-toast calc(0.3s * var(--slow, 1)) var(--ease);
+}
+.ds-thread__toast b {
+  flex: 1;
+  font-weight: 600;
+}
+.ds-thread__toast .ds-thread__undo {
+  height: var(--h-sm);
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-control);
+  font-weight: 600;
+  cursor: pointer;
+}
+.ds-thread__toast .ds-thread__undo:hover {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-thread__toast .ds-thread__undo:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+@keyframes ds-thread-toast {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-thread__msg,
+  .ds-thread__quote,
+  .ds-thread__rx,
+  .ds-thread__file,
+  .ds-thread__ib,
+  .ds-thread__item,
+  .ds-thread__box,
+  .ds-thread__send,
+  .ds-thread__acts {
+    transition: none;
+  }
+  .ds-thread__msg[data-flash],
+  .ds-thread__msg[data-enter],
+  .ds-thread__msg[data-leave],
+  .ds-thread__menu,
+  .ds-thread__preview,
+  .ds-thread__agact,
+  .ds-thread__toast {
+    animation: none;
+  }
+  .ds-thread__msg[data-leave] {
+    opacity: 0;
+  }
+  .ds-thread__dots i,
+  .ds-thread__shim,
+  .ds-thread__spin,
+  .ds-thread__skel i,
+  .ds-thread__skel u {
+    animation-duration: 3s;
+  }
+  .ds-thread__cur::after {
+    animation: none;
+  }
+}

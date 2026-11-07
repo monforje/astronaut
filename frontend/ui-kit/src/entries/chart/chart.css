@@ -1,0 +1,376 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-chart__line {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+.ds-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ds-chart__axis {
+  fill: var(--text-3);
+  font-size: 11px;
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart__grid {
+  stroke: var(--divider);
+  stroke-width: 1;
+}
+.ds-chart__area {
+  fill: var(--ds-chart-c);
+  opacity: 0.13;
+}
+.ds-chart__path {
+  fill: none;
+  stroke: var(--ds-chart-c);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.ds-chart__cross {
+  stroke: var(--text-3);
+  stroke-dasharray: 3 3;
+}
+.ds-chart__dot {
+  fill: var(--surface);
+  stroke: var(--ds-chart-c);
+  stroke-width: 2.5;
+}
+.ds-chart__hit {
+  outline: none;
+}
+.ds-chart__hit:focus-visible rect {
+  stroke: var(--focus);
+  stroke-width: 2;
+}
+.ds-chart__note {
+  position: absolute;
+  inset: 0 0 56px;
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  font-weight: 600;
+  pointer-events: none;
+}
+.ds-chart__note span {
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+}
+.ds-chart__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ds-chart__tip {
+  position: absolute;
+  z-index: 3;
+  min-width: 130px;
+  padding: 8px 10px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  font-size: var(--fs-control);
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity calc(0.1s * var(--slow, 1));
+}
+.ds-chart__tip[data-on] {
+  opacity: 1;
+}
+.ds-chart__tip b {
+  display: block;
+  margin-bottom: 4px;
+}
+.ds-chart__tip div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ds-chart__tip i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex: none;
+}
+.ds-chart__tip span {
+  margin-left: auto;
+  padding-left: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.ds-chart__legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-chart__legend button:hover {
+  background: var(--layer-2);
+}
+.ds-chart__legend button:active {
+  background: var(--layer-3);
+}
+.ds-chart__legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.ds-chart__legend button[aria-pressed="false"] {
+  color: var(--text-3);
+}
+.ds-chart__legend button[aria-pressed="false"] i {
+  background: var(--tone) !important;
+}
+
+.ds-chart__line[data-appear] .ds-chart__path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ds-chart-draw calc(0.9s * var(--slow, 1)) var(--ease) forwards;
+}
+.ds-chart__line[data-appear] .ds-chart__area {
+  animation: ds-chart-fade calc(0.5s * var(--slow, 1)) ease calc(0.4s * var(--slow, 1)) both;
+}
+@keyframes ds-chart-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ds-chart-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.ds-chart__donut-wrap {
+  display: grid;
+  gap: 16px;
+  justify-items: stretch;
+  width: 100%;
+  max-width: 280px;
+  min-width: 0;
+}
+.ds-chart__donut {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.ds-chart__track {
+  stroke: var(--tone);
+}
+.ds-chart__seg {
+  stroke-dasharray: var(--ds-chart-len) var(--ds-chart-gap);
+  cursor: pointer;
+  transition:
+    stroke-width calc(0.15s * var(--slow, 1)),
+    opacity calc(0.15s * var(--slow, 1));
+}
+.ds-chart__donut[data-hv] .ds-chart__seg {
+  opacity: 0.35;
+}
+.ds-chart__donut[data-hv] .ds-chart__seg[data-hl] {
+  opacity: 1;
+}
+.ds-chart__mid {
+  position: absolute;
+  width: 92px;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+}
+.ds-chart__mid b {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart__mid span {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-info);
+  line-height: 1.2;
+  color: var(--text-2);
+  text-wrap: balance;
+}
+.ds-chart__donut-legend {
+  display: grid;
+  gap: 2px;
+}
+.ds-chart__donut-legend button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 8px;
+  margin: 0 -8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font-size: var(--fs-body);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-chart__donut-legend button:hover,
+.ds-chart__donut-legend button[data-hl] {
+  background: var(--layer-2);
+}
+.ds-chart__donut-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex: none;
+}
+.ds-chart__donut-legend b {
+  margin-left: auto;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart__donut-wrap[data-appear] .ds-chart__seg {
+  animation: ds-chart-seg calc(0.6s * var(--slow, 1)) var(--ease)
+    calc(var(--ds-chart-i) * 0.12s * var(--slow, 1)) both;
+}
+@keyframes ds-chart-seg {
+  from {
+    stroke-dasharray: 0 var(--ds-chart-circ);
+  }
+}
+
+.ds-chart__spark {
+  display: block;
+  width: 100%;
+  height: 34px;
+  overflow: visible;
+}
+.ds-chart__spark-area {
+  fill: var(--ds-chart-c);
+  opacity: 0.14;
+}
+.ds-chart__spark-line {
+  fill: none;
+  stroke: var(--ds-chart-c);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.ds-chart__spark[data-appear] .ds-chart__spark-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ds-chart-draw calc(0.7s * var(--slow, 1)) var(--ease) forwards;
+}
+.ds-chart__spark[data-appear] .ds-chart__spark-area {
+  animation: ds-chart-fade calc(0.4s * var(--slow, 1)) ease calc(0.3s * var(--slow, 1)) both;
+}
+.ds-chart__delta {
+  --ds-chart-d: var(--text-3);
+  --ds-chart-dt: var(--text-2);
+  align-self: flex-start;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+  padding: 0 6px 0 4px;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--ds-chart-d) 12%, transparent);
+  color: color-mix(in srgb, var(--ds-chart-dt) 70%, var(--text));
+  font-size: var(--fs-info);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ds-chart__delta--good {
+  --ds-chart-d: var(--teal);
+  --ds-chart-dt: var(--ok-text);
+}
+.ds-chart__delta--bad {
+  --ds-chart-d: var(--danger);
+  --ds-chart-dt: var(--err-text);
+}
+
+.ds-chart__hbars {
+  display: grid;
+  gap: 14px;
+}
+.ds-chart__hbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 12px;
+  align-items: center;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: var(--r-item);
+  cursor: default;
+  transition: background var(--dur-f);
+}
+.ds-chart__hbar:hover {
+  background: var(--layer-1);
+}
+.ds-chart__hbar-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-chart__hbar b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ds-chart__bar {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+  overflow: hidden;
+}
+.ds-chart__bar i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--info));
+  transition: width calc(0.7s * var(--slow, 1)) var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-chart__line[data-appear] .ds-chart__path,
+  .ds-chart__line[data-appear] .ds-chart__area,
+  .ds-chart__spark[data-appear] .ds-chart__spark-line,
+  .ds-chart__spark[data-appear] .ds-chart__spark-area,
+  .ds-chart__donut-wrap[data-appear] .ds-chart__seg {
+    animation: none;
+  }
+  .ds-chart__tip,
+  .ds-chart__seg,
+  .ds-chart__bar i,
+  .ds-chart__hbar,
+  .ds-chart__legend button {
+    transition: none;
+  }
+}

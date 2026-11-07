@@ -1,0 +1,27 @@
+version: '3.53.1'
+
+# Новые проекты из шаблонов backend/example и frontend/example. Подключается корневым Taskfile.yml.
+
+tasks:
+  new-backend:
+    desc: "Новый бэкенд из backend/example: task new-backend -- <имя>"
+    dir: '{{.ROOT_DIR}}'
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Имя не задано: task new-backend -- <имя>"
+    cmds:
+      - sh "{{.TASKFILE_DIR}}/new.sh" backend {{.CLI_ARGS}}
+
+  new-frontend:
+    desc: "Новый фронтенд из frontend/example к бэкенду: task new-frontend -- <имя> [бэкенд] (по умолчанию backend/<имя>); task new-frontend NO_DOCKER=true -- … — без кодогена клиента в контейнере"
+    dir: '{{.ROOT_DIR}}'
+    vars:
+      NAME: '{{splitList " " .CLI_ARGS | first}}'
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Имя не задано: task new-frontend -- <имя> [бэкенд]"
+    cmds:
+      - sh "{{.TASKFILE_DIR}}/new.sh" frontend {{.CLI_ARGS}}
+      # Клиент API — по контракту выбранного бэкенда (у шаблона он сгенерирован по backend/example).
+      - cmd: task -d "frontend/{{.NAME}}" gen-api
+        if: '[ "{{.NO_DOCKER}}" != "true" ]'

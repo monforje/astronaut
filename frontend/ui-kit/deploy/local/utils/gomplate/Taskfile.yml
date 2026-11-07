@@ -1,0 +1,28 @@
+version: '3.53.1'
+
+env:
+  GOTEMPLATE_IMAGE: ghcr.io/hairyhenderson/gomplate:alpine
+
+tasks:
+  gomplate:
+    desc: "Выполняет gomplate в контейнере в корне проекта"
+    dir: '{{.ROOT_DIR}}'
+    cmds:
+      - |
+        env_file=$(mktemp)
+        trap 'rm -f "$env_file"' EXIT
+        env | grep -E '^[a-zA-Z_][a-zA-Z0-9_]*=' | cut -d= -f1 > "$env_file"
+        docker run --rm --env-file "$env_file" \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}":/app -w /app \
+          $GOTEMPLATE_IMAGE {{.GOMPLATE_COMMAND | default .CLI_ARGS}}
+
+  gomplate-render:
+    internal: true
+    desc: "Рендерит TEMPLATE_FILE в OUTPUT_FILE с флагами EXTRA_OPTS"
+    requires:
+      vars: [TEMPLATE_FILE, OUTPUT_FILE]
+    cmds:
+      - task: gomplate
+        vars:
+          GOMPLATE_COMMAND: '--file {{.TEMPLATE_FILE}} {{.EXTRA_OPTS}} --out {{.OUTPUT_FILE}}'

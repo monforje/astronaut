@@ -1,0 +1,66 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-select__stage {
+  position: relative;
+  z-index: 5;
+  min-height: 300px;
+  width: 100%;
+  max-width: 340px;
+}
+.ds-select__stage--short {
+  min-height: 200px;
+}
+.ds-select__stage--flow {
+  min-height: 340px;
+}
+.ds-select__host > .ds-select__pop {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+}
+
+.ds-select__anat {
+  width: 100%;
+  max-width: 320px;
+}
+
+.ds-select__pop--static {
+  position: static;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  animation: none;
+}
+
+.ds-select__trigger[data-force="hover"]:not(:disabled, [data-invalid], [aria-expanded="true"]) {
+  border-color: var(--text-3);
+}
+.ds-select__trigger[data-force="open"] {
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-select__trigger[data-force="open"]:not(:disabled, [data-invalid]) {
+  border-color: var(--focus);
+}
+.ds-select__trigger[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-select__trigger[data-invalid][data-force="open"] {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+[data-force="open"] > .ds-select__caret {
+  transform: rotate(180deg);
+}
+.ds-select__control[data-force="hover"]:not(:disabled) {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-select__control[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+.ds-select__example {
+  width: 100%;
+  max-width: 340px;
+}

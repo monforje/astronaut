@@ -1,0 +1,58 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-side-wrap {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  border-radius: var(--r-card);
+  background: var(--surface-muted);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  overflow: hidden;
+}
+.ds-side-wrap:has(.ds-side__tip) {
+  overflow: visible;
+}
+.ds-side-wrap > .ds-side__tip {
+  position: absolute;
+  left: calc(var(--w-rail) + 9px);
+  z-index: 20;
+  translate: 0 -50%;
+}
+.ds-side__trigger[data-force] {
+  opacity: 1;
+}
+.ds-side__trigger[data-force="hover"] {
+  background: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+}
+.ds-side__trigger[data-force="active"] {
+  background: color-mix(in srgb, var(--surface), var(--ink) 11.2%);
+}
+.ds-side__trigger[data-force="focus"] {
+  outline: 2px solid var(--focus);
+}
+.ds-side__group[data-force="hover"] .ds-side__gt {
+  background: var(--layer-1);
+}
+.ds-side__group[data-force="active"] .ds-side__gt {
+  background: var(--layer-1p);
+}
+.ds-side__group[data-force="focus"] .ds-side__gt {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-side__group[data-force="hover"] .ds-side__chev {
+  opacity: 1;
+}
+.ds-side__item[data-force="hover"]:not([aria-current]) {
+  background: var(--layer-1);
+}
+.ds-side__item[data-force="hover"]:not([aria-current], [aria-disabled]) {
+  color: var(--text);
+}
+.ds-side__item[data-force="active"]:not([aria-current]) {
+  background: var(--layer-1p);
+}
+.ds-side__item[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}

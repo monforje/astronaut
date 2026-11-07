@@ -1,0 +1,148 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-radio {
+  appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  border: 1.5px solid var(--text-3);
+  border-radius: 50%;
+  background: var(--field);
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    border-color var(--dur-f);
+}
+.ds-radio:hover:not(:disabled) {
+  border-color: var(--text);
+}
+.ds-radio:checked {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+.ds-radio:checked::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--on-primary);
+}
+.ds-radio:checked:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: color-mix(in oklch, var(--primary), #000 9%);
+}
+.ds-radio:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-radio[data-invalid] {
+  border-color: var(--danger);
+}
+.ds-radio:disabled {
+  background: var(--tone);
+  border-color: var(--divider);
+  cursor: default;
+}
+.ds-radio:disabled:checked::after {
+  background: var(--text-ph);
+}
+
+.ds-radio__opt {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.ds-radio__opt:has(:disabled) {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-radio__text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+.ds-radio__text small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-radio__opt:has(:disabled) small {
+  color: var(--text-ph);
+}
+.ds-radio__group {
+  display: grid;
+  gap: 10px;
+}
+.ds-radio__group--row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.ds-radio__error {
+  margin-top: 6px;
+  color: var(--err-text);
+  font-size: var(--fs-control);
+  font-weight: 500;
+}
+
+.ds-radio__cards {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+@media (max-width: 480px) {
+  .ds-radio__cards--two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.ds-radio__cards--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ds-radio__card {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-radio__card:hover {
+  background: var(--layer-1);
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-radio__card:has(:checked) {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-radio__card:has(:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-radio__card:has(:disabled) {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-radio__card small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-radio__card:has(:disabled) small {
+  color: var(--text-ph);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-radio,
+  .ds-radio__card {
+    transition: none;
+  }
+}

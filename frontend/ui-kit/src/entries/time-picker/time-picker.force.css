@@ -1,0 +1,36 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-timepicker__num[data-force="focus"] {
+  background: var(--selected);
+}
+.ds-timepicker__item[data-force="hover"]:not([aria-selected="true"]) {
+  background: var(--layer-2);
+}
+.ds-timepicker__item[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.ds-timepicker__stage {
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+}
+.ds-timepicker__drop {
+  display: grid;
+  justify-items: start;
+  margin-top: 6px;
+  transition: opacity var(--dur) var(--ease);
+}
+.ds-timepicker__drop[data-open="false"] {
+  opacity: 0.35;
+}
+.ds-timepicker__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 280px);
+}
+.ds-timepicker__pair .ds-datepicker__fld {
+  width: 100%;
+}

@@ -1,0 +1,67 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-radii-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.ds-radii-box {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+  font-size: var(--fs-control);
+  font-weight: 600;
+}
+.ds-radii-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  border-radius: var(--r-item);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: var(--fs-control);
+  font-weight: 700;
+}
+.ds-radii-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: var(--w-side);
+  height: 120px;
+  padding: 8px;
+  overflow: hidden;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  transition: width var(--dur-s) var(--glide);
+}
+.ds-radii-rail[data-rail] {
+  width: var(--w-rail);
+}
+.ds-radii-rail__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  height: var(--h-md);
+  padding: 0 8px;
+  border-radius: var(--r-item);
+  background: var(--layer-1);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ds-radii-rail__label {
+  transition: opacity var(--dur-f);
+}
+.ds-radii-rail[data-rail] .ds-radii-rail__label {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-radii-rail,
+  .ds-radii-rail__label {
+    transition: none;
+  }
+}

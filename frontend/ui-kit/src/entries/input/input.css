@@ -1,0 +1,224 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-input__field {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  width: 100%;
+}
+.ds-input__label {
+  justify-self: start;
+  font-weight: 600;
+  font-size: var(--fs-control);
+}
+.ds-input__hint {
+  font-size: var(--fs-control);
+  color: var(--text-3);
+}
+.ds-input__error {
+  font-size: var(--fs-control);
+  color: var(--err-text);
+  font-weight: 500;
+}
+.ds-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: var(--h-md);
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-item);
+  background: var(--field);
+  cursor: text;
+  transition:
+    border-color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-input:hover:not([data-disabled]) {
+  border-color: var(--text-3);
+}
+.ds-input:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-input[data-invalid] {
+  border-color: var(--danger);
+}
+.ds-input[data-invalid]:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+.ds-input--compact {
+  min-height: var(--h-sm);
+}
+.ds-input--area {
+  align-items: flex-start;
+  padding: 7px 12px;
+}
+.ds-input[data-disabled] {
+  background: transparent;
+  border-color: var(--divider);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-input__control {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  resize: none;
+}
+.ds-input__control::placeholder {
+  color: var(--text-ph);
+}
+.ds-input__control--num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.ds-input__lead {
+  display: inline-flex;
+  flex: none;
+  color: var(--text-3);
+  transition: color var(--dur-f);
+}
+.ds-input:focus-within .ds-input__lead {
+  color: var(--link);
+}
+.ds-input__unit {
+  flex: none;
+  color: var(--text-3);
+}
+.ds-input__clear {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-right: -6px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-input__clear:hover {
+  background: var(--layer-2);
+}
+.ds-input__clear:active {
+  background: var(--layer-3);
+}
+.ds-input__clear:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-input__kbd {
+  flex: none;
+  padding: 0 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-control);
+  color: var(--text-3);
+  font: 500 11px var(--font);
+  line-height: 16px;
+  white-space: nowrap;
+}
+.ds-input__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ds-input__demo {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  min-width: 240px;
+}
+
+.ds-input-inline {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  cursor: pointer;
+}
+.ds-input-inline::before {
+  content: "";
+  position: absolute;
+  inset: -1px -4px -2px;
+  z-index: -1;
+  border-radius: var(--r-control);
+  border-bottom: 1px solid transparent;
+  transition: background var(--dur-f);
+}
+.ds-input-inline:hover::before {
+  background: var(--layer-1);
+}
+.ds-input-inline:focus-within::before {
+  background: var(--layer-1p);
+}
+.ds-input-inline[data-invalid]::before {
+  border-bottom-color: var(--danger);
+}
+.ds-input-inline > input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.ds-input-search {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  max-width: 100%;
+  color: var(--text-3);
+  cursor: pointer;
+}
+.ds-input-search::before {
+  content: "";
+  position: absolute;
+  inset: -4px -8px;
+  z-index: -1;
+  border-radius: var(--r-item);
+  transition: background var(--dur-f);
+}
+.ds-input-search:hover::before {
+  background: var(--layer-1);
+}
+.ds-input-search:focus-within::before {
+  background: var(--layer-1p);
+}
+.ds-input-search:focus-within > svg {
+  color: var(--link);
+}
+.ds-input-search > input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--text);
+}
+.ds-input-search > input::placeholder {
+  color: var(--text-ph);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-input,
+  .ds-input__lead,
+  .ds-input__clear,
+  .ds-input-inline::before,
+  .ds-input-search::before {
+    transition: none;
+  }
+}

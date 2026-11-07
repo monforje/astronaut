@@ -1,0 +1,145 @@
+version: '3.53.1'
+
+env:
+  ROOT_ENV_FILE: '{{.ROOT_DIR}}/.env'
+
+vars:
+  INFRA_COMPOSE: |
+    docker compose -p shared -f compose.infra.yml \
+      $([ -f "$ROOT_ENV_FILE" ] && echo --env-file "$ROOT_ENV_FILE")
+
+tasks:
+  infra-s3-up:
+    internal: true
+    desc: "Поднимает s3 и его веб-админку s3-ui"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: s3 s3-ui }
+
+  infra-nats-up:
+    internal: true
+    desc: "Поднимает nats с JetStream и веб-интерфейс nats-ui"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: nats nats-ui }
+
+  infra-smtp-up:
+    internal: true
+    desc: "Поднимает smtp (mailpit)"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: smtp }
+
+  infra-redis-up:
+    internal: true
+    desc: "Поднимает redis и веб-интерфейс redis-ui"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: redis redis-ui }
+
+  infra-yugabyte-up:
+    internal: true
+    desc: "Поднимает yugabytedb и создаёт базы проекта YUGABYTE_DATABASES"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: yugabytedb }
+      - task: infra-yugabyte-databases
+
+  infra-yugabyte-databases:
+    internal: true
+    desc: "Создаёт базы YUGABYTE_DATABASES, которых ещё нет"
+    requires:
+      vars: [YUGABYTE_DATABASES]
+    cmds:
+      - |
+        ysql() { docker exec yugabytedb bin/ysqlsh -h yugabytedb -U yugabyte -At -c "$1"; }
+        n=0
+        until ysql 'SELECT 1' >/dev/null 2>&1; do
+          [ $((n += 1)) -gt 240 ] && { echo "-> yugabytedb не поднялся за 2 мин" >&2; exit 1; }
+          sleep 0.5
+        done
+        for db in {{.YUGABYTE_DATABASES}}; do
+          if [ "$(ysql "SELECT 1 FROM pg_database WHERE datname = '$db'")" != 1 ]; then
+            ysql "CREATE DATABASE \"$db\"" >/dev/null
+          fi
+          echo "-> база $db"
+        done
+
+  infra-yugabyte-drop:
+    internal: true
+    desc: "Удаляет базы проекта YUGABYTE_DATABASES из yugabytedb"
+    requires:
+      vars: [YUGABYTE_DATABASES]
+    cmds:
+      - |
+        if [ -z "$(docker ps -q -f name=^yugabytedb$)" ]; then
+          echo "-> yugabytedb не запущен, базы {{.YUGABYTE_DATABASES}} не удалены" >&2
+          exit 0
+        fi
+        for db in {{.YUGABYTE_DATABASES}}; do
+          docker exec yugabytedb bin/ysqlsh -h yugabytedb -U yugabyte -At -c "DROP DATABASE IF EXISTS \"$db\" WITH (FORCE)" >/dev/null
+          echo "-> удалена база $db"
+        done
+
+  infra-clickhouse-up:
+    internal: true
+    desc: "Поднимает clickhouse и создаёт базы проекта CLICKHOUSE_DATABASES"
+    cmds:
+      - task: infra-compose-up
+        vars: { INFRA_SERVICES: clickhouse }
+      - task: infra-clickhouse-databases
+
+  infra-clickhouse-databases:
+    internal: true
+    desc: "Создаёт базы CLICKHOUSE_DATABASES, которых ещё нет"
+    requires:
+      vars: [CLICKHOUSE_DATABASES]
+    cmds:
+      - |
+        n=0
+        until docker exec clickhouse clickhouse-client -q 'SELECT 1' >/dev/null 2>&1; do
+          [ $((n += 1)) -gt 60 ] && { echo "-> clickhouse не поднялся за 30 с" >&2; exit 1; }
+          sleep 0.5
+        done
+        for db in {{.CLICKHOUSE_DATABASES}}; do
+          docker exec clickhouse clickhouse-client -q "CREATE DATABASE IF NOT EXISTS \`$db\`" >/dev/null
+          echo "-> база $db"
+        done
+
+  infra-clickhouse-drop:
+    internal: true
+    desc: "Удаляет базы проекта CLICKHOUSE_DATABASES из clickhouse"
+    requires:
+      vars: [CLICKHOUSE_DATABASES]
+    cmds:
+      - |
+        if [ -z "$(docker ps -q -f name=^clickhouse$)" ]; then
+          echo "-> clickhouse не запущен, базы {{.CLICKHOUSE_DATABASES}} не удалены" >&2
+          exit 0
+        fi
+        for db in {{.CLICKHOUSE_DATABASES}}; do
+          docker exec clickhouse clickhouse-client -q "DROP DATABASE IF EXISTS \`$db\`" >/dev/null
+          echo "-> удалена база $db"
+        done
+
+  infra-compose-up:
+    internal: true
+    desc: "Поднимает сервисы инфры INFRA_SERVICES"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - echo "infra services={{if .INFRA_SERVICES}}{{.INFRA_SERVICES}}{{else}}all{{end}}"
+      - '{{trim .INFRA_COMPOSE}} up -d --remove-orphans {{.INFRA_SERVICES}}'
+
+  infra-compose-stop:
+    internal: true
+    desc: "Останавливает контейнеры инфры"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{trim .INFRA_COMPOSE}} stop'
+
+  infra-compose-down:
+    internal: true
+    desc: "Удаляет контейнеры инфры"
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{trim .INFRA_COMPOSE}} down --remove-orphans'

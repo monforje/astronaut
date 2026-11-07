@@ -1,0 +1,206 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-bc-nav {
+  min-width: 0;
+}
+.ds-bc {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-2);
+  font-size: var(--fs-body);
+}
+.ds-bc--sm {
+  font-size: var(--fs-control);
+}
+.ds-bc__li {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 28px;
+  flex: 0 5 auto;
+}
+.ds-bc__li[data-last] {
+  min-width: 48px;
+  flex-shrink: 1;
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-bc__sep {
+  flex: none;
+  display: inline-flex;
+  color: var(--text-ph);
+}
+.ds-bc__a,
+.ds-bc__bs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 200px;
+  margin: 0 -4px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    color var(--dur-f);
+}
+.ds-bc__bs--cur {
+  max-width: none;
+  cursor: default;
+}
+.ds-bc__bs--off {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-bc__t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ds-bc__a:hover,
+button.ds-bc__bs:hover,
+button.ds-bc__bs[aria-expanded="true"] {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-bc__a:active,
+button.ds-bc__bs:active {
+  background: var(--layer-3);
+}
+.ds-bc__a:focus-visible,
+button.ds-bc__bs:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-bc__ic,
+.ds-bc__mi-ic {
+  display: inline-flex;
+  flex: none;
+}
+.ds-bc__sk {
+  display: block;
+  width: 72px;
+  height: 12px;
+  border-radius: var(--r-control);
+  background: var(--tone);
+  animation: ds-bc-pulse calc(1.1s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-bc__wrap {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+}
+.ds-bc__menu {
+  min-width: 200px;
+  margin: 0 0 0 -4px;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 400;
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  animation: ds-bc-pop calc(0.125s * var(--slow, 1)) var(--ease);
+}
+.ds-bc__mi {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--h-sm);
+  padding: 1px 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-bc__mi:hover {
+  background: var(--layer-2);
+}
+.ds-bc__mi:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-bc__mi-sp {
+  width: 14px;
+  flex: none;
+}
+.ds-bc-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.ds-bc-box__ctl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-2);
+  font-size: var(--fs-control);
+}
+.ds-bc-box__ctl input {
+  flex: 1;
+  min-width: 0;
+  max-width: 240px;
+  accent-color: var(--link);
+}
+.ds-bc-box__ctl output {
+  min-width: 48px;
+  font-variant-numeric: tabular-nums;
+}
+.ds-bc-resz {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px 12px;
+  overflow: hidden;
+  border-radius: var(--r-item);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-bc-resz:has([aria-expanded="true"]) {
+  min-height: 150px;
+}
+@keyframes ds-bc-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+@keyframes ds-bc-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 -4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-bc__a,
+  .ds-bc__bs,
+  .ds-bc__mi {
+    transition: none;
+  }
+  .ds-bc__menu,
+  .ds-bc__sk {
+    animation: none;
+  }
+}

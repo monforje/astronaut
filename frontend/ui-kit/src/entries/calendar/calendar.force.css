@@ -1,0 +1,48 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-cal__nav[data-force="hover"]:not(:active) {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-cal__nav[data-force="focus"] {
+  outline: 2px solid var(--focus);
+}
+.ds-cal__d[data-force="hover"]:not([data-in], [data-sel], [aria-disabled="true"]) {
+  background: var(--layer-2);
+}
+.ds-cal__d[data-force="active"]:not([data-in], [data-sel], [aria-disabled="true"]) {
+  background: var(--layer-3);
+}
+.ds-cal__d[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-cal__d[data-in][data-force="hover"]:not([aria-disabled="true"]) {
+  background: color-mix(in srgb, var(--teal) 28%, var(--surface));
+}
+.ds-cal__d[data-sel][data-force="hover"]:not([aria-disabled="true"]) {
+  background: color-mix(in srgb, var(--primary), var(--navy) 12%);
+}
+
+.ds-cal-out {
+  color: var(--text-3);
+  font-size: var(--fs-control);
+  text-align: center;
+  min-height: 18px;
+}
+.ds-cal-wrap {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.ds-cal__note {
+  display: grid;
+  gap: 2px;
+  padding: 4px 8px 8px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-cal__note b {
+  color: var(--text);
+}

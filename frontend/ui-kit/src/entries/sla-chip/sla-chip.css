@@ -1,0 +1,79 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-sla {
+  position: relative;
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  border-radius: var(--r-pill);
+  cursor: help;
+}
+.ds-sla:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-sla__badge {
+  display: inline-flex;
+}
+.ds-sla__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ds-sla__tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  translate: -50% 0;
+  z-index: 2;
+  display: none;
+  padding: 6px 10px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ds-sla-pop var(--dur-f) var(--ease);
+}
+.ds-sla:hover:not([data-dismissed]) .ds-sla__tip,
+.ds-sla:focus-visible:not([data-dismissed]) .ds-sla__tip {
+  display: block;
+}
+.ds-sla__tip small {
+  display: block;
+  color: var(--text-3);
+  font-weight: 400;
+}
+@keyframes ds-sla-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: -50% 4px;
+  }
+}
+.ds-sla__skel {
+  display: inline-flex;
+}
+.ds-sla__skel .ds-skel {
+  border-radius: var(--r-pill);
+}
+.ds-sla__none {
+  color: var(--text-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-sla__tip {
+    animation: none;
+  }
+}

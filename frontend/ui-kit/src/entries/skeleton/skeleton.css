@@ -1,0 +1,123 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-skel-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+}
+.ds-skel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  max-width: 100%;
+  border-radius: var(--r-control);
+  background: var(--tone);
+}
+.ds-skel--round {
+  border-radius: 50%;
+}
+.ds-skel--item {
+  border-radius: var(--r-item);
+}
+[data-anim="wave"] .ds-skel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ink) 9%, transparent),
+    transparent
+  );
+  translate: -100%;
+  animation: ds-skel-shim calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+[data-anim="pulse"] .ds-skel {
+  animation: ds-skel-pulse calc(1.1s * var(--slow, 1)) ease-in-out infinite;
+}
+:root[data-theme="dark"] .ds-skel {
+  background: color-mix(in srgb, var(--ink) 13%, transparent);
+}
+:root[data-theme="dark"] [data-anim="wave"] .ds-skel::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ink) 22%, transparent),
+    transparent
+  );
+}
+:root[data-theme="dark"] [data-anim="pulse"] .ds-skel {
+  animation-name: ds-skel-pulse-dark;
+}
+@keyframes ds-skel-pulse-dark {
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes ds-skel-shim {
+  to {
+    translate: 100%;
+  }
+}
+@keyframes ds-skel-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+.ds-skel-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ds-skel-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ds-skel-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+.ds-skel-btns .ds-skel {
+  flex: 1;
+  min-width: 0;
+}
+.ds-skel-col {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+}
+.ds-skel-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  width: 420px;
+  max-width: 100%;
+  height: 170px;
+}
+.ds-skel-chart .ds-skel {
+  flex: 1;
+  min-width: 0;
+}
+.ds-skel-reveal {
+  animation: ds-skel-in calc(0.2s * var(--slow, 1)) ease both;
+}
+@keyframes ds-skel-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim="wave"] .ds-skel::after,
+  [data-anim="pulse"] .ds-skel,
+  .ds-skel-reveal {
+    animation: none;
+  }
+}

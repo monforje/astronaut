@@ -1,0 +1,75 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-dtable__table tbody tr[data-force="hover"] {
+  background: color-mix(in srgb, var(--ds-dtable-bg), var(--ink) 4%);
+}
+.ds-dtable__table tbody tr[data-force="active"] {
+  background: color-mix(in srgb, var(--ds-dtable-bg), var(--ink) 7%);
+}
+.ds-dtable__table tbody tr[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-dtable__table tr[data-force="hover"] .ds-dtable__rowact,
+.ds-dtable__table tr[data-force="focus"] .ds-dtable__rowact {
+  opacity: 1;
+}
+
+.ds-dtable__sort[data-force="hover"] {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-dtable__sort[data-force="hover"] svg {
+  opacity: 1;
+}
+.ds-dtable__sort[data-force="active"] {
+  background: var(--layer-3);
+}
+.ds-dtable__sort[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+.ds-dtable__pg[data-force="hover"]:not([aria-current="page"]) {
+  background: var(--layer-2);
+}
+.ds-dtable__pg[data-force="active"]:not([aria-current="page"]) {
+  background: var(--layer-3);
+}
+.ds-dtable__pg[data-force="focus"] {
+  outline: 2px solid var(--focus);
+}
+
+.ds-dtable__docs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ds-dtable__seg {
+  display: inline-flex;
+  gap: 3px;
+}
+.ds-dtable__seg i {
+  width: 16px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-dtable__seg i.on {
+  background: var(--teal);
+  box-shadow: none;
+}
+.ds-dtable__seg i.bad {
+  background: var(--danger);
+  box-shadow: none;
+}
+.ds-dtable__cells {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+}
+.ds-dtable__demo {
+  width: 100%;
+  min-width: 0;
+}

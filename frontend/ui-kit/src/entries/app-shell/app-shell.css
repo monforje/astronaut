@@ -1,0 +1,82 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-shell {
+  --ds-shell-side: var(--w-side);
+  --ds-shell-rail: var(--w-rail);
+  --ds-shell-bar: var(--h-bar);
+  --ds-shell-pad: 16px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: var(--ds-shell-bar) minmax(0, 1fr);
+  grid-template-areas:
+    "side top"
+    "side content";
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--page);
+  container-type: inline-size;
+}
+.ds-shell[data-brand] {
+  grid-template-areas:
+    "brand top"
+    "side content";
+}
+.ds-shell__brand,
+.ds-shell__top,
+.ds-shell__side {
+  position: relative;
+  min-width: 0;
+}
+.ds-shell__brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: var(--ds-shell-side);
+  padding: 0 16px;
+  overflow: hidden;
+  border-right: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  background: var(--surface);
+  transition: width var(--dur-s) var(--glide);
+}
+.ds-shell__top {
+  grid-area: top;
+}
+.ds-shell__side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  width: var(--ds-shell-side);
+  min-height: 0;
+  overflow: hidden;
+  transition: width var(--dur-s) var(--glide);
+}
+.ds-shell[data-rail] .ds-shell__brand,
+.ds-shell[data-rail] .ds-shell__side {
+  width: var(--ds-shell-rail);
+}
+.ds-shell__content {
+  position: relative;
+  grid-area: content;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--ds-shell-pad);
+  overflow: auto;
+}
+.ds-shell[data-narrow] .ds-shell__brand,
+.ds-shell[data-narrow] .ds-shell__side {
+  display: none;
+}
+@container (max-width: 760px) {
+  .ds-shell[data-responsive] .ds-shell__brand,
+  .ds-shell[data-responsive] .ds-shell__side {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-shell__brand,
+  .ds-shell__side {
+    transition: none;
+  }
+}

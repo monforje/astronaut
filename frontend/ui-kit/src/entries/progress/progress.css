@@ -1,0 +1,267 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-progress {
+  --ds-progress-c: var(--primary);
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  min-width: 200px;
+}
+.ds-progress--info {
+  --ds-progress-c: var(--info);
+}
+.ds-progress--warn {
+  --ds-progress-c: var(--orange);
+}
+.ds-progress--err {
+  --ds-progress-c: var(--danger);
+}
+.ds-progress--idle {
+  --ds-progress-c: var(--text-3);
+}
+.ds-progress__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: var(--fs-control);
+}
+.ds-progress__label {
+  color: var(--text-2);
+}
+.ds-progress__value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ds-progress__track {
+  position: relative;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--tone);
+  overflow: hidden;
+}
+.ds-progress--sm .ds-progress__track {
+  height: 4px;
+}
+.ds-progress--lg .ds-progress__track {
+  height: 12px;
+}
+.ds-progress__fill {
+  height: 100%;
+  width: var(--ds-progress-v, 0%);
+  border-radius: inherit;
+  background: var(--ds-progress-c);
+  transition: width calc(0.35s * var(--slow, 1)) var(--ease);
+}
+.ds-progress--ind .ds-progress__fill {
+  width: 38%;
+  animation: ds-progress-ind calc(1.3s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-progress-ind {
+  0% {
+    translate: -100%;
+  }
+  100% {
+    translate: 270%;
+  }
+}
+.ds-progress--str .ds-progress__fill {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.28) 0 7px,
+    transparent 7px 14px
+  );
+  background-color: var(--ds-progress-c);
+  background-size: 40px 40px;
+  animation: ds-progress-stripe calc(1s * var(--slow, 1)) linear infinite;
+}
+@keyframes ds-progress-stripe {
+  to {
+    background-position: 40px 0;
+  }
+}
+
+.ds-progress-circ {
+  --ds-progress-c: var(--primary);
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+.ds-progress-circ--info {
+  --ds-progress-c: var(--info);
+}
+.ds-progress-circ--warn {
+  --ds-progress-c: var(--orange);
+}
+.ds-progress-circ svg {
+  position: absolute;
+  inset: 0;
+  rotate: -90deg;
+}
+.ds-progress-circ circle {
+  fill: none;
+  stroke-width: 5;
+}
+.ds-progress-circ__bg {
+  stroke: var(--tone);
+}
+.ds-progress-circ__fg {
+  stroke: var(--ds-progress-c);
+  stroke-linecap: round;
+  transition: stroke-dashoffset calc(0.35s * var(--slow, 1)) var(--ease);
+}
+.ds-progress-circ b {
+  font-size: var(--fs-control);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-progress-seg {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  min-width: 120px;
+}
+.ds-progress-seg i {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+  transition: background var(--dur);
+}
+.ds-progress-seg i[data-on] {
+  background: var(--primary);
+}
+.ds-progress-seg i[data-err] {
+  background: var(--danger);
+}
+
+.ds-progress-file {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  width: 100%;
+  min-width: 260px;
+  padding: 10px 12px;
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--border);
+  background: var(--surface);
+}
+.ds-progress-file__ext {
+  grid-row: span 2;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-item);
+  background: color-mix(in srgb, var(--danger) 9%, var(--surface));
+  color: var(--err-text);
+  font-size: 10px;
+  font-weight: 800;
+}
+.ds-progress-file__name {
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-progress-file__st {
+  font-size: var(--fs-control);
+  font-weight: 600;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.ds-progress-file[data-status="ok"] .ds-progress-file__st {
+  color: var(--ok-text);
+}
+.ds-progress-file[data-status="err"] .ds-progress-file__st {
+  color: var(--err-text);
+}
+.ds-progress-file .ds-progress__track {
+  grid-column: 2 / 4;
+}
+
+.ds-progress-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 168px;
+  height: var(--h-md);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    box-shadow var(--dur-f),
+    color var(--dur-f);
+}
+.ds-progress-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: var(--ds-progress-v, 0%);
+  background: color-mix(in srgb, var(--teal) 30%, var(--surface));
+  transition: width calc(0.35s * var(--slow, 1)) var(--ease);
+}
+.ds-progress-btn:hover:not([aria-busy="true"]) {
+  background: var(--layer-2);
+}
+.ds-progress-btn:active:not([aria-busy="true"]) {
+  background: var(--layer-3);
+}
+.ds-progress-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-progress-btn[aria-busy="true"] {
+  cursor: progress;
+}
+.ds-progress-btn[data-status="done"] {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.ds-progress-btn[data-status="done"]::before {
+  display: none;
+}
+.ds-progress-btn[data-status="err"] {
+  box-shadow: inset 0 0 0 1px var(--danger);
+  color: var(--err-text);
+}
+.ds-progress-btn[data-status="err"]::before {
+  background: color-mix(in srgb, var(--danger) 18%, var(--surface));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-progress__fill,
+  .ds-progress-circ__fg,
+  .ds-progress-btn,
+  .ds-progress-btn::before {
+    transition: none;
+  }
+  .ds-progress--ind .ds-progress__fill {
+    animation: none;
+    width: 38%;
+    translate: 80% 0;
+  }
+  .ds-progress--str .ds-progress__fill {
+    animation: none;
+  }
+}

@@ -1,0 +1,95 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-timepicker__seg {
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.ds-timepicker__num {
+  width: 2ch;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  outline: 0;
+  background: none;
+  color: inherit;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  transition: background var(--dur-f);
+}
+.ds-timepicker__num:focus {
+  background: var(--selected);
+}
+.ds-timepicker__num::placeholder {
+  color: var(--text-ph);
+}
+.ds-timepicker__skel {
+  width: 44px;
+  height: 10px;
+  border-radius: var(--r-control);
+  background: var(--surface-muted);
+  animation: ds-timepicker-pulse calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-timepicker-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.ds-timepicker__cols {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+}
+.ds-timepicker__col {
+  width: 62px;
+  height: 208px;
+  padding: 2px 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+.ds-timepicker__col::-webkit-scrollbar {
+  display: none;
+}
+.ds-timepicker__item {
+  display: block;
+  width: 100%;
+  height: 32px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-timepicker__item:hover {
+  background: var(--layer-2);
+}
+.ds-timepicker__item:active {
+  background: var(--layer-3);
+}
+.ds-timepicker__item:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-timepicker__item[aria-selected="true"] {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+}
+.ds-timepicker__colsep {
+  align-self: center;
+  color: var(--text-3);
+  font-weight: 700;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-timepicker__num,
+  .ds-timepicker__item {
+    transition: none;
+  }
+  .ds-timepicker__skel {
+    animation: none;
+  }
+}

@@ -1,0 +1,171 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-check {
+  appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--text-3);
+  border-radius: var(--r-control);
+  background: var(--field);
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    border-color var(--dur-f);
+}
+.ds-check:hover:not(:disabled) {
+  border-color: var(--text);
+}
+.ds-check:checked,
+.ds-check:indeterminate {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.ds-check:checked:hover:not(:disabled),
+.ds-check:indeterminate:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+.ds-check:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border: solid var(--on-primary);
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+.ds-check:indeterminate::after {
+  content: "";
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--on-primary);
+}
+.ds-check:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-check[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.ds-check[aria-invalid="true"]:checked {
+  background: var(--danger);
+}
+.ds-check:disabled {
+  background: var(--tone);
+  border-color: var(--divider);
+  cursor: default;
+}
+.ds-check:disabled:checked::after {
+  border-color: var(--text-ph);
+}
+.ds-check:disabled:indeterminate::after {
+  background: var(--text-ph);
+}
+
+.ds-check__opt {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.ds-check__opt > .ds-check {
+  margin-top: 2px;
+}
+.ds-check__opt:has(:disabled) {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-check__text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+.ds-check__text small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-check__opt:has(:disabled) small {
+  color: var(--text-ph);
+}
+.ds-check__text small[data-error] {
+  color: var(--err-text);
+}
+.ds-check__list {
+  display: grid;
+  gap: 10px;
+}
+.ds-check__group {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+  padding-left: 26px;
+}
+.ds-check__inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.ds-check__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+@media (max-width: 480px) {
+  .ds-check__cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.ds-check__card {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-check__card > .ds-check {
+  margin-top: 2px;
+}
+.ds-check__card:hover {
+  background: var(--layer-1);
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-check__card:has(:checked) {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-check__card:has(:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-check__card:has(:disabled) {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-check__card small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-check__card:has(:disabled) small {
+  color: var(--text-ph);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-check,
+  .ds-check__card {
+    transition: none;
+  }
+}

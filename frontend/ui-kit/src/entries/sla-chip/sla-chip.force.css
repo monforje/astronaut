@@ -1,0 +1,23 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-sla[data-force~="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-sla[data-force~="tip"] .ds-sla__tip {
+  display: block;
+}
+
+.ds-sla-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--divider);
+  font-size: var(--fs-body);
+}
+.ds-sla-row b {
+  font-weight: 600;
+}

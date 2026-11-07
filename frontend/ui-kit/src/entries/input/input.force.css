@@ -1,0 +1,34 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-input:has(> [data-force="hover"]):not([data-invalid], [data-disabled]) {
+  border-color: var(--text-3);
+}
+.ds-input:has(> [data-force="focus"]):not([data-invalid], [data-disabled]) {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-input[data-invalid]:has(> [data-force="focus"]) {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+.ds-input:has(> [data-force="focus"]) .ds-input__lead {
+  color: var(--link);
+}
+.ds-input:has(> [data-force-clear="hover"]) .ds-input__clear {
+  background: var(--layer-2);
+}
+
+.ds-input-inline:has(> [data-force="hover"])::before {
+  background: var(--layer-1);
+}
+.ds-input-inline:has(> [data-force="focus"])::before {
+  background: var(--layer-1p);
+}
+
+.ds-input-search:has(> [data-force="hover"])::before {
+  background: var(--layer-1);
+}
+.ds-input-search:has(> [data-force="focus"])::before {
+  background: var(--layer-1p);
+}
+.ds-input-search:has(> [data-force="focus"]) > svg {
+  color: var(--link);
+}

@@ -1,0 +1,29 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-type-sample {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+}
+.ds-type-sample small {
+  color: var(--text-3);
+  font: 400 var(--fs-info) / 1.3 var(--font);
+}
+.ds-type-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 24px;
+}
+.ds-type-swap {
+  display: inline-block;
+  min-width: 11ch;
+  font-size: var(--fs-qty);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ds-type-swap--prop {
+  font-variant-numeric: normal;
+}
+.ds-type-fallback {
+  font-family: system-ui, sans-serif;
+}

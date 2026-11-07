@@ -1,0 +1,145 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-alert {
+  container: ds-alert / inline-size;
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows var(--dur-s) var(--ease),
+    opacity var(--dur);
+}
+.ds-alert[data-closed] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+.ds-alert__clip {
+  min-height: 0;
+  overflow: hidden;
+}
+.ds-alert__panel {
+  --ds-alert-fg: var(--text);
+  --ds-alert-bg: var(--selected);
+  --ds-alert-ring: var(--border-selected);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  border-radius: var(--r-item);
+  background: var(--ds-alert-bg);
+  box-shadow: inset 0 0 0 1px var(--ds-alert-ring);
+  color: var(--ds-alert-fg);
+}
+.ds-alert__panel--neutral {
+  --ds-alert-bg: var(--surface-muted);
+  --ds-alert-ring: var(--border);
+}
+.ds-alert__panel--ok {
+  --ds-alert-bg: color-mix(in srgb, var(--teal) 14%, var(--surface));
+  --ds-alert-ring: color-mix(in srgb, var(--teal) 55%, var(--surface));
+  --ds-alert-ic: var(--link-strong);
+}
+.ds-alert__panel--warn {
+  --ds-alert-bg: color-mix(in srgb, var(--orange) 16%, var(--surface));
+  --ds-alert-ring: color-mix(in srgb, var(--orange) 55%, var(--surface));
+  --ds-alert-ic: var(--warn-text);
+}
+.ds-alert__panel--err {
+  --ds-alert-bg: color-mix(in srgb, var(--danger) 12%, var(--surface));
+  --ds-alert-ring: color-mix(in srgb, var(--danger) 50%, var(--surface));
+  --ds-alert-ic: var(--danger);
+}
+.ds-alert__panel--info {
+  --ds-alert-bg: color-mix(in srgb, var(--info) 12%, var(--surface));
+  --ds-alert-ring: color-mix(in srgb, var(--info) 50%, var(--surface));
+  --ds-alert-ic: var(--info);
+}
+.ds-alert__panel--plain {
+  --ds-alert-bg: var(--surface);
+  --ds-alert-ring: var(--border);
+}
+.ds-alert__panel--inline {
+  align-items: center;
+}
+.ds-alert__icon {
+  margin-top: 2px;
+  color: var(--ds-alert-ic, var(--ds-alert-fg));
+}
+.ds-alert__panel--inline > .ds-alert__icon {
+  margin-top: 0;
+}
+.ds-alert__icon--custom {
+  flex: none;
+  display: inline-flex;
+}
+.ds-alert__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--fs-control);
+  line-height: 1.4;
+}
+.ds-alert__body b {
+  font-weight: 700;
+}
+.ds-alert__hint {
+  font-size: var(--fs-info);
+  color: var(--text-2);
+}
+.ds-alert__actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: none;
+}
+.ds-alert__body .ds-alert__actions {
+  padding-top: 4px;
+}
+.ds-alert__body .ds-alert__actions > .ds-btn--ghost:first-child {
+  margin-left: -10px;
+}
+@container ds-alert (max-width: 440px) {
+  .ds-alert__panel--inline {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .ds-alert__panel--inline > .ds-alert__icon {
+    margin-top: 2px;
+  }
+  .ds-alert__panel--inline > .ds-alert__body {
+    flex: 1 1 0;
+  }
+  .ds-alert__panel--inline > .ds-alert__close {
+    order: 2;
+  }
+  .ds-alert__panel--inline > .ds-alert__actions {
+    order: 3;
+    flex-basis: 100%;
+    padding-left: 24px;
+  }
+  .ds-alert__panel--inline > .ds-alert__actions > .ds-btn--ghost:first-child {
+    margin-left: -10px;
+  }
+}
+.ds-alert__actions > .ds-btn {
+  --ds-btn-hover: var(--layer-n);
+  --ds-btn-press: var(--layer-np);
+}
+.ds-alert .ds-alert__panel .ds-alert__close.ds-btn {
+  --ds-btn-hover: var(--layer-n);
+  --ds-btn-press: var(--layer-np);
+  --ds-btn-fg: currentColor;
+  flex: none;
+  height: 18px;
+  margin-top: 1px;
+  opacity: 0.75;
+}
+.ds-alert .ds-alert__panel .ds-alert__close.ds-btn:is(:hover, :active, :focus-visible) {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-alert {
+    transition: none;
+  }
+}

@@ -1,0 +1,211 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-card {
+  --ds-card-pad: 24px;
+  --ds-card-bg: var(--surface);
+  --ds-card-ring: inset 0 0 0 1px var(--border);
+  --ds-card-lift: 0 0 transparent;
+  --ds-card-hov: color-mix(in srgb, var(--ds-card-bg), var(--ink) 4%);
+  --ds-card-prs: color-mix(in srgb, var(--ds-card-bg), var(--ink) 7%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: var(--ds-card-pad);
+  border-radius: var(--r-panel);
+  background: var(--ds-card-bg);
+  box-shadow: var(--ds-card-lift);
+  color: var(--text);
+  transition:
+    background var(--dur-f),
+    box-shadow var(--dur-f),
+    translate var(--dur);
+}
+.ds-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: var(--ds-card-ring);
+  pointer-events: none;
+  transition: box-shadow var(--dur-f);
+}
+.ds-card--sm {
+  --ds-card-pad: 16px;
+  gap: 12px;
+  border-radius: var(--r-card);
+}
+.ds-card--flush {
+  padding: 0;
+  gap: 0;
+  overflow: clip;
+}
+.ds-card--elevated {
+  --ds-card-lift: var(--shadow-panel);
+}
+.ds-card--filled {
+  --ds-card-bg: var(--surface-muted);
+  --ds-card-ring: 0 0 transparent;
+}
+.ds-card--ghost {
+  --ds-card-bg: transparent;
+  --ds-card-ring: 0 0 transparent;
+}
+.ds-card--solid {
+  --ds-card-bg: var(--primary);
+  --ds-card-ring: 0 0 transparent;
+  --ds-card-hov: color-mix(in srgb, var(--ds-card-bg), #000 6%);
+  --ds-card-prs: color-mix(in srgb, var(--ds-card-bg), #000 12%);
+  color: var(--on-primary);
+}
+.ds-card--solid .ds-card__muted {
+  color: color-mix(in srgb, var(--on-primary) 85%, transparent);
+}
+.ds-card--selected {
+  --ds-card-bg: var(--selected);
+  --ds-card-ring: inset 0 0 0 1px var(--border-selected);
+  --ds-card-lift: 0 0 transparent;
+}
+
+.ds-card--link {
+  cursor: pointer;
+}
+.ds-card--link:hover {
+  background: var(--ds-card-hov);
+  --ds-card-ring: inset 0 0 0 1px var(--text-3);
+}
+.ds-card--solid.ds-card--link:hover {
+  --ds-card-ring: 0 0 transparent;
+}
+.ds-card--selected.ds-card--link:hover {
+  --ds-card-ring: inset 0 0 0 1px var(--border-selected);
+}
+.ds-card--link:active {
+  background: var(--ds-card-prs);
+  translate: 0 1px;
+}
+.ds-card--link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-card[aria-disabled="true"] {
+  cursor: default;
+  pointer-events: none;
+  --ds-card-bg: var(--surface-muted);
+  color: var(--text-ph);
+}
+
+.ds-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 20px;
+}
+.ds-card__ico {
+  display: inline-flex;
+  color: var(--ds-card-tone, var(--text-2));
+}
+.ds-card__title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-qty);
+  font-weight: 700;
+}
+.ds-card--sm .ds-card__title {
+  font-size: var(--fs-body);
+}
+.ds-card__title--muted {
+  color: var(--text-2);
+  font-weight: 500;
+}
+.ds-card__muted {
+  color: var(--text-2);
+}
+.ds-card__value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.ds-card--sm .ds-card__value {
+  font-size: var(--fs-title);
+}
+.ds-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider);
+}
+.ds-card--solid .ds-card__foot {
+  border-top-color: color-mix(in srgb, var(--on-primary) 25%, transparent);
+}
+.ds-card__foot--two > .ds-btn {
+  flex: 1;
+  min-width: 0;
+}
+.ds-card--tone-ok {
+  --ds-card-tone: var(--link);
+}
+.ds-card--tone-warn {
+  --ds-card-tone: var(--warn-text);
+}
+.ds-card--tone-err {
+  --ds-card-tone: var(--danger);
+}
+.ds-card__up {
+  color: var(--link);
+  font-weight: 600;
+}
+.ds-card__down {
+  color: var(--err-text);
+  font-weight: 600;
+}
+
+.ds-card__h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--divider);
+  font-weight: 600;
+}
+.ds-card__h-sub {
+  color: var(--text-3);
+  font-weight: 400;
+}
+.ds-card__h-grow {
+  flex: 1;
+}
+.ds-card__b {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 14px;
+}
+.ds-card__lbl {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+  font-weight: 600;
+}
+
+.ds-card__kpi {
+  display: grid;
+  gap: 8px;
+}
+.ds-card--kpi:hover {
+  translate: 0 -1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-card,
+  .ds-card::after {
+    transition: none;
+  }
+  .ds-card--link:active,
+  .ds-card--kpi:hover {
+    translate: none;
+  }
+}

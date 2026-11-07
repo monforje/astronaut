@@ -1,0 +1,14 @@
+# Конфиг ogen для всех Go-проектов (task gen-api); свой ogen.yml в корне проекта приоритетнее.
+# Фичи — набор ogen по умолчанию, перечислен явно: сервер, клиент, вебхуки, OpenTelemetry, заглушка Handler.
+# Остальные: client/request/validation, server/response/validation, client/request/options,
+# client/editors, client/security/reentrant, naming/camel_initialisms, debug/example_tests.
+generator:
+  features:
+    disable_all: true
+    enable:
+      - paths/client
+      - paths/server
+      - webhooks/client
+      - webhooks/server
+      - ogen/otel
+      - ogen/unimplemented

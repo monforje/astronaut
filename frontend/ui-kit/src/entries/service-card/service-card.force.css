@@ -1,0 +1,23 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-svc[data-force="hover"] {
+  --ds-card-ring: inset 0 0 0 1px color-mix(in srgb, var(--ds-svc-c) 75%, var(--border));
+  --ds-card-lift: 0 8px 24px -10px color-mix(in srgb, var(--ds-svc-c) 55%, transparent);
+}
+.ds-svc[data-force="focus"] .ds-svc__sw {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.ds-svc-cell {
+  width: 340px;
+  max-width: 100%;
+}
+.ds-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+.ds-svc-grid--pair {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+}

@@ -1,0 +1,77 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  background: var(--page);
+  scroll-padding-top: calc(var(--h-bar) + 16px);
+}
+body {
+  font: 400 var(--fs-body) / 1.4 var(--font);
+  color: var(--text);
+  background: var(--page);
+  -webkit-font-smoothing: antialiased;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+a {
+  color: var(--link);
+}
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+[hidden] {
+  display: none !important;
+}
+.ds-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ds-icon--xs {
+  width: 12px;
+  height: 12px;
+}
+.ds-icon--sm {
+  width: 14px;
+  height: 14px;
+}
+.ds-icon--md {
+  width: 18px;
+  height: 18px;
+}
+.ds-icon--xl {
+  width: 32px;
+  height: 32px;
+}
+.ds-agent-mark {
+  display: block;
+  flex: none;
+  object-fit: contain;
+  width: 16px;
+  height: 16px;
+}
+.ds-num {
+  font-variant-numeric: tabular-nums;
+}
+.ds-code {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-ligatures: none;
+}

@@ -1,0 +1,22 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-datepicker__box[data-force="hover"]:not([data-invalid], [data-disabled], [data-open]) {
+  border-color: var(--text-3);
+}
+.ds-datepicker__box[data-force="focus"]:not([data-invalid], [data-disabled]) {
+  border-color: var(--focus);
+}
+.ds-datepicker__box[data-force="focus"] {
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-datepicker__box[data-invalid][data-force="focus"] {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+.ds-datepicker__box[data-force="focus"]:not([data-disabled]) .ds-datepicker__lead {
+  color: var(--link);
+}
+.ds-datepicker__btn[data-force="hover"]:not(:disabled) {
+  background: var(--layer-2);
+}
+.ds-datepicker__btn[data-force="focus"] {
+  outline: 2px solid var(--focus);
+}

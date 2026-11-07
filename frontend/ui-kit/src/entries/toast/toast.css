@@ -1,0 +1,141 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-toaster {
+  position: fixed;
+  z-index: 1200;
+  width: min(360px, calc(100vw - 48px));
+  pointer-events: none;
+  transition: height calc(0.3s * var(--slow, 1)) var(--ease);
+}
+.ds-toaster[data-pos^="b"] {
+  bottom: 24px;
+}
+.ds-toaster[data-pos^="t"] {
+  top: 24px;
+}
+.ds-toaster[data-pos$="r"] {
+  right: 24px;
+}
+.ds-toaster[data-pos$="l"] {
+  left: 24px;
+}
+.ds-toaster[data-pos$="c"] {
+  left: 50%;
+  translate: -50% 0;
+}
+.ds-toast {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+  overflow: hidden;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    var(--shadow-pop);
+  translate: 0 var(--y, 0px);
+  scale: var(--s, 1);
+  transition:
+    translate calc(0.3s * var(--slow, 1)) var(--ease),
+    scale calc(0.3s * var(--slow, 1)) var(--ease),
+    opacity calc(0.3s * var(--slow, 1)) ease;
+}
+.ds-toaster[data-pos^="b"] .ds-toast {
+  bottom: 0;
+  transform-origin: top center;
+}
+.ds-toaster[data-pos^="t"] .ds-toast {
+  top: 0;
+  transform-origin: bottom center;
+}
+.ds-toaster[data-pos^="b"] .ds-toast:not([data-mounted]) {
+  opacity: 0;
+  translate: 0 calc(var(--y, 0px) + 24px);
+}
+.ds-toaster[data-pos^="t"] .ds-toast:not([data-mounted]) {
+  opacity: 0;
+  translate: 0 calc(var(--y, 0px) - 24px);
+}
+.ds-toast[data-closing] {
+  opacity: 0;
+  scale: 0.95;
+  pointer-events: none;
+}
+.ds-toast[data-hidden] {
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-toast:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-toast--static {
+  position: relative;
+  translate: none;
+  scale: none;
+  width: min(360px, 100%);
+  transition: none;
+}
+.ds-toast--static .ds-toast__content {
+  flex-wrap: wrap;
+}
+.ds-toast--static .ds-toast__text {
+  min-width: 10ch;
+}
+.ds-toast__content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 12px 14px 16px;
+  transition: opacity calc(0.2s * var(--slow, 1));
+}
+.ds-toast:not([data-front], [data-expanded], .ds-toast--static) .ds-toast__content {
+  opacity: 0;
+}
+.ds-toast__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 20px;
+  color: var(--link);
+}
+.ds-toast__icon--warn {
+  color: var(--warn-text);
+}
+.ds-toast__icon--err {
+  color: var(--danger);
+}
+.ds-toast__icon--info {
+  color: var(--info);
+}
+.ds-toast__text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  line-height: 1.4;
+}
+.ds-toast__text b {
+  font-weight: 600;
+}
+.ds-toast__text span {
+  color: var(--text-2);
+  font-size: var(--fs-control);
+}
+.ds-toast__end {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  margin: -4px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-toast,
+  .ds-toaster,
+  .ds-toast__content {
+    transition: none;
+  }
+}

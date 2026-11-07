@@ -1,0 +1,98 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-menu__stage {
+  position: relative;
+  z-index: 5;
+  min-height: 300px;
+  width: 100%;
+  max-width: 340px;
+}
+.ds-menu__stage--short {
+  min-height: 240px;
+}
+.ds-menu__pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+.ds-menu__host:has(> .ds-menu) {
+  position: relative;
+}
+.ds-menu__host > .ds-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+}
+.ds-menu__host > .ds-menu[data-align-end] {
+  left: auto;
+  right: 0;
+}
+.ds-menu__stage--end .ds-menu__host {
+  display: flex;
+  justify-content: flex-end;
+}
+.ds-menu__anat {
+  width: 100%;
+  max-width: 320px;
+}
+.ds-menu__anat .ds-menu__end {
+  margin-right: 6px;
+}
+.ds-menu__page {
+  display: grid;
+  gap: 4px;
+  margin-top: 56px;
+  padding: 12px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-menu__page b {
+  color: var(--text-2);
+  font-weight: 600;
+}
+.ds-menu__log {
+  min-height: 1.4em;
+  margin-top: 8px;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+
+.ds-menu--static {
+  position: static;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  animation: none;
+}
+
+.ds-menu__item[data-force="hover"]:not(:disabled) {
+  background: var(--layer-1);
+  outline: 0;
+}
+.ds-menu__item[data-force="hover"]:not(:disabled) .ds-menu__ico {
+  color: var(--text);
+}
+.ds-menu__item[data-force="active"]:not(:disabled) {
+  background: var(--layer-1p);
+}
+.ds-menu__item--danger[data-force="hover"]:not(:disabled) {
+  color: var(--err-text);
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface));
+}
+.ds-menu__item--danger[data-force="hover"]:not(:disabled) .ds-menu__ico {
+  color: var(--err-text);
+}
+
+.ds-menu__example {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 340px;
+}

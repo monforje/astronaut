@@ -1,0 +1,148 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-avatar {
+  --ds-avatar-c: var(--text-3);
+  --ds-avatar-ct: var(--text-2);
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  user-select: none;
+  color: var(--ds-avatar-ct);
+  background: color-mix(in srgb, var(--ds-avatar-c) 24%, var(--surface));
+}
+.ds-avatar > svg {
+  width: 56%;
+  height: 56%;
+}
+.ds-avatar--xs {
+  width: 16px;
+  height: 16px;
+  font-size: 8px;
+}
+.ds-avatar--sm {
+  width: 18px;
+  height: 18px;
+  font-size: 8px;
+}
+.ds-avatar--md {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+.ds-avatar--lg {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+.ds-avatar--xl {
+  width: 56px;
+  height: 56px;
+  font-size: 19px;
+}
+.ds-avatar--sqr {
+  border-radius: 32%;
+}
+
+.ds-avatar--tone-0 {
+  --ds-avatar-c: #00b3ae;
+}
+.ds-avatar--tone-1 {
+  --ds-avatar-c: #f08a24;
+}
+.ds-avatar--tone-2 {
+  --ds-avatar-c: #3b82f6;
+}
+.ds-avatar--tone-3 {
+  --ds-avatar-c: #8b5cf6;
+}
+.ds-avatar--tone-4 {
+  --ds-avatar-c: #ec4899;
+}
+.ds-avatar--tone-5 {
+  --ds-avatar-c: #22a35a;
+}
+:is(
+  .ds-avatar--tone-0,
+  .ds-avatar--tone-1,
+  .ds-avatar--tone-2,
+  .ds-avatar--tone-3,
+  .ds-avatar--tone-4,
+  .ds-avatar--tone-5
+) {
+  --ds-avatar-ct: color-mix(in srgb, var(--ds-avatar-c) 55%, #000);
+}
+:root[data-theme="dark"]
+  :is(
+    .ds-avatar--tone-0,
+    .ds-avatar--tone-1,
+    .ds-avatar--tone-2,
+    .ds-avatar--tone-3,
+    .ds-avatar--tone-4,
+    .ds-avatar--tone-5
+  ) {
+  --ds-avatar-ct: color-mix(in srgb, var(--ds-avatar-c) 45%, #fff);
+}
+
+.ds-avatar--accent {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.ds-avatar--ai {
+  background: none;
+  box-shadow: none;
+}
+.ds-avatar .ds-avatar__mark {
+  display: block;
+  flex: none;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.ds-avatar--more,
+.ds-avatar--muted {
+  --ds-avatar-c: var(--text-3);
+  --ds-avatar-ct: var(--text-2);
+}
+.ds-avatar--dark {
+  background: var(--text);
+  color: var(--surface);
+}
+
+.ds-avatar__st {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 28%;
+  min-width: 7px;
+  height: 28%;
+  min-height: 7px;
+  border-radius: 50%;
+  background: var(--ds-avatar-st);
+  box-shadow: 0 0 0 2px var(--surface);
+  transition: background var(--dur-f);
+}
+.ds-avatar[data-status="on"] {
+  --ds-avatar-st: #22c55e;
+}
+.ds-avatar[data-status="away"] {
+  --ds-avatar-st: #f59e0b;
+}
+.ds-avatar[data-status="busy"] {
+  --ds-avatar-st: var(--danger);
+}
+.ds-avatar[data-status="off"] {
+  --ds-avatar-st: var(--text-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-avatar__st {
+    transition: none;
+  }
+}

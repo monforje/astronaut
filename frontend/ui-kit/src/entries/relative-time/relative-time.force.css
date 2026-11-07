@@ -1,0 +1,46 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-reltime[data-force="hover"] {
+  border-bottom-color: var(--text);
+}
+.ds-reltime[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.ds-reltime-rows {
+  display: grid;
+  width: 100%;
+  max-width: 420px;
+}
+.ds-reltime-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--divider);
+  font-size: var(--fs-body);
+}
+.ds-reltime-row:last-child {
+  border-bottom: 0;
+}
+.ds-reltime-row b {
+  font-weight: 600;
+}
+.ds-reltime-row .ds-reltime {
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+
+.ds-reltime-stage {
+  position: relative;
+  display: inline-block;
+}
+.ds-reltime-stage__tip {
+  position: absolute;
+  inset-inline: 0;
+  bottom: calc(100% + 6px);
+  width: max-content;
+  margin-inline: auto;
+}

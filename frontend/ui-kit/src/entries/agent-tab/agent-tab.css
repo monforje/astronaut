@@ -1,0 +1,222 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-agent-tab {
+  position: fixed;
+  right: 0;
+  top: var(--ds-agent-tab-y, 62%);
+  z-index: 810;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 8px 0 6px;
+  border: 0;
+  border-radius: 16px 0 0 16px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    var(--shadow-pop);
+  cursor: pointer;
+  translate: 14px 0;
+  transition:
+    translate calc(0.28s * var(--slow, 1)) var(--ease),
+    right calc(0.3s * var(--slow, 1)) var(--ease),
+    opacity calc(0.2s * var(--slow, 1));
+  touch-action: none;
+  user-select: none;
+}
+.ds-agent-tab:hover,
+.ds-agent-tab:focus-visible,
+.ds-agent-tab[data-drag] {
+  translate: 0 0;
+}
+.ds-agent-tab:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-agent-tab:active {
+  background: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-agent-tab[data-drag] {
+  cursor: grabbing;
+}
+.ds-agent-tab__logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+}
+.ds-agent-tab__logo img {
+  width: 34px;
+  height: 34px;
+  animation: ds-agent-tab-nod calc(5s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-agent-tab-nod {
+  0%,
+  86%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  90% {
+    translate: 0 -3px;
+    rotate: -7deg;
+  }
+  94% {
+    translate: 0 0;
+    rotate: 6deg;
+  }
+  97% {
+    rotate: -2deg;
+  }
+}
+.ds-agent-tab__more {
+  display: grid;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1.2;
+  text-align: left;
+  transition:
+    max-width calc(0.28s * var(--slow, 1)) var(--ease),
+    opacity calc(0.2s * var(--slow, 1)),
+    margin calc(0.28s * var(--slow, 1)) var(--ease);
+}
+.ds-agent-tab:hover .ds-agent-tab__more,
+.ds-agent-tab:focus-visible .ds-agent-tab__more,
+.ds-agent-tab[data-drag] .ds-agent-tab__more {
+  max-width: 150px;
+  opacity: 1;
+  margin: 0 6px;
+}
+.ds-agent-tab__more b {
+  font-weight: 700;
+  font-size: var(--fs-body);
+}
+.ds-agent-tab__more small {
+  font-size: var(--fs-info);
+  color: var(--text-3);
+}
+.ds-agent-tab__badge {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  z-index: 1;
+  display: inline-flex;
+}
+.ds-agent-tab__x {
+  display: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-2);
+}
+.ds-agent-tab[data-open] {
+  translate: 0 0;
+  clip-path: inset(-24px 0 -24px -24px);
+  box-shadow:
+    inset 1px 0 0 var(--border),
+    inset 0 1px 0 var(--border),
+    inset 0 -1px 0 var(--border),
+    var(--shadow-pop);
+}
+.ds-agent-tab[data-open][data-tracking] {
+  transition:
+    translate calc(0.28s * var(--slow, 1)) var(--ease),
+    opacity calc(0.2s * var(--slow, 1));
+}
+.ds-agent-tab[data-open] .ds-agent-tab__logo,
+.ds-agent-tab[data-open] .ds-agent-tab__more,
+.ds-agent-tab[data-open] .ds-agent-tab__badge {
+  display: none;
+}
+.ds-agent-tab[data-open] .ds-agent-tab__x {
+  display: grid;
+}
+.ds-agent-tab[data-hide] {
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-agent-tab__bubble {
+  position: fixed;
+  right: 18px;
+  z-index: 810;
+  width: 300px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    var(--shadow-pop);
+  animation: ds-agent-tab-bub-in calc(0.35s * var(--slow, 1)) var(--ease);
+}
+.ds-agent-tab__bubble::after {
+  content: "";
+  position: absolute;
+  right: 26px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--surface);
+  rotate: 45deg;
+  box-shadow: 1px 1px 0 0 var(--border);
+}
+.ds-agent-tab__bubble[data-out] {
+  animation: ds-agent-tab-bub-out calc(0.2s * var(--slow, 1)) ease forwards;
+}
+.ds-agent-tab__bub-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ds-agent-tab__bub-head b {
+  flex: 1;
+  font-weight: 700;
+}
+.ds-agent-tab__bubble p {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+.ds-agent-tab__bubble p b {
+  color: var(--text);
+}
+.ds-agent-tab__bub-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ds-agent-tab__bub-actions > button {
+  width: 100%;
+}
+@keyframes ds-agent-tab-bub-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+    scale: 0.96;
+  }
+}
+@keyframes ds-agent-tab-bub-out {
+  to {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-agent-tab__logo img {
+    animation: none;
+  }
+  .ds-agent-tab,
+  .ds-agent-tab__more {
+    transition: none;
+  }
+  .ds-agent-tab__bubble,
+  .ds-agent-tab__bubble[data-out] {
+    animation: none;
+  }
+}

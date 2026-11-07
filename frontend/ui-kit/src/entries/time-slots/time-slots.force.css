@@ -1,0 +1,12 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-slots__slot[data-force="hover"]:not(:disabled, [aria-pressed="true"]) {
+  background: var(--layer-1);
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-slots__slot[data-force="active"]:not(:disabled, [aria-pressed="true"]) {
+  background: var(--layer-1p);
+}
+.ds-slots__slot[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}

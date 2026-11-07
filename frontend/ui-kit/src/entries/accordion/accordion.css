@@ -1,0 +1,132 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-acc {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ds-acc__i + .ds-acc__i {
+  border-top: 1px solid var(--divider);
+}
+.ds-acc__h {
+  margin: 0;
+  font: inherit;
+}
+.ds-acc__t {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-acc__t:hover:not(:disabled) {
+  background: var(--layer-1);
+}
+.ds-acc__t:active:not(:disabled) {
+  background: var(--layer-1p);
+}
+.ds-acc__t:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-acc__t:disabled {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-acc__ico {
+  display: inline-flex;
+  flex: none;
+  color: var(--text-2);
+}
+.ds-acc__t:disabled .ds-acc__ico {
+  color: var(--text-ph);
+}
+.ds-acc__tt {
+  flex: 1;
+  min-width: 0;
+}
+.ds-acc__ad {
+  flex: none;
+  color: var(--text-3);
+  white-space: nowrap;
+  font-size: var(--fs-control);
+  font-weight: 400;
+}
+.ds-acc__t:disabled .ds-acc__ad {
+  color: var(--text-ph);
+}
+.ds-acc__cv {
+  display: inline-flex;
+  flex: none;
+  color: var(--text-3);
+  transition: rotate var(--dur) var(--ease);
+}
+.ds-acc__t[aria-expanded="true"] .ds-acc__cv {
+  rotate: 180deg;
+}
+.ds-acc__p {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows calc(0.25s * var(--slow, 1)) var(--ease);
+}
+.ds-acc__i[data-open] > .ds-acc__p {
+  grid-template-rows: 1fr;
+}
+.ds-acc__p > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.ds-acc__b {
+  padding: 2px 8px 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.ds-acc--cards {
+  gap: 8px;
+}
+.ds-acc--cards .ds-acc__i {
+  border: 0;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition: box-shadow var(--dur-f);
+}
+.ds-acc--cards .ds-acc__i[data-open] {
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-acc--cards .ds-acc__t {
+  padding: 10px 12px;
+}
+.ds-acc--cards .ds-acc__b {
+  padding: 2px 12px 14px;
+}
+.ds-acc .ds-acc__sk-wrap {
+  gap: 8px;
+}
+.ds-acc__err {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--err-text);
+}
+.ds-acc__empty {
+  color: var(--text-3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-acc__t,
+  .ds-acc__cv,
+  .ds-acc__p,
+  .ds-acc--cards .ds-acc__i {
+    transition: none;
+  }
+}

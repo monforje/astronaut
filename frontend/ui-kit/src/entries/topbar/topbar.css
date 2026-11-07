@@ -1,0 +1,309 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-top-host {
+  container-type: inline-size;
+  width: 100%;
+  min-width: 0;
+}
+.ds-top {
+  display: grid;
+  grid-template-columns:
+    minmax(var(--top-crumbs-min, 300px), 1fr) minmax(0, 420px)
+    minmax(max-content, 1fr);
+  align-items: center;
+  gap: 12px;
+  height: var(--h-bar);
+  padding: 0 16px;
+  border-bottom: 1px solid var(--divider);
+  border-radius: var(--r-card) var(--r-card) 0 0;
+  background: var(--surface);
+}
+.ds-top__crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--text-2);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ds-top__c {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 28px;
+  flex: 0 10 auto;
+}
+.ds-top__c[data-last] {
+  min-width: 48px;
+  flex-shrink: 1;
+}
+.ds-top__c > a,
+.ds-top__c > button,
+.ds-top__c > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ds-top__crumbs a,
+.ds-top__cb {
+  margin: 0 -4px;
+  padding: 2px 4px;
+  border-radius: var(--r-control);
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--dur-f);
+}
+.ds-top__crumbs a:hover,
+.ds-top__cb:hover {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-top__crumbs a:focus-visible,
+.ds-top__cb:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-top__crumbs [aria-current] {
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-top__sl {
+  display: inline-flex;
+  flex: none;
+  color: var(--text-ph);
+  font-style: normal;
+}
+.ds-top__center {
+  min-width: 0;
+}
+.ds-top__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--h-sm);
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-item);
+  background: var(--field);
+  cursor: text;
+  transition:
+    border-color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-top__search:hover {
+  border-color: var(--text-3);
+}
+.ds-top__search:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-top__search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+}
+.ds-top__search input::placeholder {
+  color: var(--text-ph);
+}
+.ds-top__lead {
+  display: inline-flex;
+  color: var(--text-3);
+}
+.ds-top__ico,
+.ds-top__mic {
+  display: inline-flex;
+}
+.ds-top__mrow {
+  display: block;
+}
+.ds-top__search:focus-within .ds-top__lead {
+  color: var(--link);
+}
+.ds-top__kbd {
+  flex: none;
+  padding: 0 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-control);
+  color: var(--text-3);
+  font: 500 11px / 16px var(--font);
+  white-space: nowrap;
+}
+.ds-top__spin {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--link);
+  border-radius: 50%;
+  animation: ds-top-spin calc(0.8s * var(--slow, 1)) linear infinite;
+}
+.ds-top__end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 0;
+}
+.ds-top__ib {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--h-md);
+  height: var(--h-md);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-top__ib:hover,
+.ds-top__prof:hover,
+.ds-top__prof[aria-expanded="true"] {
+  background: var(--layer-2);
+}
+.ds-top__ib:active,
+.ds-top__prof:active {
+  background: var(--layer-3);
+}
+.ds-top__ib:focus-visible,
+.ds-top__prof:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-top__badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--r-pill);
+  background: var(--danger);
+  box-shadow: 0 0 0 2px var(--surface);
+  color: var(--on-danger);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+.ds-top__profwrap {
+  position: relative;
+}
+.ds-top__prof {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--h-md);
+  padding: 0 6px 0 4px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-top__caret {
+  display: inline-flex;
+  transition: rotate var(--dur) var(--ease);
+}
+.ds-top__prof[aria-expanded="true"] .ds-top__caret {
+  rotate: 180deg;
+}
+.ds-top__menu {
+  min-width: 240px;
+  padding: 6px;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  animation: ds-top-pop calc(0.125s * var(--slow, 1)) var(--ease);
+}
+.ds-top__mh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+}
+.ds-top__mh span {
+  display: grid;
+}
+.ds-top__mh small {
+  color: var(--text-3);
+  font-size: var(--fs-info);
+}
+.ds-top__msep {
+  display: block;
+  border: 0;
+  height: 1px;
+  margin: 6px -6px;
+  background: var(--divider);
+}
+.ds-top__mi {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--h-sm);
+  padding: 1px 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-top__mi svg {
+  color: var(--text-2);
+}
+.ds-top__mi:hover {
+  background: var(--layer-2);
+}
+.ds-top__mi:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+@container (max-width: 720px) {
+  .ds-top {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .ds-top__center {
+    display: none;
+  }
+}
+@keyframes ds-top-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes ds-top-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 -4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-top__crumbs a,
+  .ds-top__search,
+  .ds-top__ib,
+  .ds-top__prof,
+  .ds-top__caret,
+  .ds-top__mi {
+    transition: none;
+  }
+  .ds-top__menu {
+    animation: none;
+  }
+  .ds-top__spin {
+    animation-duration: 3s;
+  }
+}

@@ -1,0 +1,109 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+:root {
+  color-scheme: light;
+  --navy: var(--color-navy);
+  --teal: var(--color-teal);
+  --orange: var(--color-orange);
+  --off-white: var(--color-off-white);
+  --font: var(--font-sans);
+  --mono: var(--font-mono);
+
+  --surface: #fff;
+  --page: #f4f5f7;
+  --surface-muted: #eceef2;
+  --field: #fff;
+  --text: #15202b;
+  --text-2: #44505d;
+  --text-3: #5d6975;
+  --text-ph: #8792a0;
+  --border: #c6cdd6;
+  --divider: #e0e4e9;
+  --primary: var(--teal);
+  --on-primary: var(--navy);
+  --link: #007f7a;
+  --link-strong: #006662;
+  --focus: #00968f;
+  --spark: var(--orange);
+  --warn-text: #b45309;
+  --danger: #d03538;
+  --on-danger: #fff;
+  --ok-text: #00807a;
+  --err-text: #c92a2a;
+  --info-text: #1d4ed8;
+  --info: #2563eb;
+  --selected: color-mix(in srgb, var(--teal) 15%, var(--surface));
+  --border-selected: color-mix(in srgb, var(--teal) 60%, var(--surface));
+  --highlight: color-mix(in srgb, var(--orange) 45%, var(--surface));
+  --overlay: rgba(14, 20, 28, 0.45);
+  --ink: #0e1620;
+  --layer-1: color-mix(in srgb, transparent, var(--ink) 4%);
+  --layer-1p: color-mix(in srgb, transparent, var(--ink) 7%);
+  --layer-n: color-mix(in srgb, transparent, var(--ink) 6%);
+  --layer-np: color-mix(in srgb, transparent, var(--ink) 9%);
+  --layer-2: color-mix(in srgb, transparent, var(--ink) 9%);
+  --layer-3: color-mix(in srgb, transparent, var(--ink) 12%);
+  --tone: color-mix(in srgb, transparent, var(--ink) 7%);
+
+  --r-control: 4px;
+  --r-item: 8px;
+  --r-card: 10px;
+  --r-popover: 12px;
+  --r-panel: 14px;
+  --r-pill: 999px;
+
+  --h-xs: 24px;
+  --h-sm: 28px;
+  --h-md: 32px;
+  --h-lg: 36px;
+  --h-bar: 56px;
+  --w-side: 248px;
+  --w-rail: 56px;
+
+  --fs-body: 13px;
+  --fs-control: 12px;
+  --fs-info: 11px;
+  --fs-qty: 15px;
+  --fs-heading: 18px;
+  --fs-title: 22px;
+
+  --shadow-panel: 0 1px 3px rgba(14, 20, 28, 0.18);
+  --shadow-pop: 0 6px 20px rgba(14, 20, 28, 0.2), 0 1px 3px rgba(14, 20, 28, 0.14);
+  --shadow-dialog: 0 24px 64px rgba(14, 20, 28, 0.32), 0 2px 6px rgba(14, 20, 28, 0.16);
+
+  --dur-f: calc(0.125s * var(--slow, 1));
+  --dur: calc(0.2s * var(--slow, 1));
+  --dur-s: calc(0.3s * var(--slow, 1));
+  --ease: cubic-bezier(0.6, 0, 0.05, 0.95);
+  --glide: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="dark"] {
+  --surface: #151b23;
+  --page: #0a0e13;
+  --surface-muted: #1f2833;
+  --field: #0f141b;
+  --text: #f7f9fb;
+  --text-2: #c9d2dc;
+  --text-3: #a0adbb;
+  --text-ph: #7f8c9b;
+  --border: #4d5b6b;
+  --divider: #323e4b;
+  --on-primary: #082f53;
+  --link: var(--teal);
+  --link-strong: var(--teal);
+  --focus: var(--teal);
+  --warn-text: #ffb067;
+  --danger: #ff6b6b;
+  --on-danger: #2a0b08;
+  --info: #7ab0ff;
+  --ok-text: #2de3df;
+  --err-text: #ff8d8d;
+  --info-text: #9cc4ff;
+  --selected: color-mix(in srgb, var(--teal) 16%, var(--surface));
+  --overlay: rgba(0, 0, 0, 0.62);
+  --ink: #fff;
+  --shadow-panel: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.55);
+  --shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}

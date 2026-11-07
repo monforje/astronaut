@@ -1,0 +1,25 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-avgroup[data-force~="tip-0"] .ds-avgroup__item:nth-child(1) > .ds-avgroup__tip,
+.ds-avgroup[data-force~="tip-1"] .ds-avgroup__item:nth-child(2) > .ds-avgroup__tip,
+.ds-avgroup[data-force~="tip-2"] .ds-avgroup__item:nth-child(3) > .ds-avgroup__tip,
+.ds-avgroup[data-force~="tip-3"] .ds-avgroup__item:nth-child(4) > .ds-avgroup__tip,
+.ds-avgroup[data-force~="tip-4"] .ds-avgroup__item:nth-child(5) > .ds-avgroup__tip {
+  display: block;
+}
+.ds-avgroup[data-force~="hover"] .ds-avgroup__more:not([aria-expanded="true"]) > * {
+  background: color-mix(in srgb, var(--text-3) 34%, var(--surface));
+}
+.ds-avgroup[data-force~="active"] .ds-avgroup__more:not([aria-expanded="true"]) > * {
+  background: color-mix(in srgb, var(--text-3) 44%, var(--surface));
+}
+.ds-avgroup[data-force~="focus"] .ds-avgroup__more {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-avgroup__empty[data-force~="hover"] .ds-avgroup__add:not(:disabled) {
+  background: var(--layer-2);
+}
+.ds-avgroup__empty[data-force~="focus"] .ds-avgroup__add {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}

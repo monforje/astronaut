@@ -1,0 +1,107 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-spinner {
+  --ds-spinner-sw: 2px;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  background: conic-gradient(
+    currentColor 0 27%,
+    color-mix(in srgb, currentColor 22%, transparent) 0
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ds-spinner-sw)),
+    #000 calc(100% - var(--ds-spinner-sw) + 0.5px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ds-spinner-sw)),
+    #000 calc(100% - var(--ds-spinner-sw) + 0.5px)
+  );
+  animation: ds-spinner-turn calc(0.8s * var(--slow, 1)) linear infinite;
+}
+.ds-spinner--txt {
+  width: 1em;
+  height: 1em;
+}
+.ds-spinner--xs {
+  width: 10px;
+  height: 10px;
+  --ds-spinner-sw: 1.5px;
+}
+.ds-spinner--md {
+  width: 16px;
+  height: 16px;
+}
+.ds-spinner--lg {
+  width: 24px;
+  height: 24px;
+  --ds-spinner-sw: 2.5px;
+}
+.ds-spinner--xl {
+  width: 36px;
+  height: 36px;
+  --ds-spinner-sw: 3px;
+}
+.ds-spinner--accent {
+  color: var(--link);
+}
+.ds-spinner--warn {
+  color: var(--warn-text);
+}
+.ds-spinner--err {
+  color: var(--danger);
+}
+@keyframes ds-spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ds-spinner-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-2);
+}
+
+.ds-spinner-dots {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+.ds-spinner-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: ds-spinner-blink calc(1s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-spinner-dots i:nth-child(2) {
+  animation-delay: calc(0.15s * var(--slow, 1));
+}
+.ds-spinner-dots i:nth-child(3) {
+  animation-delay: calc(0.3s * var(--slow, 1));
+}
+@keyframes ds-spinner-blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-spinner {
+    animation-duration: 3s;
+  }
+  .ds-spinner-dots i {
+    animation: none;
+    opacity: 0.6;
+  }
+}

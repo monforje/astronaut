@@ -1,0 +1,5 @@
+/dist/
+/coverage/
+/.task/
+/node_modules/
+/.playwright-mcp/

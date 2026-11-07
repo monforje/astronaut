@@ -1,0 +1,62 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-sep-sec[data-force="hover"] .ds-sep-sec__btn:not(:disabled) {
+  background: var(--layer-2);
+}
+.ds-sep-sec[data-force="active"] .ds-sep-sec__btn:not(:disabled) {
+  background: var(--layer-3);
+}
+.ds-sep-sec[data-force="focus"] .ds-sep-sec__btn {
+  outline: 2px solid var(--focus);
+}
+.ds-sep-bar {
+  display: inline-flex;
+  align-items: center;
+}
+.ds-sep-bar__b {
+  height: var(--h-sm);
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text-2);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-sep-bar__b:hover {
+  background: var(--layer-2);
+}
+.ds-sep-bar__b:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-sep-sec__rows {
+  display: grid;
+  margin-top: 6px;
+}
+.ds-sep-sec__rows > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--divider);
+}
+.ds-sep-sec__rows span {
+  flex: 1;
+  font-weight: 600;
+}
+.ds-sep-sec__rows em {
+  font-style: normal;
+  font-size: var(--fs-info);
+  font-weight: 600;
+}
+.ds-sep-sec__ok {
+  color: var(--ok-text);
+}
+.ds-sep-sec__err {
+  color: var(--err-text);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-sep-bar__b {
+    transition: none;
+  }
+}

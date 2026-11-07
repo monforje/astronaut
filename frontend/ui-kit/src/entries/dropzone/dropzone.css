@@ -1,0 +1,247 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-dropzone__wrap {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  max-width: 560px;
+}
+.ds-dropzone {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 560px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  overflow-wrap: break-word;
+  padding: 28px 16px;
+  text-align: center;
+  border: 1px dashed var(--text-ph);
+  border-radius: var(--r-panel);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    background var(--dur),
+    border-color var(--dur);
+}
+.ds-dropzone:hover {
+  border-color: var(--text-3);
+  background: var(--layer-1);
+}
+.ds-dropzone:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-dropzone[data-state="drag"],
+.ds-dropzone[data-state="drag"]:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--surface));
+}
+.ds-dropzone[data-state="reject"],
+.ds-dropzone[data-state="reject"]:hover {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 6%, var(--surface));
+  cursor: no-drop;
+}
+.ds-dropzone[data-state="full"],
+.ds-dropzone[data-state="full"]:hover {
+  border-style: solid;
+  border-color: var(--border);
+  background: var(--surface-muted);
+  cursor: default;
+}
+.ds-dropzone[data-state="disabled"],
+.ds-dropzone[data-state="disabled"]:hover {
+  border-color: var(--divider);
+  background: none;
+  color: var(--text-ph);
+  cursor: default;
+}
+
+.ds-dropzone__tile {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text-2);
+  transition:
+    background var(--dur),
+    color var(--dur);
+}
+.ds-dropzone[data-state="drag"] .ds-dropzone__tile {
+  color: var(--link-strong);
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-dropzone[data-state="reject"] .ds-dropzone__tile {
+  color: var(--err-text);
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+.ds-dropzone[data-state="full"] .ds-dropzone__tile {
+  color: var(--ok-text);
+}
+.ds-dropzone[data-state="disabled"] .ds-dropzone__tile {
+  color: var(--text-ph);
+  box-shadow: inset 0 0 0 1px var(--divider);
+  background: none;
+}
+.ds-dropzone__title {
+  font-weight: 600;
+}
+.ds-dropzone[data-state="reject"] .ds-dropzone__title {
+  color: var(--err-text);
+}
+.ds-dropzone__hint {
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-dropzone[data-state="disabled"] .ds-dropzone__hint {
+  color: var(--text-ph);
+}
+
+.ds-dropzone--compact {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  text-align: left;
+}
+.ds-dropzone--compact .ds-dropzone__tile {
+  width: 32px;
+  height: 32px;
+}
+.ds-dropzone__text {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+  justify-items: center;
+}
+.ds-dropzone--compact .ds-dropzone__text {
+  justify-items: start;
+}
+.ds-dropzone--cell {
+  padding: 14px 8px;
+  font-size: var(--fs-control);
+}
+.ds-dropzone--cell .ds-dropzone__tile {
+  width: 32px;
+  height: 32px;
+}
+.ds-dropzone--cell .ds-dropzone__hint {
+  display: none;
+}
+
+.ds-dropzone__list {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+.ds-dropzone__file {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--border);
+  background: var(--surface);
+}
+.ds-dropzone__ext {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-item);
+  background: color-mix(in srgb, var(--danger) 9%, var(--surface));
+  color: var(--err-text);
+  font-size: 10px;
+  font-weight: 800;
+}
+.ds-dropzone__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ds-dropzone__status {
+  grid-column: 3;
+  grid-row: 1;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-size: var(--fs-control);
+  font-weight: 600;
+}
+.ds-dropzone__file[data-done] .ds-dropzone__status {
+  color: var(--ok-text);
+}
+.ds-dropzone__remove {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-dropzone__remove:hover {
+  background: var(--layer-2);
+}
+.ds-dropzone__remove:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-dropzone__bar {
+  grid-column: 2 / 4;
+  position: relative;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--tone);
+  overflow: hidden;
+}
+.ds-dropzone__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width calc(0.35s * var(--slow, 1)) var(--ease);
+}
+.ds-dropzone__note {
+  min-height: 1.4em;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-dropzone__note button {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-dropzone,
+  .ds-dropzone__tile,
+  .ds-dropzone__remove,
+  .ds-dropzone__fill {
+    transition: none;
+  }
+}

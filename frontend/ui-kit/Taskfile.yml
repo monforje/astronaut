@@ -1,0 +1,69 @@
+version: "3.53.1"
+
+dotenv: ["../../.env", ".env", "../../.env.example", ".env.example"]
+
+env:
+  PROJECT_NAME: ui-kit-front
+  SERVICE_APP: frontend
+  APP_WORKING_DIR: /app
+  DOCKER_COMPOSE_FILEPATH: compose.yml
+  # Сертификат домена из ao.toml (task trust) — имя файла в CERTS_DIR.
+  CERT_NAME: astronaut-ui-kit
+  DOCKER_BUN_IMAGE_NAME: oven/bun:1.4.3
+  DOCKER_UID:
+    sh: id -u
+  DOCKER_GID:
+    sh: id -g
+
+vars:
+  # Бренд подключён симлинками на idea/skelet/brand (глубина: frontend/ui-kit → ../../idea):
+  # без этого монтирования в контейнере `task bun` они битые (как в compose.yml для dev-сервера).
+  DOCKER_BUN_RUN_ARGS: '-v "{{.ROOT_DIR}}/../../idea/skelet/brand":/idea/skelet/brand:ro'
+
+includes:
+  base:
+    taskfile: ./deploy/local/Taskfile.yml
+    flatten: true
+    excludes: [default, project_deploy, infra-up]
+  bun:
+    taskfile: ./deploy/local/lang/bun/Taskfile.yml
+    flatten: true
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  mcp:
+    desc: "MCP-сервер кита (stdio, astronaut-ui-kit): JSON-RPC в stdout, логи в stderr; репозиторий монтируется только для чтения"
+    silent: true
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - |
+        exec docker run --rm -i \
+          -u {{.USERID}}:{{.GROUPID}} \
+          -v "{{.ROOT_DIR}}/../..":/repo:ro -w /repo/frontend/ui-kit \
+          -e HOME=/tmp \
+          {{.DOCKER_BUN_IMAGE_NAME}} \
+          bun mcp/main.ts
+
+  project_deploy:
+    internal: true
+    cmds:
+      - task: trust
+      - task: init-hooks
+        if: '[ -e "{{.ROOT_DIR}}/.pre-commit-config.yaml" ]'
+      - task: deps-install
+      - task: proxy-start
+      - task: start
+        vars: { CLI_ARGS: "-d --wait" }
+
+  deps-install:
+    desc: "bun install — только если менялись package.json/bun.lock"
+    sources: [package.json, bun.lock]
+    status:
+      - test -d node_modules
+    cmds:
+      - task: bun
+        vars: { BUN_COMMAND: "install" }

@@ -1,0 +1,41 @@
+{
+  "name": "ui-kit",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Komarov Zhiznev Group",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "check": "tsc",
+    "lint": "oxlint",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "test": "vitest run",
+    "verify": "bun run check && bun run lint && bun run format:check && bun run test",
+    "docs": "bun scripts/gen-docs.ts",
+    "mcp": "bun mcp/main.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router": "^8.4.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "happy-dom": "^21.0.4",
+    "oxfmt": "^0.72.0",
+    "oxlint": "^1.87.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.11"
+  }
+}

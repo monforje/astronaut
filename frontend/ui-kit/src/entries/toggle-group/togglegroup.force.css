@@ -1,0 +1,11 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-tgroup__opt[data-force="hover"]:not([aria-checked="true"]) {
+  color: var(--text);
+}
+.ds-tgroup__opt[data-force="active"]:not([aria-checked="true"]) {
+  background: var(--layer-1p);
+}
+.ds-tgroup__opt[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}

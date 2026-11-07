@@ -1,0 +1,176 @@
+name: shared
+
+x-restart-policy: &restart-policy
+  restart: unless-stopped
+
+x-services-common: &services-common
+  <<: *restart-policy
+  networks:
+    - global
+
+x-traefik-labels: &traefik-labels
+  traefik.enable: "true"
+  traefik.docker.network: traefik
+
+services:
+  s3:
+    <<: *services-common
+    image: adobe/s3mock:5.2.3
+    container_name: s3
+    # Новый volume принадлежит root, а образ по умолчанию работает от cnb и не может в него писать.
+    user: "0"
+    env_file:
+      - path: ./env/s3.env
+      - path: ./env/s3.secrets.env
+        required: false
+      - path: ${ROOT_ENV_FILE:-/dev/null}
+        required: false
+    environment:
+      # Бакет проекта создаётся при старте: клиент и тесты ждут, что он уже есть (S3_BUCKET из .env проекта).
+      COM_ADOBE_TESTING_S3MOCK_STORE_INITIAL_BUCKETS: ${S3_BUCKET:-}
+    volumes:
+      - ${S3_VOLUME:-s3-data}:/storage
+
+  s3-ui:
+    <<: *services-common
+    image: cloudlena/s3manager:${S3_UI_VERSION:-v0.11.1}
+    container_name: s3-ui
+    env_file:
+      - path: ./env/s3-ui.env
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.s3-ui.rule: 'Host(`${S3_UI_HOSTNAME:-s3.astronaut.localhost}`)'
+      traefik.http.services.s3-ui.loadbalancer.server.port: "8080"
+    networks:
+      - global
+      - traefik
+    depends_on:
+      - s3
+
+  nats:
+    <<: *services-common
+    image: nats:${NATS_VERSION:-2.15.1-alpine}
+    container_name: nats
+    env_file:
+      - path: ./env/nats.env
+        required: false
+      - path: ${ROOT_ENV_FILE:-/dev/null}
+        required: false
+    command: ['-m', '8222', '-js', '-sd', '/data']
+    volumes:
+      - ${NATS_VOLUME:-nats-data}:/data
+
+  nats-ui:
+    <<: *services-common
+    image: ghcr.io/nats-nui/nui:${NATS_UI_VERSION:-0.9.3}
+    container_name: nats-ui
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.nats-ui.rule: 'Host(`${NATS_UI_HOSTNAME:-nats.astronaut.localhost}`)'
+      traefik.http.services.nats-ui.loadbalancer.server.port: "31311"
+    networks:
+      - global
+      - traefik
+    depends_on:
+      - nats
+
+  smtp:
+    <<: *services-common
+    image: docker.io/axllent/mailpit:v1.31.6
+    container_name: smtp
+    env_file:
+      - path: ./env/smtp.env
+      - path: ${ROOT_ENV_FILE:-/dev/null}
+        required: false
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.smtp.rule: 'Host(`${SMTP_HOSTNAME:-smtp.astronaut.localhost}`)'
+      traefik.http.services.smtp.loadbalancer.server.port: "8025"
+    networks:
+      - global
+      - traefik
+
+  yugabytedb:
+    <<: *services-common
+    image: yugabytedb/yugabyte:${YUGABYTE_VERSION:-2026.1.2.0-b137}
+    container_name: yugabytedb
+    hostname: yugabytedb
+    # Новый volume принадлежит root, а образ по умолчанию работает от пользователя yugabyte.
+    user: "0"
+    command:
+      - bin/yugabyted
+      - start
+      - --background=false
+      - --base_dir=/var/lib/yugabyte
+      - --advertise_address=yugabytedb
+      - --tserver_flags=ysql_yb_ddl_transaction_block_enabled=true,pgsql_proxy_bind_address=0.0.0.0:5433,webserver_interface=0.0.0.0
+      - --master_flags=webserver_interface=0.0.0.0
+    env_file:
+      - path: ./env/yugabyte.env
+        required: false
+      - path: ${ROOT_ENV_FILE:-/dev/null}
+        required: false
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.yugabytedb.rule: 'Host(`${YUGABYTE_HOSTNAME:-yugabyte.astronaut.localhost}`)'
+      traefik.http.services.yugabytedb.loadbalancer.server.port: "7000"
+    networks:
+      - global
+      - traefik
+    volumes:
+      - ${YUGABYTE_VOLUME:-yugabyte-data}:/var/lib/yugabyte
+
+  redis:
+    <<: *services-common
+    image: redis:${REDIS_VERSION:-8.10.2-alpine}
+    container_name: redis
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes:
+      - ${REDIS_VOLUME:-redis-data}:/data
+
+  redis-ui:
+    <<: *services-common
+    image: rediscommander/redis-commander:${REDIS_UI_VERSION:-latest}
+    container_name: redis-ui
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.redis-ui.rule: 'Host(`${REDIS_UI_HOSTNAME:-redis.astronaut.localhost}`)'
+      traefik.http.services.redis-ui.loadbalancer.server.port: "8081"
+    networks:
+      - global
+      - traefik
+    depends_on:
+      - redis
+
+  clickhouse:
+    <<: *services-common
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-26.9}
+    container_name: clickhouse
+    env_file:
+      - path: ./env/clickhouse.env
+        required: false
+      - path: ${ROOT_ENV_FILE:-/dev/null}
+        required: false
+    labels:
+      <<: *traefik-labels
+      traefik.http.routers.clickhouse.rule: 'Host(`${CLICKHOUSE_HOSTNAME:-clickhouse.astronaut.localhost}`)'
+      traefik.http.services.clickhouse.loadbalancer.server.port: "8123"
+    networks:
+      - global
+      - traefik
+    volumes:
+      - ${CLICKHOUSE_VOLUME:-clickhouse-data}:/var/lib/clickhouse
+
+volumes:
+  s3-data:
+  nats-data:
+  yugabyte-data:
+  redis-data:
+  clickhouse-data:
+
+networks:
+  global:
+  traefik:
+    external: true

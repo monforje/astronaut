@@ -10,12 +10,12 @@ includes:
     flatten: true
     excludes: [deploy, where]
     vars:
-      PROJECTS: frontend/demo-site frontend/landing
+      PROJECTS: frontend/demo-site frontend/landing frontend/ui-kit
   all:
     taskfile: ./frontend/demo-site/deploy/local/group/Taskfile.yml
     internal: true
     vars:
-      PROJECTS: frontend/demo-site frontend/landing
+      PROJECTS: frontend/demo-site frontend/landing frontend/ui-kit
 
 tasks:
   default:
@@ -35,9 +35,9 @@ tasks:
     cmds:
       - |
         echo
-        for p in demo-site:Демо-сайт landing:Лендинг; do
+        for p in demo-site:Демо-сайт landing:Лендинг ui-kit:UI-кит; do
           d=${p%%:*}
           h=$(tomlq -r '.hosts[][]' "frontend/$d/ao.toml")
-          printf '  %-10s https://%s\n' "${p#*:}" "$h"
+          printf '  %-14s https://%s\n' "${p#*:}" "$h"
         done
         echo

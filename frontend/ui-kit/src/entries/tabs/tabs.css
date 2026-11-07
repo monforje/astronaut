@@ -1,0 +1,143 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-tabs {
+  width: 100%;
+  min-width: 0;
+}
+.ds-tabs__list {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding: 0 6px;
+  box-shadow: inset 0 -1px 0 var(--divider);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.ds-tabs__list[data-scroll] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
+.ds-tabs__tab {
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-2);
+  font-weight: 500;
+  cursor: pointer;
+}
+.ds-tabs--sm .ds-tabs__tab {
+  height: 36px;
+}
+.ds-tabs__in {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--r-control);
+  transition: background var(--dur-f);
+}
+.ds-tabs__lbl {
+  display: inline-grid;
+}
+.ds-tabs__lbl::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 600;
+}
+.ds-tabs__tab:hover .ds-tabs__in {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-tabs__tab:active .ds-tabs__in {
+  background: var(--layer-3);
+}
+.ds-tabs__tab[aria-selected="true"] {
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-tabs__tab:focus-visible {
+  outline: 0;
+}
+.ds-tabs__tab:focus-visible .ds-tabs__in {
+  outline: 2px solid var(--focus);
+}
+.ds-tabs__tab:disabled {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-tabs__tab:disabled .ds-tabs__in {
+  background: none;
+}
+.ds-tabs__cn {
+  min-width: 18px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--tone);
+  color: var(--text-2);
+  font-size: var(--fs-info);
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.ds-tabs__tab[aria-selected="true"] .ds-tabs__cn {
+  background: var(--selected);
+  color: var(--link-strong);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-tabs__cn[data-zero] {
+  color: var(--text-3);
+}
+.ds-tabs__cn--load {
+  width: 24px;
+  height: 18px;
+  padding: 0;
+  animation: ds-tabs-pulse calc(1.1s * var(--slow, 1)) ease-in-out infinite;
+}
+.ds-tabs__err {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+.ds-tabs__ink {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--text);
+}
+.ds-tabs__ink[data-ready] {
+  transition:
+    translate var(--dur) var(--ease),
+    width var(--dur) var(--ease);
+}
+.ds-tabs__panel {
+  padding: 14px 8px;
+  color: var(--text-2);
+}
+.ds-tabs__panel:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+  border-radius: var(--r-control);
+}
+@keyframes ds-tabs-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-tabs__in,
+  .ds-tabs__ink[data-ready] {
+    transition: none;
+  }
+  .ds-tabs__cn--load {
+    animation: none;
+  }
+}

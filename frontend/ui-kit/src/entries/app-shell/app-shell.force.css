@@ -1,0 +1,298 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-shell[data-bp] {
+  --ds-shell-side: 84px;
+  --ds-shell-rail: 30px;
+  --ds-shell-bar: 30px;
+  --ds-shell-pad: 8px;
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--border);
+  font-size: 10px;
+  line-height: 1.25;
+}
+.ds-shell[data-bp] .ds-shell__brand,
+.ds-shell[data-bp] .ds-shell__top,
+.ds-shell[data-bp] .ds-shell__side {
+  background: var(--surface);
+  color: var(--text-3);
+}
+.ds-shell[data-bp] .ds-shell__brand {
+  gap: 6px;
+  padding: 0 8px;
+}
+.ds-shell[data-bp] .ds-shell__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--divider);
+}
+.ds-shell[data-bp] .ds-shell__side {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 8px;
+  border-right: 1px solid var(--divider);
+}
+.ds-shell[data-bp][data-narrow] .ds-shell__side {
+  display: none;
+}
+.ds-shell[data-bp] .ds-shell__content {
+  overflow: hidden;
+}
+.ds-shell__logo {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--text);
+}
+.ds-shell__search {
+  flex: 0 1 38%;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--tone);
+}
+.ds-shell__tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface-muted);
+  color: var(--text-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ds-shell__grp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ds-shell__grp u {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--text-3);
+}
+.ds-shell__grp i {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+  transition: opacity var(--dur-f);
+}
+.ds-shell[data-rail] .ds-shell__grp i,
+.ds-shell[data-rail] .ds-shell__side .ds-shell__tag,
+.ds-shell[data-rail] .ds-shell__brand .ds-shell__tag {
+  opacity: 0;
+}
+.ds-shell__page {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  height: 100%;
+}
+.ds-shell__b {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  min-height: 0;
+  padding: 6px 8px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text-2);
+}
+.ds-shell__b b,
+.ds-shell__b small {
+  flex: none;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.ds-shell__b b {
+  font-weight: 700;
+  color: var(--text);
+}
+.ds-shell__b small {
+  color: var(--text-3);
+  font-size: 9px;
+}
+.ds-shell__b[data-fill] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--surface),
+    var(--surface) 6px,
+    var(--surface-muted) 6px,
+    var(--surface-muted) 12px
+  );
+}
+.ds-shell__b[data-scroll]::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.ds-shell__rows {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+}
+.ds-shell__rows i {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+}
+.ds-shell__cargo {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.ds-shell__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.ds-shell__split {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+  min-height: 0;
+}
+.ds-shell__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+.ds-shell__stack > [data-fill] {
+  flex: 1;
+}
+.ds-shell__inbox {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.3fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+}
+.ds-shell__set {
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 3fr);
+  gap: 12px;
+  align-items: start;
+}
+.ds-shell__snav {
+  display: grid;
+  gap: 4px;
+}
+.ds-shell__snav b {
+  margin-top: 4px;
+  color: var(--text-3);
+}
+.ds-shell__snav i {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--tone);
+}
+.ds-shell__snav i[data-on] {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+}
+.ds-shell__sbody {
+  display: grid;
+  gap: 6px;
+  max-width: 440px;
+}
+.ds-shell__save {
+  box-shadow:
+    inset 0 0 0 1px var(--border-selected),
+    var(--shadow-panel);
+}
+.ds-shell__dash {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: stretch;
+  align-content: stretch;
+  grid-auto-rows: minmax(0, auto);
+}
+.ds-shell__msg {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  height: 100%;
+  text-align: center;
+  color: var(--text-2);
+}
+.ds-shell__msg b {
+  font-size: 11px;
+  color: var(--text);
+}
+.ds-shell__msg small {
+  color: var(--text-3);
+}
+.ds-shell__msg[data-tone="err"] b {
+  color: var(--err-text);
+}
+.ds-shell__orb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--link);
+  animation: ds-shell-spin calc(1s * var(--slow, 1)) linear infinite;
+}
+
+.ds-shell:is([data-bp="1280"], [data-bp="1180"], [data-bp="900"], [data-bp="760"])
+  .ds-shell__inbox {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2.3fr);
+}
+.ds-shell:is([data-bp="1280"], [data-bp="1180"], [data-bp="900"], [data-bp="760"])
+  .ds-shell__third {
+  display: none;
+}
+.ds-shell:is([data-bp="1180"], [data-bp="900"], [data-bp="760"]) .ds-shell__split {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ds-shell:is([data-bp="1180"], [data-bp="900"], [data-bp="760"]) .ds-shell__kpis {
+  grid-template-columns: repeat(2, 1fr);
+}
+.ds-shell:is([data-bp="1180"], [data-bp="900"], [data-bp="760"]) .ds-shell__dash > * {
+  grid-column: span 12;
+}
+.ds-shell:is([data-bp="900"], [data-bp="760"]) .ds-shell__inbox {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto;
+  height: auto;
+}
+.ds-shell:is([data-bp="900"], [data-bp="760"]) .ds-shell__inbox > * {
+  min-height: 52px;
+}
+.ds-shell:is([data-bp="900"], [data-bp="760"]) .ds-shell__set {
+  grid-template-columns: minmax(0, 1fr);
+}
+.ds-shell:is([data-bp="900"], [data-bp="760"]) .ds-shell__snav {
+  grid-auto-flow: column;
+}
+.ds-shell__note {
+  margin-bottom: 8px;
+  color: var(--text-3);
+  font-size: var(--fs-info);
+  text-align: center;
+}
+@keyframes ds-shell-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-shell__grp i {
+    transition: none;
+  }
+  .ds-shell__orb {
+    animation-duration: 3s;
+  }
+}

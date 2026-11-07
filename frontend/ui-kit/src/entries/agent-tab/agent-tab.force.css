@@ -1,0 +1,161 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-agent-tab[data-force="hover"],
+.ds-agent-tab[data-force="active"],
+.ds-agent-tab[data-force="focus"] {
+  translate: 0 0;
+}
+.ds-agent-tab[data-force="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.ds-agent-tab[data-force="active"] {
+  background: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-agent-tab[data-force="hover"] .ds-agent-tab__more,
+.ds-agent-tab[data-force="active"] .ds-agent-tab__more,
+.ds-agent-tab[data-force="focus"] .ds-agent-tab__more {
+  max-width: 150px;
+  opacity: 1;
+  margin: 0 6px;
+}
+.ds-agent-tab--demo {
+  position: relative;
+  top: auto;
+  right: auto;
+  translate: none;
+  transition: none;
+  touch-action: auto;
+}
+.ds-agent-tab-frame {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  width: 190px;
+  padding: 14px 0 14px 28px;
+  border-radius: var(--r-card) 0 0 var(--r-card);
+  background: color-mix(in srgb, var(--surface-muted) 70%, var(--page));
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-agent-tab-frame--rest {
+  overflow: hidden;
+  width: 78px;
+}
+.ds-agent-tab-frame--rest .ds-agent-tab--demo {
+  translate: 14px 0;
+}
+.ds-agent-tab-frame--rest .ds-agent-tab--demo[data-force] {
+  translate: 14px 0;
+}
+
+.ds-agent-tab__bubble--static {
+  position: relative;
+  right: auto;
+  animation: none;
+  margin-bottom: 8px;
+  max-width: 100%;
+  min-width: 0;
+}
+.ds-agent-tab-stage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--page);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-agent-tab-stage .ds-agent-tab {
+  position: absolute;
+  top: var(--ds-agent-tab-y, 60%);
+}
+.ds-agent-tab-stage .ds-agent-tab__bubble {
+  position: absolute;
+}
+.ds-agent-tab-stage__page {
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.ds-agent-tab-stage__page i {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--tone);
+}
+.ds-agent-tab-stage__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+.ds-agent-tab-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  width: var(--ds-agent-tab-pw, 260px);
+  background: var(--surface);
+  box-shadow: inset 1px 0 0 var(--border);
+  animation: ds-agent-tab-panel-in calc(0.3s * var(--slow, 1)) var(--ease);
+  transition: width calc(0.3s * var(--slow, 1)) var(--ease);
+}
+.ds-agent-tab-panel[data-size="panel"] {
+  --ds-agent-tab-pw: 260px;
+}
+.ds-agent-tab-panel[data-size="wide"] {
+  --ds-agent-tab-pw: 420px;
+}
+.ds-agent-tab-panel[data-size="full"] {
+  --ds-agent-tab-pw: 100%;
+}
+.ds-agent-tab-panel[data-out] {
+  animation: ds-agent-tab-panel-out calc(0.2s * var(--slow, 1)) var(--ease) forwards;
+}
+.ds-agent-tab-panel__head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 10px 10px 16px;
+  border-bottom: 1px solid var(--divider);
+  font-weight: 700;
+}
+.ds-agent-tab-panel__head b {
+  flex: 1;
+}
+.ds-agent-tab-panel__body {
+  padding: 16px;
+  color: var(--text-2);
+}
+@keyframes ds-agent-tab-panel-in {
+  from {
+    translate: 100% 0;
+  }
+}
+@keyframes ds-agent-tab-panel-out {
+  to {
+    translate: 100% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-agent-tab-panel,
+  .ds-agent-tab-panel[data-out] {
+    transition: none;
+    animation: none;
+  }
+}
+
+.ds-agent-tab-stage--sm {
+  height: 240px;
+}
+.ds-agent-tab-example {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}

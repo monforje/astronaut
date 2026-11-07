@@ -1,0 +1,170 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-sheet__dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px 14px;
+  margin: 0;
+}
+.ds-sheet__dl dt {
+  color: var(--text-2);
+}
+.ds-sheet__dl dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.ds-sheet__dl dd[data-bad] {
+  color: var(--err-text);
+}
+.ds-sheet__field {
+  display: grid;
+  gap: 6px;
+}
+.ds-sheet__field > label,
+.ds-sheet__field > span:first-child {
+  font-size: var(--fs-control);
+  font-weight: 600;
+}
+.ds-sheet__input {
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: var(--field);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  resize: none;
+  transition: box-shadow var(--dur-f);
+}
+.ds-sheet__input::placeholder {
+  color: var(--text-ph);
+}
+.ds-sheet__input:hover {
+  box-shadow: inset 0 0 0 1px var(--text-3);
+}
+.ds-sheet__input:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1px var(--focus),
+    0 0 0 3px var(--selected);
+}
+.ds-sheet__seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--r-item);
+  background: var(--tone);
+}
+.ds-sheet__seg button {
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-2);
+  font-weight: 600;
+  cursor: pointer;
+}
+.ds-sheet__seg button[aria-checked="true"] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-panel);
+}
+.ds-sheet__seg button:focus-visible {
+  outline: 2px solid var(--focus);
+}
+
+.ds-sheet-stage {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--page);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-sheet-stage__page {
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.ds-sheet-stage__page i {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--tone);
+}
+.ds-sheet-stage .ds-sheet-root {
+  position: absolute;
+  z-index: 5;
+}
+.ds-sheet-stage--sm {
+  height: 300px;
+}
+
+.ds-sheet-mini {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  height: 170px;
+  border-radius: var(--r-item);
+  overflow: hidden;
+  background: var(--page);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-sheet-mini__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+}
+.ds-sheet-mini__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--w);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+.ds-sheet-mini__panel i {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--tone);
+}
+.ds-sheet-mini__panel b {
+  font-size: var(--fs-info);
+}
+.ds-sheet-mini__w {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  padding: 2px 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: var(--fs-info);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.ds-sheet--flow {
+  position: static;
+  width: 100%;
+  max-width: none;
+  animation: none;
+  border-radius: var(--r-card);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.ds-sheet--still {
+  animation: none;
+}

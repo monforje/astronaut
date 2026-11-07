@@ -1,0 +1,422 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-dtable {
+  --ds-dtable-row: 48px;
+  container: ds-dtable / inline-size;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+@container ds-dtable (max-width: 520px) {
+  .ds-dtable__n--sel {
+    display: none;
+  }
+  .ds-dtable__foot,
+  .ds-dtable__selbar {
+    padding-inline: 8px;
+  }
+}
+.ds-dtable[data-density="compact"] {
+  --ds-dtable-row: 36px;
+}
+.ds-dtable[data-density="comfort"] {
+  --ds-dtable-row: 56px;
+}
+.ds-dtable__grow {
+  flex: 1;
+}
+.ds-dtable__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ds-dtable__muted {
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-dtable__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--divider);
+}
+.ds-dtable__bar .ds-dtable__search {
+  width: 260px;
+  max-width: 100%;
+}
+.ds-dtable__rowact,
+.ds-dtable__pg,
+.ds-dtable__chip button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    opacity var(--dur-f);
+}
+.ds-dtable__rowact:hover,
+.ds-dtable__chip button:hover {
+  background: var(--layer-2);
+}
+.ds-dtable__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--divider);
+  background: var(--surface-muted);
+}
+.ds-dtable__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 4px 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  font-size: var(--fs-control);
+  font-weight: 600;
+}
+.ds-dtable__chip span {
+  color: var(--text-3);
+  font-weight: 500;
+}
+.ds-dtable__chip button {
+  width: 18px;
+  height: 18px;
+}
+.ds-dtable__reset {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.ds-dtable__wrap {
+  scrollbar-color: var(--text-3) transparent;
+  scrollbar-width: thin;
+  min-height: 0;
+  max-height: var(--ds-dtable-h, none);
+  overflow: auto;
+}
+.ds-dtable__table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-size: var(--fs-body);
+}
+.ds-dtable__table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text-2);
+  font-size: var(--fs-control);
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+.ds-dtable__table td {
+  height: var(--ds-dtable-row);
+  padding: 0 12px;
+  border-bottom: 1px solid var(--divider);
+  background: inherit;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.ds-dtable__table .ds-dtable__end {
+  text-align: right;
+}
+.ds-dtable__table th.ds-dtable__chk,
+.ds-dtable__table td.ds-dtable__chk {
+  padding: 0 0 0 14px;
+}
+.ds-dtable__table th:last-child,
+.ds-dtable__table td:last-child {
+  padding-right: 10px;
+}
+.ds-dtable__table tbody tr {
+  --ds-dtable-bg: var(--surface);
+  background: var(--ds-dtable-bg);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-dtable[data-lines="zebra"] .ds-dtable__table tbody tr:nth-child(even) {
+  --ds-dtable-bg: color-mix(in srgb, var(--surface-muted) 55%, var(--surface));
+}
+.ds-dtable[data-lines="zebra"] .ds-dtable__table td {
+  border-bottom-color: transparent;
+}
+.ds-dtable[data-lines="grid"] .ds-dtable__table th:not(:last-child),
+.ds-dtable[data-lines="grid"] .ds-dtable__table td:not(:last-child) {
+  border-right: 1px solid var(--divider);
+}
+.ds-dtable__table tbody tr[data-on] {
+  --ds-dtable-bg: var(--selected);
+}
+.ds-dtable__table tbody tr:hover,
+.ds-dtable__table tbody tr:focus-within {
+  background: color-mix(in srgb, var(--ds-dtable-bg), var(--ink) 4%);
+}
+.ds-dtable__table tbody tr:active:not(:has(:is(button, input, a, label):active)) {
+  background: color-mix(in srgb, var(--ds-dtable-bg), var(--ink) 7%);
+}
+.ds-dtable__table tbody tr:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-dtable__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.ds-dtable__table tbody tr.ds-dtable__static {
+  cursor: default;
+  background: var(--surface);
+}
+.ds-dtable__rowact {
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+.ds-dtable__rowact--md {
+  width: var(--h-sm);
+  height: var(--h-sm);
+}
+.ds-dtable__table tr:hover .ds-dtable__rowact,
+.ds-dtable__table tr:focus-within .ds-dtable__rowact {
+  opacity: 1;
+}
+.ds-dtable__rowact:focus-visible,
+.ds-dtable__pg:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+.ds-dtable__idc {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ds-dtable__idc b {
+  font-weight: 600;
+}
+.ds-dtable__lead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ds-dtable__lead > .ds-avatar {
+  flex: none;
+}
+.ds-dtable__clip {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-dtable__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% + 12px);
+  margin: 0 -6px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    color var(--dur-f);
+}
+.ds-dtable__sort--end {
+  flex-direction: row-reverse;
+}
+.ds-dtable__sort svg {
+  opacity: 0.55;
+  transition: opacity var(--dur-f);
+}
+.ds-dtable__sort:hover {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-dtable__sort:hover svg,
+.ds-dtable__sort[data-sorted] svg {
+  opacity: 1;
+}
+.ds-dtable__sort:active {
+  background: var(--layer-3);
+}
+.ds-dtable__sort[data-sorted] {
+  color: var(--text);
+}
+.ds-dtable__sort:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+.ds-dtable__wrap[data-anim] .ds-skel::after {
+  animation-delay: var(--ds-dtable-d, 0s);
+}
+.ds-dtable__chk .ds-check {
+  vertical-align: middle;
+}
+.ds-dtable__note {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 16px;
+  color: var(--text-2);
+  text-align: center;
+  white-space: normal;
+}
+.ds-dtable__note b {
+  color: var(--text);
+  font-size: var(--fs-qty);
+  font-weight: 700;
+}
+.ds-dtable__e {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--err-text);
+  font-weight: 600;
+}
+.ds-dtable__big {
+  display: inline-flex;
+  color: var(--text-3);
+}
+.ds-dtable__acts {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ds-dtable__selbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-selected);
+  background: var(--selected);
+  animation: ds-dtable-in calc(0.2s * var(--slow, 1)) var(--ease);
+}
+.ds-dtable__selbar b {
+  margin-right: 4px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+@keyframes ds-dtable-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+.ds-dtable__foot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--divider);
+  color: var(--text-2);
+  font-size: var(--fs-control);
+}
+.ds-dtable__n {
+  margin: 0 6px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ds-dtable__foot .ds-dtable__size {
+  flex: none;
+  width: auto;
+}
+.ds-dtable__pg {
+  min-width: var(--h-sm);
+  height: var(--h-sm);
+  padding: 0 4px;
+  font-size: var(--fs-control);
+  font-variant-numeric: tabular-nums;
+}
+.ds-dtable__pg:hover:not(:disabled) {
+  background: var(--layer-2);
+}
+.ds-dtable__pg:active:not(:disabled) {
+  background: var(--layer-3);
+}
+.ds-dtable__pg[aria-current="page"] {
+  background: var(--selected);
+  box-shadow: inset 0 0 0 1px var(--border-selected);
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-dtable__pg:disabled {
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-dtable__gap {
+  padding: 0 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-dtable__table tbody tr,
+  .ds-dtable__sort,
+  .ds-dtable__sort svg,
+  .ds-dtable__rowact,
+  .ds-dtable__pg {
+    transition: none;
+  }
+  .ds-dtable__selbar {
+    animation: none;
+  }
+}
+
+.ds-dtable--mini .ds-dtable__table {
+  min-width: 0;
+  table-layout: auto;
+}
+.ds-dtable--mini .ds-dtable__table th,
+.ds-dtable--mini .ds-dtable__table td {
+  padding: 0 8px;
+}
+
+.ds-dtable__bar,
+.ds-dtable__chips,
+.ds-dtable__selbar,
+.ds-dtable__foot {
+  position: relative;
+  flex-wrap: wrap;
+}
+.ds-dtable__tabs {
+  scrollbar-width: none;
+}
+.ds-dtable__tabs::-webkit-scrollbar {
+  display: none;
+}

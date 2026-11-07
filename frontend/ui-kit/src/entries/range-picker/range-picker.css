@@ -1,0 +1,204 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-rangepicker__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--h-md);
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-item);
+  background: var(--field);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-rangepicker__trigger:hover:not(:disabled) {
+  border-color: var(--text-3);
+}
+.ds-rangepicker__trigger[aria-expanded="true"],
+.ds-rangepicker__trigger:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--selected);
+  outline: 0;
+}
+.ds-rangepicker__trigger[data-invalid] {
+  border-color: var(--danger);
+}
+.ds-rangepicker__trigger:disabled {
+  background: transparent;
+  border-color: var(--divider);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-rangepicker__v {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.ds-rangepicker__v svg {
+  flex: none;
+  color: var(--link);
+}
+.ds-rangepicker__trigger:disabled .ds-rangepicker__v svg {
+  color: var(--text-ph);
+}
+.ds-rangepicker__ph {
+  color: var(--text-ph);
+}
+.ds-rangepicker__caret {
+  flex: none;
+  color: var(--text-3);
+  transition: rotate var(--dur) var(--ease);
+}
+.ds-rangepicker__trigger[aria-expanded="true"] .ds-rangepicker__caret {
+  rotate: 180deg;
+}
+.ds-rangepicker__skel {
+  width: 150px;
+  height: 10px;
+  border-radius: var(--r-control);
+  background: var(--surface-muted);
+  animation: ds-rangepicker-pulse calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-rangepicker-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.ds-rangepicker__panel {
+  display: flex;
+}
+.ds-rangepicker__pre {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  width: 160px;
+  flex: none;
+  padding: 8px;
+  border-right: 1px solid var(--divider);
+}
+.ds-rangepicker__preset {
+  display: flex;
+  align-items: center;
+  min-height: var(--h-sm);
+  padding: 1px 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-control);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-rangepicker__preset:hover {
+  background: var(--layer-2);
+}
+.ds-rangepicker__preset:active {
+  background: var(--layer-3);
+}
+.ds-rangepicker__preset:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.ds-rangepicker__preset[aria-pressed="true"] {
+  background: var(--selected);
+  color: var(--link-strong);
+  font-weight: 600;
+}
+.ds-rangepicker__main {
+  display: grid;
+  min-width: 0;
+}
+.ds-rangepicker__caption {
+  padding: 8px 12px;
+  border-top: 1px solid var(--divider);
+  color: var(--text-3);
+  font-size: var(--fs-control);
+  font-variant-numeric: tabular-nums;
+}
+.ds-rangepicker__caption[data-ready] {
+  color: var(--text);
+}
+.ds-rangepicker__actions {
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+.ds-rangepicker__actions > * {
+  flex: 1;
+}
+.ds-rangepicker__act {
+  height: var(--h-sm);
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-control);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-rangepicker__act:hover:not(:disabled) {
+  background: var(--layer-1);
+}
+.ds-rangepicker__act:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-rangepicker__act--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: none;
+}
+.ds-rangepicker__act--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary), var(--navy) 12%);
+}
+.ds-rangepicker__act:disabled {
+  background: var(--surface-muted);
+  color: var(--text-ph);
+  box-shadow: none;
+  cursor: default;
+}
+@media (max-width: 520px) {
+  .ds-rangepicker__panel {
+    flex-direction: column;
+    max-width: 100%;
+  }
+  .ds-rangepicker__pre {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--divider);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-rangepicker__trigger,
+  .ds-rangepicker__preset,
+  .ds-rangepicker__act {
+    transition: none;
+  }
+  .ds-rangepicker__caret {
+    transition: none;
+  }
+  .ds-rangepicker__skel {
+    animation: none;
+  }
+}

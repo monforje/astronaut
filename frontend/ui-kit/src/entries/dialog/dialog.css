@@ -1,0 +1,135 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: var(--overlay);
+  animation: ds-dialog-fade calc(0.2s * var(--slow, 1)) ease;
+}
+.ds-dialog-overlay[data-out] {
+  animation: ds-dialog-fadeout calc(0.2s * var(--slow, 1)) ease forwards;
+}
+.ds-dialog-overlay[data-out] .ds-dialog {
+  animation: ds-dialog-out calc(0.2s * var(--slow, 1)) ease forwards;
+}
+.ds-dialog {
+  --ds-dialog-w: 520px;
+  position: relative;
+  container: ds-dialog / inline-size;
+  display: flex;
+  flex-direction: column;
+  width: min(var(--ds-dialog-w), 100%);
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  border-radius: var(--r-panel);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-dialog),
+    inset 0 0 0 1px var(--border);
+  color: var(--text);
+  animation: ds-dialog-in calc(0.3s * var(--slow, 1)) var(--ease);
+}
+.ds-dialog:focus {
+  outline: none;
+}
+.ds-dialog--sm {
+  --ds-dialog-w: 400px;
+}
+.ds-dialog--lg {
+  --ds-dialog-w: 720px;
+}
+.ds-dialog__header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--divider);
+}
+.ds-dialog__title {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.ds-dialog__main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.ds-dialog__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  overflow-wrap: break-word;
+}
+.ds-dialog__inner--flush {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  gap: 0;
+}
+.ds-dialog__text {
+  color: var(--text-2);
+}
+.ds-dialog__error {
+  flex: none;
+  padding: 0 24px 16px;
+}
+.ds-dialog__footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 64px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--divider);
+}
+.ds-dialog__footer > button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: 8px;
+  white-space: nowrap;
+}
+.ds-dialog__footer > button:only-child {
+  flex: 0 0 calc(50% - 4px);
+  margin-left: auto;
+}
+@keyframes ds-dialog-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes ds-dialog-fadeout {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ds-dialog-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 8px;
+  }
+}
+@keyframes ds-dialog-out {
+  to {
+    opacity: 0;
+    scale: 0.98;
+    translate: 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-dialog-overlay,
+  .ds-dialog,
+  .ds-dialog-overlay[data-out],
+  .ds-dialog-overlay[data-out] .ds-dialog {
+    animation: none;
+  }
+}

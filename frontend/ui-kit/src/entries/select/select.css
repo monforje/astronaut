@@ -1,0 +1,286 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-select__field {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  width: 100%;
+}
+.ds-select__label {
+  font-weight: 600;
+  font-size: var(--fs-control);
+}
+.ds-select__error {
+  font-size: var(--fs-control);
+  color: var(--err-text);
+  font-weight: 500;
+}
+.ds-select__host {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 240px;
+}
+.ds-select__host--inline {
+  display: inline-block;
+  width: auto;
+  min-width: 0;
+}
+.ds-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--h-md);
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-item);
+  background: var(--field);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+.ds-select__trigger:hover:not(:disabled) {
+  border-color: var(--text-3);
+}
+.ds-select__trigger[aria-expanded="true"] {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--selected);
+}
+.ds-select__trigger:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-select__trigger[data-invalid] {
+  border-color: var(--danger);
+}
+.ds-select__trigger[data-invalid][aria-expanded="true"] {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
+}
+.ds-select__trigger:disabled {
+  background: transparent;
+  border-color: var(--divider);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-select__value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-select__value--ph {
+  color: var(--text-ph);
+}
+.ds-select__caret {
+  flex: none;
+  color: var(--text-3);
+  transition: transform var(--dur) var(--ease);
+}
+[aria-expanded="true"] > .ds-select__caret {
+  transform: rotate(180deg);
+}
+
+.ds-select__control {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: var(--h-sm);
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--r-item);
+  background: none;
+  color: var(--text-2);
+  font-weight: 600;
+  font-size: var(--fs-control);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-select__control b {
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-select__control:hover:not(:disabled),
+.ds-select__control[aria-expanded="true"] {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-select__control:active:not(:disabled) {
+  background: var(--layer-3);
+}
+.ds-select__control:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-select__control:disabled {
+  color: var(--text-ph);
+  background: none;
+  cursor: default;
+}
+.ds-select__control:disabled b {
+  color: var(--text-ph);
+}
+
+.ds-select__pop {
+  display: flex;
+  flex-direction: column;
+  min-width: 232px;
+  max-width: min(360px, calc(100vw - 16px));
+  padding: 6px;
+  border-radius: var(--r-popover);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-pop),
+    inset 0 0 0 1px var(--border);
+  color: var(--text);
+  animation: ds-select-pop var(--dur-f) var(--ease);
+}
+@keyframes ds-select-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 -4px;
+  }
+}
+.ds-select__title {
+  padding: 2px 8px 4px;
+  font-size: var(--fs-info);
+  color: var(--text-3);
+}
+.ds-select__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  padding: 6px 8px 8px;
+  border-bottom: 1px solid var(--divider);
+  color: var(--text-3);
+}
+.ds-select__search:focus-within > svg {
+  color: var(--link);
+}
+.ds-select__search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--text);
+}
+.ds-select__search input::placeholder {
+  color: var(--text-ph);
+}
+.ds-select__list {
+  display: flex;
+  flex-direction: column;
+  max-height: 240px;
+  overflow: hidden auto;
+  outline: none;
+  scrollbar-width: thin;
+}
+.ds-select__opt {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 5px 8px;
+  border-radius: var(--r-item);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: background var(--dur-f);
+}
+.ds-select__main {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.ds-select__vico {
+  display: inline-flex;
+}
+.ds-select__vico > svg {
+  width: 16px;
+  height: 16px;
+}
+.ds-select__ico > svg {
+  width: 14px;
+  height: 14px;
+}
+.ds-select__ico {
+  display: inline-flex;
+  margin-top: 2px;
+  color: var(--text-3);
+  flex: none;
+}
+.ds-select__tx {
+  display: block;
+  min-width: 0;
+}
+.ds-select__hint {
+  display: block;
+  font-size: var(--fs-info);
+  color: var(--text-3);
+  font-weight: 400;
+}
+.ds-select__opt[aria-selected="true"] {
+  background: var(--selected);
+  color: var(--text);
+  font-weight: 600;
+}
+.ds-select__opt[data-active],
+.ds-select__opt:hover {
+  background: var(--layer-1);
+}
+.ds-select__opt[aria-selected="true"][data-active],
+.ds-select__opt[aria-selected="true"]:hover {
+  background: color-mix(in srgb, var(--selected), var(--ink) 4%);
+}
+.ds-select__opt:active {
+  background: var(--layer-1p);
+}
+.ds-select__opt[aria-disabled="true"],
+.ds-select__opt[aria-disabled="true"]:hover {
+  background: none;
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-select__opt[aria-disabled="true"] .ds-select__hint,
+.ds-select__opt[aria-disabled="true"] .ds-select__ico {
+  color: var(--text-ph);
+}
+.ds-select__mark {
+  background: var(--highlight);
+  color: inherit;
+  border-radius: 2px;
+}
+.ds-select__empty {
+  padding: 10px 8px;
+  color: var(--text-3);
+  font-size: var(--fs-control);
+}
+.ds-select__pop[data-kb] .ds-select__opt[data-active] {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-select__pop {
+    animation: none;
+  }
+  .ds-select__trigger,
+  .ds-select__control,
+  .ds-select__opt {
+    transition: none;
+  }
+  .ds-select__caret {
+    transition: none;
+  }
+}

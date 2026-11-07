@@ -1,0 +1,42 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-uchip[data-force~="hover"] {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 4%);
+}
+.ds-uchip[data-force~="active"] {
+  background-color: color-mix(in srgb, var(--surface), var(--ink) 7%);
+}
+.ds-uchip[data-force~="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-uchip[data-force~="x-hover"] .ds-uchip__x {
+  background: var(--layer-2);
+  color: var(--text);
+}
+.ds-uchip[data-force~="x-focus"] .ds-uchip__x {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-uchip-mn[data-force~="hover"] {
+  background: color-mix(in srgb, var(--teal) 26%, var(--surface));
+}
+.ds-uchip-mn[data-force~="focus"] {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ds-uchip-line {
+  display: block;
+  max-width: 340px;
+  line-height: 1.5;
+  font-size: 13.5px;
+  color: var(--text);
+}
+
+.ds-uchip__anat .ds-uchip__name {
+  padding-top: 6px;
+  margin-top: -6px;
+}
+.ds-uchip__anat .ds-uchip__role {
+  padding-bottom: 6px;
+  margin-bottom: -6px;
+}

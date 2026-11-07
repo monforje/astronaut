@@ -1,0 +1,92 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-tgroup {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  gap: 2px;
+  max-width: 100%;
+  padding: 2px;
+  border-radius: var(--r-item);
+  background: var(--surface-muted);
+  box-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-tgroup--block {
+  display: flex;
+  width: 100%;
+}
+.ds-tgroup--block .ds-tgroup__opt {
+  flex: 1 1 0;
+}
+.ds-tgroup__thumb {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  z-index: -1;
+  border-radius: calc(var(--r-item) - 2px);
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-panel),
+    inset 0 0 0 1px var(--border);
+}
+.ds-tgroup[data-ready] .ds-tgroup__thumb {
+  transition:
+    translate var(--dur) var(--ease),
+    width var(--dur) var(--ease);
+}
+.ds-tgroup__opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: calc(var(--h-sm) - 2px);
+  padding: 0 12px;
+  border: 0;
+  border-radius: calc(var(--r-item) - 2px);
+  background: transparent;
+  color: var(--text-2);
+  font-weight: 600;
+  font-size: var(--fs-control);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color var(--dur-f),
+    background var(--dur-f);
+}
+.ds-tgroup--sm .ds-tgroup__opt {
+  height: calc(var(--h-xs) - 2px);
+  padding: 0 8px;
+  font-size: var(--fs-info);
+}
+.ds-tgroup__icon {
+  display: inline-flex;
+}
+.ds-tgroup__opt--thumb {
+  background: var(--surface);
+  box-shadow:
+    var(--shadow-panel),
+    inset 0 0 0 1px var(--border);
+}
+.ds-tgroup__opt:hover:not([aria-checked="true"], :disabled) {
+  color: var(--text);
+}
+.ds-tgroup__opt:active:not([aria-checked="true"], :disabled) {
+  background: var(--layer-1p);
+}
+.ds-tgroup__opt:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-tgroup__opt[aria-checked="true"] {
+  color: var(--text);
+}
+.ds-tgroup__opt:disabled {
+  color: var(--text-ph);
+  cursor: default;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-tgroup[data-ready] .ds-tgroup__thumb,
+  .ds-tgroup__opt {
+    transition: none;
+  }
+}

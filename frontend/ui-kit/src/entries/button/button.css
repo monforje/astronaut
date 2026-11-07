@@ -1,0 +1,343 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-btn {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  max-width: 100%;
+  height: var(--h-md);
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--ds-btn-br, var(--r-item));
+  background: var(--ds-btn-bg, transparent);
+  color: var(--ds-btn-fg, inherit);
+  box-shadow: var(--ds-btn-shadow, none);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--dur-f),
+    color var(--dur-f),
+    box-shadow var(--dur-f);
+}
+
+.ds-btn--primary {
+  --ds-btn-bg: var(--primary);
+  --ds-btn-fg: var(--on-primary);
+  --ds-btn-hover: color-mix(in oklch, var(--primary), #000 8%);
+  --ds-btn-press: color-mix(in oklch, var(--primary), #000 15%);
+  --ds-btn-off: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+}
+.ds-btn--accent {
+  --ds-btn-bg: var(--spark);
+  --ds-btn-fg: var(--on-primary);
+  --ds-btn-hover: color-mix(in oklch, var(--spark), #000 5%);
+  --ds-btn-press: color-mix(in oklch, var(--spark), #000 9%);
+  --ds-btn-off: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+}
+.ds-btn--inverse {
+  --ds-btn-bg: var(--surface);
+  --ds-btn-fg: var(--text);
+  --ds-btn-shadow: var(--shadow-panel), inset 0 0 0 1px var(--border);
+  --ds-btn-hover: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+  --ds-btn-press: color-mix(in srgb, var(--surface), var(--ink) 11.2%);
+  --ds-btn-off: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+}
+.ds-btn--destructive {
+  --ds-btn-bg: var(--danger);
+  --ds-btn-fg: var(--on-danger);
+  --ds-btn-hover: color-mix(in srgb, var(--danger), var(--ink) 9%);
+  --ds-btn-press: color-mix(in srgb, var(--danger), var(--ink) 18%);
+  --ds-btn-off: color-mix(in srgb, var(--surface), var(--ink) 8.8%);
+}
+.ds-btn--secondary {
+  --ds-btn-bg: var(--selected);
+  --ds-btn-fg: var(--text);
+  --ds-btn-shadow: inset 0 0 0 1px var(--border-selected);
+  --ds-btn-hover: color-mix(in srgb, var(--teal) 24%, var(--surface));
+  --ds-btn-press: color-mix(in srgb, var(--teal) 32%, var(--surface));
+  --ds-btn-off: color-mix(in srgb, var(--surface), var(--ink) 6%);
+  --ds-btn-off-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-btn--outline {
+  --ds-btn-fg: var(--text);
+  --ds-btn-shadow: inset 0 0 0 1px var(--border);
+  --ds-btn-hover: var(--layer-2);
+  --ds-btn-press: var(--layer-3);
+  --ds-btn-off-shadow: inset 0 0 0 1px var(--divider);
+}
+.ds-btn--ghost {
+  --ds-btn-fg: var(--text-2);
+  --ds-btn-hover: var(--layer-2);
+  --ds-btn-press: var(--layer-3);
+}
+
+.ds-btn--xs {
+  height: var(--h-xs);
+  padding: 0 8px;
+  font-size: var(--fs-info);
+}
+.ds-btn--sm {
+  height: var(--h-sm);
+  padding: 0 10px;
+  font-size: var(--fs-control);
+}
+.ds-btn--lg {
+  height: var(--h-lg);
+  padding: 0 16px;
+}
+.ds-btn--sq {
+  padding: 0;
+  aspect-ratio: 1;
+}
+.ds-btn--ghost.ds-btn--sq.ds-btn--xs,
+.ds-btn--ghost.ds-btn--sq.ds-btn--sm {
+  height: 20px;
+  --ds-btn-br: var(--r-control);
+  --ds-btn-fg: var(--text-3);
+}
+.ds-btn--ghost.ds-btn--sq.ds-btn--md {
+  height: var(--h-sm);
+  --ds-btn-br: var(--r-control);
+}
+.ds-btn--block {
+  width: 100%;
+}
+.ds-btn--start {
+  justify-content: flex-start;
+}
+
+.ds-btn:hover:not(:disabled, [aria-busy="true"]),
+.ds-btn--ghost[aria-expanded="true"] {
+  background: var(--ds-btn-hover, var(--ds-btn-bg, transparent));
+}
+.ds-btn:active:not(:disabled, [aria-busy="true"]) {
+  background: var(--ds-btn-press, var(--ds-btn-bg, transparent));
+}
+.ds-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+.ds-btn[aria-pressed="true"] {
+  background: var(--selected);
+  color: var(--link-strong);
+}
+.ds-btn[aria-pressed="true"]:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--selected), var(--ink) 8.8%);
+}
+.ds-btn:disabled {
+  background: var(--ds-btn-off, transparent);
+  box-shadow: var(--ds-btn-off-shadow, none);
+  color: var(--text-ph);
+  cursor: default;
+}
+.ds-btn[aria-busy="true"] {
+  cursor: progress;
+}
+
+.ds-btn__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ds-btn__icon,
+.ds-btn__end {
+  flex: none;
+  display: inline-flex;
+}
+.ds-btn__icon > svg,
+.ds-btn__end > svg {
+  width: 14px;
+  height: 14px;
+}
+.ds-btn__end {
+  transition: translate var(--dur) var(--ease);
+}
+.ds-btn:hover:not(:disabled) .ds-btn__end {
+  translate: 2px 0;
+}
+.ds-btn--disc svg {
+  transition: rotate var(--dur) var(--ease);
+}
+.ds-btn--disc[aria-expanded="true"] svg {
+  rotate: 90deg;
+}
+
+.ds-btn__spin {
+  --ds-btn-sw: 2px;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  background: conic-gradient(
+    currentColor 0 27%,
+    color-mix(in srgb, currentColor 22%, transparent) 0
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ds-btn-sw)),
+    #000 calc(100% - var(--ds-btn-sw) + 0.5px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ds-btn-sw)),
+    #000 calc(100% - var(--ds-btn-sw) + 0.5px)
+  );
+  animation: ds-btn-spin calc(0.8s * var(--slow, 1)) linear infinite;
+}
+@keyframes ds-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ds-btn-group {
+  flex: none;
+  display: inline-flex;
+  align-items: stretch;
+}
+.ds-btn-group > .ds-btn {
+  --ds-btn-br: 0;
+}
+.ds-btn-group > .ds-btn:first-child {
+  --ds-btn-br: 8px 0 0 8px;
+}
+.ds-btn-group > .ds-btn:last-child {
+  --ds-btn-br: 0 8px 8px 0;
+}
+.ds-btn-group > .ds-btn + .ds-btn {
+  margin-left: -1px;
+}
+.ds-btn-group > .ds-btn:hover,
+.ds-btn-group > .ds-btn:focus-visible {
+  z-index: 1;
+}
+.ds-btn-group > .ds-btn--primary + .ds-btn--primary {
+  box-shadow: inset 1px 0 0 color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.ds-btn-link {
+  display: inline;
+  height: auto;
+  max-width: calc(100% + 6px);
+  margin: 0 -3px;
+  padding: 0 3px;
+  border: 0;
+  border-radius: var(--r-control);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  text-underline-offset: 3px;
+  text-align: left;
+}
+.ds-btn-link--xs {
+  font-size: var(--fs-info);
+  font-weight: 400;
+}
+.ds-btn-link--sm {
+  font-size: var(--fs-control);
+  font-weight: 700;
+}
+.ds-btn-link--md {
+  font-size: var(--fs-body);
+}
+.ds-btn-link--dashed,
+.ds-btn-link--dotted {
+  text-decoration: underline;
+  text-decoration-color: var(--text-3);
+}
+.ds-btn-link--dashed {
+  text-decoration-style: dashed;
+}
+.ds-btn-link--dotted {
+  text-decoration-style: dotted;
+}
+.ds-btn-link--plain {
+  text-decoration: none;
+}
+.ds-btn-link:hover:not(:disabled) {
+  background: var(--layer-2);
+}
+.ds-btn-link:active:not(:disabled) {
+  background: var(--layer-3);
+}
+.ds-btn-link:focus-visible {
+  outline: 2px solid var(--focus);
+}
+.ds-btn-link:disabled {
+  color: var(--text-ph);
+  cursor: default;
+  background: none;
+}
+.ds-btn-link[aria-busy="true"] {
+  cursor: progress;
+}
+.ds-btn-link__spin {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 4px;
+  vertical-align: -0.15em;
+}
+.ds-btn-link--next {
+  color: var(--link);
+}
+.ds-btn-link--next:hover:not(:disabled) {
+  background: none;
+  color: var(--link-strong);
+}
+.ds-btn-link--next:hover .ds-btn-link__tx {
+  text-decoration: underline dashed var(--text-3);
+  text-underline-offset: 3px;
+}
+.ds-btn-link--next .ds-btn-link__ar {
+  display: inline-block;
+  transition: transform calc(0.18s * var(--slow, 1)) ease-out;
+}
+.ds-btn-link--next:hover .ds-btn-link__ar {
+  transform: translateX(3px);
+}
+.ds-btn-link--ext {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  color: var(--text-3);
+}
+.ds-btn-link--ext .ds-btn-link__tx {
+  text-decoration: underline dashed var(--text-3);
+  text-underline-offset: 3px;
+}
+.ds-btn-link--ext .ds-btn-link__ar {
+  font-size: var(--fs-info);
+  opacity: 0;
+  translate: -2px 2px;
+  transition:
+    opacity calc(0.15s * var(--slow, 1)),
+    translate var(--dur) var(--ease);
+}
+.ds-btn-link--ext:hover {
+  color: var(--text-2);
+}
+.ds-btn-link--ext:hover .ds-btn-link__ar {
+  opacity: 1;
+  translate: 0 0;
+}
+.ds-btn-link--back {
+  color: var(--text-2);
+}
+.ds-btn-link--back:hover {
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-btn {
+    transition: none;
+  }
+  .ds-btn__spin {
+    animation-duration: 3s;
+  }
+}

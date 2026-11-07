@@ -1,0 +1,56 @@
+/* © 2026 Komarov Zhiznev Group. Все права защищены. Копирование и передача запрещены. См. LICENSE */
+.ds-reltime {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted var(--text-3);
+  color: inherit;
+  cursor: help;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transition: border-color var(--dur-f);
+}
+.ds-reltime:hover {
+  border-bottom-color: var(--text);
+}
+.ds-reltime:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.ds-reltime[data-muted] {
+  color: var(--text-3);
+}
+.ds-reltime--plain {
+  border-bottom: 0;
+  cursor: default;
+}
+.ds-reltime--err {
+  color: var(--err-text);
+  border-bottom-color: var(--err-text);
+}
+.ds-reltime__skel {
+  display: inline-block;
+  width: 64px;
+  height: 10px;
+  border-radius: var(--r-control);
+  background: var(--surface-muted);
+  vertical-align: middle;
+  animation: ds-reltime-pulse calc(1.4s * var(--slow, 1)) ease-in-out infinite;
+}
+@keyframes ds-reltime-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+.ds-reltime__empty {
+  color: var(--text-ph);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-reltime {
+    transition: none;
+  }
+  .ds-reltime__skel {
+    animation: none;
+  }
+}
